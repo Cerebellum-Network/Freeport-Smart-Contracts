@@ -1,0 +1,38 @@
+{
+  "name": "polygon-box",
+  "version": "1.0.0",
+  "description": "A sample Truffle project that allows developers to deploy to the Polygon Matic PoS chain",
+  "main": "truffle-config.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "truffle test",
+    "test:polygon": "truffle test --config=truffle-config.polygon.js --network=$npm_config_network",
+    "compile:polygon": "truffle compile --config=truffle-config.polygon.js",
+    "migrate:polygon": "truffle migrate --config=truffle-config.polygon.js --network=$npm_config_network"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/truffle-box/polygon-box.git"
+  },
+  "keywords": [
+    "Matic",
+    "Polygon",
+    "Ethereum",
+    "Truffle",
+    "dapp"
+  ],
+  "author": "Faina Shalts",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/truffle-box/polygon-box/issues"
+  },
+  "homepage": "https://github.com/truffle-box/polygon-box#readme",
+  "devDependencies": {
+    "@maticnetwork/maticjs": "^2.0.40",
+    "@truffle/hdwallet-provider": "^1.2.3",
+    "dotenv": "^9.0.0"
+  },
+  "dependencies": {}
+}
