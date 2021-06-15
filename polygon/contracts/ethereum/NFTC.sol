@@ -8,6 +8,10 @@ contract NFTC is ERC1155 {
     address public serviceProvider;
     uint256 public serviceFee;
 
+    // Token ID to fee beneficiary.
+    mapping (uint256 => address) public beneficiaries;
+    mapping (uint256 => uint256) public beneficiaryFees;
+
     constructor() ERC1155("https://cere.network/ntfc/{id}.json") {
         serviceProvider = _msgSender();
         serviceFee = 10;
@@ -45,7 +49,34 @@ contract NFTC is ERC1155 {
     virtual
     override
     {
-        if(to == serviceProvider) return;
+        // Do not apply on pure currency transfers.
+        // This also prevents recursion.
+        bool all_currency = true;
+        for (uint256 i = 0; i < ids.length; ++i) {
+            uint256 token_id = ids[i];
+            if(token_id != WCERE) {
+                all_currency = false;
+                break;
+            }
+        }
+        if(all_currency) return;
+
+        // Pay a fee per transfer to a beneficiary, if any.
+        for (uint256 i = 0; i < ids.length; ++i) {
+            uint256 token_id = ids[i];
+            address beneficiary = beneficiaries[token_id];
+            uint256 beneficiaryFee = beneficiaryFees[token_id];
+
+            if(beneficiary != address(0) && beneficiaryFee != 0) {
+                safeTransferFrom(
+                    from,
+                    beneficiary,
+                    WCERE,
+                    beneficiaryFee,
+                    ""
+                );
+            }
+        }
 
         // Pay a fee per transfer to the service provider.
         safeTransferFrom(
