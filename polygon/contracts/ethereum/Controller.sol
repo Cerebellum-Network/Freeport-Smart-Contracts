@@ -4,111 +4,133 @@ import "@openzeppelin/contracts/token/ERC1155/IERC1155.sol";
 import "@openzeppelin/contracts/utils/Context.sol";
 
 /**
- * Hold configuration of NFTs: services, fees, royalties.
+ * Issue NFTs and enforce of issuance.
+ * Hold configuration of NFTs: services, royalties.
+ * Capture royalties on primary and secondary transfers.
+ * Report configured royalties to service providers.
  */
 contract Controller is Context, IERC1155 {
-    uint256 public constant WCERE = 0;
+    uint256 public constant CURRENCY = 0;
 
-    address public serviceProvider;
-    uint256 public serviceTransferFee;
-    uint256 public serviceIssuanceFee;
+    // Royalties configurable per NFT by issuers.
+    mapping(uint256 => address) public primaryRoyaltyAccounts;
+    mapping(uint256 => uint256) public primaryRoyaltyFees;
+    mapping(uint256 => address) public secondaryRoyaltyAccounts;
+    mapping(uint256 => uint256) public secondaryRoyaltyFees;
 
-    // Token ID to fee beneficiary.
-    mapping(uint256 => bool) public tokenExists;
-    mapping(uint256 => address) public beneficiaries;
-    mapping(uint256 => uint256) public beneficiaryFees;
+    // State of NFTs.
+    mapping(uint256 => bool) public nftExists;
 
-    constructor() {
-        serviceProvider = _msgSender();
-        serviceTransferFee = 10;
-        serviceIssuanceFee = 10;
-    }
+    constructor() {}
 
     function issue(uint32 nonce, uint256 supply, bytes memory data) public returns (uint256) {
-        address issuer = _msgSender();
-        return _issueAs(issuer, nonce, supply, data);
+        return _issueAs(_msgSender(), nonce, supply, data);
     }
 
     function _issueAs(address issuer, uint32 nonce, uint256 supply, bytes memory data) internal returns (uint256) {
-        uint256 id = _makeId(issuer, nonce, supply);
+        uint256 nftId = _makeId(issuer, nonce, supply);
 
-        // Pay issuance fee.
-        if (serviceIssuanceFee != 0) {
-            safeTransferFrom(
-                issuer,
-                serviceProvider,
-                WCERE,
-                serviceIssuanceFee,
-                ""
-            );
+        require(nftExists[nftId] == false);
+        nftExists[nftId] = true;
+
+        _mint(issuer, nftId, supply, "");
+
+        return nftId;
+    }
+
+    function setFee(
+        uint256 nftId,
+        address primaryRoyaltyAccount,
+        uint256 primaryRoyaltyFee,
+        address secondaryRoyaltyAccount,
+        uint256 secondaryRoyaltyFee
+    ) public {
+        address issuer = _msgSender();
+        require(_isIssuerAndOwner(issuer, nftId));
+
+        if (primaryRoyaltyFee != 0) {
+            require(primaryRoyaltyAccount != address(0));
+            primaryRoyaltyAccounts[nftId] = primaryRoyaltyAccount;
+            primaryRoyaltyFees[nftId] = primaryRoyaltyFee;
         }
 
-        require(tokenExists[id] == false);
-        tokenExists[id] = true;
-
-        _mint(issuer, id, supply, "");
-
-        return id;
+        if (secondaryRoyaltyFee != 0) {
+            require(secondaryRoyaltyAccount != address(0));
+            secondaryRoyaltyAccounts[nftId] = secondaryRoyaltyAccount;
+            secondaryRoyaltyFees[nftId] = secondaryRoyaltyFee;
+        }
     }
 
     function _beforeTokenTransfer(
         address operator,
         address from,
         address to,
-        uint256[] memory ids,
+        uint256[] memory tokenIds,
         uint256[] memory amounts,
         bytes memory data
     ) internal {
         // Do not apply on pure currency transfers.
         // This also prevents recursion.
-        bool all_currency = true;
-        for (uint256 i = 0; i < ids.length; ++i) {
-            uint256 token_id = ids[i];
-            if (token_id != WCERE) {
-                all_currency = false;
-                break;
-            }
-        }
-        if (all_currency) return;
+        if (_idsAreAllCurrency(tokenIds)) return;
 
         // Pay a fee per transfer to a beneficiary, if any.
-        for (uint256 i = 0; i < ids.length; ++i) {
-            uint256 token_id = ids[i];
-            uint256 beneficiaryFee = beneficiaryFees[token_id];
+        for (uint256 i = 0; i < tokenIds.length; ++i) {
+            uint256 tokenId = tokenIds[i];
+            _captureFee(from, tokenId);
+        }
+    }
 
-            if (beneficiaryFee != 0) {
-                address beneficiary = beneficiaries[token_id];
-                safeTransferFrom(
-                    from,
-                    beneficiary,
-                    WCERE,
-                    beneficiaryFee,
-                    ""
-                );
-            }
+    function _captureFee(address from, uint256 tokenId) internal {
+        uint256 royaltyFee;
+        address royaltyAccount;
+        bool isPrimary = _isPrimaryTransfer(from, tokenId);
+        if (isPrimary) {
+            royaltyFee = primaryRoyaltyFees[tokenId];
+            royaltyAccount = primaryRoyaltyAccounts[tokenId];
+        } else {
+            royaltyFee = secondaryRoyaltyFees[tokenId];
+            royaltyAccount = secondaryRoyaltyAccounts[tokenId];
         }
 
-        // Pay a fee per transfer to the service provider.
-        if (serviceTransferFee != 0) {
+        if (royaltyFee != 0) {
             safeTransferFrom(
                 from,
-                serviceProvider,
-                WCERE,
-                serviceTransferFee * ids.length,
+                royaltyAccount,
+                CURRENCY,
+                royaltyFee,
                 ""
             );
         }
     }
 
-    function configure_nft(uint256 id, address beneficiary, uint256 fee) public {
-        address issuer = _msgSender();
-        require(_isIssuerAndOwner(issuer, id));
-        require(beneficiary != address(0));
-
-        beneficiaries[id] = beneficiary;
-        beneficiaryFees[id] = fee;
+    function _idsAreAllCurrency(uint256[] memory tokenIds) internal returns (bool) {
+        for (uint256 i = 0; i < tokenIds.length; ++i) {
+            uint256 tokenId = tokenIds[i];
+            if (tokenId != CURRENCY) {
+                return false;
+            }
+        }
+        return true;
     }
 
+    function _isPrimaryTransfer(address from, uint256 nftId)
+    internal returns (bool) {
+        (address issuer, uint32 nonce, uint64 supply) = _parseId(id);
+        return from == issuer;
+    }
+
+    /*
+        // Pay issuance fee.
+        if (primaryTransferFee != 0) {
+            safeTransferFrom(
+                issuer,
+                vendor,
+                CURRENCY,
+                primaryTransferFee,
+                ""
+            );
+        }
+    */
 
     function _isIssuer(address addr, uint256 id) internal returns (bool) {
         (address issuer, uint32 nonce, uint64 supply) = _parseId(id);
