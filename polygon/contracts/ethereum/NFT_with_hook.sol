@@ -1,20 +1,24 @@
 pragma solidity ^0.8.0;
 
 import "@openzeppelin/contracts/token/ERC1155/ERC1155.sol";
+import "./Controller.sol";
 
-contract NFTC is ERC1155 {
+/**
+* Hold NFTs.
+* Hold a currency for fees.
+* Notifies a controller contract of transfers.
+* Pays fees based on instructions from the controller.
+*/
+contract DavinciNFT is ERC1155, Controller {
     uint256 public constant WCERE = 0;
 
-    address public serviceProvider;
-    uint256 public serviceFee;
+    address controller;
 
-    // Token ID to fee beneficiary.
-    mapping (uint256 => address) public beneficiaries;
-    mapping (uint256 => uint256) public beneficiaryFees;
+    constructor() ERC1155("https://cere.network/ntfc/{id}.json") {}
 
-    constructor() ERC1155("https://cere.network/ntfc/{id}.json") {
-        serviceProvider = _msgSender();
-        serviceFee = 10;
+    function mint(address account, uint256 id, uint256 amount, bytes memory data) public {
+        require(_msgSender() == controller);
+        _mint(account, id, amount, data);
     }
 
     /**
@@ -49,6 +53,19 @@ contract NFTC is ERC1155 {
     virtual
     override
     {
+        if (operator != controller && controller != address(0)) {
+            controller._beforeTokenTransfer(
+                operator,
+                from,
+                to,
+                ids,
+                amounts,
+                data
+            );
+        }
+    }
+
+    /*
         // Do not apply on pure currency transfers.
         // This also prevents recursion.
         bool all_currency = true;
@@ -60,31 +77,5 @@ contract NFTC is ERC1155 {
             }
         }
         if(all_currency) return;
-
-        // Pay a fee per transfer to a beneficiary, if any.
-        for (uint256 i = 0; i < ids.length; ++i) {
-            uint256 token_id = ids[i];
-            address beneficiary = beneficiaries[token_id];
-            uint256 beneficiaryFee = beneficiaryFees[token_id];
-
-            if(beneficiary != address(0) && beneficiaryFee != 0) {
-                safeTransferFrom(
-                    from,
-                    beneficiary,
-                    WCERE,
-                    beneficiaryFee,
-                    ""
-                );
-            }
-        }
-
-        // Pay a fee per transfer to the service provider.
-        safeTransferFrom(
-            from,
-            serviceProvider,
-            WCERE,
-            serviceFee * ids.length,
-            ""
-        );
-    }
+    */
 }
