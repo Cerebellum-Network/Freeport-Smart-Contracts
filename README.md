@@ -1,4 +1,12 @@
-# Polygon Box
+# Davinci Smart Contracts
+
+## Introduction
+
+A set of contracts to hold NFTs, capture royalties, and subscribe to services.
+
+See `contracts/ethereum/*.sol`
+
+## (Original instructions of the repo template)
 
 - [Requirements](#requirements)
 - [Installation](#installation)
