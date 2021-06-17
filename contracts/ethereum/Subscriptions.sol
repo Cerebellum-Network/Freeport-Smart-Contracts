@@ -11,9 +11,5 @@ import "@openzeppelin/contracts/utils/Context.sol";
 contract Subscription is Context, IERC1155 {
     uint256 public constant CURRENCY = 0;
 
-    // Service ID to service config.
-    mapping(uint256 => address) public servicebeneficiaries;
-    mapping(uint256 => uint256) public beneficiaryFees;
-
-    constructor() {}
+    
 }

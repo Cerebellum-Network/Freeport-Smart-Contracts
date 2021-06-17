@@ -9,7 +9,7 @@ import "@openzeppelin/contracts/utils/Context.sol";
  * Capture royalties on primary and secondary transfers.
  * Report configured royalties to service providers.
  */
-contract Fees is Context, IERC1155 {
+contract TransferFees is Context, IERC1155 {
     uint256 public constant CURRENCY = 0;
 
     // Royalties configurable per NFT by issuers.
