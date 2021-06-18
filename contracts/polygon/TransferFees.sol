@@ -5,10 +5,9 @@ import "@openzeppelin/contracts/utils/Context.sol";
 import "./Issuance.sol";
 
 /**
- * Issue NFTs and enforce of issuance.
- * Hold configuration of NFTs: services, royalties.
- * Capture royalties on primary and secondary transfers.
- * Report configured royalties to service providers.
+- Hold configuration of NFTs: services, royalties.
+- Capture royalties on primary and secondary transfers.
+- Report configured royalties to service providers.
  */
 contract TransferFees is Issuance {
 
@@ -95,7 +94,7 @@ contract TransferFees is Issuance {
 
     function _isPrimaryTransfer(address from, uint256 nftId)
     internal returns (bool) {
-        (address issuer, uint32 nonce, uint64 supply) = _parseId(nftId);
+        (address issuer, uint32 nonce, uint64 supply) = _parseNftId(nftId);
         return from == issuer;
     }
 

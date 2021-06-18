@@ -3,8 +3,8 @@ pragma solidity ^0.8.0;
 import "./DavinciNFT.sol";
 
 /**
- * Handle accounts of multiple owners.
- * Each owner of an account has a claim to a share of this account.
+Handle accounts of multiple owners.
+Each owner of an account has a claim to a share of its funds.
  */
 contract DistributionAccounts is DavinciNFT {
     uint256 public TOTAL_SHARES = 10000;
@@ -19,11 +19,21 @@ contract DistributionAccounts is DavinciNFT {
     mapping(address => uint256) public accountTotalWithdrawn;
 
     function createDistributionAccount(address[] memory owners, uint256[] memory shares) public returns (address) {
-        address account; // TODO: generate.
-        for(uint256 i = 0; i < owners.length; i++) {
+        address account = getAddressOfDistributionAccount(owners, shares);
+
+        uint256 totalShares = 0;
+        for (uint256 i = 0; i < owners.length; i++) {
             accountOwnerShares[account][owners[i]] = shares[i];
+            totalShares += shares[i];
         }
+        require(totalShares == TOTAL_SHARES);
+
         return account;
+    }
+
+    function getAddressOfDistributionAccount(address[] memory owners, uint256[] memory shares) public returns (address) {
+        bytes32 hash = keccak256(abi.encodePacked(owners, shares));
+        return address(bytes20(hash));
     }
 
     function availableToOwnerOfDistributionAccount(address account, address owner) public returns (uint256) {
