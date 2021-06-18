@@ -1,12 +1,12 @@
 pragma solidity ^0.8.0;
 
-import "./DavinciNFT.sol";
+import "./Issuance.sol";
 
 /**
 Handle accounts of multiple owners.
 Each owner of an account has a claim to a share of its funds.
  */
-contract DistributionAccounts is DavinciNFT {
+contract DistributionAccounts is Issuance {
     uint256 public TOTAL_SHARES = 10000;
 
     // Account - Owner => share.

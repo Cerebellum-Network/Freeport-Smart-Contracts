@@ -1,15 +1,13 @@
 pragma solidity ^0.8.0;
 
-import "@openzeppelin/contracts/token/ERC1155/IERC1155.sol";
-import "@openzeppelin/contracts/utils/Context.sol";
-import "./Issuance.sol";
+import "./DistributionAccounts.sol";
 
 /**
 - Hold configuration of NFTs: services, royalties.
 - Capture royalties on primary and secondary transfers.
 - Report configured royalties to service providers.
  */
-contract TransferFees is Issuance {
+contract TransferFees is DistributionAccounts {
 
     // Royalties configurable per NFT by issuers.
     mapping(uint256 => address) public primaryRoyaltyAccounts;
@@ -17,7 +15,31 @@ contract TransferFees is Issuance {
     mapping(uint256 => address) public secondaryRoyaltyAccounts;
     mapping(uint256 => uint256) public secondaryRoyaltyFees;
 
-    function setFee(
+    function hasRoyalties(uint256 nftId, address addr)
+    public view returns (uint256 primaryFee, uint256 secondaryFee) {
+
+        // Primary royalties.
+        uint256 fee = primaryRoyaltyFees[nftId];
+        address account = primaryRoyaltyAccounts[nftId];
+        if (account == addr) {
+            primaryFee = fee;
+        } else {
+            primaryFee = fee * accountOwnerShares[account][addr] / TOTAL_SHARES;
+        }
+
+        // Secondary royalties.
+        fee = secondaryRoyaltyFees[nftId];
+        account = secondaryRoyaltyAccounts[nftId];
+        if (account == addr) {
+            secondaryFee = fee;
+        } else {
+            secondaryFee = fee * accountOwnerShares[account][addr] / TOTAL_SHARES;
+        }
+
+        return (primaryFee, secondaryFee);
+    }
+
+    function setRoyalties(
         uint256 nftId,
         address primaryRoyaltyAccount,
         uint256 primaryRoyaltyFee,
@@ -25,7 +47,7 @@ contract TransferFees is Issuance {
         uint256 secondaryRoyaltyFee
     ) public {
         address issuer = _msgSender();
-        require(_isIssuerAndOwner(issuer, nftId));
+        require(_isIssuerAndOnlyOwner(issuer, nftId));
 
         if (primaryRoyaltyFee != 0) {
             require(primaryRoyaltyAccount != address(0));

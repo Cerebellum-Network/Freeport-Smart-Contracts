@@ -1,7 +1,7 @@
 pragma solidity ^0.8.0;
 
 import "@openzeppelin/contracts/token/ERC1155/ERC1155.sol";
-import "./DavinciNFT.sol";
+import "./AtomicExchange.sol";
 
 /**
 - Issue NFTs.
@@ -15,7 +15,7 @@ The following attributes of a type of NFT are immutable. They are used to derive
 - Supply: how many NFT of this type exists.
 
 */
-contract Issuance is DavinciNFT {
+contract Issuance is AtomicExchange {
     // State of NFTs.
     mapping(uint256 => bool) public nftExists;
 
@@ -39,7 +39,7 @@ contract Issuance is DavinciNFT {
         return addr == issuer;
     }
 
-    function _isIssuerAndOwner(address addr, uint256 id) internal returns (bool) {
+    function _isIssuerAndOnlyOwner(address addr, uint256 id) internal returns (bool) {
         (address issuer, uint32 nonce, uint64 supply) = _parseNftId(id);
         uint64 balance = uint64(balanceOf(issuer, id));
 

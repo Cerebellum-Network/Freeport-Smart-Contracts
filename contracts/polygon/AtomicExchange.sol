@@ -1,14 +1,14 @@
 pragma solidity ^0.8.0;
 
-import "./DavinciNFT.sol";
+import "./BaseNFT.sol";
 
 /**
 - Owner creates an offer to sell NFTs.
 - Buyer pays and receives the NFT.
 
-- Nice-to-have: Support for single transaction using a signature from the seller.
+- TODO: Support for single transaction compatible with OpenSea / Wyvern Protocol (using a signature from the seller).
 */
-contract AtomicExchange is DavinciNFT {
+contract AtomicExchange is BaseNFT {
 
     // Seller => NFT ID => Price => Remaining amount offered.
     mapping(address => mapping(uint256 => mapping(uint256 => uint256))) sellerNftPriceOffers;
