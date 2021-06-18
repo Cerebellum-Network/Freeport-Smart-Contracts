@@ -10,7 +10,8 @@
     "test": "truffle test",
     "test:polygon": "truffle test --config=truffle-config.polygon.js --network=$npm_config_network",
     "compile:polygon": "truffle compile --config=truffle-config.polygon.js",
-    "migrate:polygon": "truffle migrate --config=truffle-config.polygon.js --network=$npm_config_network"
+    "migrate:polygon": "truffle migrate --config=truffle-config.polygon.js --network=$npm_config_network",
+    "doc": "npx solidity-docgen --solc-module solc-0.8"
   },
   "repository": {
     "type": "git",
@@ -32,9 +33,11 @@
   "devDependencies": {
     "@maticnetwork/maticjs": "^2.0.40",
     "@truffle/hdwallet-provider": "^1.2.3",
-    "dotenv": "^9.0.0"
+    "dotenv": "^9.0.0",
+    "solc-0.8": "npm:solc@^0.8.5"
   },
   "dependencies": {
-    "@openzeppelin/contracts": "^4.1.0"
+    "@openzeppelin/contracts": "^4.1.0",
+    "solidity-docgen": "^0.5.13"
   }
 }

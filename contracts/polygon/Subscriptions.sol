@@ -8,7 +8,7 @@ import "@openzeppelin/contracts/utils/Context.sol";
  * Report subscription status to service providers.
  * Distribute revenues.
  */
-contract Subscription is Context, IERC1155 {
+abstract contract Subscription is Context, IERC1155 {
     uint256 public constant CURRENCY = 0;
 
     

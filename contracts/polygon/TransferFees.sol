@@ -2,6 +2,7 @@ pragma solidity ^0.8.0;
 
 import "@openzeppelin/contracts/token/ERC1155/IERC1155.sol";
 import "@openzeppelin/contracts/utils/Context.sol";
+import "./Issuance.sol";
 
 /**
  * Issue NFTs and enforce of issuance.
@@ -9,8 +10,7 @@ import "@openzeppelin/contracts/utils/Context.sol";
  * Capture royalties on primary and secondary transfers.
  * Report configured royalties to service providers.
  */
-contract TransferFees is Context, IERC1155 {
-    uint256 public constant CURRENCY = 0;
+contract TransferFees is Issuance {
 
     // Royalties configurable per NFT by issuers.
     mapping(uint256 => address) public primaryRoyaltyAccounts;
@@ -48,7 +48,7 @@ contract TransferFees is Context, IERC1155 {
         uint256[] memory tokenIds,
         uint256[] memory amounts,
         bytes memory data
-    ) internal {
+    ) internal override {
         // Do not apply on pure currency transfers.
         // This also prevents recursion.
         if (_idsAreAllCurrency(tokenIds)) return;
@@ -95,7 +95,7 @@ contract TransferFees is Context, IERC1155 {
 
     function _isPrimaryTransfer(address from, uint256 nftId)
     internal returns (bool) {
-        (address issuer, uint32 nonce, uint64 supply) = _parseId(id);
+        (address issuer, uint32 nonce, uint64 supply) = _parseId(nftId);
         return from == issuer;
     }
 
