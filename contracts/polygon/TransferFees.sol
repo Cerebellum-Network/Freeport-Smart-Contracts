@@ -84,14 +84,13 @@ contract TransferFees is DistributionAccounts {
         uint256[] memory amounts,
         bytes memory data)
     internal override {
-        // Do not apply on pure currency transfers.
-        // This also prevents recursion.
-        if (_idsAreAllCurrency(tokenIds)) return;
-
         // Pay a fee per transfer to a beneficiary, if any.
         for (uint256 i = 0; i < tokenIds.length; ++i) {
             uint256 tokenId = tokenIds[i];
-            _captureFee(from, tokenId);
+            bool isNFT = tokenId != CURRENCY;
+            if (isNFT) {
+                _captureFee(from, tokenId, amounts[i]);
+            }
         }
     }
 
@@ -99,17 +98,17 @@ contract TransferFees is DistributionAccounts {
      *
      * Collect the royalty using an internal transfer of currency.
      */
-    function _captureFee(address from, uint256 tokenId)
+    function _captureFee(address from, uint256 nftId, uint256 amount)
     internal {
         uint256 royaltyFee;
         address royaltyAccount;
-        bool isPrimary = _isPrimaryTransfer(from, tokenId);
+        bool isPrimary = _isPrimaryTransfer(from, nftId);
         if (isPrimary) {
-            royaltyFee = primaryRoyaltyFees[tokenId];
-            royaltyAccount = primaryRoyaltyAccounts[tokenId];
+            royaltyFee = primaryRoyaltyFees[nftId];
+            royaltyAccount = primaryRoyaltyAccounts[nftId];
         } else {
-            royaltyFee = secondaryRoyaltyFees[tokenId];
-            royaltyAccount = secondaryRoyaltyAccounts[tokenId];
+            royaltyFee = secondaryRoyaltyFees[nftId];
+            royaltyAccount = secondaryRoyaltyAccounts[nftId];
         }
 
         if (royaltyFee != 0) {
@@ -117,23 +116,10 @@ contract TransferFees is DistributionAccounts {
                 from,
                 royaltyAccount,
                 CURRENCY,
-                royaltyFee,
+                royaltyFee * amount,
                 ""
             );
         }
-    }
-
-    /** Determine whether all token IDs refer to the contract currency, no NFTs.
-     */
-    function _idsAreAllCurrency(uint256[] memory tokenIds)
-    internal pure returns (bool) {
-        for (uint256 i = 0; i < tokenIds.length; ++i) {
-            uint256 tokenId = tokenIds[i];
-            if (tokenId != CURRENCY) {
-                return false;
-            }
-        }
-        return true;
     }
 
     /** Determine whether a transfer is primary (true) or secondary (false).
