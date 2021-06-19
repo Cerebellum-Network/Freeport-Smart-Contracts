@@ -6,7 +6,8 @@ import "./AtomicExchange.sol";
 import "./DistributionAccounts.sol";
 import "./TransferFees.sol";
 
-/**
+/** Main contract, including all components.
+
 - Hold and transfer NFTs using ERC1155.
 - Support atomic exchanges of NFTs for currency.
 - Issuance of NFTs with fixed supply.

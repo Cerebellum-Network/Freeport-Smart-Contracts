@@ -15,6 +15,8 @@ contract TransferFees is DistributionAccounts {
     mapping(uint256 => address) public secondaryRoyaltyAccounts;
     mapping(uint256 => uint256) public secondaryRoyaltyFees;
 
+    /** Return the amount of royalties earned by an address on each primary and secondary transfer of an NFT.
+     */
     function hasRoyalties(uint256 nftId, address addr)
     public view returns (uint256 primaryFee, uint256 secondaryFee) {
 
@@ -39,13 +41,23 @@ contract TransferFees is DistributionAccounts {
         return (primaryFee, secondaryFee);
     }
 
+    /** Configure the amounts and beneficiaries of royalties on primary and secondary transfers of this NFT.
+     *
+     * This setting is available to the issuer while he holds all NFTs of this type (normally right after issuance).
+     *
+     * A transfer is primary if it comes from the issuer of this NFT (normally the first sale after issuance).
+     * Otherwise, it is a secondary transfer.
+     *
+     * There can be one beneficiary account for each primary and secondary royalties. To distribute revenues amongst
+     * several parties, use a distribution account (see function createDistributionAccount).
+     */
     function setRoyalties(
         uint256 nftId,
         address primaryRoyaltyAccount,
         uint256 primaryRoyaltyFee,
         address secondaryRoyaltyAccount,
-        uint256 secondaryRoyaltyFee
-    ) public {
+        uint256 secondaryRoyaltyFee)
+    public {
         address issuer = _msgSender();
         require(_isIssuerAndOnlyOwner(issuer, nftId));
 
@@ -62,14 +74,16 @@ contract TransferFees is DistributionAccounts {
         }
     }
 
+    /** Internal hook to trigger the collection of royalties due on a batch of transfers.
+     */
     function _beforeTokenTransfer(
         address operator,
         address from,
         address to,
         uint256[] memory tokenIds,
         uint256[] memory amounts,
-        bytes memory data
-    ) internal override {
+        bytes memory data)
+    internal override {
         // Do not apply on pure currency transfers.
         // This also prevents recursion.
         if (_idsAreAllCurrency(tokenIds)) return;
@@ -81,7 +95,12 @@ contract TransferFees is DistributionAccounts {
         }
     }
 
-    function _captureFee(address from, uint256 tokenId) internal {
+    /** Calculate the royalty due on a transfer.
+     *
+     * Collect the royalty using an internal transfer of currency.
+     */
+    function _captureFee(address from, uint256 tokenId)
+    internal {
         uint256 royaltyFee;
         address royaltyAccount;
         bool isPrimary = _isPrimaryTransfer(from, tokenId);
@@ -104,7 +123,10 @@ contract TransferFees is DistributionAccounts {
         }
     }
 
-    function _idsAreAllCurrency(uint256[] memory tokenIds) internal returns (bool) {
+    /** Determine whether all token IDs refer to the contract currency, no NFTs.
+     */
+    function _idsAreAllCurrency(uint256[] memory tokenIds)
+    internal pure returns (bool) {
         for (uint256 i = 0; i < tokenIds.length; ++i) {
             uint256 tokenId = tokenIds[i];
             if (tokenId != CURRENCY) {
@@ -114,8 +136,12 @@ contract TransferFees is DistributionAccounts {
         return true;
     }
 
+    /** Determine whether a transfer is primary (true) or secondary (false).
+     *
+     * See the function setRoyalties.
+     */
     function _isPrimaryTransfer(address from, uint256 nftId)
-    internal returns (bool) {
+    internal pure returns (bool) {
         (address issuer, uint32 nonce, uint64 supply) = _parseNftId(nftId);
         return from == issuer;
     }

@@ -11,7 +11,7 @@
     "test:polygon": "truffle test --config=truffle-config.polygon.js --network=$npm_config_network",
     "compile:polygon": "truffle compile --config=truffle-config.polygon.js",
     "migrate:polygon": "truffle migrate --config=truffle-config.polygon.js --network=$npm_config_network",
-    "doc": "npx solidity-docgen --solc-module solc-0.8"
+    "doc": "npx solidity-docgen --solc-module=solc-0.8 -s single -t doc_template -o ."
   },
   "repository": {
     "type": "git",

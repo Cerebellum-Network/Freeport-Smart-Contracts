@@ -7,9 +7,11 @@ import "@openzeppelin/contracts/utils/Context.sol";
 - Subscribe to recurring services (and prepaid, refund).
 - Report subscription status to service providers.
 - Distribute revenues.
+
+[Not implemented]
  */
 abstract contract Subscription is Context, IERC1155 {
     uint256 public constant CURRENCY = 0;
 
-    
+
 }

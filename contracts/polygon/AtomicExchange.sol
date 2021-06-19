@@ -10,15 +10,26 @@ import "./BaseNFT.sol";
 */
 contract AtomicExchange is BaseNFT {
 
-    // Seller => NFT ID => Price => Remaining amount offered.
+    /** Seller => NFT ID => Price => Remaining amount offered.
+     */
     mapping(address => mapping(uint256 => mapping(uint256 => uint256))) sellerNftPriceOffers;
 
-    function offerToSell(uint256 nftId, uint256 price, uint256 amount) public {
+    /** Create an offer to sell an amount of NFTs for a price per unit.
+     *
+     * To cancel, call again with an amount of 0.
+     */
+    function offerToSell(uint256 nftId, uint256 price, uint256 amount)
+    public {
         address seller = _msgSender();
         sellerNftPriceOffers[seller][nftId][price] = amount;
     }
 
-    function buyOffer(address seller, uint256 nftId, uint256 price, uint256 amount) public {
+    /** Accept an offer, paying the price per unit for an amount of NFTs.
+     *
+     * The offer must have been created beforehand by offerToSell.
+     */
+    function buyOffer(address seller, uint256 nftId, uint256 price, uint256 amount)
+    public {
         // Check and update the amount offered.
         sellerNftPriceOffers[seller][nftId][price] -= amount;
 
@@ -43,11 +54,20 @@ contract AtomicExchange is BaseNFT {
         );
     }
 
-    function buySignedOffer(uint256 nftId, uint256 price, uint256 amount, bytes memory sellerSignature) public {
+    /** Accept an offer, paying the price per unit for an amount of NFTs.
+     *
+     * The offer is proved using sellerSignature generated offchain.
+     *
+     * [Not implemented]
+     */
+    function buySignedOffer(uint256 nftId, uint256 price, uint256 amount, bytes memory sellerSignature)
+    public {
         revert("not implemented");
     }
 
-    function _mathIsSafe() internal {
-    unchecked {} // Use this keyword to guarantee that the correct version of Solidity is used.
+    /** Guarantee that a version of Solidity with safe math is used.
+     */
+    function _mathIsSafe() internal pure {
+    unchecked {} // Use a keyword from Solidity 0.8.0.
     }
 }

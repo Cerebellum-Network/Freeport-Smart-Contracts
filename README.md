@@ -4,7 +4,9 @@
 
 A set of contracts to hold NFTs, capture royalties, and subscribe to services.
 
-See `contracts/ethereum/*.sol`
+See `contracts/polygon/*.sol`
+
+See the [documentation](index.md) (regenerate with `npm run doc`).
 
 ## (Original instructions of the repo template)
 
