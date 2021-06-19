@@ -39,7 +39,7 @@ contract Issuance is AtomicExchange {
      */
     function _issueAs(address issuer, uint32 nonce, uint64 supply, bytes memory data)
     internal returns (uint256) {
-        uint256 nftId = _makeNftId(issuer, nonce, supply);
+        uint256 nftId = getNftId(issuer, nonce, supply);
 
         require(nftExists[nftId] == false);
         nftExists[nftId] = true;
@@ -75,8 +75,8 @@ contract Issuance is AtomicExchange {
 
     /** Calculate the ID of an NFT type, identifying its issuer, its supply, and an arbitrary nonce.
      */
-    function _makeNftId(address issuer, uint32 nonce, uint64 supply)
-    internal pure returns (uint256) {
+    function getNftId(address issuer, uint32 nonce, uint64 supply)
+    public pure returns (uint256) {
         // issuer || nonce || supply: 160 + 32 + 64 = 256 bits
         uint256 id = (uint256(uint160(issuer)) << (32 + 64))
         + (nonce << 64)

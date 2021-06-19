@@ -98,6 +98,6 @@ module.exports = {
     }
   },
   db: {
-    enabled: true
+    enabled: false
   }
 }
