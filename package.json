@@ -37,7 +37,7 @@
     "solc-0.8": "npm:solc@^0.8.5"
   },
   "dependencies": {
-    "@openzeppelin/contracts": "^4.1.0",
+    "@openzeppelin/contracts": "4.1.0",
     "solidity-docgen": "^0.5.13"
   }
 }
