@@ -53,6 +53,12 @@ An implementation of ERC1155 from OpenZeppelin.
 
 
 
+#### `_forceTransfer(address from, address to, uint256 id, uint256 amount)` (internal)
+
+
+
+
+
 
 
 
@@ -77,9 +83,12 @@ Main contract, including all components.
 Handle accounts of multiple owners.
 Each owner of an account has a claim to a share of its funds.
 
-Distribution accounts support the contract currency only. They cannot be used for NFTs.
+Distribution Accounts support the contract currency only. They cannot be used for NFTs.
 
-Owners must be external accounts; nesting distribution accounts is not supported.
+An owner may be another Distribution Account, or a smart contract.
+It is possible to withdraw funds through nested DAs,
+because anyone can trigger a withdrawal from a DA to its owners,
+including if that owner is itself a DA.
 
 
 
@@ -110,13 +119,190 @@ Calculate the amount of tokens that an owner of a distribution account can withd
 
 
 
-#### `withdrawFromDistributionAccount(address account) → uint256` (public)
+#### `withdrawFromDistributionAccount(address account, address owner) → uint256` (public)
 
 Withdraw all tokens available to an owner of a distribution account.
 
 The function createDistributionAccount must be called beforehand.
 
+Anyone can trigger the withdrawal.
 
+
+
+
+
+
+## Contract `ERC1155`
+
+
+
+Implementation of the basic standard multi-token.
+See https://eips.ethereum.org/EIPS/eip-1155
+Originally based on code by Enjin: https://github.com/enjin/erc-1155
+
+_Available since v3.1._
+
+
+#### `constructor(string uri_)` (public)
+
+
+
+See {_setURI}.
+
+#### `supportsInterface(bytes4 interfaceId) → bool` (public)
+
+
+
+See {IERC165-supportsInterface}.
+
+#### `uri(uint256) → string` (public)
+
+
+
+See {IERC1155MetadataURI-uri}.
+
+This implementation returns the same URI for *all* token types. It relies
+on the token type ID substitution mechanism
+https://eips.ethereum.org/EIPS/eip-1155#metadata[defined in the EIP].
+
+Clients calling this function must replace the `\{id\}` substring with the
+actual token type ID.
+
+#### `balanceOf(address account, uint256 id) → uint256` (public)
+
+
+
+See {IERC1155-balanceOf}.
+
+Requirements:
+
+- `account` cannot be the zero address.
+
+#### `balanceOfBatch(address[] accounts, uint256[] ids) → uint256[]` (public)
+
+
+
+See {IERC1155-balanceOfBatch}.
+
+Requirements:
+
+- `accounts` and `ids` must have the same length.
+
+#### `setApprovalForAll(address operator, bool approved)` (public)
+
+
+
+See {IERC1155-setApprovalForAll}.
+
+#### `isApprovedForAll(address account, address operator) → bool` (public)
+
+
+
+See {IERC1155-isApprovedForAll}.
+
+#### `safeTransferFrom(address from, address to, uint256 id, uint256 amount, bytes data)` (public)
+
+
+
+See {IERC1155-safeTransferFrom}.
+
+#### `safeBatchTransferFrom(address from, address to, uint256[] ids, uint256[] amounts, bytes data)` (public)
+
+
+
+See {IERC1155-safeBatchTransferFrom}.
+
+#### `_setURI(string newuri)` (internal)
+
+
+
+Sets a new URI for all token types, by relying on the token type ID
+substitution mechanism
+https://eips.ethereum.org/EIPS/eip-1155#metadata[defined in the EIP].
+
+By this mechanism, any occurrence of the `\{id\}` substring in either the
+URI or any of the amounts in the JSON file at said URI will be replaced by
+clients with the token type ID.
+
+For example, the `https://token-cdn-domain/\{id\}.json` URI would be
+interpreted by clients as
+`https://token-cdn-domain/000000000000000000000000000000000000000000000000000000000004cce0.json`
+for token type ID 0x4cce0.
+
+See {uri}.
+
+Because these URIs cannot be meaningfully represented by the {URI} event,
+this function emits no events.
+
+#### `_mint(address account, uint256 id, uint256 amount, bytes data)` (internal)
+
+
+
+Creates `amount` tokens of token type `id`, and assigns them to `account`.
+
+Emits a {TransferSingle} event.
+
+Requirements:
+
+- `account` cannot be the zero address.
+- If `account` refers to a smart contract, it must implement {IERC1155Receiver-onERC1155Received} and return the
+acceptance magic value.
+
+#### `_mintBatch(address to, uint256[] ids, uint256[] amounts, bytes data)` (internal)
+
+
+
+xref:ROOT:erc1155.adoc#batch-operations[Batched] version of {_mint}.
+
+Requirements:
+
+- `ids` and `amounts` must have the same length.
+- If `to` refers to a smart contract, it must implement {IERC1155Receiver-onERC1155BatchReceived} and return the
+acceptance magic value.
+
+#### `_burn(address account, uint256 id, uint256 amount)` (internal)
+
+
+
+Destroys `amount` tokens of token type `id` from `account`
+
+Requirements:
+
+- `account` cannot be the zero address.
+- `account` must have at least `amount` tokens of token type `id`.
+
+#### `_burnBatch(address account, uint256[] ids, uint256[] amounts)` (internal)
+
+
+
+xref:ROOT:erc1155.adoc#batch-operations[Batched] version of {_burn}.
+
+Requirements:
+
+- `ids` and `amounts` must have the same length.
+
+#### `_beforeTokenTransfer(address operator, address from, address to, uint256[] ids, uint256[] amounts, bytes data)` (internal)
+
+
+
+Hook that is called before any token transfer. This includes minting
+and burning, as well as batched variants.
+
+The same hook is called on both single and batched variants. For single
+transfers, the length of the `id` and `amount` arrays will be 1.
+
+Calling conditions (for each `id` and `amount` pair):
+
+- When `from` and `to` are both non-zero, `amount` of ``from``'s tokens
+of token type `id` will be  transferred to `to`.
+- When `from` is zero, `amount` tokens of token type `id` will be minted
+for `to`.
+- when `to` is zero, `amount` of ``from``'s tokens of token type `id`
+will be burned.
+- `from` and `to` are never both zero.
+- `ids` and `amounts` have the same, non-zero length.
+
+To learn more about hooks, head to xref:ROOT:extending-contracts.adoc#using-hooks[Using Hooks].
 
 
 
