@@ -6,9 +6,12 @@ import "./Issuance.sol";
 Handle accounts of multiple owners.
 Each owner of an account has a claim to a share of its funds.
 
-Distribution accounts support the contract currency only. They cannot be used for NFTs.
+Distribution Accounts support the contract currency only. They cannot be used for NFTs.
 
-Owners must be external accounts; nesting distribution accounts is not supported.
+An owner may be another Distribution Account, or a smart contract.
+It is possible to withdraw funds through nested DAs,
+because anyone can trigger a withdrawal from a DA to its owners,
+including if that owner is itself a DA.
 */
 contract DistributionAccounts is Issuance {
     /** The reference number of shares representing 100% of an account.
@@ -78,10 +81,11 @@ contract DistributionAccounts is Issuance {
     /** Withdraw all tokens available to an owner of a distribution account.
      *
      * The function createDistributionAccount must be called beforehand.
+     *
+     * Anyone can trigger the withdrawal.
      */
-    function withdrawFromDistributionAccount(address account)
+    function withdrawFromDistributionAccount(address account, address owner)
     public returns (uint256) {
-        address owner = _msgSender();
         uint256 ownerAvailable = availableToOwnerOfDistributionAccount(account, owner);
 
         if (ownerAvailable == 0) return 0;
@@ -89,13 +93,7 @@ contract DistributionAccounts is Issuance {
         accountTotalWithdrawn[account] += ownerAvailable;
         accountOwnerWithdrawn[account][owner] += ownerAvailable;
 
-        safeTransferFrom(
-            account,
-            owner,
-            CURRENCY,
-            ownerAvailable,
-            ""
-        );
+        _forceTransfer(account, owner, CURRENCY, ownerAvailable);
 
         return ownerAvailable;
     }

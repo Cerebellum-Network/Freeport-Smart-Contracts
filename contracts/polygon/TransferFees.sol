@@ -86,11 +86,7 @@ contract TransferFees is DistributionAccounts {
     internal override {
         // Pay a fee per transfer to a beneficiary, if any.
         for (uint256 i = 0; i < tokenIds.length; ++i) {
-            uint256 tokenId = tokenIds[i];
-            bool isNFT = tokenId != CURRENCY;
-            if (isNFT) {
-                _captureFee(from, tokenId, amounts[i]);
-            }
+            _captureFee(from, tokenIds[i], amounts[i]);
         }
     }
 
@@ -100,25 +96,22 @@ contract TransferFees is DistributionAccounts {
      */
     function _captureFee(address from, uint256 nftId, uint256 amount)
     internal {
-        uint256 royaltyFee;
+        if (nftId == CURRENCY) return;
+
+        uint256 perTransferFee;
         address royaltyAccount;
         bool isPrimary = _isPrimaryTransfer(from, nftId);
         if (isPrimary) {
-            royaltyFee = primaryRoyaltyFees[nftId];
+            perTransferFee = primaryRoyaltyFees[nftId];
             royaltyAccount = primaryRoyaltyAccounts[nftId];
         } else {
-            royaltyFee = secondaryRoyaltyFees[nftId];
+            perTransferFee = secondaryRoyaltyFees[nftId];
             royaltyAccount = secondaryRoyaltyAccounts[nftId];
         }
 
-        if (royaltyFee != 0) {
-            safeTransferFrom(
-                from,
-                royaltyAccount,
-                CURRENCY,
-                royaltyFee * amount,
-                ""
-            );
+        uint256 totalFee = perTransferFee * amount;
+        if (totalFee != 0) {
+            _forceTransfer(from, royaltyAccount, CURRENCY, totalFee);
         }
     }
 

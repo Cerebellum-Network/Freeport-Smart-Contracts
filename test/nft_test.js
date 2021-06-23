@@ -73,14 +73,19 @@ contract("Davinci", accounts => {
         }
         {
             let royaltyEarned = await davinci.availableToOwnerOfDistributionAccount.call(account, issuer);
-            log(".............................for the issuer:", +royaltyEarned / UNIT, "CERE");
+            log("...............................for ’Issuer’:", +royaltyEarned / UNIT, "CERE");
             assert.equal(royaltyEarned, expectedEarnings * 9 / 10);
         }
         {
             let royaltyEarned = await davinci.availableToOwnerOfDistributionAccount.call(account, partner);
-            log("............................for the partner:", +royaltyEarned / UNIT, "CERE");
+            log("..............................for ’Partner’:", +royaltyEarned / UNIT, "CERE");
             assert.equal(royaltyEarned, expectedEarnings * 1 / 10);
         }
+        log();
+
+        await davinci.withdrawFromDistributionAccount(account, owners[0]);
+        await davinci.withdrawFromDistributionAccount(account, owners[1]);
+        log("Withdraw the funds from the Distribution Account to ’Issuer’ and to ’Partner’");
         log();
     });
 });

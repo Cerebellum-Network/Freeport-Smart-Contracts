@@ -1,7 +1,6 @@
 pragma solidity ^0.8.0;
 
-import "@openzeppelin/contracts/token/ERC1155/ERC1155.sol";
-import "./AtomicExchange.sol";
+import "./BaseNFT.sol";
 
 /**
 - Issue NFTs.
@@ -15,7 +14,7 @@ The following attributes of a type of NFT are immutable. They are used to derive
 - Supply: how many NFT of this type exists.
 
 */
-contract Issuance is AtomicExchange {
+contract Issuance is BaseNFT {
     /** NFT ID => Whether this NFT type was issued yet.
      *
      * This is used to prevent issuing more NFTs after their initial issuance.

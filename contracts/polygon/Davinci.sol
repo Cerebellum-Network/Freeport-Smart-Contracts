@@ -14,7 +14,7 @@ import "./TransferFees.sol";
 - Accounts that distribute their funds over multiple owners.
 - Capture royalties on primary and secondary transfers, configurable per NFT type.
 */
-contract Davinci is /* BaseNFT, AtomicExchange, Issuance, DistributionAccounts, */ TransferFees {
+contract Davinci is /* BaseNFT, Issuance, DistributionAccounts, TransferFees, */ AtomicExchange {
     constructor() {
         // 10 billion tokens with 10 decimals.
         uint256 currencySupply = 10e9 * 1e10;

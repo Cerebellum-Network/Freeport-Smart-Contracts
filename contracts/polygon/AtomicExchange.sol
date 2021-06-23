@@ -1,6 +1,6 @@
 pragma solidity ^0.8.0;
 
-import "./BaseNFT.sol";
+import "./TransferFees.sol";
 
 /**
 - Owner creates an offer to sell NFTs.
@@ -8,7 +8,7 @@ import "./BaseNFT.sol";
 
 - TODO: Support for single transaction compatible with OpenSea / Wyvern Protocol (using a signature from the seller).
 */
-contract AtomicExchange is BaseNFT {
+contract AtomicExchange is TransferFees {
 
     /** Seller => NFT ID => Price => Remaining amount offered.
      */
@@ -36,22 +36,12 @@ contract AtomicExchange is BaseNFT {
         address buyer = _msgSender();
 
         // Pay.
-        safeTransferFrom(
-            buyer,
-            seller,
-            CURRENCY,
-            price,
-            ""
-        );
+        _forceTransfer(buyer, seller, CURRENCY, price * amount);
 
         // Get NFTs.
-        safeTransferFrom(
-            seller,
-            buyer,
-            nftId,
-            amount,
-            ""
-        );
+        _forceTransfer(seller, buyer, nftId, amount);
+
+        _captureFee(seller, nftId, amount);
     }
 
     /** Accept an offer, paying the price per unit for an amount of NFTs.
