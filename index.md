@@ -169,7 +169,7 @@ currently owns all NFT of this type (normally right after issuance).
 
 
 
-#### `_makeNftId(address issuer, uint32 nonce, uint64 supply) → uint256` (internal)
+#### `getNftId(address issuer, uint32 nonce, uint64 supply) → uint256` (public)
 
 Calculate the ID of an NFT type, identifying its issuer, its supply, and an arbitrary nonce.
 
@@ -235,17 +235,11 @@ Internal hook to trigger the collection of royalties due on a batch of transfers
 
 
 
-#### `_captureFee(address from, uint256 tokenId)` (internal)
+#### `_captureFee(address from, uint256 nftId, uint256 amount)` (internal)
 
 Calculate the royalty due on a transfer.
 
 Collect the royalty using an internal transfer of currency.
-
-
-
-#### `_idsAreAllCurrency(uint256[] tokenIds) → bool` (internal)
-
-Determine whether all token IDs refer to the contract currency, no NFTs.
 
 
 
