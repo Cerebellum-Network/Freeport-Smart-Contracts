@@ -16,7 +16,7 @@ including if that owner is itself a DA.
 contract DistributionAccounts is Issuance {
     /** The reference number of shares representing 100% of an account.
      */
-    uint256 public TOTAL_SHARES = 10000;
+    uint256 public BASIS_POINTS = 100 * 100;
 
     /** Account + Owner => The share of the account that belongs to the owner.
      */
@@ -34,7 +34,7 @@ contract DistributionAccounts is Issuance {
 
     /** Create an account such that multiple owners have a claim on their respective share.
      *
-     * The share numbers are given as a fraction of the TOTAL_SHARES constant. The sum of shares must equal TOTAL_SHARES.
+     * The share numbers are given in basis points (1% of 1%). The sum of shares must equal 10,000.
      * An owner address can not be repeated.
      *
      * Anyone can create distribution accounts including any owners.
@@ -50,7 +50,7 @@ contract DistributionAccounts is Issuance {
             accountOwnerShares[account][owners[i]] = shares[i];
             totalShares += shares[i];
         }
-        require(totalShares == TOTAL_SHARES);
+        require(totalShares == BASIS_POINTS);
 
         return account;
     }
@@ -72,7 +72,7 @@ contract DistributionAccounts is Issuance {
     public view returns (uint256) {
         uint256 accountEarned = balanceOf(account, CURRENCY) + accountTotalWithdrawn[account];
         uint256 ownerShare = accountOwnerShares[account][owner];
-        uint256 ownerEarned = accountEarned * ownerShare / TOTAL_SHARES;
+        uint256 ownerEarned = accountEarned * ownerShare / BASIS_POINTS;
         uint256 ownerWithdrawn = accountOwnerWithdrawn[account][owner];
         uint256 ownerAvailable = ownerEarned - ownerWithdrawn;
         return ownerAvailable;

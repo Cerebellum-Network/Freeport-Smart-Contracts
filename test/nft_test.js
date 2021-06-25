@@ -13,7 +13,8 @@ contract("Davinci", accounts => {
         const davinci = await Davinci.deployed();
         const CURRENCY = await davinci.CURRENCY.call();
         const UNIT = 1e10;
-        let TOTAL_SHARES = +await davinci.TOTAL_SHARES.call();
+        let BASIS_POINTS = +await davinci.BASIS_POINTS.call();
+        assert.equal(BASIS_POINTS, 100 * 100);
 
         let currencySupply = await davinci.balanceOf.call(bridge, CURRENCY);
         let pocketMoney = 1000;
@@ -37,13 +38,23 @@ contract("Davinci", accounts => {
         let account = await davinci.getAddressOfDistributionAccount.call(owners, shares);
         await davinci.createDistributionAccount(owners, shares, {from: issuer});
         log("’Issuer’ creates a Distribution Account:", account);
-        log("..........................’Issuer’ gets:", shares[0] * 100 / TOTAL_SHARES, "%");
-        log(".........................’Partner’ gets:", shares[1] * 100 / TOTAL_SHARES, "%");
+        log("..........................’Issuer’ gets:", shares[0] * 100 / BASIS_POINTS, "%");
+        log(".........................’Partner’ gets:", shares[1] * 100 / BASIS_POINTS, "%");
         log();
 
         let primaryFee = 100;
         let secondaryFee = 50;
-        await davinci.setRoyalties(nftId, account, primaryFee * UNIT, account, secondaryFee * UNIT, {from: issuer});
+        let primaryCut = 0;
+        let secondaryCut = 0;
+        await davinci.setRoyalties(
+            nftId,
+            account,
+            primaryCut,
+            primaryFee * UNIT,
+            account,
+            secondaryCut,
+            secondaryFee * UNIT,
+            {from: issuer});
         log("’Issuer’ configures royalties for this NFT type");
         {
             let {primaryFee, secondaryFee} = await davinci.hasRoyalties.call(nftId, account);

@@ -41,7 +41,7 @@ contract AtomicExchange is TransferFees {
         // Get NFTs.
         _forceTransfer(seller, buyer, nftId, amount);
 
-        _captureFee(seller, nftId, amount);
+        _captureFee(seller, nftId, price, amount);
     }
 
     /** Accept an offer, paying the price per unit for an amount of NFTs.
