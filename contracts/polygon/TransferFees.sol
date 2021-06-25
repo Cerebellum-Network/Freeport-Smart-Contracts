@@ -18,31 +18,35 @@ contract TransferFees is DistributionAccounts {
     mapping(uint256 => uint256) public secondaryRoyaltyMinimums;
 
     /** Return the amount of royalties earned by an address on each primary and secondary transfer of an NFT.
-
-    TODO: royalty share
      */
-    function hasRoyalties(uint256 nftId, address addr)
-    public view returns (uint256 primaryFee, uint256 secondaryFee) {
+    function hasRoyalties(uint256 nftId, address beneficiary)
+    public view returns (uint256 primaryCut, uint256 primaryMinimum, uint256 secondaryCut, uint256 secondaryMinimum) {
+
+        // If the royalty account is the given beneficiary, return the settings.
+        // Otherwise, the royalty account may be a distribution account, and the beneficiary a share owner of it.
+        // Otherwise, "share" will be 0, and 0 values will be returned.
 
         // Primary royalties.
-        uint256 fee = primaryRoyaltyMinimums[nftId];
-        address account = primaryRoyaltyAccounts[nftId];
-        if (account == addr) {
-            primaryFee = fee;
-        } else {
-            primaryFee = fee * accountOwnerShares[account][addr] / BASIS_POINTS;
+        primaryCut = primaryRoyaltyCuts[nftId];
+        primaryMinimum = primaryRoyaltyMinimums[nftId];
+        address primaryAccount = primaryRoyaltyAccounts[nftId];
+        if (primaryAccount != beneficiary) {
+            uint256 share = accountOwnerShares[primaryAccount][beneficiary];
+            primaryCut = primaryCut * share / BASIS_POINTS;
+            primaryMinimum = primaryMinimum * share / BASIS_POINTS;
         }
 
         // Secondary royalties.
-        fee = secondaryRoyaltyMinimums[nftId];
-        account = secondaryRoyaltyAccounts[nftId];
-        if (account == addr) {
-            secondaryFee = fee;
-        } else {
-            secondaryFee = fee * accountOwnerShares[account][addr] / BASIS_POINTS;
+        secondaryCut = secondaryRoyaltyCuts[nftId];
+        secondaryMinimum = secondaryRoyaltyMinimums[nftId];
+        address secondaryAccount = secondaryRoyaltyAccounts[nftId];
+        if (secondaryAccount != beneficiary) {
+            uint256 share = accountOwnerShares[secondaryAccount][beneficiary];
+            secondaryCut = secondaryCut * share / BASIS_POINTS;
+            secondaryMinimum = secondaryMinimum * share / BASIS_POINTS;
         }
 
-        return (primaryFee, secondaryFee);
+        return (primaryCut, primaryMinimum, secondaryCut, secondaryMinimum);
     }
 
     /** Configure the amounts and beneficiaries of royalties on primary and secondary transfers of this NFT.
@@ -52,12 +56,11 @@ contract TransferFees is DistributionAccounts {
      * A transfer is primary if it comes from the issuer of this NFT (normally the first sale after issuance).
      * Otherwise, it is a secondary transfer.
      *
-     * A royalty is defined in two parts:
+     * A royalty is defined in two parts (both optional):
      * a cut of the sale price of an NFT, and a minimum royalty per transfer.
      * For simple transfers not attached to a price, or a too low price, the minimum royalty is charged.
      *
      * The cuts are given in basis points (1% of 1%). The minimums are given in currency amounts.
-     * Any setting can be set to 0.
      *
      * There can be one beneficiary account for each primary and secondary royalties. To distribute revenues amongst
      * several parties, use a distribution account (see function createDistributionAccount).

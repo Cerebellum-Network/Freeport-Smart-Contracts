@@ -42,31 +42,27 @@ contract("Davinci", accounts => {
         log(".........................’Partner’ gets:", shares[1] * 100 / BASIS_POINTS, "%");
         log();
 
-        let primaryFee = 100;
-        let secondaryFee = 50;
-        let primaryCut = 0;
-        let secondaryCut = 0;
         await davinci.setRoyalties(
             nftId,
             account,
-            primaryCut,
-            primaryFee * UNIT,
+            /* primaryCut */ 0,
+            /* primaryMinimum */ 100 * UNIT,
             account,
-            secondaryCut,
-            secondaryFee * UNIT,
+            /* secondaryCut */ 0,
+            /* secondaryMinimum */ 50 * UNIT,
             {from: issuer});
         log("’Issuer’ configures royalties for this NFT type");
         {
-            let {primaryFee, secondaryFee} = await davinci.hasRoyalties.call(nftId, account);
-            log("Royalties per transfer (primary/secondary):", +primaryFee / UNIT, +secondaryFee / UNIT, "CERE");
+            let {primaryMinimum, secondaryMinimum} = await davinci.hasRoyalties.call(nftId, account);
+            log("Royalties per transfer (primary/secondary):", +primaryMinimum / UNIT, +secondaryMinimum / UNIT, "CERE");
         }
         {
-            let {primaryFee, secondaryFee} = await davinci.hasRoyalties.call(nftId, issuer);
-            log("..............................for ’Issuer’:", +primaryFee / UNIT, +secondaryFee / UNIT, "CERE");
+            let {primaryMinimum, secondaryMinimum} = await davinci.hasRoyalties.call(nftId, issuer);
+            log("..............................for ’Issuer’:", +primaryMinimum / UNIT, +secondaryMinimum / UNIT, "CERE");
         }
         {
-            let {primaryFee, secondaryFee} = await davinci.hasRoyalties.call(nftId, partner);
-            log(".............................for ’Partner’:", +primaryFee / UNIT, +secondaryFee / UNIT, "CERE");
+            let {primaryMinimum, secondaryMinimum} = await davinci.hasRoyalties.call(nftId, partner);
+            log(".............................for ’Partner’:", +primaryMinimum / UNIT, +secondaryMinimum / UNIT, "CERE");
         }
         log();
 
