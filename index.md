@@ -97,7 +97,7 @@ including if that owner is itself a DA.
 
 Create an account such that multiple owners have a claim on their respective share.
 
-The share numbers are given as a fraction of the TOTAL_SHARES constant. The sum of shares must equal TOTAL_SHARES.
+The share numbers are given in basis points (1% of 1%). The sum of shares must equal 10,000.
 An owner address can not be repeated.
 
 Anyone can create distribution accounts including any owners.
@@ -395,13 +395,13 @@ This does not imply that the NFTs exist.
 
 
 
-#### `hasRoyalties(uint256 nftId, address addr) → uint256 primaryFee, uint256 secondaryFee` (public)
+#### `hasRoyalties(uint256 nftId, address beneficiary) → uint256 primaryCut, uint256 primaryMinimum, uint256 secondaryCut, uint256 secondaryMinimum` (public)
 
 Return the amount of royalties earned by an address on each primary and secondary transfer of an NFT.
 
 
 
-#### `setRoyalties(uint256 nftId, address primaryRoyaltyAccount, uint256 primaryRoyaltyFee, address secondaryRoyaltyAccount, uint256 secondaryRoyaltyFee)` (public)
+#### `setRoyalties(uint256 nftId, address primaryRoyaltyAccount, uint256 primaryRoyaltyCut, uint256 primaryRoyaltyMinimum, address secondaryRoyaltyAccount, uint256 secondaryRoyaltyCut, uint256 secondaryRoyaltyMinimum)` (public)
 
 Configure the amounts and beneficiaries of royalties on primary and secondary transfers of this NFT.
 
@@ -409,6 +409,12 @@ This setting is available to the issuer while he holds all NFTs of this type (no
 
 A transfer is primary if it comes from the issuer of this NFT (normally the first sale after issuance).
 Otherwise, it is a secondary transfer.
+
+A royalty is defined in two parts (both optional):
+a cut of the sale price of an NFT, and a minimum royalty per transfer.
+For simple transfers not attached to a price, or a too low price, the minimum royalty is charged.
+
+The cuts are given in basis points (1% of 1%). The minimums are given in currency amounts.
 
 There can be one beneficiary account for each primary and secondary royalties. To distribute revenues amongst
 several parties, use a distribution account (see function createDistributionAccount).
@@ -421,7 +427,7 @@ Internal hook to trigger the collection of royalties due on a batch of transfers
 
 
 
-#### `_captureFee(address from, uint256 nftId, uint256 amount)` (internal)
+#### `_captureFee(address from, uint256 nftId, uint256 price, uint256 amount)` (internal)
 
 Calculate the royalty due on a transfer.
 
