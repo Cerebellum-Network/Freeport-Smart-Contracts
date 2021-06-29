@@ -1,13 +1,13 @@
 pragma solidity ^0.8.0;
 
-import "./DistributionAccounts2.sol";
+import "./JointAccounts.sol";
 
 /**
 - Hold configuration of NFTs: services, royalties.
 - Capture royalties on primary and secondary transfers.
-- Report configured royalties to service providers.
+- Report configured royalties to service providers (supports Joint Accounts).
  */
-contract TransferFees is DistributionAccounts2 {
+contract TransferFees is JointAccounts {
 
     // Royalties configurable per NFT by issuers.
     mapping(uint256 => address) public primaryRoyaltyAccounts;
@@ -22,18 +22,18 @@ contract TransferFees is DistributionAccounts2 {
     function hasRoyalties(uint256 nftId, address beneficiary)
     public view returns (uint256 primaryCut, uint256 primaryMinimum, uint256 secondaryCut, uint256 secondaryMinimum) {
 
-        // If the royalty account is the given beneficiary, return the settings.
-        // Otherwise, the royalty account may be a distribution account, and the beneficiary a share owner of it.
-        // Otherwise, "share" will be 0, and 0 values will be returned.
+        // If the royalty account is the given beneficiary, return the configured fees.
+        // Otherwise, the royalty account may be a Joint Account, and the beneficiary a share owner of it.
+        // Otherwise, "fraction" will be 0, and 0 values will be returned.
 
         // Primary royalties.
         primaryCut = primaryRoyaltyCuts[nftId];
         primaryMinimum = primaryRoyaltyMinimums[nftId];
         address primaryAccount = primaryRoyaltyAccounts[nftId];
         if (primaryAccount != beneficiary) {
-            uint256 share = getShareOfOwner(primaryAccount, beneficiary);
-            primaryCut = primaryCut * share / BASIS_POINTS;
-            primaryMinimum = primaryMinimum * share / BASIS_POINTS;
+            uint256 fraction = fractionOfJAOwner(primaryAccount, beneficiary);
+            primaryCut = primaryCut * fraction / BASIS_POINTS;
+            primaryMinimum = primaryMinimum * fraction / BASIS_POINTS;
         }
 
         // Secondary royalties.
@@ -41,9 +41,9 @@ contract TransferFees is DistributionAccounts2 {
         secondaryMinimum = secondaryRoyaltyMinimums[nftId];
         address secondaryAccount = secondaryRoyaltyAccounts[nftId];
         if (secondaryAccount != beneficiary) {
-            uint256 share = getShareOfOwner(secondaryAccount, beneficiary);
-            secondaryCut = secondaryCut * share / BASIS_POINTS;
-            secondaryMinimum = secondaryMinimum * share / BASIS_POINTS;
+            uint256 fraction = fractionOfJAOwner(secondaryAccount, beneficiary);
+            secondaryCut = secondaryCut * fraction / BASIS_POINTS;
+            secondaryMinimum = secondaryMinimum * fraction / BASIS_POINTS;
         }
 
         return (primaryCut, primaryMinimum, secondaryCut, secondaryMinimum);
@@ -63,7 +63,7 @@ contract TransferFees is DistributionAccounts2 {
      * The cuts are given in basis points (1% of 1%). The minimums are given in currency amounts.
      *
      * There can be one beneficiary account for each primary and secondary royalties. To distribute revenues amongst
-     * several parties, use a distribution account (see function createDistributionAccount).
+     * several parties, use a Joint Account (see function createDistributionAccount).
      */
     function setRoyalties(
         uint256 nftId,

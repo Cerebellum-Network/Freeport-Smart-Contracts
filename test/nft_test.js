@@ -34,12 +34,12 @@ contract("Davinci", accounts => {
         log();
 
         let owners = [issuer, partner];
-        let shares = [9000, 1000];
-        let account = await davinci.getAddressOfDistributionAccount.call(owners, shares);
-        await davinci.createDistributionAccount(owners, shares, {from: issuer});
-        log("’Issuer’ creates a Distribution Account:", account);
-        log("..........................’Issuer’ gets:", shares[0] * 100 / BASIS_POINTS, "%");
-        log(".........................’Partner’ gets:", shares[1] * 100 / BASIS_POINTS, "%");
+        let fractions = [9000, 1000];
+        let account = await davinci.makeAddressOfJointAccount.call(owners, fractions);
+        await davinci.createJointAccount(owners, fractions, {from: issuer});
+        log("’Issuer’ creates a Joint Account:", account);
+        log("..........................’Issuer’ gets:", fractions[0] * 100 / BASIS_POINTS, "%");
+        log(".........................’Partner’ gets:", fractions[1] * 100 / BASIS_POINTS, "%");
         log();
 
         await davinci.setRoyalties(
@@ -79,19 +79,19 @@ contract("Davinci", accounts => {
             assert.equal(royaltyEarned, expectedEarnings);
         }
         {
-            let royaltyEarned = await davinci.availableToOwnerOfDistributionAccount.call(account, issuer);
+            let royaltyEarned = await davinci.balanceOfJAOwner.call(account, issuer);
             log("...............................for ’Issuer’:", +royaltyEarned / UNIT, "CERE");
             assert.equal(royaltyEarned, expectedEarnings * 9 / 10);
         }
         {
-            let royaltyEarned = await davinci.availableToOwnerOfDistributionAccount.call(account, partner);
+            let royaltyEarned = await davinci.balanceOfJAOwner.call(account, partner);
             log("..............................for ’Partner’:", +royaltyEarned / UNIT, "CERE");
             assert.equal(royaltyEarned, expectedEarnings * 1 / 10);
         }
         log();
 
-        await davinci.distributeAccount(account);
-        log("Withdraw the funds from the Distribution Account to ’Issuer’ and to ’Partner’");
+        await davinci.distributeJointAccount(account);
+        log("Withdraw the funds from the Joint Account to ’Issuer’ and to ’Partner’");
         log();
     });
 });
