@@ -63,7 +63,7 @@ contract TransferFees is JointAccounts {
      * The cuts are given in basis points (1% of 1%). The minimums are given in currency amounts.
      *
      * There can be one beneficiary account for each primary and secondary royalties. To distribute revenues amongst
-     * several parties, use a Joint Account (see function createDistributionAccount).
+     * several parties, use a Joint Account (see function createJointAccount).
      */
     function setRoyalties(
         uint256 nftId,

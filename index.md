@@ -69,63 +69,9 @@ Main contract, including all components.
 - Hold and transfer NFTs using ERC1155.
 - Support atomic exchanges of NFTs for currency.
 - Issuance of NFTs with fixed supply.
-- Accounts that distribute their funds over multiple owners.
+- Joint Accounts that distribute their funds over multiple owners.
 - Capture royalties on primary and secondary transfers, configurable per NFT type.
 
-
-
-
-
-
-
-## Contract `DistributionAccounts`
-
-Handle accounts of multiple owners.
-Each owner of an account has a claim to a share of its funds.
-
-Distribution Accounts support the contract currency only. They cannot be used for NFTs.
-
-An owner may be another Distribution Account, or a smart contract.
-It is possible to withdraw funds through nested DAs,
-because anyone can trigger a withdrawal from a DA to its owners,
-including if that owner is itself a DA.
-
-
-
-
-#### `createDistributionAccount(address[] owners, uint256[] shares) → address` (public)
-
-Create an account such that multiple owners have a claim on their respective share.
-
-The share numbers are given in basis points (1% of 1%). The sum of shares must equal 10,000.
-An owner address can not be repeated.
-
-Anyone can create distribution accounts including any owners.
-
-
-
-#### `getAddressOfDistributionAccount(address[] owners, uint256[] shares) → address` (public)
-
-Generate a unique address identifying a list of owners and shares.
-
-It may be used to predict the address of a distribution account and receive payments
-even before calling the function createDistributionAccount.
-
-
-
-#### `availableToOwnerOfDistributionAccount(address account, address owner) → uint256` (public)
-
-Calculate the amount of tokens that an owner of a distribution account can withdraw right now.
-
-
-
-#### `withdrawFromDistributionAccount(address account, address owner) → uint256` (public)
-
-Withdraw all tokens available to an owner of a distribution account.
-
-The function createDistributionAccount must be called beforehand.
-
-Anyone can trigger the withdrawal.
 
 
 
@@ -372,6 +318,75 @@ This does not imply that the NFTs exist.
 
 
 
+## Contract `JointAccounts`
+
+A Joint Account (JA) is an account such that multiple owners have a claim on their respective share of the funds.
+
+Joint Accounts support the contract currency only. They cannot be used for NFTs.
+
+An owner may be another Joint Account, or a smart contract.
+It is possible to withdraw funds through nested JAs,
+because anyone can trigger a withdrawal from a JA to its owners,
+including if that owner is itself a JA.
+
+[An implementation that distributes to all owners at once.]
+
+
+
+
+#### `createJointAccount(address[] owners, uint256[] fractions) → address` (public)
+
+Create an account such that multiple owners have a claim on their respective share.
+
+The size of a share is given as a fraction in basis points (1% of 1%). The sum of share fractions must equal 10,000.
+
+Anyone can create Joint Accounts including any owners.
+
+
+
+#### `distributeJointAccount(address account)` (public)
+
+Distribute all tokens available to all owners of a Joint Account.
+
+The function createJointAccount must be called beforehand.
+
+Anyone can trigger the distribution.
+
+
+
+#### `makeAddressOfJointAccount(address[] owners, uint256[] fractions) → address` (public)
+
+Generate a unique address identifying a list of owners and shares.
+
+It may be used to predict the address of a Joint Account and receive payments
+even before calling the function createJointAccount.
+
+
+
+#### `fractionOfJAOwner(address account, address maybeOwner) → uint256` (public)
+
+Return the fraction of an account owned by the given address, in basis points (1% of 1%).
+
+If the account does not exist, or if the given address is not an owner of it, this returns 0.
+If the owner appears more than once in the account, this reports only the first share.
+
+
+
+#### `balanceOfJAOwner(address account, address owner) → uint256` (public)
+
+Calculate the amount of tokens that an owner of a Joint Account can withdraw right now.
+
+
+
+
+#### `JointAccountShareCreated(address account, address owner, uint256 fraction)`
+
+
+
+
+
+
+
 ## Contract `Subscription`
 
 - Subscribe to recurring services (and prepaid, refund).
@@ -390,7 +405,7 @@ This does not imply that the NFTs exist.
 
 - Hold configuration of NFTs: services, royalties.
 - Capture royalties on primary and secondary transfers.
-- Report configured royalties to service providers.
+- Report configured royalties to service providers (supports Joint Accounts).
 
 
 
@@ -417,7 +432,7 @@ For simple transfers not attached to a price, or a too low price, the minimum ro
 The cuts are given in basis points (1% of 1%). The minimums are given in currency amounts.
 
 There can be one beneficiary account for each primary and secondary royalties. To distribute revenues amongst
-several parties, use a distribution account (see function createDistributionAccount).
+several parties, use a Joint Account (see function createJointAccount).
 
 
 
