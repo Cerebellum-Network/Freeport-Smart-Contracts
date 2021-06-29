@@ -1,13 +1,13 @@
 pragma solidity ^0.8.0;
 
-import "./DistributionAccounts.sol";
+import "./DistributionAccounts2.sol";
 
 /**
 - Hold configuration of NFTs: services, royalties.
 - Capture royalties on primary and secondary transfers.
 - Report configured royalties to service providers.
  */
-contract TransferFees is DistributionAccounts {
+contract TransferFees is DistributionAccounts2 {
 
     // Royalties configurable per NFT by issuers.
     mapping(uint256 => address) public primaryRoyaltyAccounts;
@@ -31,7 +31,7 @@ contract TransferFees is DistributionAccounts {
         primaryMinimum = primaryRoyaltyMinimums[nftId];
         address primaryAccount = primaryRoyaltyAccounts[nftId];
         if (primaryAccount != beneficiary) {
-            uint256 share = accountOwnerShares[primaryAccount][beneficiary];
+            uint256 share = getShareOfOwner(primaryAccount, beneficiary);
             primaryCut = primaryCut * share / BASIS_POINTS;
             primaryMinimum = primaryMinimum * share / BASIS_POINTS;
         }
@@ -41,7 +41,7 @@ contract TransferFees is DistributionAccounts {
         secondaryMinimum = secondaryRoyaltyMinimums[nftId];
         address secondaryAccount = secondaryRoyaltyAccounts[nftId];
         if (secondaryAccount != beneficiary) {
-            uint256 share = accountOwnerShares[secondaryAccount][beneficiary];
+            uint256 share = getShareOfOwner(secondaryAccount, beneficiary);
             secondaryCut = secondaryCut * share / BASIS_POINTS;
             secondaryMinimum = secondaryMinimum * share / BASIS_POINTS;
         }

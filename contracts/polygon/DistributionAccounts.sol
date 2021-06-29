@@ -12,6 +12,8 @@ An owner may be another Distribution Account, or a smart contract.
 It is possible to withdraw funds through nested DAs,
 because anyone can trigger a withdrawal from a DA to its owners,
 including if that owner is itself a DA.
+
+[An implementation that distributes to owners one by one.]
 */
 contract DistributionAccounts is Issuance {
     /** The reference number of shares representing 100% of an account.
@@ -64,6 +66,11 @@ contract DistributionAccounts is Issuance {
     public pure returns (address) {
         bytes32 hash = keccak256(abi.encodePacked(owners, shares));
         return address(bytes20(hash));
+    }
+
+    function getShareOfOwner(address account, address owner)
+    public view returns (uint) {
+        return accountOwnerShares[account][owner];
     }
 
     /** Calculate the amount of tokens that an owner of a distribution account can withdraw right now.

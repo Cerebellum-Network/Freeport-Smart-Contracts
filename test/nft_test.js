@@ -90,8 +90,7 @@ contract("Davinci", accounts => {
         }
         log();
 
-        await davinci.withdrawFromDistributionAccount(account, owners[0]);
-        await davinci.withdrawFromDistributionAccount(account, owners[1]);
+        await davinci.distributeAccount(account);
         log("Withdraw the funds from the Distribution Account to ’Issuer’ and to ’Partner’");
         log();
     });
