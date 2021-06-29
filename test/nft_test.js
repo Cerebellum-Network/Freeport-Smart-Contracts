@@ -42,7 +42,7 @@ contract("Davinci", accounts => {
         log(".........................’Partner’ gets:", fractions[1] * 100 / BASIS_POINTS, "%");
         log();
 
-        await davinci.setRoyalties(
+        await davinci.configureRoyalties(
             nftId,
             account,
             /* primaryCut */ 0,
@@ -53,15 +53,15 @@ contract("Davinci", accounts => {
             {from: issuer});
         log("’Issuer’ configures royalties for this NFT type");
         {
-            let {primaryMinimum, secondaryMinimum} = await davinci.hasRoyalties.call(nftId, account);
+            let {primaryMinimum, secondaryMinimum} = await davinci.getRoyaltiesForBeneficiary.call(nftId, account);
             log("Royalties per transfer (primary/secondary):", +primaryMinimum / UNIT, +secondaryMinimum / UNIT, "CERE");
         }
         {
-            let {primaryMinimum, secondaryMinimum} = await davinci.hasRoyalties.call(nftId, issuer);
+            let {primaryMinimum, secondaryMinimum} = await davinci.getRoyaltiesForBeneficiary.call(nftId, issuer);
             log("..............................for ’Issuer’:", +primaryMinimum / UNIT, +secondaryMinimum / UNIT, "CERE");
         }
         {
-            let {primaryMinimum, secondaryMinimum} = await davinci.hasRoyalties.call(nftId, partner);
+            let {primaryMinimum, secondaryMinimum} = await davinci.getRoyaltiesForBeneficiary.call(nftId, partner);
             log(".............................for ’Partner’:", +primaryMinimum / UNIT, +secondaryMinimum / UNIT, "CERE");
         }
         log();

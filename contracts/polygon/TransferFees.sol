@@ -10,16 +10,35 @@ import "./JointAccounts.sol";
 contract TransferFees is JointAccounts {
 
     // Royalties configurable per NFT by issuers.
-    mapping(uint256 => address) public primaryRoyaltyAccounts;
-    mapping(uint256 => uint256) public primaryRoyaltyCuts;
-    mapping(uint256 => uint256) public primaryRoyaltyMinimums;
-    mapping(uint256 => address) public secondaryRoyaltyAccounts;
-    mapping(uint256 => uint256) public secondaryRoyaltyCuts;
-    mapping(uint256 => uint256) public secondaryRoyaltyMinimums;
+    mapping(uint256 => address) primaryRoyaltyAccounts;
+    mapping(uint256 => uint256) primaryRoyaltyCuts;
+    mapping(uint256 => uint256) primaryRoyaltyMinimums;
+    mapping(uint256 => address) secondaryRoyaltyAccounts;
+    mapping(uint256 => uint256) secondaryRoyaltyCuts;
+    mapping(uint256 => uint256) secondaryRoyaltyMinimums;
 
-    /** Return the amount of royalties earned by an address on each primary and secondary transfer of an NFT.
+
+    /** Return the current configuration of royalties for NFTs of type nftId, as set by configureRoyalties.
      */
-    function hasRoyalties(uint256 nftId, address beneficiary)
+    function getRoyalties(uint256 nftId)
+    public view returns (
+        address primaryRoyaltyAccount,
+        uint256 primaryRoyaltyCut,
+        uint256 primaryRoyaltyMinimum,
+        address secondaryRoyaltyAccount,
+        uint256 secondaryRoyaltyCut,
+        uint256 secondaryRoyaltyMinimum
+    ) {
+        return (primaryRoyaltyAccounts[nftId], primaryRoyaltyCuts[nftId], primaryRoyaltyMinimums[nftId],
+        secondaryRoyaltyAccounts[nftId], secondaryRoyaltyCuts[nftId], secondaryRoyaltyMinimums[nftId]);
+    }
+
+    /** Return the amount of royalties earned by a beneficiary on each primary and secondary transfer of an NFT.
+     *
+     * This function supports Joint Accounts. If royalties are paid to a JA and beneficiary is an owner of the JA,
+     * the shares of the royalties for this owner are returned.
+     */
+    function getRoyaltiesForBeneficiary(uint256 nftId, address beneficiary)
     public view returns (uint256 primaryCut, uint256 primaryMinimum, uint256 secondaryCut, uint256 secondaryMinimum) {
 
         // If the royalty account is the given beneficiary, return the configured fees.
@@ -65,7 +84,7 @@ contract TransferFees is JointAccounts {
      * There can be one beneficiary account for each primary and secondary royalties. To distribute revenues amongst
      * several parties, use a Joint Account (see function createJointAccount).
      */
-    function setRoyalties(
+    function configureRoyalties(
         uint256 nftId,
         address primaryRoyaltyAccount,
         uint256 primaryRoyaltyCut,

@@ -410,13 +410,22 @@ Calculate the amount of tokens that an owner of a Joint Account can withdraw rig
 
 
 
-#### `hasRoyalties(uint256 nftId, address beneficiary) → uint256 primaryCut, uint256 primaryMinimum, uint256 secondaryCut, uint256 secondaryMinimum` (public)
+#### `getRoyalties(uint256 nftId) → address primaryRoyaltyAccount, uint256 primaryRoyaltyCut, uint256 primaryRoyaltyMinimum, address secondaryRoyaltyAccount, uint256 secondaryRoyaltyCut, uint256 secondaryRoyaltyMinimum` (public)
 
-Return the amount of royalties earned by an address on each primary and secondary transfer of an NFT.
+Return the current configuration of royalties for NFTs of type nftId, as set by configureRoyalties.
 
 
 
-#### `setRoyalties(uint256 nftId, address primaryRoyaltyAccount, uint256 primaryRoyaltyCut, uint256 primaryRoyaltyMinimum, address secondaryRoyaltyAccount, uint256 secondaryRoyaltyCut, uint256 secondaryRoyaltyMinimum)` (public)
+#### `getRoyaltiesForBeneficiary(uint256 nftId, address beneficiary) → uint256 primaryCut, uint256 primaryMinimum, uint256 secondaryCut, uint256 secondaryMinimum` (public)
+
+Return the amount of royalties earned by a beneficiary on each primary and secondary transfer of an NFT.
+
+This function supports Joint Accounts. If royalties are paid to a JA and beneficiary is an owner of the JA,
+the shares of the royalties for this owner are returned.
+
+
+
+#### `configureRoyalties(uint256 nftId, address primaryRoyaltyAccount, uint256 primaryRoyaltyCut, uint256 primaryRoyaltyMinimum, address secondaryRoyaltyAccount, uint256 secondaryRoyaltyCut, uint256 secondaryRoyaltyMinimum)` (public)
 
 Configure the amounts and beneficiaries of royalties on primary and secondary transfers of this NFT.
 
