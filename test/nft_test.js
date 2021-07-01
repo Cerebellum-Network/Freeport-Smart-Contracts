@@ -27,7 +27,7 @@ contract("Davinci", accounts => {
 
         let nftSupply = 10;
         let nftId = await davinci.getNftId.call(issuer, 0, nftSupply);
-        await davinci.issue(0, 10, "0x", {from: issuer});
+        await davinci.issue(10, "0x", {from: issuer});
         let nftBalance = await davinci.balanceOf.call(issuer, nftId);
         assert.equal(nftBalance, nftSupply, "NFTs should be minted to the issuer");
         log("’Issuer’ creates", nftSupply, "NFTs of type", nftId.toString(16));
