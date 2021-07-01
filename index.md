@@ -468,3 +468,9 @@ See the function setRoyalties.
 
 
 
+#### `RoyaltiesConfigured(uint256 nftId, address primaryRoyaltyAccount, uint256 primaryRoyaltyCut, uint256 primaryRoyaltyMinimum, address secondaryRoyaltyAccount, uint256 secondaryRoyaltyCut, uint256 secondaryRoyaltyMinimum)`
+
+
+
+
+

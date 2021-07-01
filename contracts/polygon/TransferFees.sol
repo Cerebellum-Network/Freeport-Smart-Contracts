@@ -17,6 +17,14 @@ contract TransferFees is JointAccounts {
     mapping(uint256 => uint256) secondaryRoyaltyCuts;
     mapping(uint256 => uint256) secondaryRoyaltyMinimums;
 
+    event RoyaltiesConfigured(
+        uint256 indexed nftId,
+        address primaryRoyaltyAccount,
+        uint256 primaryRoyaltyCut,
+        uint256 primaryRoyaltyMinimum,
+        address secondaryRoyaltyAccount,
+        uint256 secondaryRoyaltyCut,
+        uint256 secondaryRoyaltyMinimum);
 
     /** Return the current configuration of royalties for NFTs of type nftId, as set by configureRoyalties.
      */
@@ -96,19 +104,26 @@ contract TransferFees is JointAccounts {
         address issuer = _msgSender();
         require(_isIssuerAndOnlyOwner(issuer, nftId));
 
-        if (primaryRoyaltyCut != 0 || primaryRoyaltyMinimum != 0) {
-            require(primaryRoyaltyAccount != address(0));
-            primaryRoyaltyAccounts[nftId] = primaryRoyaltyAccount;
-            primaryRoyaltyCuts[nftId] = primaryRoyaltyCut;
-            primaryRoyaltyMinimums[nftId] = primaryRoyaltyMinimum;
-        }
+        require(primaryRoyaltyAccount != address(0) || (primaryRoyaltyCut == 0 && primaryRoyaltyMinimum == 0),
+            "The account must not be 0, unless fees are 0");
+        primaryRoyaltyAccounts[nftId] = primaryRoyaltyAccount;
+        primaryRoyaltyCuts[nftId] = primaryRoyaltyCut;
+        primaryRoyaltyMinimums[nftId] = primaryRoyaltyMinimum;
 
-        if (secondaryRoyaltyCut != 0 || secondaryRoyaltyMinimum != 0) {
-            require(secondaryRoyaltyAccount != address(0));
-            secondaryRoyaltyAccounts[nftId] = secondaryRoyaltyAccount;
-            secondaryRoyaltyCuts[nftId] = secondaryRoyaltyCut;
-            secondaryRoyaltyMinimums[nftId] = secondaryRoyaltyMinimum;
-        }
+        require(secondaryRoyaltyAccount != address(0) || (secondaryRoyaltyCut == 0 && secondaryRoyaltyMinimum == 0),
+            "The account must not be 0, unless fees are 0");
+        secondaryRoyaltyAccounts[nftId] = secondaryRoyaltyAccount;
+        secondaryRoyaltyCuts[nftId] = secondaryRoyaltyCut;
+        secondaryRoyaltyMinimums[nftId] = secondaryRoyaltyMinimum;
+
+        emit RoyaltiesConfigured(
+            nftId,
+            primaryRoyaltyAccount,
+            primaryRoyaltyCut,
+            primaryRoyaltyMinimum,
+            secondaryRoyaltyAccount,
+            secondaryRoyaltyCut,
+            secondaryRoyaltyMinimum);
     }
 
     /** Internal hook to trigger the collection of royalties due on a batch of transfers.
