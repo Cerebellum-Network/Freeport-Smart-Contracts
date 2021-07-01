@@ -23,6 +23,7 @@ module.exports = {
       host: "127.0.0.1",     // Localhost (default: none)
       port: 8545,            // Standard Ethereum port (default: none)
       network_id: "*",       // Any network (default: none)
+      gasPrice: 1e9,
     },
     //polygon Infura mainnet
     polygon_infura_mainnet: {
@@ -37,7 +38,8 @@ module.exports = {
       confirmations: 2,
       timeoutBlocks: 200,
       skipDryRun: true,
-      chainId: 137
+      chainId: 137,
+      gasPrice: 1e9,
     },
     //polygon Infura testnet
     polygon_infura_testnet: {
@@ -52,7 +54,8 @@ module.exports = {
       confirmations: 2,
       timeoutBlocks: 200,
       skipDryRun: true,
-      chainId: 80001
+      chainId: 80001,
+      gasPrice: 1e9,
     },
     //polygon testnet
     polygon_testnet: {
@@ -60,14 +63,16 @@ module.exports = {
         mnemonic: {
           phrase: mnemonic
         },
-        providerOrUrl:  `https://rpc-mumbai.matic.today`,
+        providerOrUrl:  `https://rpc-mumbai.maticvigil.com`,
+        //providerOrUrl:  `https://rpc-mumbai.matic.today`,
         chainId: 80001
       }),
       network_id: 80001,
       confirmations: 2,
       timeoutBlocks: 200,
       skipDryRun: true,
-      chainId: 80001
+      chainId: 80001,
+      gasPrice: 1e9,
     },
     //polygon mainnet
     polygon_mainnet: {
@@ -82,7 +87,8 @@ module.exports = {
       confirmations: 2,
       timeoutBlocks: 200,
       skipDryRun: true,
-      chainId: 137
+      chainId: 137,
+      gasPrice: 1e9,
     }
   },
 
