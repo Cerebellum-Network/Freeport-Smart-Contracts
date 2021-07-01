@@ -6,7 +6,7 @@ A set of contracts to hold NFTs, capture royalties, and subscribe to services.
 
 See `contracts/polygon/*.sol`
 
-See the [documentation](index.md) (regenerate with `npm run doc`).
+See the [documentation](docs/polygon/) (regenerate with `npm run doc`).
 
 See the [build instructions](BUILD.md).
 

@@ -28,6 +28,10 @@ contract JointAccounts is Issuance {
 
     mapping(address => JointAccountShare[]) public jointAccounts;
 
+    /** Notify that a Joint Account was created at the address `account`.
+     *
+     * One such event is emitted for each owner, including his fraction of the account in basis points (1% of 1%).
+     */
     event JointAccountShareCreated(
         address indexed account,
         address indexed owner,

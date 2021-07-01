@@ -17,6 +17,8 @@ contract TransferFees is JointAccounts {
     mapping(uint256 => uint256) secondaryRoyaltyCuts;
     mapping(uint256 => uint256) secondaryRoyaltyMinimums;
 
+    /** Notify that royalties were configured on an NFT type.
+     */
     event RoyaltiesConfigured(
         uint256 indexed nftId,
         address primaryRoyaltyAccount,
