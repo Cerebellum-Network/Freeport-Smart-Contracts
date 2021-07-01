@@ -15,9 +15,8 @@ The following attributes of a type of NFT are immutable. They are used to derive
 
 */
 contract Issuance is BaseNFT {
-    /** NFT ID => Whether this NFT type was issued yet.
-     *
-     * This is used to prevent issuing more NFTs after their initial issuance.
+    /** A counter of NFT types issued by each issuer.
+     * This is used to generate unique NFT IDs.
      */
     mapping(address => uint32) public issuanceNonces;
 
