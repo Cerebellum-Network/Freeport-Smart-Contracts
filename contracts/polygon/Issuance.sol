@@ -15,33 +15,30 @@ The following attributes of a type of NFT are immutable. They are used to derive
 
 */
 contract Issuance is BaseNFT {
-    /** NFT ID => Whether this NFT type was issued yet.
-     *
-     * This is used to prevent issuing more NFTs after their initial issuance.
+    /** A counter of NFT types issued by each issuer.
+     * This is used to generate unique NFT IDs.
      */
-    mapping(uint256 => bool) public nftExists;
+    mapping(address => uint32) public issuanceNonces;
 
-    /** Issue a supply of NFTs of a new type.
+    /** Issue a supply of NFTs of a new type, and return its ID.
      *
      * No more NFT of this type can be issued again.
      *
      * The caller will be recorded as the issuer and it will initially own the entire supply.
-     *
-     * A same account must provide a distinct nonce value for each NFT type that it issues.
      */
-    function issue(uint32 nonce, uint64 supply, bytes memory data)
+    function issue(uint64 supply, bytes memory data)
     public returns (uint256) {
-        return _issueAs(_msgSender(), nonce, supply, data);
+        return _issueAs(_msgSender(), supply, data);
     }
 
     /** Internal implementation of the function issue.
      */
-    function _issueAs(address issuer, uint32 nonce, uint64 supply, bytes memory data)
+    function _issueAs(address issuer, uint64 supply, bytes memory data)
     internal returns (uint256) {
-        uint256 nftId = getNftId(issuer, nonce, supply);
+        uint32 nonce = issuanceNonces[issuer];
+        issuanceNonces[issuer] = nonce + 1;
 
-        require(nftExists[nftId] == false);
-        nftExists[nftId] = true;
+        uint256 nftId = getNftId(issuer, nonce, supply);
 
         require(supply > 0);
         _mint(issuer, nftId, supply, data);

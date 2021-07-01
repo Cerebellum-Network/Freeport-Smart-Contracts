@@ -268,19 +268,17 @@ The following attributes of a type of NFT are immutable. They are used to derive
 
 
 
-#### `issue(uint32 nonce, uint64 supply, bytes data) → uint256` (public)
+#### `issue(uint64 supply, bytes data) → uint256` (public)
 
-Issue a supply of NFTs of a new type.
+Issue a supply of NFTs of a new type, and return its ID.
 
 No more NFT of this type can be issued again.
 
 The caller will be recorded as the issuer and it will initially own the entire supply.
 
-A same account must provide a distinct nonce value for each NFT type that it issues.
 
 
-
-#### `_issueAs(address issuer, uint32 nonce, uint64 supply, bytes data) → uint256` (internal)
+#### `_issueAs(address issuer, uint64 supply, bytes data) → uint256` (internal)
 
 Internal implementation of the function issue.
 
