@@ -22,11 +22,10 @@ the shares of the royalties for this owner are returned.
 
 
 
-#### `configureRoyalties(uint256 nftId, address primaryRoyaltyAccount, uint256 primaryRoyaltyCut, uint256 primaryRoyaltyMinimum, address secondaryRoyaltyAccount, uint256 secondaryRoyaltyCut, uint256 secondaryRoyaltyMinimum)` (public)
+#### `configureRoyalties(uint256 nftId, address primaryRoyaltyAccount, uint256 primaryRoyaltyCut, uint256 primaryRoyaltyMinimum, address secondaryRoyaltyAccount, uint256 secondaryRoyaltyCut, uint256 secondaryRoyaltyMinimum, uint256 lockUntil)` (public)
 
 Configure the amounts and beneficiaries of royalties on primary and secondary transfers of this NFT.
-
-This setting is available to the issuer while he holds all NFTs of this type (normally right after issuance).
+This configuration is available to the issuer of this NFT.
 
 A transfer is primary if it comes from the issuer of this NFT (normally the first sale after issuance).
 Otherwise, it is a secondary transfer.
@@ -36,6 +35,11 @@ a cut of the sale price of an NFT, and a minimum royalty per transfer.
 For simple transfers not attached to a price, or a too low price, the minimum royalty is charged.
 
 The cuts are given in basis points (1% of 1%). The minimums are given in currency amounts.
+
+The configuration can be changed at any time by default. However, the issuer may commit to it for a period of time,
+effectively giving up his ability to modify the royalties. Set lockUntil to a time in the future to lock the
+configuration of this NFT type until the specified time (in UNIX seconds). Set to 0xFFFFFFFF to lock forever.
+Set to 0 to keep the configuration modifiable.
 
 There can be one beneficiary account for each primary and secondary royalties. To distribute revenues amongst
 several parties, use a Joint Account (see function createJointAccount).
@@ -65,7 +69,7 @@ See the function setRoyalties.
 
 
 
-#### `RoyaltiesConfigured(uint256 nftId, address primaryRoyaltyAccount, uint256 primaryRoyaltyCut, uint256 primaryRoyaltyMinimum, address secondaryRoyaltyAccount, uint256 secondaryRoyaltyCut, uint256 secondaryRoyaltyMinimum)` (event)
+#### `RoyaltiesConfigured(uint256 nftId, address primaryRoyaltyAccount, uint256 primaryRoyaltyCut, uint256 primaryRoyaltyMinimum, address secondaryRoyaltyAccount, uint256 secondaryRoyaltyCut, uint256 secondaryRoyaltyMinimum, uint256 lockUntil)` (event)
 
 Notify that royalties were configured on an NFT type.
 

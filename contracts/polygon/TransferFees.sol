@@ -16,6 +16,7 @@ contract TransferFees is JointAccounts {
     mapping(uint256 => address) secondaryRoyaltyAccounts;
     mapping(uint256 => uint256) secondaryRoyaltyCuts;
     mapping(uint256 => uint256) secondaryRoyaltyMinimums;
+    mapping(uint256 => uint256) royaltiesConfigLockedUntil;
 
     /** Notify that royalties were configured on an NFT type.
      */
@@ -26,7 +27,8 @@ contract TransferFees is JointAccounts {
         uint256 primaryRoyaltyMinimum,
         address secondaryRoyaltyAccount,
         uint256 secondaryRoyaltyCut,
-        uint256 secondaryRoyaltyMinimum);
+        uint256 secondaryRoyaltyMinimum,
+        uint256 lockUntil);
 
     /** Return the current configuration of royalties for NFTs of type nftId, as set by configureRoyalties.
      */
@@ -79,8 +81,7 @@ contract TransferFees is JointAccounts {
     }
 
     /** Configure the amounts and beneficiaries of royalties on primary and secondary transfers of this NFT.
-     *
-     * This setting is available to the issuer while he holds all NFTs of this type (normally right after issuance).
+     * This configuration is available to the issuer of this NFT.
      *
      * A transfer is primary if it comes from the issuer of this NFT (normally the first sale after issuance).
      * Otherwise, it is a secondary transfer.
@@ -90,6 +91,11 @@ contract TransferFees is JointAccounts {
      * For simple transfers not attached to a price, or a too low price, the minimum royalty is charged.
      *
      * The cuts are given in basis points (1% of 1%). The minimums are given in currency amounts.
+     *
+     * The configuration can be changed at any time by default. However, the issuer may commit to it for a period of time,
+     * effectively giving up his ability to modify the royalties. Set lockUntil to a time in the future to lock the
+     * configuration of this NFT type until the specified time (in UNIX seconds). Set to 0xFFFFFFFF to lock forever.
+     * Set to 0 to keep the configuration modifiable.
      *
      * There can be one beneficiary account for each primary and secondary royalties. To distribute revenues amongst
      * several parties, use a Joint Account (see function createJointAccount).
@@ -101,10 +107,14 @@ contract TransferFees is JointAccounts {
         uint256 primaryRoyaltyMinimum,
         address secondaryRoyaltyAccount,
         uint256 secondaryRoyaltyCut,
-        uint256 secondaryRoyaltyMinimum)
+        uint256 secondaryRoyaltyMinimum,
+        uint256 lockUntil)
     public {
         address issuer = _msgSender();
-        require(_isIssuerAndOnlyOwner(issuer, nftId));
+        require(_isIssuer(issuer, nftId));
+
+        require(block.timestamp >= royaltiesConfigLockedUntil[nftId], "Royalties configuration is locked for now");
+        royaltiesConfigLockedUntil[nftId] = lockUntil;
 
         require(primaryRoyaltyAccount != address(0) || (primaryRoyaltyCut == 0 && primaryRoyaltyMinimum == 0),
             "The account must not be 0, unless fees are 0");
@@ -125,7 +135,8 @@ contract TransferFees is JointAccounts {
             primaryRoyaltyMinimum,
             secondaryRoyaltyAccount,
             secondaryRoyaltyCut,
-            secondaryRoyaltyMinimum);
+            secondaryRoyaltyMinimum,
+            lockUntil);
     }
 
     /** Internal hook to trigger the collection of royalties due on a batch of transfers.
