@@ -27,7 +27,13 @@ contract TransferFees is JointAccounts {
         uint256 primaryRoyaltyMinimum,
         address secondaryRoyaltyAccount,
         uint256 secondaryRoyaltyCut,
-        uint256 secondaryRoyaltyMinimum,
+        uint256 secondaryRoyaltyMinimum);
+
+    /** Notify that royalties are locked and cannot change, until the given time (in UNIX seconds),
+     * or forever (lockUntil = 0xFFFFFFFF).
+     */
+    event RoyaltiesLocked(
+        uint256 indexed nftId,
         uint256 lockUntil);
 
     /** Return the current configuration of royalties for NFTs of type nftId, as set by configureRoyalties.
@@ -93,9 +99,7 @@ contract TransferFees is JointAccounts {
      * The cuts are given in basis points (1% of 1%). The minimums are given in currency amounts.
      *
      * The configuration can be changed at any time by default. However, the issuer may commit to it for a period of time,
-     * effectively giving up his ability to modify the royalties. Set lockUntil to a time in the future to lock the
-     * configuration of this NFT type until the specified time (in UNIX seconds). Set to 0xFFFFFFFF to lock forever.
-     * Set to 0 to keep the configuration modifiable.
+     * effectively giving up his ability to modify the royalties. See the function lockRoyalties.
      *
      * There can be one beneficiary account for each primary and secondary royalties. To distribute revenues amongst
      * several parties, use a Joint Account (see function createJointAccount).
@@ -107,14 +111,11 @@ contract TransferFees is JointAccounts {
         uint256 primaryRoyaltyMinimum,
         address secondaryRoyaltyAccount,
         uint256 secondaryRoyaltyCut,
-        uint256 secondaryRoyaltyMinimum,
-        uint256 lockUntil)
+        uint256 secondaryRoyaltyMinimum)
     public {
         address issuer = _msgSender();
-        require(_isIssuer(issuer, nftId));
-
+        require(_isIssuer(issuer, nftId), "Only the issuer of this NFT can set royalties");
         require(block.timestamp >= royaltiesConfigLockedUntil[nftId], "Royalties configuration is locked for now");
-        royaltiesConfigLockedUntil[nftId] = lockUntil;
 
         require(primaryRoyaltyAccount != address(0) || (primaryRoyaltyCut == 0 && primaryRoyaltyMinimum == 0),
             "The account must not be 0, unless fees are 0");
@@ -135,8 +136,26 @@ contract TransferFees is JointAccounts {
             primaryRoyaltyMinimum,
             secondaryRoyaltyAccount,
             secondaryRoyaltyCut,
-            secondaryRoyaltyMinimum,
-            lockUntil);
+            secondaryRoyaltyMinimum);
+    }
+
+    /** Lock the configuration of royalties for this NFT type. Only the issuer may lock the configuration,
+     * after which he himself will no longer be able to change the configuration, for some time, or forever.
+     *
+     * Set lockUntil to a time in the future to lock the configuration until the specified time (in UNIX seconds).
+     * Set to 0xFFFFFFFF to lock forever.
+     */
+    function lockRoyalties(
+        uint256 nftId,
+        uint256 lockUntil)
+    public {
+        address issuer = _msgSender();
+        require(_isIssuer(issuer, nftId));
+
+        require(lockUntil > royaltiesConfigLockedUntil[nftId], "Royalties configuration cannot be unlocked earlier");
+        royaltiesConfigLockedUntil[nftId] = lockUntil;
+
+        emit RoyaltiesLocked(nftId, lockUntil);
     }
 
     /** Internal hook to trigger the collection of royalties due on a batch of transfers.

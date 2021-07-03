@@ -50,7 +50,6 @@ contract("Davinci", accounts => {
             account,
             /* secondaryCut */ 0,
             /* secondaryMinimum */ 50 * UNIT,
-            0, // Do not lock.
             {from: issuer});
         log("’Issuer’ configures royalties for this NFT type");
         {
