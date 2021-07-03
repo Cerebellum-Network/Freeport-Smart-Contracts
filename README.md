@@ -12,7 +12,7 @@ See the [build instructions](BUILD.md).
 
 |  Deployments | Version | Contract |
 | ------------ | ------- | -------- |
-| Polygon Mumbai Testnet | 2021-07-01, 2355f975 | [0xBb391c59403818A56A4ddb51FeE561c42571aFf4](https://explorer-mumbai.maticvigil.com/address/0xBb391c59403818A56A4ddb51FeE561c42571aFf4/transactions) |
+| Polygon Mumbai Testnet | 2021-07-05, 021f0116 | [0x509Dfd7c670AC89246723EFe0f80f433BfbB6E5c](https://explorer-mumbai.maticvigil.com/address/0x509Dfd7c670AC89246723EFe0f80f433BfbB6E5c/transactions) |
 
 ## How to deploy
 
