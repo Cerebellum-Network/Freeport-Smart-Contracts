@@ -8,6 +8,38 @@ contract("Davinci", accounts => {
     const buyer = accounts[3];
     const buyer2 = accounts[4];
 
+
+    it("issues unique NFT IDs.", async () => {
+        const davinci = await Davinci.deployed();
+
+        const expectedIds = [
+            [5, "0xce049b80a345227266081fd26685f46b9d234590000000000000000000000005"],
+            [5, "0xce049b80a345227266081fd26685f46b9d234590000000010000000000000005"],
+            [9, "0xce049b80a345227266081fd26685f46b9d234590000000020000000000000009"],
+        ];
+
+        for (let i of expectedIds.keys()) {
+            let [supply, expectedId] = expectedIds[i];
+
+            // Predict NFT ID using the getter, or simulating the issuance.
+            let nftId = await davinci.getNftId.call(issuer, i, supply);
+            let nftId2 = await davinci.issue.call(supply, "0x", {from: issuer});
+            assert.equal("0x" + nftId.toString(16), expectedId);
+            assert.equal("0x" + nftId2.toString(16), expectedId);
+
+            // Balance should be 0.
+            let balance = await davinci.balanceOf(issuer, expectedId);
+            assert.equal(balance, 0);
+
+            // Issue.
+            await davinci.issue(supply, "0x", {from: issuer});
+
+            // Balance should be supply
+            balance = await davinci.balanceOf(issuer, expectedId);
+            assert.equal(balance, supply);
+        }
+    });
+
     it("issues an NFT.", async () => {
         log();
         const davinci = await Davinci.deployed();
@@ -26,8 +58,8 @@ contract("Davinci", accounts => {
         log();
 
         let nftSupply = 10;
-        let nftId = await davinci.getNftId.call(issuer, 0, nftSupply);
-        await davinci.issue(10, "0x", {from: issuer});
+        let nftId = await davinci.issue.call(nftSupply, "0x", {from: issuer});
+        await davinci.issue(nftSupply, "0x", {from: issuer});
         let nftBalance = await davinci.balanceOf.call(issuer, nftId);
         assert.equal(nftBalance, nftSupply, "NFTs should be minted to the issuer");
         log("’Issuer’ creates", nftSupply, "NFTs of type", nftId.toString(16));

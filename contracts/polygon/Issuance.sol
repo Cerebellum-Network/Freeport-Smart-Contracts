@@ -75,8 +75,8 @@ contract Issuance is BaseNFT {
     public pure returns (uint256) {
         // issuer || nonce || supply: 160 + 32 + 64 = 256 bits
         uint256 id = (uint256(uint160(issuer)) << (32 + 64))
-        + (nonce << 64)
-        + supply;
+        | (uint256(nonce) << 64)
+        | uint256(supply);
         return id;
     }
 
