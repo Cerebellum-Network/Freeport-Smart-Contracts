@@ -2,20 +2,20 @@ const Davinci = artifacts.require("./Davinci.sol");
 const log = console.log;
 
 contract("Davinci", accounts => {
-    const bridge = accounts[0];
-    const issuer = accounts[1];
-    const partner = accounts[2];
-    const buyer = accounts[3];
-    const buyer2 = accounts[4];
+    const bridge = accounts[0].toLowerCase();
+    const issuer = accounts[1].toLowerCase();
+    const partner = accounts[2].toLowerCase();
+    const buyer = accounts[3].toLowerCase();
+    const buyer2 = accounts[4].toLowerCase();
 
 
     it("issues unique NFT IDs.", async () => {
         const davinci = await Davinci.deployed();
 
         const expectedIds = [
-            [5, "0xce049b80a345227266081fd26685f46b9d234590000000000000000000000005"],
-            [5, "0xce049b80a345227266081fd26685f46b9d234590000000010000000000000005"],
-            [9, "0xce049b80a345227266081fd26685f46b9d234590000000020000000000000009"],
+            [5, issuer + "000000000000000000000005"],
+            [5, issuer + "000000010000000000000005"],
+            [9, issuer + "000000020000000000000009"],
         ];
 
         for (let i of expectedIds.keys()) {
