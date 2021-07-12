@@ -10,11 +10,6 @@ import "./AtomicExchange.sol";
 - Joint Accounts that distribute their funds over multiple owners.
 - Capture royalties on primary and secondary transfers, configurable per NFT type.
 */
-contract Davinci is /* BaseNFT, Issuance, JointAccounts, TransferFees, */ AtomicExchange {
-    constructor() {
-        // 10 billion tokens with 10 decimals.
-        uint256 currencySupply = 10e9 * 1e10;
-        address bridge = _msgSender();
-        _mint(bridge, CURRENCY, currencySupply, "");
-    }
+contract Davinci is /* BaseNFT, ChildERC20, Issuance, JointAccounts, TransferFees, */ AtomicExchange {
+
 }

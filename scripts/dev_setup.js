@@ -14,8 +14,11 @@ module.exports = async function (done) {
     let D = await Davinci.deployed();
     log("Contract", D.address, "from account", accounts[0]);
 
+    let amount = 100e3 * 1e10 // 100k with 10 decimals;
+    let encodedAmount = web3.eth.abi.encodeParameter('uint256', amount);
+
     for (let devAccount of devAccounts) {
-        await D.safeTransferFrom(accounts[0], devAccount, 0, 1e5 * 1e10, "0x");
+        await davinci.deposit(devAccount, encodedAmount);
         log("Sent 100k of currency to", devAccount);
     }
 
