@@ -54,9 +54,6 @@ contract("Davinci", accounts => {
         let amount = 1000 * UNIT;
         let encodedAmount = web3.eth.abi.encodeParameter('uint256', amount);
 
-        const bridge = await davinci.BRIDGE.call();
-        assert.equal(bridge, constants.ZERO_ADDRESS);
-
         // Check initial supply in the bridge.
         let currencySupply = await davinci.currencyInBridge.call();
         assert.equal(currencySupply, 10e9 * UNIT); // 10 billions with 10 decimals.

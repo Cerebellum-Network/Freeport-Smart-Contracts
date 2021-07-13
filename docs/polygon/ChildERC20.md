@@ -19,6 +19,12 @@ using updateChildChainManager.
 
 
 
+#### `currencyInBridge() → uint256` (external)
+
+Return the total amount of currency available in the bridge, which can be deposited into this contract.
+
+
+
 #### `updateChildChainManager(address newChildChainManagerProxy)` (external)
 
 Change the ChainManager, which can deposit currency into any account.

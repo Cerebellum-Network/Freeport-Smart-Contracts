@@ -16,7 +16,7 @@ contract ChildERC20 is BaseNFT {
     event Transfer(address indexed from, address indexed to, uint256 value);
 
     /** The address of the bridge account in this contract. */
-    address public constant BRIDGE = address(0);
+    address constant BRIDGE = address(0);
 
     /** The address of the Polygon bridge contract that is allowed to deposit tokens. */
     address public childChainManagerProxy;
@@ -34,6 +34,8 @@ contract ChildERC20 is BaseNFT {
         childChainManagerProxy = _msgSender();
     }
 
+    /** Return the total amount of currency available in the bridge, which can be deposited into this contract.
+     */
     function currencyInBridge()
     external view returns (uint256) {
         return _balances[CURRENCY][BRIDGE];
@@ -68,7 +70,7 @@ contract ChildERC20 is BaseNFT {
 
         _forceTransfer(BRIDGE, user, CURRENCY, amount);
 
-        emit Transfer(address(0), user, amount);
+        emit Transfer(BRIDGE, user, amount);
     }
 
     /** Withdraw currency from a user account in this contract to Ethereum.
@@ -83,6 +85,6 @@ contract ChildERC20 is BaseNFT {
 
         _forceTransfer(user, BRIDGE, CURRENCY, amount);
 
-        emit Transfer(msg.sender, address(0), amount);
+        emit Transfer(user, BRIDGE, amount);
     }
 }
