@@ -50,13 +50,15 @@ contract("Davinci", accounts => {
     it("deposits and withdraws from the bridge", async () => {
         const davinci = await Davinci.new();
         const CURRENCY = await davinci.CURRENCY.call();
-        const bridge = await davinci.BRIDGE.call();
         const UNIT = 1e10;
         let amount = 1000 * UNIT;
         let encodedAmount = web3.eth.abi.encodeParameter('uint256', amount);
 
+        const bridge = await davinci.BRIDGE.call();
+        assert.equal(bridge, constants.ZERO_ADDRESS);
+
         // Check initial supply in the bridge.
-        let currencySupply = await davinci.balanceOf.call(bridge, CURRENCY);
+        let currencySupply = await davinci.currencyInBridge.call();
         assert.equal(currencySupply, 10e9 * UNIT); // 10 billions with 10 decimals.
 
         // Everybody has 0 tokens.
@@ -94,7 +96,7 @@ contract("Davinci", accounts => {
         // Someone got the deposit, taken from the bridge supply.
         let someoneBalance = await davinci.balanceOf.call(someone, CURRENCY);
         assert.equal(someoneBalance, amount);
-        let currencySupplyAfter = await davinci.balanceOf.call(bridge, CURRENCY);
+        let currencySupplyAfter = await davinci.currencyInBridge.call();
         assert.equal(currencySupplyAfter, currencySupply - amount);
 
         // Someone cannot withdraw more than what they have.
@@ -113,7 +115,7 @@ contract("Davinci", accounts => {
 
         expectEvent(receipt, 'TransferSingle', {
             from: someone,
-            to: bridge, // Different than the ERC20 event because of current ERC1155 implementation.
+            to: constants.ZERO_ADDRESS,
             value: new BN(amount),
             operator: someone,
             id: CURRENCY,
@@ -122,7 +124,7 @@ contract("Davinci", accounts => {
         // Tokens moved from someone to the bridge.
         someoneBalance = await davinci.balanceOf.call(someone, CURRENCY);
         assert.equal(someoneBalance, 0);
-        currencySupplyAfter = await davinci.balanceOf.call(bridge, CURRENCY);
+        currencySupplyAfter = await davinci.currencyInBridge.call();
         assert.equal(+currencySupplyAfter, +currencySupply);
     });
 
@@ -135,8 +137,7 @@ contract("Davinci", accounts => {
         let BASIS_POINTS = +await davinci.BASIS_POINTS.call();
         assert.equal(BASIS_POINTS, 100 * 100);
 
-        let bridge = await davinci.BRIDGE.call();
-        let currencySupply = await davinci.balanceOf.call(bridge, CURRENCY);
+        let currencySupply = await davinci.currencyInBridge.call();
         log("Supply of currencies in the bridge:", +currencySupply / UNIT, "CERE");
 
         let pocketMoney = 1000 * UNIT;
