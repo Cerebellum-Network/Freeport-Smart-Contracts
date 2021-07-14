@@ -18,11 +18,11 @@
  *
  */
 
-// const HDWalletProvider = require('@truffle/hdwallet-provider');
-// const infuraKey = "fj4jll3k.....";
-//
-// const fs = require('fs');
-// const mnemonic = fs.readFileSync(".secret").toString().trim();
+const HDWalletProvider = require('@truffle/hdwallet-provider');
+require('dotenv').config();
+const mnemonic = process.env["MNEMONIC"];
+const infuraProjectId = process.env["INFURA_PROJECT_ID"];
+
 
 module.exports = {  /**
 
@@ -50,7 +50,19 @@ module.exports = {  /**
        host: "127.0.0.1",     // Localhost (default: none)
        port: 8545,            // Standard Ethereum port (default: none)
        network_id: "*",       // Any network (default: none)
-     }
+     },
+
+    goerli: {
+      provider: () => {
+        return new HDWalletProvider(mnemonic, 'https://goerli.infura.io/v3/' + infuraProjectId)
+      },
+      network_id: '5', // eslint-disable-line camelcase
+      gas: 4465030,
+      gasPrice: 10000000000,
+      confirmations: 2,
+      timeoutBlocks: 200,
+      skipDryRun: true,
+    },
    },
 
   // Set default mocha options here, use special reporters etc.
@@ -61,7 +73,7 @@ module.exports = {  /**
   // Configure your compilers
   compilers: {
     solc: {
-      version: "^0.8.0",
+      version: "0.8.6",
       // docker: true,        // Use "0.5.1" you've installed locally with docker (default: false)
       // settings: {          // See the solidity docs for advice about optimization and evmVersion
       //  optimizer: {
@@ -76,6 +88,6 @@ module.exports = {  /**
   // Truffle DB is enabled in this project by default. Enabling Truffle DB surfaces access to the @truffle/db package
   // for querying data about the contracts, deployments, and networks in this project
   db: {
-    enabled: true
+    enabled: false
   }
 };
