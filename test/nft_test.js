@@ -74,8 +74,16 @@ contract("Davinci", accounts => {
             davinci.updateChildChainManager(relayer, {from: relayer}),
             "Only the current ChainManager is allowed to change the ChainManager.");
 
+        // The initial childChainManagerProxy is the deployer.
+        let childChainManagerProxy = await davinci.childChainManagerProxy.call();
+        assert.equal(childChainManagerProxy, deployer);
+
         // The deployer sets the relayer.
         await davinci.updateChildChainManager(relayer, {from: deployer});
+
+        // The new childChainManagerProxy is the relayer.
+        childChainManagerProxy = await davinci.childChainManagerProxy.call();
+        assert.equal(childChainManagerProxy, relayer);
 
         // The deployer cannot deposit anymore.
         await expectRevert(

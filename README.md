@@ -12,6 +12,7 @@ See the [build instructions](BUILD.md).
 
 |  Deployments | Version | Contract |
 | ------------ | ------- | -------- |
+| Polygon Mumbai Testnet | 2021-07-14, ef34b60e, with ERC20 bridge | [0x0710e2063758F5091A9347A30435e92e260D0069](https://explorer-mumbai.maticvigil.com/address/0x0710e2063758F5091A9347A30435e92e260D0069/transactions) |
 | Polygon Mumbai Testnet | 2021-07-05, 021f0116 | [0x509Dfd7c670AC89246723EFe0f80f433BfbB6E5c](https://explorer-mumbai.maticvigil.com/address/0x509Dfd7c670AC89246723EFe0f80f433BfbB6E5c/transactions) |
 
 ## How to deploy
