@@ -1,21 +1,27 @@
 const Davinci = artifacts.require("./Davinci.sol");
 const log = console.log;
+const {expectEvent, expectRevert, constants} = require('@openzeppelin/test-helpers');
+const BN = require('bn.js');
+
 
 contract("Davinci", accounts => {
-    const bridge = accounts[0].toLowerCase();
-    const issuer = accounts[1].toLowerCase();
-    const partner = accounts[2].toLowerCase();
-    const buyer = accounts[3].toLowerCase();
-    const buyer2 = accounts[4].toLowerCase();
+    const deployer = accounts[0];
+    const issuer = accounts[1];
+    const partner = accounts[2];
+    const buyer = accounts[3];
+    const buyer2 = accounts[4];
+    const relayer = accounts[5];
+    const someone = accounts[6];
 
 
     it("issues unique NFT IDs.", async () => {
         const davinci = await Davinci.deployed();
 
+        let issuerLow = issuer.toLowerCase();
         const expectedIds = [
-            [5, issuer + "000000000000000000000005"],
-            [5, issuer + "000000010000000000000005"],
-            [9, issuer + "000000020000000000000009"],
+            [5, issuerLow + "000000000000000000000005"],
+            [5, issuerLow + "000000010000000000000005"],
+            [9, issuerLow + "000000020000000000000009"],
         ];
 
         for (let i of expectedIds.keys()) {
@@ -40,21 +46,115 @@ contract("Davinci", accounts => {
         }
     });
 
-    it("issues an NFT.", async () => {
+
+    it("deposits and withdraws from the bridge", async () => {
+        const davinci = await Davinci.new();
+        const CURRENCY = await davinci.CURRENCY.call();
+        const UNIT = 1e10;
+        let amount = 1000 * UNIT;
+        let encodedAmount = web3.eth.abi.encodeParameter('uint256', amount);
+
+        // Check initial supply in the bridge.
+        let currencySupply = await davinci.currencyInBridge.call();
+        assert.equal(currencySupply, 10e9 * UNIT); // 10 billions with 10 decimals.
+
+        // Everybody has 0 tokens.
+        for (let account of accounts) {
+            let balance = await davinci.balanceOf.call(account, CURRENCY);
+            assert.equal(balance, 0);
+        }
+
+        // Some account cannot deposit.
+        await expectRevert(
+            davinci.deposit(someone, encodedAmount, {from: relayer}),
+            "Only the ChainManager is allowed to deposit");
+
+        // Some account cannot set the relayer.
+        await expectRevert(
+            davinci.updateChildChainManager(relayer, {from: relayer}),
+            "Only the current ChainManager is allowed to change the ChainManager.");
+
+        // The initial childChainManagerProxy is the deployer.
+        let childChainManagerProxy = await davinci.childChainManagerProxy.call();
+        assert.equal(childChainManagerProxy, deployer);
+
+        // The deployer sets the relayer.
+        await davinci.updateChildChainManager(relayer, {from: deployer});
+
+        // The new childChainManagerProxy is the relayer.
+        childChainManagerProxy = await davinci.childChainManagerProxy.call();
+        assert.equal(childChainManagerProxy, relayer);
+
+        // The deployer cannot deposit anymore.
+        await expectRevert(
+            davinci.deposit(someone, encodedAmount, {from: deployer}),
+            "Only the ChainManager is allowed to deposit");
+
+        // The deployer cannot set the relayer anymore.
+        await expectRevert(
+            davinci.updateChildChainManager(deployer, {from: deployer}),
+            "Only the current ChainManager is allowed to change the ChainManager.");
+
+        // The relayer deposits to someone’s account from the bridge.
+        await davinci.deposit(someone, encodedAmount, {from: relayer});
+
+        // Someone got the deposit, taken from the bridge supply.
+        let someoneBalance = await davinci.balanceOf.call(someone, CURRENCY);
+        assert.equal(someoneBalance, amount);
+        let currencySupplyAfter = await davinci.currencyInBridge.call();
+        assert.equal(currencySupplyAfter, currencySupply - amount);
+
+        // Someone cannot withdraw more than what they have.
+        await expectRevert(
+            davinci.withdraw(amount + 1, {from: someone}),
+            "ERC1155: insufficient balance for transfer");
+
+        // Someone withdraws back into the bridge.
+        let receipt = await davinci.withdraw(amount, {from: someone});
+
+        expectEvent(receipt, 'Transfer', {
+            from: someone,
+            to: constants.ZERO_ADDRESS, // Must be 0 to be detected by the relayer.
+            value: new BN(amount),
+        });
+
+        expectEvent(receipt, 'TransferSingle', {
+            from: someone,
+            to: constants.ZERO_ADDRESS,
+            value: new BN(amount),
+            operator: someone,
+            id: CURRENCY,
+        });
+
+        // Tokens moved from someone to the bridge.
+        someoneBalance = await davinci.balanceOf.call(someone, CURRENCY);
+        assert.equal(someoneBalance, 0);
+        currencySupplyAfter = await davinci.currencyInBridge.call();
+        assert.equal(+currencySupplyAfter, +currencySupply);
+    });
+
+
+    it("issues an NFT, create a Joint Account, collect royalties, distribute to JA.", async () => {
         log();
-        const davinci = await Davinci.deployed();
+        const davinci = await Davinci.new();
         const CURRENCY = await davinci.CURRENCY.call();
         const UNIT = 1e10;
         let BASIS_POINTS = +await davinci.BASIS_POINTS.call();
         assert.equal(BASIS_POINTS, 100 * 100);
 
-        let currencySupply = await davinci.balanceOf.call(bridge, CURRENCY);
-        let pocketMoney = 1000;
-        await davinci.safeTransferFrom(bridge, issuer, CURRENCY, pocketMoney * UNIT, "0x", {from: bridge});
-        await davinci.safeTransferFrom(bridge, buyer, CURRENCY, pocketMoney * UNIT, "0x", {from: bridge});
+        let currencySupply = await davinci.currencyInBridge.call();
         log("Supply of currencies in the bridge:", +currencySupply / UNIT, "CERE");
-        log("Transfer", pocketMoney, "CERE to account ’Issuer’");
-        log("Transfer", pocketMoney, "CERE to account ’Buyer’");
+
+        let pocketMoney = 1000 * UNIT;
+        let encodedMoney = web3.eth.abi.encodeParameter('uint256', pocketMoney);
+        await davinci.deposit(issuer, encodedMoney);
+        await davinci.deposit(buyer, encodedMoney);
+        let issuerBalance = await davinci.balanceOf.call(issuer, CURRENCY);
+        assert.equal(issuerBalance, pocketMoney);
+        let buyerBalance = await davinci.balanceOf.call(buyer, CURRENCY);
+        assert.equal(buyerBalance, pocketMoney);
+        log("Deposit", pocketMoney / UNIT, "CERE from the bridge to account ’Issuer’");
+        log("Deposit", pocketMoney / UNIT, "CERE from the bridge to account ’Buyer’");
         log();
 
         let nftSupply = 10;
@@ -99,26 +199,36 @@ contract("Davinci", accounts => {
         log();
 
         await davinci.safeTransferFrom(issuer, buyer, nftId, 3, "0x", {from: issuer});
-        await davinci.safeTransferFrom(buyer, buyer2, nftId, 1, "0x", {from: buyer});
+        let primaryEarnings = 100 * 3 * UNIT;
+        await davinci.safeTransferFrom(buyer, buyer2, nftId, 2, "0x", {from: buyer});
+        let secondaryEarnings = 50 * 2 * UNIT;
         log("Primary transfer from ’Issuer’ to ’Buyer’:  ", 3, "NFTs");
-        log("Secondary transfer from ’Buyer’ to ’Buyer2’:", 1, "NFTs");
+        log("Secondary transfer from ’Buyer’ to ’Buyer2’:", 2, "NFTs");
         log();
 
-        let expectedEarnings = (100 * 3 + 50) * UNIT;
+        let issuerBalanceAfter = await davinci.balanceOf.call(issuer, CURRENCY);
+        assert.equal(issuerBalanceAfter, issuerBalance - primaryEarnings);
+        let buyerBalanceAfter = await davinci.balanceOf.call(buyer, CURRENCY);
+        assert.equal(buyerBalanceAfter, buyerBalance - secondaryEarnings);
+        log("’Issuer’ paid", primaryEarnings / UNIT, "in primary royalties.");
+        log("’Buyer’ paid", secondaryEarnings / UNIT, "in secondary royalties.");
+        log();
+
+        let totalEarnings = primaryEarnings + secondaryEarnings;
         {
             let royaltyEarned = await davinci.balanceOf.call(account, CURRENCY);
             log("Royalties earned (3x primary, 1x secondary):", +royaltyEarned / UNIT, "CERE");
-            assert.equal(royaltyEarned, expectedEarnings);
+            assert.equal(royaltyEarned, totalEarnings);
         }
         {
             let royaltyEarned = await davinci.balanceOfJAOwner.call(account, issuer);
             log("...............................for ’Issuer’:", +royaltyEarned / UNIT, "CERE");
-            assert.equal(royaltyEarned, expectedEarnings * 9 / 10);
+            assert.equal(royaltyEarned, totalEarnings * 9 / 10);
         }
         {
             let royaltyEarned = await davinci.balanceOfJAOwner.call(account, partner);
             log("..............................for ’Partner’:", +royaltyEarned / UNIT, "CERE");
-            assert.equal(royaltyEarned, expectedEarnings * 1 / 10);
+            assert.equal(royaltyEarned, totalEarnings * 1 / 10);
         }
         log();
 
