@@ -26,3 +26,7 @@ Commit the file `build/polygon-contracts/Davinci.json`
 On testnet, setup testing accounts:
 
     truffle --config=truffle-config.polygon.js exec scripts/dev_setup.js --network=polygon_testnet
+
+On testnet, setup the Polygon bridge:
+
+    truffle --config=truffle-config.polygon.js exec scripts/dev_bridge.js --network=polygon_testnet
