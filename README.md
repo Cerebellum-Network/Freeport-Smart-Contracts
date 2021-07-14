@@ -22,6 +22,8 @@ See the [build instructions](BUILD.md).
 Commit 309ba894 on Polygon Mumbai:
 [0x09cA13A8dA7A049696dEc9df57f8948ed6702a71](https://mumbai.polygonscan.com/address/0x09cA13A8dA7A049696dEc9df57f8948ed6702a71)
 
+This contract is bridged to a test ERC20 on Ethereum Goerli: [0x35C33219cFC617BA362860e28E7cf25085cA1355](https://goerli.etherscan.io/address/0x35C33219cFC617BA362860e28E7cf25085cA1355)
+
 ### 2021-07-05: First version
 
 - ERC1155 and mint function
