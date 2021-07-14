@@ -11,6 +11,7 @@
     "test:polygon": "truffle test --config=truffle-config.polygon.js --network=$npm_config_network",
     "compile:polygon": "truffle compile --config=truffle-config.polygon.js",
     "migrate:polygon": "truffle migrate --config=truffle-config.polygon.js --network=$npm_config_network",
+    "flatten:polygon": "npx poa-solidity-flattener contracts/polygon/Davinci.sol",
     "doc": "npx solidity-docgen --solc-module=solc-0.8 -t doc_template -o docs"
   },
   "repository": {
@@ -36,7 +37,7 @@
     "@poanet/solidity-flattener": "^3.0.6",
     "@truffle/hdwallet-provider": "^1.4.1",
     "dotenv": "^9.0.0",
-    "solc-0.8": "npm:solc@0.8.6",
+    "solc-0.8": "npm:solc@0.8.4",
     "solidity-docgen": "^0.5.13"
   },
   "dependencies": {
