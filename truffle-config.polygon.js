@@ -13,9 +13,14 @@ module.exports = {
   contracts_build_directory: './build/polygon-contracts',
 
   /**
-  * contracts_directory tells Truffle where the contracts you want to compile are located
-  */
+   * contracts_directory tells Truffle where the contracts you want to compile are located
+   */
   contracts_directory: './contracts/polygon',
+
+  /**
+   * migrations_directory tells Truffle where the deployment scripts are located
+   */
+  migrations_directory: './migrations/polygon',
 
 
   networks: {

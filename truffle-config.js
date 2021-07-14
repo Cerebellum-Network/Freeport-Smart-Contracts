@@ -36,6 +36,11 @@ module.exports = {  /**
   contracts_directory: './contracts/ethereum',
 
   /**
+   * migrations_directory tells Truffle where the deployment scripts are located
+   */
+  migrations_directory: './migrations/ethereum',
+
+  /**
    * Networks define how you connect to your ethereum client and let you set the
    * defaults web3 uses to send transactions. If you don't specify one truffle
    * will spin up a development blockchain for you on port 9545 when you
