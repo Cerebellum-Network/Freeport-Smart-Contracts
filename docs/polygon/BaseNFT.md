@@ -22,7 +22,7 @@ Supports interfaces of AccessControl, ERC1155, and ERC1155 MetadataURI.
 
 #### `isApprovedForAll(address account, address operator) → bool` (public)
 
-The role FULL_OPERATOR is allowed to make any transfer.
+The role TRANSFER_OPERATOR is allowed to make any transfer.
 This is useful to connect a marketplace contract.
 
 

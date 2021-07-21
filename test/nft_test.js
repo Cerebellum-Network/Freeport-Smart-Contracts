@@ -248,8 +248,8 @@ contract("Davinci", accounts => {
         // Give the role full operator to a partner account.
         // In reality "partner" should be a smart contract, for instance for a marketplace or a meta-transaction service.
         // This contract must verify consent from token owners.
-        const FULL_OPERATOR = await davinci.FULL_OPERATOR.call();
-        await davinci.grantRole(FULL_OPERATOR, partner);
+        const TRANSFER_OPERATOR = await davinci.TRANSFER_OPERATOR.call();
+        await davinci.grantRole(TRANSFER_OPERATOR, partner);
 
         // The full operator can transfer.
         await davinci.safeTransferFrom(issuer, someone, nftId, 1, "0x", {from: partner});
@@ -270,8 +270,8 @@ contract("Davinci", accounts => {
 
         // Authorize an operator to move the NFTs.
         // In reality "partner" should be a smart contract for meta-transactions. This contract must verify consent from token owners.
-        const FULL_OPERATOR = await davinci.FULL_OPERATOR.call();
-        await davinci.grantRole(FULL_OPERATOR, partner);
+        const TRANSFER_OPERATOR = await davinci.TRANSFER_OPERATOR.call();
+        await davinci.grantRole(TRANSFER_OPERATOR, partner);
 
         // Seller has no currency, he cannot pay royalties.
         const CURRENCY = await davinci.CURRENCY.call();
@@ -284,7 +284,7 @@ contract("Davinci", accounts => {
             "ERC1155: insufficient balance for transfer");
 
         // Give the role to bypass royalties to the operator.
-        // This comes in complement to the role FULL_OPERATOR.
+        // This comes in complement to the role TRANSFER_OPERATOR.
         const BYPASS_OPERATOR = await davinci.BYPASS_OPERATOR.call();
         await davinci.grantRole(BYPASS_OPERATOR, partner);
 

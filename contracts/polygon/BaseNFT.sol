@@ -17,7 +17,7 @@ contract BaseNFT is AccessControl, ERC1155 {
      */
     uint256 public constant CURRENCY_SUPPLY = 10e9 * 1e10;
 
-    bytes32 public constant FULL_OPERATOR = keccak256("FULL_OPERATOR");
+    bytes32 public constant TRANSFER_OPERATOR = keccak256("TRANSFER_OPERATOR");
 
     constructor()
     ERC1155("https://cere.network/nft/{id}.json") {
@@ -46,7 +46,7 @@ contract BaseNFT is AccessControl, ERC1155 {
         emit TransferSingle(operator, from, to, CURRENCY, amount);
     }
 
-    /** The role FULL_OPERATOR is allowed to make any transfer.
+    /** The role TRANSFER_OPERATOR is allowed to make any transfer.
      * This is useful to connect a marketplace contract.
      *
      * @dev See {IERC1155-isApprovedForAll}.
@@ -54,7 +54,7 @@ contract BaseNFT is AccessControl, ERC1155 {
     function isApprovedForAll(address account, address operator)
     public view virtual override returns (bool) {
 
-        if (hasRole(FULL_OPERATOR, operator)) return true;
+        if (hasRole(TRANSFER_OPERATOR, operator)) return true;
 
         return super.isApprovedForAll(account, operator);
     }
