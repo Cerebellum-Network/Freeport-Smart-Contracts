@@ -238,16 +238,20 @@ contract("Davinci", accounts => {
     });
 
 
-    it("lets a marketplace make transfers.", async () => {
+    it("lets a marketplace or meta-transaction service make transfers.", async () => {
         const davinci = await Davinci.deployed();
 
-        // Issue.
+        // Issue an NFT.
         let nftId = await davinci.issue.call(1, "0x", {from: issuer});
         await davinci.issue(1, "0x", {from: issuer});
 
+        // Give the role full operator to a partner account.
+        // In reality "partner" should be a smart contract, for instance for a marketplace or a meta-transaction service.
+        // This contract must verify consent from token owners.
         const FULL_OPERATOR = await davinci.FULL_OPERATOR.call();
         await davinci.grantRole(FULL_OPERATOR, partner);
 
+        // The full operator can transfer.
         await davinci.safeTransferFrom(issuer, someone, nftId, 1, "0x", {from: partner});
 
         let balance = await davinci.balanceOf.call(someone, nftId);
@@ -265,7 +269,9 @@ contract("Davinci", accounts => {
             nftId, issuer, 1, 1, issuer, 1, 1, {from: issuer});
 
         // Authorize an operator to move the NFTs.
-        await davinci.setApprovalForAll(partner, true, {from: issuer});
+        // In reality "partner" should be a smart contract for meta-transactions. This contract must verify consent from token owners.
+        const FULL_OPERATOR = await davinci.FULL_OPERATOR.call();
+        await davinci.grantRole(FULL_OPERATOR, partner);
 
         // Seller has no currency, he cannot pay royalties.
         const CURRENCY = await davinci.CURRENCY.call();
@@ -278,6 +284,7 @@ contract("Davinci", accounts => {
             "ERC1155: insufficient balance for transfer");
 
         // Give the role to bypass royalties to the operator.
+        // This comes in complement to the role FULL_OPERATOR.
         const BYPASS_OPERATOR = await davinci.BYPASS_OPERATOR.call();
         await davinci.grantRole(BYPASS_OPERATOR, partner);
 
