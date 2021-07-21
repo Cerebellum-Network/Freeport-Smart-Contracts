@@ -19,7 +19,10 @@ contract BaseNFT is AccessControl, ERC1155 {
 
     bytes32 public constant FULL_OPERATOR = keccak256("FULL_OPERATOR");
 
-    constructor() ERC1155("https://cere.network/nft/{id}.json") {}
+    constructor()
+    ERC1155("https://cere.network/nft/{id}.json") {
+        _setupRole(DEFAULT_ADMIN_ROLE, _msgSender());
+    }
 
     /** Supports interfaces of AccessControl, ERC1155, and ERC1155 MetadataURI.
      */
