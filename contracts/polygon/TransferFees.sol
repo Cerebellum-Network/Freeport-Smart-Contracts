@@ -9,6 +9,8 @@ import "./JointAccounts.sol";
  */
 contract TransferFees is JointAccounts {
 
+    bytes32 public constant BYPASS_OPERATOR = keccak256("BYPASS_OPERATOR");
+
     // Royalties configurable per NFT by issuers.
     mapping(uint256 => address) primaryRoyaltyAccounts;
     mapping(uint256 => uint256) primaryRoyaltyCuts;
@@ -168,6 +170,10 @@ contract TransferFees is JointAccounts {
         uint256[] memory amounts,
         bytes memory data)
     internal override {
+
+        // An account with bypass role does not pay royalties.
+        if (hasRole(BYPASS_OPERATOR, operator)) return;
+
         // Pay a fee per transfer to a beneficiary, if any.
         for (uint256 i = 0; i < tokenIds.length; ++i) {
             _captureFee(from, tokenIds[i], /*price*/ 0, amounts[i]);
