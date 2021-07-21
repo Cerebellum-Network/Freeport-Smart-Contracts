@@ -161,6 +161,8 @@ contract TransferFees is JointAccounts {
     }
 
     /** Internal hook to trigger the collection of royalties due on a batch of transfers.
+     *
+     * The role BYPASS_OPERATOR does not pay royalties. This is intended to be used by a privileged service that allows users to make simple non-sale transfers.
      */
     function _beforeTokenTransfer(
         address operator,
