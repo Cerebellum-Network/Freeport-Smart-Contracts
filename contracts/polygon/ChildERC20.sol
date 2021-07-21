@@ -68,7 +68,7 @@ contract ChildERC20 is BaseNFT {
 
         uint256 amount = abi.decode(depositData, (uint256));
 
-        _forceTransfer(BRIDGE, user, CURRENCY, amount);
+        _forceTransferCurrency(BRIDGE, user, amount);
 
         emit Transfer(BRIDGE, user, amount);
     }
@@ -83,7 +83,7 @@ contract ChildERC20 is BaseNFT {
     external {
         address user = _msgSender();
 
-        _forceTransfer(user, BRIDGE, CURRENCY, amount);
+        _forceTransferCurrency(user, BRIDGE, amount);
 
         emit Transfer(user, BRIDGE, amount);
     }

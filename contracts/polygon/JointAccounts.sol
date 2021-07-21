@@ -84,7 +84,7 @@ contract JointAccounts is Issuance {
             JointAccountShare storage share = shares[i];
             uint256 ownerBalance = accountBalance * share.fraction / BASIS_POINTS;
 
-            _forceTransfer(account, share.owner, CURRENCY, ownerBalance);
+            _forceTransferCurrency(account, share.owner, ownerBalance);
         }
     }
 

@@ -1,6 +1,6 @@
 pragma solidity ^0.8.0;
 
-import "./AtomicExchange.sol";
+import "./TransferFees.sol";
 
 /** Main contract, including all components.
 
@@ -10,6 +10,6 @@ import "./AtomicExchange.sol";
 - Joint Accounts that distribute their funds over multiple owners.
 - Capture royalties on primary and secondary transfers, configurable per NFT type.
 */
-contract Davinci is /* BaseNFT, ChildERC20, Issuance, JointAccounts, TransferFees, */ AtomicExchange {
+contract Davinci is /* BaseNFT, ChildERC20, Issuance, JointAccounts, */ TransferFees {
 
 }

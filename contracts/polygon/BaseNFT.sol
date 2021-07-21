@@ -21,19 +21,26 @@ contract BaseNFT is AccessControl, ERC1155 {
 
     constructor() ERC1155("https://cere.network/nft/{id}.json") {}
 
-    function _forceTransfer(
+    /** Supports interfaces of AccessControl, ERC1155, and ERC1155 MetadataURI.
+     */
+    function supportsInterface(bytes4 interfaceId)
+    public view virtual override(AccessControl, ERC1155) returns (bool) {
+        return ERC1155.supportsInterface(interfaceId)
+        || AccessControl.supportsInterface(interfaceId);
+    }
+
+    function _forceTransferCurrency(
         address from,
         address to,
-        uint256 id,
         uint256 amount)
     internal {
-        uint256 fromBalance = _balances[id][from];
+        uint256 fromBalance = _balances[CURRENCY][from];
         require(fromBalance >= amount, "ERC1155: insufficient balance for transfer");
-        _balances[id][from] = fromBalance - amount;
-        _balances[id][to] += amount;
+        _balances[CURRENCY][from] = fromBalance - amount;
+        _balances[CURRENCY][to] += amount;
 
         address operator = _msgSender();
-        emit TransferSingle(operator, from, to, id, amount);
+        emit TransferSingle(operator, from, to, CURRENCY, amount);
     }
 
     /** The role FULL_OPERATOR is allowed to make any transfer.
