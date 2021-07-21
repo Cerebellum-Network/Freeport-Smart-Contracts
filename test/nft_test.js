@@ -236,4 +236,55 @@ contract("Davinci", accounts => {
         log("Withdraw the funds from the Joint Account to ’Issuer’ and to ’Partner’");
         log();
     });
+
+
+    it("lets a marketplace make transfers.", async () => {
+        const davinci = await Davinci.deployed();
+
+        // Issue.
+        let nftId = await davinci.issue.call(1, "0x", {from: issuer});
+        await davinci.issue(1, "0x", {from: issuer});
+
+        const FULL_OPERATOR = await davinci.FULL_OPERATOR.call();
+        await davinci.grantRole(FULL_OPERATOR, partner);
+
+        await davinci.safeTransferFrom(issuer, someone, nftId, 1, "0x", {from: partner});
+
+        let balance = await davinci.balanceOf.call(someone, nftId);
+        assert.equal(balance, 1);
+    });
+
+
+    it("bypasses royalties on transfers from a bypass operator.", async () => {
+        const davinci = await Davinci.deployed();
+
+        // Issue an NFT with royalties.
+        let nftId = await davinci.issue.call(1, "0x", {from: issuer});
+        await davinci.issue(1, "0x", {from: issuer});
+        await davinci.configureRoyalties(
+            nftId, issuer, 1, 1, issuer, 1, 1, {from: issuer});
+
+        // Authorize an operator to move the NFTs.
+        await davinci.setApprovalForAll(partner, true, {from: issuer});
+
+        // Seller has no currency, he cannot pay royalties.
+        const CURRENCY = await davinci.CURRENCY.call();
+        let balance = await davinci.balanceOf.call(issuer, CURRENCY);
+        assert.equal(balance, 0);
+
+        // Transfer fails because royalties are not paid.
+        await expectRevert(
+            davinci.safeTransferFrom(issuer, someone, nftId, 1, "0x", {from: partner}),
+            "ERC1155: insufficient balance for transfer");
+
+        // Give the role to bypass royalties to the operator.
+        const BYPASS_OPERATOR = await davinci.BYPASS_OPERATOR.call();
+        await davinci.grantRole(BYPASS_OPERATOR, partner);
+
+        // Now the transfer will work because there are no royalties or currency needed.
+        await davinci.safeTransferFrom(issuer, someone, nftId, 1, "0x", {from: partner});
+
+        balance = await davinci.balanceOf.call(someone, nftId);
+        assert.equal(balance, 1);
+    });
 });
