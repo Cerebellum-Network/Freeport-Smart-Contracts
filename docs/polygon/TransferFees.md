@@ -58,6 +58,8 @@ Set to 0xFFFFFFFF to lock forever.
 
 Internal hook to trigger the collection of royalties due on a batch of transfers.
 
+The role BYPASS_OPERATOR does not pay royalties. This is intended to be used by a privileged service that allows users to make simple non-sale transfers.
+
 
 
 #### `_captureFee(address from, uint256 nftId, uint256 price, uint256 amount)` (internal)

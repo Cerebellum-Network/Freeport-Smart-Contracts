@@ -209,7 +209,7 @@ contract TransferFees is JointAccounts {
 
         uint256 totalFee = perTransferFee * amount;
         if (totalFee != 0) {
-            _forceTransfer(from, royaltyAccount, CURRENCY, totalFee);
+            _forceTransferCurrency(from, royaltyAccount, totalFee);
         }
     }
 
