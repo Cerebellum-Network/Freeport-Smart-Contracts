@@ -18,7 +18,7 @@ contract Davinci is /*
     Currency,
     TransferOperator,
     MetaTxContext,
-    ChildERC20,
+    PolygonChildERC20,
     Issuance,
     JointAccounts,
     */ TransferFees {

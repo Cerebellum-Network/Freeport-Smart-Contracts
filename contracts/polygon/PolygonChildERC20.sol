@@ -9,7 +9,7 @@ import "./MetaTxContext.sol";
  *
  * See https://docs.matic.network/docs/develop/ethereum-matic/pos/mapping-assets
  */
-abstract contract ChildERC20 is MetaTxContext {
+abstract contract PolygonChildERC20 is MetaTxContext {
 
     /** ERC20 Transfer event for bridging this ERC1155 contract to ERC20 on Ethereum.
      */
