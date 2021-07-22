@@ -15,6 +15,8 @@ contract Davinci is /*
     ERC1155,
     AccessControl,
     BaseNFT,
+    Currency,
+    TransferOperator,
     MetaTxContext,
     ChildERC20,
     Issuance,

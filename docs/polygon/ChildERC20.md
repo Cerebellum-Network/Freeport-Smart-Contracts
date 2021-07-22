@@ -10,7 +10,7 @@ See https://docs.matic.network/docs/develop/ethereum-matic/pos/mapping-assets
 
 
 
-#### `constructor()` (public)
+#### `constructor()` (internal)
 
 Fill the bridge with the supply of CERE tokens on all chains.
 

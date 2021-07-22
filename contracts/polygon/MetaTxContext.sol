@@ -3,13 +3,12 @@
 
 pragma solidity ^0.8.0;
 
-import "./access/AccessControl.sol";
-import "./BaseNFT.sol";
+import "./TransferOperator.sol";
 
 /*
  * @dev Context variant with ERC2771 support.
  */
-abstract contract MetaTxContext is BaseNFT {
+abstract contract MetaTxContext is TransferOperator {
 
     bytes32 public constant META_TX_FORWARDER = keccak256("META_TX_FORWARDER");
 
