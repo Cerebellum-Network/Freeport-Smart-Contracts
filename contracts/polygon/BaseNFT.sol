@@ -1,14 +1,23 @@
 pragma solidity ^0.8.0;
 
 import "./token/ERC1155/ERC1155.sol";
-import "./MetaTxContext.sol";
+import "./access/AccessControl.sol";
 
 /** An implementation of ERC1155 from OpenZeppelin.
 
 - Hold NFTs.
 - Hold a currency for fees.
 */
-contract BaseNFT is MetaTxContext, ERC1155 {
+abstract contract BaseNFT is ERC1155, AccessControl {
+
+    /** Supports interfaces of AccessControl, ERC1155, and ERC1155 MetadataURI.
+     */
+    function supportsInterface(bytes4 interfaceId)
+    public view virtual override(ERC1155, AccessControl) returns (bool) {
+        return ERC1155.supportsInterface(interfaceId)
+        || AccessControl.supportsInterface(interfaceId);
+    }
+
     /** The token ID that represents the CERE currency for all payments in this contract. */
     uint256 public constant CURRENCY = 0;
 

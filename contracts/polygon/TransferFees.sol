@@ -7,7 +7,7 @@ import "./JointAccounts.sol";
 - Capture royalties on primary and secondary transfers.
 - Report configured royalties to service providers (supports Joint Accounts).
  */
-contract TransferFees is JointAccounts {
+abstract contract TransferFees is JointAccounts {
 
     bytes32 public constant BYPASS_OPERATOR = keccak256("BYPASS_OPERATOR");
 

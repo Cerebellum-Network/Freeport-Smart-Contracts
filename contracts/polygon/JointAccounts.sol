@@ -14,7 +14,7 @@ including if that owner is itself a JA.
 
 [An implementation that distributes to all owners at once.]
 */
-contract JointAccounts is Issuance {
+abstract contract JointAccounts is Issuance {
     /** The total fraction representing 100% of an account.
      */
     uint256 public BASIS_POINTS = 100 * 100;

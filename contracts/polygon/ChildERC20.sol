@@ -1,6 +1,6 @@
 pragma solidity ^0.8.0;
 
-import "./BaseNFT.sol";
+import "./MetaTxContext.sol";
 
 /** An implementation of ChildERC20 used by the Polygon bridge.
  *
@@ -9,7 +9,7 @@ import "./BaseNFT.sol";
  *
  * See https://docs.matic.network/docs/develop/ethereum-matic/pos/mapping-assets
  */
-contract ChildERC20 is BaseNFT {
+abstract contract ChildERC20 is MetaTxContext {
 
     /** ERC20 Transfer event for bridging this ERC1155 contract to ERC20 on Ethereum.
      */
