@@ -1,7 +1,6 @@
 pragma solidity ^0.8.0;
 
 import "./TransferFees.sol";
-import "./MetaTxContext.sol";
 
 /** Main contract, including all components.
 
