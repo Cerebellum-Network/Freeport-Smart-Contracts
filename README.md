@@ -12,6 +12,19 @@ See the [build instructions](BUILD.md).
 
 ## Releases
 
+### 2021-07-23: Integration with meta-transactions, marketplaces, and royalties bypass
+
+- Add access control mechanism to support other features in a flexible way.
+
+- Introduce a meta-transactions forwarder contract and deployment. See `contracts/polygon/metatx/MinimalForwarder.sol` and `migrations/2_deploy_forwarder.js`
+
+- Support meta-transactions using the standard ERC2771. See the role `META_TX_FORWARDER` in `MetaTxContext.sol`
+
+- Add a mechanism to bypass royalties. There can be a meta-transaction forwarder whose transactions are not subject to royalties. See the role `BYPASS_OPERATOR` in `TransferFees.sol`
+
+- Support marketplaces in a generic way. The smart contracts from marketplaces can be connected by giving them permissions to make transfers. See the role `TRANSFER_OPERATOR` in `TransferOperator.sol`
+
+
 ### 2021-07-14: ERC20 bridge
 
 - Add support for
