@@ -1,6 +1,6 @@
 pragma solidity ^0.8.0;
 
-import "./ChildERC20.sol";
+import "./PolygonChildERC20.sol";
 
 /**
 - Issue NFTs.
@@ -14,7 +14,7 @@ The following attributes of a type of NFT are immutable. They are used to derive
 - Supply: how many NFT of this type exists.
 
 */
-contract Issuance is ChildERC20 {
+abstract contract Issuance is PolygonChildERC20 {
     /** A counter of NFT types issued by each issuer.
      * This is used to generate unique NFT IDs.
      */

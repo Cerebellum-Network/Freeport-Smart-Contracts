@@ -1,4 +1,5 @@
 const Davinci = artifacts.require("./Davinci.sol");
+const Forwarder = artifacts.require("MinimalForwarder");
 const log = console.log;
 const {expectEvent, expectRevert, constants} = require('@openzeppelin/test-helpers');
 const BN = require('bn.js');
@@ -235,6 +236,17 @@ contract("Davinci", accounts => {
         await davinci.distributeJointAccount(account);
         log("Withdraw the funds from the Joint Account to ’Issuer’ and to ’Partner’");
         log();
+    });
+
+
+    it("accepts meta-transactions from the forwarder contract", async () => {
+        const davinci = await Davinci.deployed();
+        const forwarder = await Forwarder.deployed();
+
+        const META_TX_FORWARDER = await davinci.META_TX_FORWARDER.call();
+        const isForwarder = await davinci.hasRole.call(META_TX_FORWARDER, forwarder.address);
+
+        assert.equal(isForwarder, true);
     });
 
 

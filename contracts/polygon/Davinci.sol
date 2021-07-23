@@ -1,6 +1,7 @@
 pragma solidity ^0.8.0;
 
 import "./TransferFees.sol";
+import "./MetaTxContext.sol";
 
 /** Main contract, including all components.
 
@@ -10,6 +11,16 @@ import "./TransferFees.sol";
 - Joint Accounts that distribute their funds over multiple owners.
 - Capture royalties on primary and secondary transfers, configurable per NFT type.
 */
-contract Davinci is /* BaseNFT, ChildERC20, Issuance, JointAccounts, */ TransferFees {
+contract Davinci is /*
+    ERC1155,
+    AccessControl,
+    BaseNFT,
+    Currency,
+    TransferOperator,
+    MetaTxContext,
+    PolygonChildERC20,
+    Issuance,
+    JointAccounts,
+    */ TransferFees {
 
 }
