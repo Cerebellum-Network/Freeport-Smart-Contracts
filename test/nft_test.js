@@ -271,7 +271,7 @@ contract("Davinci", accounts => {
     });
 
 
-    it("bypasses royalties on transfers from a bypass operator.", async () => {
+    it("bypasses royalties on transfers from a bypass sender.", async () => {
         const davinci = await Davinci.deployed();
 
         // Issue an NFT with royalties.
@@ -280,11 +280,6 @@ contract("Davinci", accounts => {
         await davinci.configureRoyalties(
             nftId, issuer, 1, 1, issuer, 1, 1, {from: issuer});
 
-        // Authorize an operator to move the NFTs.
-        // In reality "partner" should be a smart contract for meta-transactions. This contract must verify consent from token owners.
-        const TRANSFER_OPERATOR = await davinci.TRANSFER_OPERATOR.call();
-        await davinci.grantRole(TRANSFER_OPERATOR, partner);
-
         // Seller has no currency, he cannot pay royalties.
         const CURRENCY = await davinci.CURRENCY.call();
         let balance = await davinci.balanceOf.call(issuer, CURRENCY);
@@ -292,16 +287,15 @@ contract("Davinci", accounts => {
 
         // Transfer fails because royalties are not paid.
         await expectRevert(
-            davinci.safeTransferFrom(issuer, someone, nftId, 1, "0x", {from: partner}),
+            davinci.safeTransferFrom(issuer, someone, nftId, 1, "0x", {from: issuer}),
             "ERC1155: insufficient balance for transfer");
 
-        // Give the role to bypass royalties to the operator.
-        // This comes in complement to the role TRANSFER_OPERATOR.
-        const BYPASS_OPERATOR = await davinci.BYPASS_OPERATOR.call();
-        await davinci.grantRole(BYPASS_OPERATOR, partner);
+        // Give the role to bypass royalties to the sender.
+        const BYPASS_SENDER = await davinci.BYPASS_SENDER.call();
+        await davinci.grantRole(BYPASS_SENDER, issuer);
 
         // Now the transfer will work because there are no royalties or currency needed.
-        await davinci.safeTransferFrom(issuer, someone, nftId, 1, "0x", {from: partner});
+        await davinci.safeTransferFrom(issuer, someone, nftId, 1, "0x", {from: issuer});
 
         balance = await davinci.balanceOf.call(someone, nftId);
         assert.equal(balance, 1);

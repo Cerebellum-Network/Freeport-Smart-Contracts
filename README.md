@@ -20,7 +20,7 @@ See the [build instructions](BUILD.md).
 
 - Support meta-transactions using the standard ERC2771. See the role `META_TX_FORWARDER` in `MetaTxContext.sol`
 
-- Add a mechanism to bypass royalties. There can be a meta-transaction forwarder whose transactions are not subject to royalties. See the role `BYPASS_OPERATOR` in `TransferFees.sol`
+- Add a mechanism to bypass royalties. There can be a meta-transaction forwarder whose transactions are not subject to royalties. See the role `BYPASS_SENDER` in `TransferFees.sol`
 
 - Support marketplaces in a generic way. The smart contracts from marketplaces can be connected by giving them permissions to make transfers. See the role `TRANSFER_OPERATOR` in `TransferOperator.sol`
 
