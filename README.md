@@ -35,7 +35,9 @@ See the [build instructions](BUILD.md).
 Commit 309ba894 on Polygon Mumbai:
 [0x09cA13A8dA7A049696dEc9df57f8948ed6702a71](https://mumbai.polygonscan.com/address/0x09cA13A8dA7A049696dEc9df57f8948ed6702a71)
 
-This contract is bridged to a test ERC20 on Ethereum Goerli: [0x35C33219cFC617BA362860e28E7cf25085cA1355](https://goerli.etherscan.io/address/0x35C33219cFC617BA362860e28E7cf25085cA1355)
+This contract is bridged to a test ERC20 on Ethereum Goerli: [0x35C33219cFC617BA362860e28E7cf25085cA1355](https://goerli.etherscan.io/address/0x35C33219cFC617BA362860e28E7cf25085cA1355). Try it with [Polygon UI](https://wallet.matic.today/bridge).
+
+![Polygon bridge](https://user-images.githubusercontent.com/8718243/127128156-b1f9cfc1-e9cf-4a36-be4d-d4fe71f537be.png)
 
 ### 2021-07-05: First version
 
