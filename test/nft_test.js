@@ -239,6 +239,87 @@ contract("Davinci", accounts => {
     });
 
 
+    it("executes sales with variable royalties", async () => {
+        log();
+
+        const davinci = await Davinci.new();
+        const CURRENCY = await davinci.CURRENCY.call();
+        const UNIT = 1e10;
+
+        let pocketMoney = 1000 * UNIT;
+        let encodedMoney = web3.eth.abi.encodeParameter('uint256', pocketMoney);
+        await davinci.deposit(buyer, encodedMoney);
+        await davinci.deposit(buyer2, encodedMoney);
+        log("Deposit", pocketMoney / UNIT, "CERE from the bridge to account ’Buyer’");
+        log();
+
+        // Other actors have no currency.
+        for (let actor of [issuer, partner, someone]) {
+            let zeroBalance = await davinci.balanceOf.call(actor, CURRENCY);
+            assert.equal(zeroBalance, 0);
+        }
+
+        let nftSupply = 10;
+        let nftId = await davinci.issue.call(nftSupply, "0x", {from: issuer});
+        await davinci.issue(nftSupply, "0x", {from: issuer});
+        let nftBalance = await davinci.balanceOf.call(issuer, nftId);
+        assert.equal(nftBalance, nftSupply, "NFTs should be minted to the issuer");
+        log("’Issuer’ creates", nftSupply, "NFTs of type", nftId.toString(16));
+        log();
+
+        await davinci.configureRoyalties(
+            nftId,
+            partner,
+            /* primaryCut 10% */ 10 * 100,
+            /* primaryMinimum */ 2 * UNIT,
+            someone,
+            /* secondaryCut 5% */ 5 * 100,
+            /* secondaryMinimum */ 2 * UNIT,
+            {from: issuer});
+        log("’Issuer’ configures royalties for this NFT type");
+
+
+        // Primary sale.
+        let price1 = 200 * UNIT;
+        await davinci.makeOffer(nftId, price1, 1, {from: issuer});
+
+        // Cannot take an offer that does not exist (wrong price).
+        await expectRevert.unspecified(
+            davinci.takeOffer(issuer, nftId, price1 - 1, 1, {from: buyer}));
+
+        await davinci.takeOffer(issuer, nftId, price1, 1, {from: buyer});
+
+        // Cannot take the offer again.
+        await expectRevert.unspecified(
+            davinci.takeOffer(issuer, nftId, price1, 1, {from: buyer}));
+
+        // Secondary sale.
+        let price2 = 300 * UNIT;
+        await davinci.makeOffer(nftId, price2, 1, {from: buyer});
+        await davinci.takeOffer(buyer, nftId, price2, 1, {from: buyer2});
+
+        let partnerFee = price1 * 10 / 100; // Primary royalty on initial price.
+        let someoneFee = price2 * 5 / 100; // Secondary royalty on a resale price.
+
+        // Check everybody’s money after the deals.
+        for (let account of [
+            // Issuer got the initial price and paid a primary fee.
+            [issuer, price1 - partnerFee],
+            // Buyer bought at the initial price, resold at another price, and paid a secondary fee.
+            [buyer, pocketMoney - price1 + price2 - someoneFee],
+            // Buyer2 paid the price.
+            [buyer2, pocketMoney - price2],
+            // Partner got a primary fee.
+            [partner, partnerFee],
+            // Someone got a secondary fee.
+            [someone, someoneFee],
+        ]) {
+            let balance = await davinci.balanceOf.call(account[0], CURRENCY);
+            assert.equal(balance, account[1]);
+        }
+    });
+
+
     it("accepts meta-transactions from the forwarder contract", async () => {
         const davinci = await Davinci.deployed();
         const forwarder = await Forwarder.deployed();

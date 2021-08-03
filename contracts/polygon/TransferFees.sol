@@ -172,12 +172,6 @@ abstract contract TransferFees is JointAccounts {
         uint256[] memory amounts,
         bytes memory data)
     internal override {
-
-        // An account with bypass role does not pay royalties.
-        // This uses msg.sender which is supposed to be a transaction relayer,
-        // instead of _msgSender() which is the user wishing to transfer his tokens.
-        if (hasRole(BYPASS_SENDER, msg.sender)) return;
-
         // Pay a fee per transfer to a beneficiary, if any.
         for (uint256 i = 0; i < tokenIds.length; ++i) {
             _captureFee(from, tokenIds[i], /*price*/ 0, amounts[i]);
@@ -189,8 +183,13 @@ abstract contract TransferFees is JointAccounts {
      * Collect the royalty using an internal transfer of currency.
      */
     function _captureFee(address from, uint256 nftId, uint256 price, uint256 amount)
-    internal {
-        if (nftId == CURRENCY) return;
+    internal returns (uint256) {
+        if (nftId == CURRENCY) return 0;
+
+        // An account with bypass role does not pay royalties.
+        // This uses msg.sender which is supposed to be a transaction relayer,
+        // instead of _msgSender() which is the user wishing to transfer his tokens.
+        if (hasRole(BYPASS_SENDER, msg.sender)) return 0;
 
         uint256 cut;
         uint256 minimum;
@@ -213,6 +212,8 @@ abstract contract TransferFees is JointAccounts {
         if (totalFee != 0) {
             _forceTransferCurrency(from, royaltyAccount, totalFee);
         }
+
+        return totalFee;
     }
 
     /** Determine whether a transfer is primary (true) or secondary (false).
