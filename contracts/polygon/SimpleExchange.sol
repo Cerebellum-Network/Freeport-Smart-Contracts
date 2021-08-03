@@ -14,6 +14,19 @@ abstract contract SimpleExchange is TransferFees {
      */
     mapping(address => mapping(uint256 => mapping(uint256 => uint256))) sellerNftPriceOffers;
 
+    event MakeOffer(
+        address indexed seller,
+        uint256 indexed nftId,
+        uint256 price,
+        uint256 amount);
+
+    event TakeOffer(
+        address indexed buyer,
+        address indexed seller,
+        uint256 indexed nftId,
+        uint256 price,
+        uint256 amount);
+
     /** Create an offer to sell an amount of NFTs for a price per unit.
      *
      * To cancel, call again with an amount of 0.
@@ -22,6 +35,8 @@ abstract contract SimpleExchange is TransferFees {
     public {
         address seller = _msgSender();
         sellerNftPriceOffers[seller][nftId][price] = amount;
+
+        emit MakeOffer(seller, nftId, price, amount);
     }
 
     /** Accept an offer, paying the price per unit for an amount of NFTs.
@@ -45,6 +60,8 @@ abstract contract SimpleExchange is TransferFees {
 
         // Move the NFTs to the buyer.
         _forceTransfer(seller, buyer, nftId, amount);
+
+        emit TakeOffer(buyer, seller, nftId, price, amount);
     }
 
     /** Guarantee that a version of Solidity with safe math is used.
