@@ -19,4 +19,10 @@ Supports interfaces of AccessControl, ERC1155, and ERC1155 MetadataURI.
 
 
 
+#### `_forceTransfer(address from, address to, uint256 id, uint256 amount)` (internal)
+
+
+
+
+
 
