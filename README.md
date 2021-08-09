@@ -16,7 +16,7 @@ See the [build instructions](BUILD.md).
 
 - Add a basic NFT sale functionality with `make / take` functions. This captures variable royalties based on the NFT price.
 
-Commit d4380b12 on Polygon Mumbai: [0x2f514e001361D37C75bc3Fc967e5a4e6819Eff50](https://mumbai.polygonscan.com/address/0x2f514e001361D37C75bc3Fc967e5a4e6819Eff50)
+Commit e1852250 on Polygon Mumbai: [0x656E87eC4607E81896C41de2135db72ee8abce13](https://mumbai.polygonscan.com/address/0x656E87eC4607E81896C41de2135db72ee8abce13)
 
 
 ### 2021-07-23: Integration with meta-transactions, marketplaces, and royalties bypass
