@@ -259,7 +259,7 @@ contract("Davinci", accounts => {
             assert.equal(zeroBalance, 0);
         }
 
-        let nftSupply = 10;
+        let nftSupply = 1;
         let nftId = await davinci.issue.call(nftSupply, "0x", {from: issuer});
         await davinci.issue(nftSupply, "0x", {from: issuer});
         let nftBalance = await davinci.balanceOf.call(issuer, nftId);
@@ -281,7 +281,7 @@ contract("Davinci", accounts => {
 
         // Primary sale.
         let price1 = 200 * UNIT;
-        await davinci.makeOffer(nftId, price1, 1, {from: issuer});
+        await davinci.makeOffer(nftId, price1, {from: issuer});
 
         // Cannot take an offer that does not exist (wrong price).
         await expectRevert.unspecified(
@@ -295,7 +295,7 @@ contract("Davinci", accounts => {
 
         // Secondary sale.
         let price2 = 300 * UNIT;
-        await davinci.makeOffer(nftId, price2, 1, {from: buyer});
+        await davinci.makeOffer(nftId, price2, {from: buyer});
         await davinci.takeOffer(buyer, nftId, price2, 1, {from: buyer2});
 
         let partnerFee = price1 * 10 / 100; // Primary royalty on initial price.

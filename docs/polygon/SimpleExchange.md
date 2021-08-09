@@ -7,11 +7,12 @@
 
 
 
-#### `makeOffer(uint256 nftId, uint256 price, uint256 amount)` (public)
+#### `makeOffer(uint256 nftId, uint256 price)` (public)
 
-Create an offer to sell an amount of NFTs for a price per unit.
+Create an offer to sell a type of NFTs for a price per unit.
+All the NFTs of this type owned by the caller will be for sale.
 
-To cancel, call again with an amount of 0.
+To cancel, call again with a price of 0.
 
 
 
@@ -30,7 +31,7 @@ Guarantee that a version of Solidity with safe math is used.
 
 
 
-#### `MakeOffer(address seller, uint256 nftId, uint256 price, uint256 amount)` (event)
+#### `MakeOffer(address seller, uint256 nftId, uint256 price)` (event)
 
 
 

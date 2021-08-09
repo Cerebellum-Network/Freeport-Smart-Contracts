@@ -10,15 +10,14 @@ import "./TransferFees.sol";
  */
 abstract contract SimpleExchange is TransferFees {
 
-    /** Seller => NFT ID => Price => Remaining amount offered.
+    /** Seller => NFT ID => Price.
      */
-    mapping(address => mapping(uint256 => mapping(uint256 => uint256))) sellerNftPriceOffers;
+    mapping(address => mapping(uint256 => uint256)) sellerNftPriceOffers;
 
     event MakeOffer(
         address indexed seller,
         uint256 indexed nftId,
-        uint256 price,
-        uint256 amount);
+        uint256 price);
 
     event TakeOffer(
         address indexed buyer,
@@ -27,16 +26,17 @@ abstract contract SimpleExchange is TransferFees {
         uint256 price,
         uint256 amount);
 
-    /** Create an offer to sell an amount of NFTs for a price per unit.
+    /** Create an offer to sell a type of NFTs for a price per unit.
+     * All the NFTs of this type owned by the caller will be for sale.
      *
-     * To cancel, call again with an amount of 0.
+     * To cancel, call again with a price of 0.
      */
-    function makeOffer(uint256 nftId, uint256 price, uint256 amount)
+    function makeOffer(uint256 nftId, uint256 price)
     public {
         address seller = _msgSender();
-        sellerNftPriceOffers[seller][nftId][price] = amount;
+        sellerNftPriceOffers[seller][nftId] = price;
 
-        emit MakeOffer(seller, nftId, price, amount);
+        emit MakeOffer(seller, nftId, price);
     }
 
     /** Accept an offer, paying the price per unit for an amount of NFTs.
@@ -46,7 +46,9 @@ abstract contract SimpleExchange is TransferFees {
     function takeOffer(address seller, uint256 nftId, uint256 price, uint256 amount)
     public {
         // Check and update the amount offered.
-        sellerNftPriceOffers[seller][nftId][price] -= amount;
+        uint256 expectedPrice = sellerNftPriceOffers[seller][nftId];
+        require(expectedPrice != 0, "Not for sale");
+        require(price == expectedPrice, "Wrong price");
 
         address buyer = _msgSender();
 
