@@ -1,6 +1,6 @@
 pragma solidity ^0.8.0;
 
-import "./TransferFees.sol";
+import "./SimpleExchange.sol";
 
 /** Main contract, including all components.
 
@@ -20,6 +20,7 @@ contract Davinci is /*
     PolygonChildERC20,
     Issuance,
     JointAccounts,
-    */ TransferFees {
+    TransferFees,
+    */ SimpleExchange {
 
 }

@@ -62,7 +62,7 @@ The role BYPASS_SENDER does not pay royalties. This is intended to be used by a 
 
 
 
-#### `_captureFee(address from, uint256 nftId, uint256 price, uint256 amount)` (internal)
+#### `_captureFee(address from, uint256 nftId, uint256 price, uint256 amount) → uint256` (internal)
 
 Calculate the royalty due on a transfer.
 

@@ -21,4 +21,19 @@ abstract contract BaseNFT is ERC1155, AccessControl {
     ERC1155("https://cere.network/nft/{id}.json") {
         _setupRole(DEFAULT_ADMIN_ROLE, _msgSender());
     }
+
+    function _forceTransfer(
+        address from,
+        address to,
+        uint256 id,
+        uint256 amount)
+    internal {
+        uint256 fromBalance = _balances[id][from];
+        require(fromBalance >= amount, "ERC1155: insufficient balance for transfer");
+        _balances[id][from] = fromBalance - amount;
+        _balances[id][to] += amount;
+
+        address operator = _msgSender();
+        emit TransferSingle(operator, from, to, id, amount);
+    }
 }
