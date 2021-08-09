@@ -12,6 +12,13 @@ See the [build instructions](BUILD.md).
 
 ## Releases
 
+### 2021-08-09: Simple Exchange
+
+- Add a basic NFT sale functionality with `make / take` functions. This captures variable royalties based on the NFT price.
+
+Commit d4380b12 on Polygon Mumbai: [0x2f514e001361D37C75bc3Fc967e5a4e6819Eff50](https://mumbai.polygonscan.com/address/0x2f514e001361D37C75bc3Fc967e5a4e6819Eff50)
+
+
 ### 2021-07-23: Integration with meta-transactions, marketplaces, and royalties bypass
 
 - Add access control mechanism to support other features in a flexible way.
