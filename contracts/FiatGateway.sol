@@ -115,7 +115,9 @@ contract FiatGateway is AccessControl {
         uint nonce)
     public onlyRole(PAYMENT_SERVICE) {
 
-        buyCereFromUsd(penniesReceived, buyer, nonce);
+        uint boughtCere = buyCereFromUsd(penniesReceived, buyer, nonce);
+
+        require(boughtCere >= nftPrice, "Not enough Cere to cover the NFT price");
 
         uint amount = 1;
         davinci.takeOffer(buyer, seller, nftId, nftPrice, amount);
