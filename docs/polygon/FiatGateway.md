@@ -26,7 +26,7 @@ Only the rate service with the EXCHANGE_RATE_ORACLE role can change the rate.
 
 
 
-#### `withdrawCere()` (public)
+#### `withdraw() → uint256` (public)
 
 Withdraw all CERE from this contract.
 
@@ -34,15 +34,25 @@ Only accounts with DEFAULT_ADMIN_ROLE can withdraw.
 
 
 
-#### `buyFromUsd(uint256 penniesReceived, address buyer, address seller, uint256 nftId, uint256 nftPrice, uint256 nonce)` (public)
+#### `buyCereFromUsd(uint256 penniesReceived, address buyer, uint256 nonce) → uint256` (public)
 
-Execute a buy of an NFT based on a fiat payment.
+Obtain CERE based on a fiat payment.
+
+The amount of fiat is recorded, and exchanged for an amount of CERE.
 
 Only the gateway with PAYMENT_SERVICE role can report successful payments.
 
-The amount of fiat is recorded, and exchanged for an amount of Davinci currency.
 
-The currency is used to buy an NFT in the same transaction. The NFT must be available for sale from the seller in SimpleExchange.
+
+#### `buyNftFromUsd(uint256 penniesReceived, address buyer, address seller, uint256 nftId, uint256 nftPrice, uint256 nonce)` (public)
+
+Obtain CERE and buy an NFT based on a fiat payment.
+
+CERE tokens are obtained in the same way as buyCereFromUsd.
+
+Then, the tokens are used to buy an NFT in the same transaction. The NFT must be available for sale from the seller in SimpleExchange.
+
+Only the gateway with PAYMENT_SERVICE role can report successful payments.
 
 
 

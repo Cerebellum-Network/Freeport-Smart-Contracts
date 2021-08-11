@@ -51,12 +51,13 @@ contract FiatGateway is AccessControl {
       *
       * Only accounts with DEFAULT_ADMIN_ROLE can withdraw.
      */
-    function withdrawCere()
-    public onlyRole(DEFAULT_ADMIN_ROLE) {
+    function withdraw()
+    public onlyRole(DEFAULT_ADMIN_ROLE)
+    returns (uint) {
 
         address admin = _msgSender();
 
-        uint amount = davinci.balanceOf(admin, CURRENCY);
+        uint amount = davinci.balanceOf(address(this), CURRENCY);
 
         davinci.safeTransferFrom(
             address(this),
@@ -64,24 +65,22 @@ contract FiatGateway is AccessControl {
             CURRENCY,
             amount,
             "");
+
+        return amount;
     }
 
-    /** Execute a buy of an NFT based on a fiat payment.
+    /** Obtain CERE based on a fiat payment.
+      *
+      * The amount of fiat is recorded, and exchanged for an amount of CERE.
       *
       * Only the gateway with PAYMENT_SERVICE role can report successful payments.
-      *
-      * The amount of fiat is recorded, and exchanged for an amount of Davinci currency.
-      *
-      * The currency is used to buy an NFT in the same transaction. The NFT must be available for sale from the seller in SimpleExchange.
      */
-    function buyFromUsd(
+    function buyCereFromUsd(
         uint penniesReceived,
         address buyer,
-        address seller,
-        uint nftId,
-        uint nftPrice,
         uint nonce)
-    public onlyRole(PAYMENT_SERVICE) {
+    public onlyRole(PAYMENT_SERVICE)
+    returns (uint) {
         require(cerePerPenny != 0, "Exchange rate must be configured");
 
         uint cereToSend = penniesReceived * cerePerPenny;
@@ -95,6 +94,28 @@ contract FiatGateway is AccessControl {
 
         totalPenniesReceived += penniesReceived;
         totalCereSent += cereToSend;
+
+        return cereToSend;
+    }
+
+    /** Obtain CERE and buy an NFT based on a fiat payment.
+      *
+      * CERE tokens are obtained in the same way as buyCereFromUsd.
+      *
+      * Then, the tokens are used to buy an NFT in the same transaction. The NFT must be available for sale from the seller in SimpleExchange.
+      *
+      * Only the gateway with PAYMENT_SERVICE role can report successful payments.
+     */
+    function buyNftFromUsd(
+        uint penniesReceived,
+        address buyer,
+        address seller,
+        uint nftId,
+        uint nftPrice,
+        uint nonce)
+    public onlyRole(PAYMENT_SERVICE) {
+
+        buyCereFromUsd(penniesReceived, buyer, nonce);
 
         uint amount = 1;
         davinci.takeOffer(buyer, seller, nftId, nftPrice, amount);

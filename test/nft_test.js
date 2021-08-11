@@ -383,7 +383,7 @@ contract("Davinci", accounts => {
         assert.equal(balance, 1);
     });
 
-    it("buys from USD", async () => {
+    it("buys CERE from USD", async () => {
         const davinci = await Davinci.deployed();
         const gateway = await FiatGateway.deployed();
         const CURRENCY = await davinci.CURRENCY.call();
@@ -391,6 +391,52 @@ contract("Davinci", accounts => {
 
         let addressConfigured = await gateway.davinci.call();
         assert.equal(addressConfigured, davinci.address);
+
+        // Top up FiatGateway with CERE.
+        let liquidities = 1000 * UNIT;
+        let encodedLiquidities = web3.eth.abi.encodeParameter('uint256', liquidities);
+        await davinci.deposit(gateway.address, encodedLiquidities);
+
+        // Set exchange rate.
+        let cerePerPenny = 0.1 * UNIT;
+        await gateway.setExchangeRate(cerePerPenny);
+
+        // Buy the NFT after a fiat payment.
+        let priceCere = 200 * UNIT;
+        let pricePennies = priceCere / cerePerPenny;
+        await gateway.buyCereFromUsd(
+            pricePennies,
+            buyer,
+            0);
+
+        // Check all balances.
+        let balance = await davinci.balanceOf(gateway.address, CURRENCY);
+        assert.equal(balance, liquidities - priceCere);
+
+        balance = await davinci.balanceOf(buyer, CURRENCY);
+        assert.equal(balance, priceCere);
+
+        balance = await gateway.totalCereSent();
+        assert.equal(balance, priceCere);
+
+        balance = await gateway.totalPenniesReceived();
+        assert.equal(balance, pricePennies);
+
+        // Withdraw liquidities to the admin.
+        await gateway.withdraw();
+
+        balance = await davinci.balanceOf(deployer, CURRENCY);
+        assert.equal(balance, liquidities - priceCere);
+
+        // Send back the tokens to clean up.
+        await davinci.safeTransferFrom(buyer, deployer, CURRENCY, priceCere, "0x", {from: buyer});
+    });
+
+    it("buys an NFT from USD", async () => {
+        const davinci = await Davinci.deployed();
+        const gateway = await FiatGateway.deployed();
+        const CURRENCY = await davinci.CURRENCY.call();
+        const UNIT = 1e10;
 
         // Issue an NFT.
         let nftId = await davinci.issue.call(10, "0x", {from: issuer});
@@ -411,7 +457,7 @@ contract("Davinci", accounts => {
 
         // Buy the NFT after a fiat payment.
         let pricePennies = priceCere / cerePerPenny;
-        await gateway.buyFromUsd(
+        await gateway.buyNftFromUsd(
             pricePennies,
             buyer,
             issuer,
@@ -435,10 +481,8 @@ contract("Davinci", accounts => {
         balance = await davinci.balanceOf(buyer, nftId);
         assert.equal(balance, 1);
 
-        balance = await gateway.totalCereSent();
-        assert.equal(balance, priceCere);
-
-        balance = await gateway.totalPenniesReceived();
-        assert.equal(balance, pricePennies);
+        // Send back the tokens to clean up.
+        await gateway.withdraw();
+        await davinci.safeTransferFrom(issuer, deployer, CURRENCY, priceCere, "0x", {from: issuer});
     });
 });

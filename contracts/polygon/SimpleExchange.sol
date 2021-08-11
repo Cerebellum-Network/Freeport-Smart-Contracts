@@ -52,7 +52,7 @@ abstract contract SimpleExchange is TransferFees {
         require(expectedPrice != 0, "Not for sale");
         require(price == expectedPrice, "Wrong price");
 
-        // Pay. This verifies the intent of the buyer
+        // Pay. This verifies the intent of the buyer.
         uint totalPrice = price * amount;
         safeTransferFrom(buyer, seller, CURRENCY, totalPrice, "");
 
