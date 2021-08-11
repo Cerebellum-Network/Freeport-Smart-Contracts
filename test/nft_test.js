@@ -1,5 +1,6 @@
 const Davinci = artifacts.require("./Davinci.sol");
 const Forwarder = artifacts.require("MinimalForwarder");
+const FiatGateway = artifacts.require("FiatGateway");
 const log = console.log;
 const {expectEvent, expectRevert, constants} = require('@openzeppelin/test-helpers');
 const BN = require('bn.js');
@@ -285,18 +286,18 @@ contract("Davinci", accounts => {
 
         // Cannot take an offer that does not exist (wrong price).
         await expectRevert.unspecified(
-            davinci.takeOffer(issuer, nftId, price1 - 1, 1, {from: buyer}));
+            davinci.takeOffer(buyer, issuer, nftId, price1 - 1, 1, {from: buyer}));
 
-        await davinci.takeOffer(issuer, nftId, price1, 1, {from: buyer});
+        await davinci.takeOffer(buyer, issuer, nftId, price1, 1, {from: buyer});
 
         // Cannot take the offer again.
         await expectRevert.unspecified(
-            davinci.takeOffer(issuer, nftId, price1, 1, {from: buyer}));
+            davinci.takeOffer(buyer, issuer, nftId, price1, 1, {from: buyer}));
 
         // Secondary sale.
         let price2 = 300 * UNIT;
         await davinci.makeOffer(nftId, price2, {from: buyer});
-        await davinci.takeOffer(buyer, nftId, price2, 1, {from: buyer2});
+        await davinci.takeOffer(buyer2, buyer, nftId, price2, 1, {from: buyer2});
 
         let partnerFee = price1 * 10 / 100; // Primary royalty on initial price.
         let someoneFee = price2 * 5 / 100; // Secondary royalty on a resale price.
@@ -380,5 +381,64 @@ contract("Davinci", accounts => {
 
         balance = await davinci.balanceOf.call(someone, nftId);
         assert.equal(balance, 1);
+    });
+
+    it("buys from USD", async () => {
+        const davinci = await Davinci.deployed();
+        const gateway = await FiatGateway.deployed();
+        const CURRENCY = await davinci.CURRENCY.call();
+        const UNIT = 1e10;
+
+        let addressConfigured = await gateway.davinci.call();
+        assert.equal(addressConfigured, davinci.address);
+
+        // Issue an NFT.
+        let nftId = await davinci.issue.call(10, "0x", {from: issuer});
+        await davinci.issue(10, "0x", {from: issuer});
+
+        // Offer to sell.
+        let priceCere = 200 * UNIT;
+        await davinci.makeOffer(nftId, priceCere, {from: issuer});
+
+        // Top up FiatGateway with CERE.
+        let liquidities = 1000 * UNIT;
+        let encodedLiquidities = web3.eth.abi.encodeParameter('uint256', liquidities);
+        await davinci.deposit(gateway.address, encodedLiquidities);
+
+        // Set exchange rate.
+        let cerePerPenny = 0.1 * UNIT;
+        await gateway.setExchangeRate(cerePerPenny);
+
+        // Buy the NFT after a fiat payment.
+        let pricePennies = priceCere / cerePerPenny;
+        await gateway.buyFromUsd(
+            pricePennies,
+            buyer,
+            issuer,
+            nftId,
+            priceCere,
+            0);
+
+        // Check all balances.
+        let balance = await davinci.balanceOf(gateway.address, CURRENCY);
+        assert.equal(balance, liquidities - priceCere);
+
+        balance = await davinci.balanceOf(issuer, CURRENCY);
+        assert.equal(balance, priceCere);
+
+        balance = await davinci.balanceOf(buyer, CURRENCY);
+        assert.equal(balance, 0);
+
+        balance = await davinci.balanceOf(issuer, nftId);
+        assert.equal(balance, 10 - 1);
+
+        balance = await davinci.balanceOf(buyer, nftId);
+        assert.equal(balance, 1);
+
+        balance = await gateway.totalCereSent();
+        assert.equal(balance, priceCere);
+
+        balance = await gateway.totalPenniesReceived();
+        assert.equal(balance, pricePennies);
     });
 });

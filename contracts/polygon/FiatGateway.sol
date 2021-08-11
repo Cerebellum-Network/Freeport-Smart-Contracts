@@ -18,9 +18,16 @@ contract FiatGateway is AccessControl {
     /** The token ID that represents the CERE currency for all payments in this contract. */
     uint256 public constant CURRENCY = 0;
 
-    Davinci davinci;
-    uint cerePerPenny;
-    uint totalPennies;
+    Davinci public davinci;
+    uint public cerePerPenny;
+
+    /** How many USD cents were received so far, according to the payment service.
+     */
+    uint public totalPenniesReceived;
+
+    /** How many CERE tokens were sold so far.
+     */
+    uint public totalCereSent;
 
     constructor(Davinci _davinci) {
         davinci = _davinci;
@@ -68,7 +75,7 @@ contract FiatGateway is AccessControl {
       * The currency is used to buy an NFT in the same transaction. The NFT must be available for sale from the seller in SimpleExchange.
      */
     function buyFromUsd(
-        uint paidPennies,
+        uint penniesReceived,
         address buyer,
         address seller,
         uint nftId,
@@ -77,19 +84,20 @@ contract FiatGateway is AccessControl {
     public onlyRole(PAYMENT_SERVICE) {
         require(cerePerPenny != 0, "Exchange rate must be configured");
 
-        totalPennies += paidPennies;
-
-        uint cere = paidPennies * cerePerPenny;
+        uint cereToSend = penniesReceived * cerePerPenny;
 
         davinci.safeTransferFrom(
             address(this),
             buyer,
             CURRENCY,
-            cere,
+            cereToSend,
             "");
 
+        totalPenniesReceived += penniesReceived;
+        totalCereSent += cereToSend;
+
         uint amount = 1;
-        davinci.takeOffer(seller, nftId, nftPrice, amount);
+        davinci.takeOffer(buyer, seller, nftId, nftPrice, amount);
     }
 
     /** Guarantee that a version of Solidity with safe math is used.

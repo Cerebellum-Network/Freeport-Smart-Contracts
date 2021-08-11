@@ -16,11 +16,13 @@ To cancel, call again with a price of 0.
 
 
 
-#### `takeOffer(address seller, uint256 nftId, uint256 price, uint256 amount)` (public)
+#### `takeOffer(address buyer, address seller, uint256 nftId, uint256 price, uint256 amount)` (public)
 
 Accept an offer, paying the price per unit for an amount of NFTs.
 
 The offer must have been created beforehand by offerToSell.
+
+The same authorization as safeTransferFrom apply to the buyer (sender or approved operator)..
 
 
 

@@ -34,7 +34,7 @@ Only accounts with DEFAULT_ADMIN_ROLE can withdraw.
 
 
 
-#### `buyFromUsd(uint256 paidPennies, address buyer, address seller, uint256 nftId, uint256 nftPrice, uint256 nonce)` (public)
+#### `buyFromUsd(uint256 penniesReceived, address buyer, address seller, uint256 nftId, uint256 nftPrice, uint256 nonce)` (public)
 
 Execute a buy of an NFT based on a fiat payment.
 
