@@ -1,6 +1,6 @@
 pragma solidity ^0.8.0;
 
-import "./SimpleExchange.sol";
+import "./davinciParts/SimpleExchange.sol";
 
 /** Main contract, including all components.
 
