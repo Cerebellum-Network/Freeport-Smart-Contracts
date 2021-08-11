@@ -16,6 +16,12 @@ To cancel, call again with a price of 0.
 
 
 
+#### `getOffer(address seller, uint256 nftId) → uint256` (public)
+
+Return the price offered by the given seller for the given NFT type.
+
+
+
 #### `takeOffer(address buyer, address seller, uint256 nftId, uint256 price, uint256 amount)` (public)
 
 Accept an offer, paying the price per unit for an amount of NFTs.

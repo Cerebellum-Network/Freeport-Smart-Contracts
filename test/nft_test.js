@@ -284,6 +284,10 @@ contract("Davinci", accounts => {
         let price1 = 200 * UNIT;
         await davinci.makeOffer(nftId, price1, {from: issuer});
 
+        // Check offer.
+        let offer1 = await davinci.getOffer(issuer, nftId);
+        assert.equal(offer1, price1);
+
         // Cannot take an offer that does not exist (wrong price).
         await expectRevert.unspecified(
             davinci.takeOffer(buyer, issuer, nftId, price1 - 1, 1, {from: buyer}));

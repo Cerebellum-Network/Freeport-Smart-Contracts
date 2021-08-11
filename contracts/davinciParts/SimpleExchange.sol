@@ -39,6 +39,14 @@ abstract contract SimpleExchange is TransferFees {
         emit MakeOffer(seller, nftId, price);
     }
 
+    /** Return the price offered by the given seller for the given NFT type.
+     */
+    function getOffer(address seller, uint256 nftId)
+    public view returns (uint256) {
+        uint price = sellerNftPriceOffers[seller][nftId];
+        return price;
+    }
+
     /** Accept an offer, paying the price per unit for an amount of NFTs.
      *
      * The offer must have been created beforehand by offerToSell.
