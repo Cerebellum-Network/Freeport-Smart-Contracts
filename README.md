@@ -12,6 +12,15 @@ See the [build instructions](BUILD.md).
 
 ## Releases
 
+### 2021-08-11: Fiat Gateway
+
+- Add a contract to handle fiat payments and buy CERE and NFTs.
+
+Commit be6ed7dc on Polygon Mumbai:
+[Davinci](https://mumbai.polygonscan.com/address/0x4F908981A3CFdd440f7a3d114b06b1695DA8373b) and
+[Fiat Gateway](https://mumbai.polygonscan.com/address/0xf038C9F12884b4544497fE5857506D1B78E8aC41)
+
+
 ### 2021-08-09: Simple Exchange
 
 - Add a basic NFT sale functionality with `make / take` functions. This captures variable royalties based on the NFT price.
