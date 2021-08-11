@@ -1,7 +1,7 @@
 pragma solidity ^0.8.0;
 
-import "./token/ERC1155/ERC1155.sol";
-import "./access/AccessControl.sol";
+import "../token/ERC1155/ERC1155.sol";
+import "../access/AccessControl.sol";
 
 /** This contract implements NFTs.
  *
