@@ -1,38 +1,37 @@
 {
-  "name": "polygon-box",
+  "name": "davinci",
   "version": "1.0.0",
-  "description": "A sample Truffle project that allows developers to deploy to the Polygon Matic PoS chain",
+  "description": "The Davinci smart contracts",
   "main": "truffle-config.js",
   "directories": {
     "test": "test"
   },
   "scripts": {
-    "test": "truffle test",
-    "test:polygon": "truffle test --config=truffle-config.polygon.js --network=$npm_config_network",
-    "compile:polygon": "truffle compile --config=truffle-config.polygon.js",
-    "migrate:polygon": "truffle migrate --config=truffle-config.polygon.js --network=$npm_config_network",
-    "flatten:polygon": "npx poa-solidity-flattener contracts/polygon/Davinci.sol",
+    "test": "truffle test --network=$npm_config_network",
+    "compile": "truffle compile",
+    "migrate": "truffle migrate --network=$npm_config_network",
+    "flatten": "npx poa-solidity-flattener contracts/Davinci.sol",
     "doc": "npx solidity-docgen --solc-module=solc-0.8 -t doc_template -o docs"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/truffle-box/polygon-box.git"
+    "url": "git+https://github.com/Cerebellum-Network/davinci_nft.git"
   },
   "keywords": [
-    "Matic",
+    "Cere",
     "Polygon",
-    "Ethereum",
-    "Truffle",
-    "dapp"
+    "Davinci",
+    "NFT"
   ],
-  "author": "Faina Shalts",
+  "author": "Aurélien Nicolas and team",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/truffle-box/polygon-box/issues"
+    "url": "https://github.com/Cerebellum-Network/davinci_nft/issues"
   },
-  "homepage": "https://github.com/truffle-box/polygon-box#readme",
+  "homepage": "https://github.com/Cerebellum-Network/davinci_nft#readme",
   "devDependencies": {
     "@maticnetwork/maticjs": "^2.0.40",
+    "@openzeppelin/contracts": "4.1.0",
     "@openzeppelin/test-helpers": "^0.5.12",
     "@poanet/solidity-flattener": "^3.0.6",
     "@truffle/hdwallet-provider": "^1.4.1",
@@ -41,6 +40,5 @@
     "solidity-docgen": "^0.5.13"
   },
   "dependencies": {
-    "@openzeppelin/contracts": "4.1.0"
   }
 }
