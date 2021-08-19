@@ -9,7 +9,7 @@ id=$(docker run -d -p 8545:8545 \
   --network=bridge \
   -v "$PWD"/artifacts/db:/app/db \
   -v "$PWD"/artifacts/contracts:/app/davinci_nft/build/contracts \
-  davinci:latest \
+  338287888375.dkr.ecr.us-west-2.amazonaws.com/davinci-nft:runtime \
   --db /app/db \
   --mnemonic "$MNEMONIC" \
   --networkId "$NETWORK_ID")
