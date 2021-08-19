@@ -2,22 +2,18 @@
 
 export MNEMONIC="${1:-'gesture rather obey video awake genuine patient base soon parrot upset lounge'}"
 export NETWORK_ID="${2:-5777}"
-export NPM_CONFIG_NETWORK="${2:-development}"
+export NPM_CONFIG_NETWORK="${3:-development}"
 
 #Run ganache
-id=$(docker run -d -p 8545:8545 \
+id=$(docker run -d \
+  -p 8545:8545 \
   --network=bridge \
   -v "$PWD"/artifacts/db:/app/db \
   -v "$PWD"/artifacts/contracts:/app/davinci_nft/build/contracts \
-  338287888375.dkr.ecr.us-west-2.amazonaws.com/davinci-nft:runtime \
+  338287888375.dkr.ecr.us-west-2.amazonaws.com/davinci-nft:builder \
   --db /app/db \
   --mnemonic "$MNEMONIC" \
   --networkId "$NETWORK_ID")
-
-#Get ganache docker address and setup ganache url
-export GANACHE_IP=$(docker inspect --format='{{(index .NetworkSettings.Networks "bridge").IPAddress}}' "$id")
-export GANACHE_URL="http://${GANACHE_IP}:8545"
-echo $GANACHE_URL
 
 #Deploy contracts
 docker exec "$id" sh -c "cd /app/davinci_nft && npm_config_network=$NPM_CONFIG_NETWORK npm run migrate"
@@ -30,9 +26,14 @@ curl -H "Content-Type: application/json" -X POST --data \
 #Run tests
 docker exec "$id" sh -c "cd /app/davinci_nft && npm_config_network=$NPM_CONFIG_NETWORK npm run test"
 
-#Revert to snapshot
+#Revert to snapshot, after tests
 curl -H "Content-Type: application/json" -X POST --data \
   '{"id":1337,"jsonrpc":"2.0","method":"evm_revert","params":["0x1"]}' \
+  http://localhost:8545
+
+#Create snapshot for test purposes
+curl -H "Content-Type: application/json" -X POST --data \
+  '{"id":1337,"jsonrpc":"2.0","method":"evm_snapshot","params":[]}' \
   http://localhost:8545
 
 #Kill ganache docker container

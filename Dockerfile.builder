@@ -1,11 +1,14 @@
 FROM node:alpine as builder
 LABEL maintainer="team@cere.network"
 LABEL description="This is the build stage install all dependecies"
+
 WORKDIR /davinci_nft
 COPY . /davinci_nft
-# Install ganache-cli globally and all dependecies
+
+# Install ganache-cli globally and all dependencies
 RUN npm install -g truffle ganache-cli
 RUN npm install
+
 # Compile polygon
 RUN npm run compile
 
