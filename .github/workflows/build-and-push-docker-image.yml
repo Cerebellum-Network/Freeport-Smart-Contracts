@@ -33,5 +33,5 @@ jobs:
           . ./run-ganache-deploy-copy-artifacts.sh
 
           echo "Build ganance with snapshot version of deployed contract"
-          docker build -f Dockerfile.runtime . -t $ECR_REGISTRY/$ECR_REPOSITORY:latest
+          sudo docker build -f Dockerfile.runtime . -t $ECR_REGISTRY/$ECR_REPOSITORY:latest
           echo "::set-output name=image::$ECR_REGISTRY/$ECR_REPOSITORY:latest"
