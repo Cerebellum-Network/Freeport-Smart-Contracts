@@ -93,3 +93,13 @@ Verify on Polyscan using the information in Davinci.json and the flattened code:
     npm run flatten
 
 More instructions can be found in the original [README of the template](BUILD.md).
+
+## How to use test image
+  ### 1. To copy the latest snapshot of db with deployed contract and built contracts use 
+ `sudo . ./copy-artifacts.sh dir_path_to (copy to your directory)`\
+ `sudo . ./copy-artifacts.sh (copy to default ./artifacts directory)`
+
+### 2. To run ganache cli locally with already deployed contract use
+`export MNEMONIC='gesture rather obey video awake genuine patient base soon parrot upset lounge'`\
+`docker run -d -p 8545:8545 --db /app/db --mnemonic $MNEMONIC --networkId $NETWORK_ID`
+
