@@ -2,4 +2,4 @@ FROM trufflesuite/ganache-cli:latest
 LABEL maintainer="team@cere.network"
 LABEL description="This is the build stage for copy snapshot and artifacts to official ganache cli image"
 
-COPY artifacts /app/artifacts
+COPY ./artifacts /app
