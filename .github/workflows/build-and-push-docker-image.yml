@@ -4,7 +4,7 @@ on:
     branches:
       - feature/dockerizeContracts
 env:
-  ECR_REPOSITORY: davinci-nft
+  ECR_REPOSITORY: crb-davinci-nft-test
 jobs:
   build-and-push:
     runs-on: ubuntu-18.04
@@ -34,4 +34,8 @@ jobs:
 
           echo "Build ganance with snapshot version of deployed contract"
           sudo docker build -f Dockerfile.runtime . -t $ECR_REGISTRY/$ECR_REPOSITORY:latest
+          echo "::set-output name=image::$ECR_REGISTRY/$ECR_REPOSITORY:latest"
+
+          echo "Push to docker registry"
+          docker push $ECR_REGISTRY/$ECR_REPOSITORY:latest
           echo "::set-output name=image::$ECR_REGISTRY/$ECR_REPOSITORY:latest"
