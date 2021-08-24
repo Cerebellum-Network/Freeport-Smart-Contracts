@@ -100,6 +100,7 @@ More instructions can be found in the original [README of the template](BUILD.md
  `sudo . ./copy-artifacts.sh (copy to default ./artifacts directory)`
 
 ### 2. To run ganache cli locally with already deployed contract use
-`export MNEMONIC='gesture rather obey video awake genuine patient base soon parrot upset lounge'`\
-`docker run -d -p 8545:8545 --db /app/db --mnemonic $MNEMONIC --networkId $NETWORK_ID`
+`export MNEMONIC='spatial spin account funny glue cancel cushion twelve inmate author night dust'`\
+`export NETWORK_ID=5777`\
+`docker run -d -p 8545:8545 338287888375.dkr.ecr.us-west-2.amazonaws.com/crb-davinci-nft-test:latest --db /app/db --mnemonic $MNEMONIC --networkId $NETWORK_ID`
 

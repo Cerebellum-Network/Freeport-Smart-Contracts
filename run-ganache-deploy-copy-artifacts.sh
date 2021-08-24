@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-export MNEMONIC="${1:-'gesture rather obey video awake genuine patient base soon parrot upset lounge'}"
+export MNEMONIC="${1:-'spatial spin account funny glue cancel cushion twelve inmate author night dust'}"
 export NETWORK_ID="${2:-5777}"
 export NPM_CONFIG_NETWORK="${3:-development}"
 
