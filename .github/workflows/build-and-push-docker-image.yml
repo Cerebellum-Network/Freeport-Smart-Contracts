@@ -1,0 +1,41 @@
+name: Build and push image to ECR
+on:
+  push:
+    branches:
+      - master
+env:
+  ECR_REPOSITORY: crb-davinci-nft-test
+jobs:
+  build-and-push:
+    runs-on: ubuntu-18.04
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v1
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: us-west-2
+      - name: Login to Amazon ECR
+        id: login-ecr
+        uses: aws-actions/amazon-ecr-login@v1
+      - name: Build and push image
+        env:
+          ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+        run: |
+          echo "Installing helper packaging curl wget findutils jq"
+          sudo apt-get install curl wget findutils jq
+
+          echo "Build -> Deploy -> Copy artifacts"
+          docker build -f Dockerfile.builder . -t $ECR_REGISTRY/$ECR_REPOSITORY:builder
+          echo "::set-output name=image::$ECR_REGISTRY/$ECR_REPOSITORY:builder"
+          . ./run-ganache-deploy-copy-artifacts.sh
+
+          echo "Build ganance with snapshot version of deployed contract"
+          sudo docker build -f Dockerfile.runtime . -t $ECR_REGISTRY/$ECR_REPOSITORY:latest
+          echo "::set-output name=image::$ECR_REGISTRY/$ECR_REPOSITORY:latest"
+
+          echo "Push to docker registry"
+          docker push $ECR_REGISTRY/$ECR_REPOSITORY:latest
+          echo "::set-output name=image::$ECR_REGISTRY/$ECR_REPOSITORY:latest"

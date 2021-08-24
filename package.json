@@ -38,7 +38,5 @@
     "dotenv": "^9.0.0",
     "solc-0.8": "npm:solc@0.8.4",
     "solidity-docgen": "^0.5.13"
-  },
-  "dependencies": {
   }
 }
