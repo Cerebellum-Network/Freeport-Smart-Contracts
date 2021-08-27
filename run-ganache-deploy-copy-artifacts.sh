@@ -12,12 +12,13 @@ id=$(docker run -d \
   -v "$PWD"/artifacts/contracts:/app/davinci_nft/build/contracts \
   338287888375.dkr.ecr.us-west-2.amazonaws.com/crb-davinci-nft-test:builder \
   --db /app/db \
+  --account_keys_path /app/keys.json \
   --mnemonic "$MNEMONIC" \
   --networkId "$NETWORK_ID")
 
 #Deploy contracts
 docker exec "$id" sh -c "cd /app/davinci_nft && npm_config_network=$NPM_CONFIG_NETWORK npm run migrate"
-
+docker cp "$id":/app/keys.json ./artifacts/keys.json
 #Create snapshot
 curl -H "Content-Type: application/json" -X POST --data \
   '{"id":1337,"jsonrpc":"2.0","method":"evm_snapshot","params":[]}' \
