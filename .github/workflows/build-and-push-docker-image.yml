@@ -2,7 +2,7 @@ name: Build and push image to ECR
 on:
   push:
     branches:
-      - master
+      - feature/smallFixForDockerizeContracts
 env:
   ECR_REPOSITORY: crb-davinci-nft-test
 jobs:
@@ -30,7 +30,7 @@ jobs:
           echo "Build -> Deploy -> Copy artifacts"
           docker build -f Dockerfile.builder . -t $ECR_REGISTRY/$ECR_REPOSITORY:builder
           echo "::set-output name=image::$ECR_REGISTRY/$ECR_REPOSITORY:builder"
-          . ./run-ganache-deploy-copy-artifacts.sh
+          sudo ./run-ganache-deploy-copy-artifacts.sh
 
           echo "Build ganance with snapshot version of deployed contract"
           sudo docker build -f Dockerfile.runtime . -t $ECR_REGISTRY/$ECR_REPOSITORY:latest
