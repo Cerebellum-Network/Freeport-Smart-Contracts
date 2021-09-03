@@ -10,6 +10,15 @@ See the [documentation](docs/Davinci.md) (regenerate with `npm run doc`).
 
 ## Releases
 
+### 2021-09-03: Fiat Gateway and Simple Exchange
+
+- Validate that enough CERE were bought. See [FiatGateway](docs/FiatGateway.md).
+- Add getOffer function to get the NFT price. See [Davinci](contracts/Davinci.sol).
+
+Commit e8d42c55 on Polygon Mumbai:
+[Davinci](https://mumbai.polygonscan.com/address/0x411b7f7BB3B3137437A34fE2C7644d56c96EeA39) and
+[Fiat Gateway](https://mumbai.polygonscan.com/address/0xBa51587d0a03dD07a4559823409843aFa49cdEd3)
+
 ### 2021-08-11: Fiat Gateway
 
 - Add a contract to handle fiat payments and buy CERE and NFTs. See [FiatGateway](docs/FiatGateway.md).
