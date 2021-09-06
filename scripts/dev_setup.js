@@ -27,6 +27,7 @@ module.exports = async function (done) {
         "0x6d2b28389d3153689c57909829dFCf6241d36388", // Evgeny
         "0x1Bf6FCa28253A1257e4B5B3440F7fbE0c59D1546", // Sergey
         "0x51c5590504251A5993Ba6A46246f87Fa0eaE5897", // Aurel
+        "0xd1BA02B47986057Ca8d74b75705A8d1E1006D4f5", // Ruslan
     ];
 
     let amount = 100e3 * 1e10 // 100k with 10 decimals;
