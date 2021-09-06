@@ -9,6 +9,8 @@ import "./Davinci.sol";
   * It must hold a balance of CERE recognized by Davinci.
   *
   * This contract uses the SimpleExchange API to buy NFTs.
+  *
+  * This contract is operational only when the exchange rate is set to a non-zero value.
  */
 contract FiatGateway is AccessControl {
 
@@ -19,15 +21,22 @@ contract FiatGateway is AccessControl {
     uint256 public constant CURRENCY = 0;
 
     Davinci public davinci;
-    uint public cerePerPenny;
+    uint cereUnitsPerPenny;
 
     /** How many USD cents were received so far, according to the payment service.
      */
     uint public totalPenniesReceived;
 
-    /** How many CERE tokens were sold so far.
+    /** How many CERE Units were sold so far.
      */
-    uint public totalCereSent;
+    uint public totalCereUnitsSent;
+
+    /** An event emitted when the exchange rate was set to a new value.
+     *
+     * The rate is given as CERE Units (with 10 decimals) per USD cent (1 penny).
+     */
+    event SetExchangeRate(
+        uint256 cereUnitsPerPenny);
 
     constructor(Davinci _davinci) {
         davinci = _davinci;
@@ -37,14 +46,23 @@ contract FiatGateway is AccessControl {
 
     /** Set the exchange rate between fiat (USD) and Davinci currency (CERE).
       *
-      * The rate is given as number of CERE (with 10 decimals) per USD cent (1 penny).
+      * The rate is given as number of CERE Units (with 10 decimals) per USD cent (1 penny).
       *
       * Only the rate service with the EXCHANGE_RATE_ORACLE role can change the rate.
      */
-    function setExchangeRate(uint _cerePerPenny)
+    function setExchangeRate(uint _cereUnitsPerPenny)
     public onlyRole(EXCHANGE_RATE_ORACLE) {
 
-        cerePerPenny = _cerePerPenny;
+        cereUnitsPerPenny = _cereUnitsPerPenny;
+
+        emit SetExchangeRate(_cereUnitsPerPenny);
+    }
+
+    /** Get the current exchange rate in CERE Units (with 10 decimals) per USD cent (1 penny).
+     */
+    function getExchangeRate()
+    public view returns (uint) {
+        return cereUnitsPerPenny;
     }
 
     /** Withdraw all CERE from this contract.
@@ -81,9 +99,9 @@ contract FiatGateway is AccessControl {
         uint nonce)
     public onlyRole(PAYMENT_SERVICE)
     returns (uint) {
-        require(cerePerPenny != 0, "Exchange rate must be configured");
+        require(cereUnitsPerPenny != 0, "Exchange rate must be configured");
 
-        uint cereToSend = penniesReceived * cerePerPenny;
+        uint cereToSend = penniesReceived * cereUnitsPerPenny;
 
         davinci.safeTransferFrom(
             address(this),
@@ -93,7 +111,7 @@ contract FiatGateway is AccessControl {
             "");
 
         totalPenniesReceived += penniesReceived;
-        totalCereSent += cereToSend;
+        totalCereUnitsSent += cereToSend;
 
         return cereToSend;
     }

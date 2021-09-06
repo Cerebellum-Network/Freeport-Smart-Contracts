@@ -7,6 +7,8 @@ It must hold a balance of CERE recognized by Davinci.
 
 This contract uses the SimpleExchange API to buy NFTs.
 
+This contract is operational only when the exchange rate is set to a non-zero value.
+
 
 
 
@@ -16,13 +18,19 @@ This contract uses the SimpleExchange API to buy NFTs.
 
 
 
-#### `setExchangeRate(uint256 _cerePerPenny)` (public)
+#### `setExchangeRate(uint256 _cereUnitsPerPenny)` (public)
 
 Set the exchange rate between fiat (USD) and Davinci currency (CERE).
 
-The rate is given as number of CERE (with 10 decimals) per USD cent (1 penny).
+The rate is given as number of CERE Units (with 10 decimals) per USD cent (1 penny).
 
 Only the rate service with the EXCHANGE_RATE_ORACLE role can change the rate.
+
+
+
+#### `getExchangeRate() → uint256` (public)
+
+Get the current exchange rate in CERE Units (with 10 decimals) per USD cent (1 penny).
 
 
 
@@ -60,6 +68,14 @@ Only the gateway with PAYMENT_SERVICE role can report successful payments.
 
 Guarantee that a version of Solidity with safe math is used.
 
+
+
+
+#### `SetExchangeRate(uint256 cereUnitsPerPenny)` (event)
+
+An event emitted when the exchange rate was set to a new value.
+
+The rate is given as CERE Units (with 10 decimals) per USD cent (1 penny).
 
 
 
