@@ -14,11 +14,25 @@ abstract contract SimpleExchange is TransferFees {
      */
     mapping(address => mapping(uint256 => uint256)) sellerNftPriceOffers;
 
+    /** An event emitted when an account `seller` has offered to sell a type of NFT
+     * at a given price.
+     *
+     * This replaces previous offers by the same seller on the same NFT ID, if any.
+     * A price of 0 means "no offer" and the previous offer is cancelled.
+     *
+     * An offer does not imply that the seller owns any amount of this NFT.
+     * An offer remains valid until cancelled, for the entire balance at a given time,
+     * regardless of incoming and outgoing transfers on the seller account.
+     */
     event MakeOffer(
         address indexed seller,
         uint256 indexed nftId,
         uint256 price);
 
+    /** An offer of `seller` was taken by `buyer`.
+     * The transfers of `amount` NFTs of type `nftId`
+     * against `amount * price` of CERE Units were executed.
+     */
     event TakeOffer(
         address indexed buyer,
         address indexed seller,

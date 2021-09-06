@@ -403,9 +403,17 @@ contract("Davinci", accounts => {
 
         // Set exchange rate.
         let cerePerPenny = 0.1 * UNIT;
-        await gateway.setExchangeRate(cerePerPenny);
+        let receipt = await gateway.setExchangeRate(cerePerPenny);
 
-        // Buy the NFT after a fiat payment.
+        // Verify.
+        expectEvent(receipt, 'SetExchangeRate', {
+            cereUnitsPerPenny: new BN(cerePerPenny),
+        });
+
+        let currentCerePerPenny = await gateway.getExchangeRate();
+        assert.equal(currentCerePerPenny, cerePerPenny);
+
+        // Buy some CERE after a fiat payment.
         let priceCere = 200 * UNIT;
         let pricePennies = priceCere / cerePerPenny;
         await gateway.buyCereFromUsd(
@@ -420,7 +428,7 @@ contract("Davinci", accounts => {
         balance = await davinci.balanceOf(buyer, CURRENCY);
         assert.equal(balance, priceCere);
 
-        balance = await gateway.totalCereSent();
+        balance = await gateway.totalCereUnitsSent();
         assert.equal(balance, priceCere);
 
         balance = await gateway.totalPenniesReceived();
