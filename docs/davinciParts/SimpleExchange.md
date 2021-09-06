@@ -26,7 +26,7 @@ Return the price offered by the given seller for the given NFT type.
 
 Accept an offer, paying the price per unit for an amount of NFTs.
 
-The offer must have been created beforehand by offerToSell.
+The offer must have been created beforehand by makeOffer.
 
 The same authorization as safeTransferFrom apply to the buyer (sender or approved operator)..
 

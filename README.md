@@ -10,6 +10,14 @@ See the [documentation](docs/Davinci.md) (regenerate with `npm run doc`).
 
 ## Releases
 
+### 2021-09-06: Exchange rate event and getter
+
+- Add event SetExchangeRate and function getExchangeRate.
+
+Commit 07c8ad0f on Polygon Mumbai:
+[Davinci](https://mumbai.polygonscan.com/address/0xC7066eCAd7304Bed38E0b07aD8B9AD4dac92cb2B) and
+[Fiat Gateway](https://mumbai.polygonscan.com/address/0xe4708fcCEA49b9305f48901bc2195664dC198097)
+
 ### 2021-09-03: Fiat Gateway and Simple Exchange
 
 - Validate that enough CERE were bought. See [FiatGateway](docs/FiatGateway.md).
