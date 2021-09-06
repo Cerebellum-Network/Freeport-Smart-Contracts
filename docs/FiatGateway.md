@@ -52,7 +52,7 @@ Only the gateway with PAYMENT_SERVICE role can report successful payments.
 
 
 
-#### `buyNftFromUsd(uint256 penniesReceived, address buyer, address seller, uint256 nftId, uint256 nftPrice, uint256 nonce)` (public)
+#### `buyNftFromUsd(uint256 penniesReceived, address buyer, address seller, uint256 nftId, uint256 expectedPriceOrZero, uint256 nonce)` (public)
 
 Obtain CERE and buy an NFT based on a fiat payment.
 
@@ -61,6 +61,9 @@ CERE tokens are obtained in the same way as buyCereFromUsd.
 Then, the tokens are used to buy an NFT in the same transaction. The NFT must be available for sale from the seller in SimpleExchange.
 
 Only the gateway with PAYMENT_SERVICE role can report successful payments.
+
+The parameter expectedPriceOrZero can be used to validate the price that the buyer expects to pay. This prevents
+a race condition with makeOffer or setExchangeRate. Pass 0 to disable this validation and accept any current price.
 
 
 

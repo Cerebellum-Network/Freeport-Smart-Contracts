@@ -123,22 +123,25 @@ contract FiatGateway is AccessControl {
       * Then, the tokens are used to buy an NFT in the same transaction. The NFT must be available for sale from the seller in SimpleExchange.
       *
       * Only the gateway with PAYMENT_SERVICE role can report successful payments.
+     *
+     * The parameter expectedPriceOrZero can be used to validate the price that the buyer expects to pay. This prevents
+     * a race condition with makeOffer or setExchangeRate. Pass 0 to disable this validation and accept any current price.
      */
     function buyNftFromUsd(
         uint penniesReceived,
         address buyer,
         address seller,
         uint nftId,
-        uint nftPrice,
+        uint expectedPriceOrZero,
         uint nonce)
     public onlyRole(PAYMENT_SERVICE) {
 
         uint boughtCere = buyCereFromUsd(penniesReceived, buyer, nonce);
 
-        require(boughtCere >= nftPrice, "Not enough Cere to cover the NFT price");
+        require(boughtCere >= expectedPriceOrZero, "Received fewer Cere than expected");
 
         uint amount = 1;
-        davinci.takeOffer(buyer, seller, nftId, nftPrice, amount);
+        davinci.takeOffer(buyer, seller, nftId, expectedPriceOrZero, amount);
     }
 
     /** Guarantee that a version of Solidity with safe math is used.

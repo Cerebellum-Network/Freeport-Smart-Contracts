@@ -65,14 +65,17 @@ abstract contract SimpleExchange is TransferFees {
      *
      * The offer must have been created beforehand by makeOffer.
      *
-     * The same authorization as safeTransferFrom apply to the buyer (sender or approved operator)..
+     * The same authorization as safeTransferFrom apply to the buyer (sender or approved operator).
+     *
+     * The parameter expectedPriceOrZero can be used to validate the price that the buyer expects to pay. This prevents
+     * a race condition with makeOffer or setExchangeRate. Pass 0 to disable this validation and accept any current price.
      */
-    function takeOffer(address buyer, address seller, uint256 nftId, uint256 price, uint256 amount)
+    function takeOffer(address buyer, address seller, uint256 nftId, uint256 expectedPriceOrZero, uint256 amount)
     public {
         // Check and update the amount offered.
-        uint256 expectedPrice = sellerNftPriceOffers[seller][nftId];
-        require(expectedPrice != 0, "Not for sale");
-        require(price == expectedPrice, "Wrong price");
+        uint256 price = sellerNftPriceOffers[seller][nftId];
+        require(price != 0, "Not for sale");
+        require(expectedPriceOrZero == 0 || expectedPriceOrZero == price, "Unexpected price");
 
         // Pay. This verifies the intent of the buyer.
         uint totalPrice = price * amount;
