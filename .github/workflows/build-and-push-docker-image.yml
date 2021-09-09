@@ -3,7 +3,7 @@ on:
   push:
     branches:
       - master
-      - feature/addTriggerForE2eTests
+
 env:
   ECR_REPOSITORY: crb-davinci-nft-test
   IMAGE_TAG: ${{ github.sha }}
