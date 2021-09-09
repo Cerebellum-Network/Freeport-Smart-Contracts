@@ -3,8 +3,10 @@ on:
   push:
     branches:
       - master
+      - feature/addTriggerForE2eTests
 env:
   ECR_REPOSITORY: crb-davinci-nft-test
+  IMAGE_TAG: ${{ github.sha }}
 jobs:
   build-and-push:
     runs-on: ubuntu-18.04
@@ -33,9 +35,26 @@ jobs:
           sudo ./run-ganache-deploy-copy-artifacts.sh
 
           echo "Build ganance with snapshot version of deployed contract"
-          sudo docker build -f Dockerfile.runtime . -t $ECR_REGISTRY/$ECR_REPOSITORY:latest
-          echo "::set-output name=image::$ECR_REGISTRY/$ECR_REPOSITORY:latest"
+          sudo docker build -f Dockerfile.runtime -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
+          echo "::set-output name=image::$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG"
+          docker image tag $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG $ECR_REGISTRY/$ECR_REPOSITORY:latest
 
           echo "Push to docker registry"
+          docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
           docker push $ECR_REGISTRY/$ECR_REPOSITORY:latest
-          echo "::set-output name=image::$ECR_REGISTRY/$ECR_REPOSITORY:latest"
+          echo "::set-output name=image::$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG"
+
+  trigger:
+    needs: build-and-push
+    strategy:
+      matrix:
+        repo: ['Cerebellum-Network/e2e-tests']
+    runs-on: ubuntu-latest
+    steps:
+      - name: Trigger Cerebellum-Network/e2e-tests repository
+        uses: peter-evans/repository-dispatch@v1
+        with:
+          token: ${{ secrets.TRIGGER_GITHUB_TOKEN }}
+          repository: ${{ matrix.repo }}
+          event-type: DAVINCI_NFT_VERSION_TRIGGER
+          client-payload: '{"DAVINCI_NFT_VERSION": "${{ github.sha }}"}'
