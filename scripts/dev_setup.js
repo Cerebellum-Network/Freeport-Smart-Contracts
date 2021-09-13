@@ -16,11 +16,7 @@ module.exports = async function (done) {
     log("Operating on FiatGateway contract", gateway.address);
     log("From admin account", admin);
 
-    const EXCHANGE_RATE_ORACLE = await gateway.EXCHANGE_RATE_ORACLE.call();
     const PAYMENT_SERVICE = await gateway.PAYMENT_SERVICE.call();
-
-    log("Give the permission to change the exchange rate to Admin", admin);
-    await gateway.grantRole(EXCHANGE_RATE_ORACLE, admin);
 
     log("Set an exchange rate of 0.1 token for $0.01");
     await gateway.setExchangeRate(0.1e10);

@@ -10,6 +10,22 @@ See the [documentation](docs/Davinci.md) (regenerate with `npm run doc`).
 
 ## Releases
 
+### 2021-09-13: Staging deployment
+
+- Reduce permissions in migrate and dev_setup scripts.
+
+Commit 7eb3e339 deployed on Polygon Mumbai.
+
+Contracts [Davinci](https://mumbai.polygonscan.com/address/0xAD56017BAD84Fa4Eab489314C1e158C6adaca598) and
+[Fiat Gateway](https://mumbai.polygonscan.com/address/0x7B7e644c49D6C1e7C4af63eFB8cAD382a7b397fB).
+
+[Fiat-to-NFT Service Account](https://mumbai.polygonscan.com/address/0xc0DAe4aE8d21250a830B2A79314c9D43cAeab145) (
+see [dev_setup](scripts/dev_setup.js)).
+
+[Admin Account](https://mumbai.polygonscan.com/address/0x51c5590504251A5993Ba6A46246f87Fa0eaE5897) (Aurel).
+
+Exchange rate of 0.1 CERE_stage for $0.01.
+
 ### 2021-09-06: Exchange rate event and getter
 
 - Add event SetExchangeRate and function getExchangeRate.
@@ -112,11 +128,14 @@ Verify on Polyscan using the information in Davinci.json and the flattened code:
 More instructions can be found in the original [README of the template](BUILD.md).
 
 ## How to use test image
-  ### 1. To copy the latest snapshot of db with deployed contract and built contracts use 
- `sudo . ./copy-artifacts.sh dir_path_to (copy to your directory)`\
- `sudo . ./copy-artifacts.sh (copy to default ./artifacts directory)`
+
+### 1. To copy the latest snapshot of db with deployed contract and built contracts use
+
+`sudo . ./copy-artifacts.sh dir_path_to (copy to your directory)`\
+`sudo . ./copy-artifacts.sh (copy to default ./artifacts directory)`
 
 ### 2. To run ganache cli locally with already deployed contract use
+
 `export MNEMONIC='spatial spin account funny glue cancel cushion twelve inmate author night dust'`\
 `export NETWORK_ID=5777`\
 `docker run -d -p 8545:8545 338287888375.dkr.ecr.us-west-2.amazonaws.com/crb-davinci-nft-test:latest --db /app/db --mnemonic $MNEMONIC --networkId $NETWORK_ID`
