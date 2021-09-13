@@ -4,6 +4,10 @@ const log = console.log;
 
 module.exports = async function (done) {
 
+    // A fixed account for tests.
+    // Mnemonic: "spatial spin account funny glue cancel cushion twelve inmate author night dust"
+    let serviceAccount = "0xc0DAe4aE8d21250a830B2A79314c9D43cAeab145";
+
     let accounts = await web3.eth.getAccounts();
     let admin = accounts[0];
     let davinci = await Davinci.deployed();
@@ -21,9 +25,12 @@ module.exports = async function (done) {
     log("Set an exchange rate of 0.1 token for $0.01");
     await gateway.setExchangeRate(0.1e10);
 
+    log("Give the permission to execute payments to the service account", serviceAccount);
+    await gateway.grantRole(PAYMENT_SERVICE, serviceAccount);
+
     let devAccounts = [
         gateway.address,
-        "0xc0DAe4aE8d21250a830B2A79314c9D43cAeab145", // Fixed account for tests (mnemonic "spatial spin account funny glue cancel cushion twelve inmate author night dust").
+        serviceAccount,
         "0x6d2b28389d3153689c57909829dFCf6241d36388", // Evgeny
         "0x1Bf6FCa28253A1257e4B5B3440F7fbE0c59D1546", // Sergey
         "0x51c5590504251A5993Ba6A46246f87Fa0eaE5897", // Aurel
@@ -36,9 +43,6 @@ module.exports = async function (done) {
     for (let devAccount of devAccounts) {
         await davinci.deposit(devAccount, encodedAmount);
         log("Sent 100k of currency to", devAccount);
-
-        log("Give the permission to execute payments to", devAccount);
-        await gateway.grantRole(PAYMENT_SERVICE, devAccount);
     }
 
     done();
