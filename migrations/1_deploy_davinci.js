@@ -1,4 +1,5 @@
 const Davinci = artifacts.require("Davinci");
+const log = console.log;
 
 module.exports = async function (deployer, network, accounts) {
   await deployer.deploy(Davinci);
