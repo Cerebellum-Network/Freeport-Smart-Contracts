@@ -24,8 +24,8 @@ module.exports = async function (deployer, network, accounts) {
     log("Give the permission to change the exchange rate to Admin.");
     await gateway.grantRole(EXCHANGE_RATE_ORACLE, admin);
 
-    // log("Give the permission to execute payments to Admin.");
-    // await gateway.grantRole(PAYMENT_SERVICE, admin);
+    log("Give the permission to execute payments to Admin.");
+    await gateway.grantRole(PAYMENT_SERVICE, admin);
 
     log();
 };
