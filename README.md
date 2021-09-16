@@ -19,8 +19,8 @@ Commit 7eb3e339 deployed on Polygon Mumbai.
 Contracts [Davinci](https://mumbai.polygonscan.com/address/0xAD56017BAD84Fa4Eab489314C1e158C6adaca598) and
 [Fiat Gateway](https://mumbai.polygonscan.com/address/0x7B7e644c49D6C1e7C4af63eFB8cAD382a7b397fB).
 
-[Fiat-to-NFT Service Account](https://mumbai.polygonscan.com/address/0xc0DAe4aE8d21250a830B2A79314c9D43cAeab145) (
-see [dev_setup](scripts/dev_setup.js)).
+[Fiat-to-NFT Service Account](https://mumbai.polygonscan.com/address/0x50a2Cf81C5F8991780Ebc80222b835ecC4010956) (
+see [stage_setup](scripts/stage_setup.js)).
 
 [Admin Account](https://mumbai.polygonscan.com/address/0x51c5590504251A5993Ba6A46246f87Fa0eaE5897) (Aurel).
 
@@ -113,11 +113,17 @@ Write down the contract address and current version in the Releases section abov
 Commit these files in `build/contracts/`: `Davinci.json`, `MinimalForwarder.json`, `BypassForwarder.json`
 , `FiatGateway.json`.
 
-On testnet, setup testing accounts:
+For **dev** on Polygon testnet, setup test accounts:
 
     truffle exec scripts/dev_setup.js --network=polygon_testnet
 
-On testnet, setup the Polygon bridge:
+For **staging** on Polygon testnet, setup test accounts:
+
+    truffle exec scripts/stage_setup.js --network=polygon_testnet
+
+The script will print the address of the different accounts, including the fiat-to-nft service account.
+
+(optional) For tests or staging on Polygon testnet, setup the Polygon bridge:
 
     truffle exec scripts/dev_bridge.js --network=polygon_testnet
 
