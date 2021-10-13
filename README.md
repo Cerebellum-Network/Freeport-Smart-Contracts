@@ -146,3 +146,12 @@ More instructions can be found in the original [README of the template](BUILD.md
 `export NETWORK_ID=5777`\
 `docker run -d -p 8545:8545 338287888375.dkr.ecr.us-west-2.amazonaws.com/crb-davinci-nft-test:latest --db /app/db --mnemonic $MNEMONIC --networkId $NETWORK_ID`
 
+## How update davinci-sdk
+
+1. Open [davinci-sdk](https://github.com/Cerebellum-Network/davinci-sdk) project, switch to master branch
+2. Copy smart-contract artifacts from `davinci_nft/build/polygon-contracts` to `davinci-sdk/src/artifacts`
+3. Run `yarn update-types`
+4. Commit changes with message like *"artifacts from release 2021-08-11"*
+5. Run `yarn deploy` and publish next major version
+6. Push changes to the remote branch
+7. Install the new major version of davinci-sdk in projects that use it
