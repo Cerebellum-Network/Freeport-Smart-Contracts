@@ -146,3 +146,10 @@ More instructions can be found in the original [README of the template](BUILD.md
 `export NETWORK_ID=5777`\
 `docker run -d -p 8545:8545 338287888375.dkr.ecr.us-west-2.amazonaws.com/crb-davinci-nft-test:latest --db /app/db --mnemonic $MNEMONIC --networkId $NETWORK_ID`
 
+## How to run e2e test locally
+Readme.md for running e2e-test locally is [here](https://github.com/Cerebellum-Network/e2e-tests/blob/master/README.md).
+For this service you need to create image and tag it with tag `338287888375.dkr.ecr.us-west-2.amazonaws.com/crb-davinci-nft-test:YOUR_CUSTOM_TAG`
+and use `YOUR_CUSTOM_TAG` for running e2e-tests locally.
+
+## Where to check the e2e-tests result after merge in dev ?
+After merge in develop, make sure that tests passed in **@e2e-test-results** channel on Cere Slack.
