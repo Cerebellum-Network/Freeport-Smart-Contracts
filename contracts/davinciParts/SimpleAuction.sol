@@ -14,7 +14,7 @@ abstract contract SimpleAuction is SimpleExchange {
     struct Bid {
         address buyer; // 0 means no buyer yet.
         uint256 price; // The highest bid price. The initial value is set by the seller.
-        uint256 closeTimeSec;
+        uint256 closeTimeSec; // Bidding is open until the close time. After this time, the settlement becomes possible. A non-zero value also means that the auction exists.
     }
 
     /** Seller => NFT ID => Bid.
@@ -51,13 +51,22 @@ abstract contract SimpleAuction is SimpleExchange {
     function startAuction(uint256 nftId, uint256 minPrice, uint closeTimeSec)
     public {
         address seller = _msgSender();
+        Bid storage bid = sellerNftBids[seller][nftId];
+
+        // Check that the auction does not exist.
+        require(bid.closeTimeSec == 0, "the auction must not exist");
+
+        // Check that the close time is non-zero and in the future.
         require(block.timestamp < closeTimeSec, "the close time must be in the future");
 
-        // Deduce the minimum increment to work with the logic of minPrice in the function bid().
+        // Deduct the minimum increment to work with the logic of minPrice in the function bid().
         uint256 price = minPrice * 100 / 110;
         require(price > 0, "the starting price must be greater than 0");
 
-        sellerNftBids[seller][nftId] = Bid(address(0), price, closeTimeSec);
+        // Create the auction.
+        bid.buyer = address(0);
+        bid.price = price;
+        bid.closeTimeSec = closeTimeSec;
 
         // Take the NFT from the seller. This verifies the intent of the seller.
         safeTransferFrom(seller, address(this), nftId, 1, "");
@@ -70,10 +79,9 @@ abstract contract SimpleAuction is SimpleExchange {
     function bidOnAuction(address seller, uint256 nftId, uint256 price)
     public {
         address buyer = _msgSender();
-
         Bid storage bid = sellerNftBids[seller][nftId];
 
-        // Check that the auction is open.
+        // Check that the auction exists and is open.
         require(block.timestamp < bid.closeTimeSec, "the auction must be open");
 
         // Push back the end of the auction if it is too close.
