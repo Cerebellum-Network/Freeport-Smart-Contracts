@@ -2,12 +2,23 @@ pragma solidity ^0.8.0;
 
 import "../token/ERC1155/ERC1155.sol";
 import "../access/AccessControl.sol";
+import "./MetaTxContext.sol";
 
 /** This contract implements NFTs.
  *
  * Integrate the implementation of ERC1155 and AccessControl from OpenZeppelin.
  */
-abstract contract BaseNFT is ERC1155, AccessControl {
+abstract contract BaseNFT is ERC1155, MetaTxContext {
+
+    // Enable the implementation of meta transactions (ERC2771).
+    function _msgSender() internal view virtual override(Context, MetaTxContext) returns (address sender) {
+        return MetaTxContext._msgSender();
+    }
+
+    // Enable the implementation of meta transactions (ERC2771).
+    function _msgData() internal view virtual override(Context, MetaTxContext) returns (bytes calldata) {
+        return MetaTxContext._msgData();
+    }
 
     /** Supports interfaces of AccessControl, ERC1155, and ERC1155 MetadataURI.
      */

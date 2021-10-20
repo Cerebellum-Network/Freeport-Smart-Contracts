@@ -1,6 +1,6 @@
 pragma solidity ^0.8.0;
 
-import "./davinciParts/SimpleAuction.sol";
+import "./davinciParts/SimpleExchange.sol";
 
 /** Main contract, including all components.
 
@@ -13,15 +13,14 @@ import "./davinciParts/SimpleAuction.sol";
 contract Davinci is /*
     ERC1155,
     AccessControl,
+    MetaTxContext,
     BaseNFT,
     Currency,
     TransferOperator,
-    MetaTxContext,
     PolygonChildERC20,
     Issuance,
     JointAccounts,
     TransferFees,
-    SimpleExchange,
-    */ SimpleAuction {
+    */ SimpleExchange {
 
 }
