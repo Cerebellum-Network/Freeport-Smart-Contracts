@@ -63,6 +63,8 @@ abstract contract SimpleAuction is SimpleExchange {
         uint256 price = minPrice * 100 / 110;
         require(price > 0, "the starting price must be greater than 0");
 
+        // TODO: Check that minPrice is greater than the fixed royalty, if any.
+
         // Create the auction.
         bid.buyer = address(0);
         bid.price = price;
@@ -130,7 +132,8 @@ abstract contract SimpleAuction is SimpleExchange {
             // Transfer the NFT to the buyer.
             _forceTransfer(address(this), buyer, nftId, 1);
 
-            // TODO: collect royalty.
+            // Collect royalty.
+            _captureFee(seller, nftId, price, 1);
         } else {
             // Otherwise, there was no buyer,
             // give back the NFT to the seller.
