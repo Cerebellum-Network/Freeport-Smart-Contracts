@@ -1,6 +1,6 @@
 pragma solidity ^0.8.0;
 
-import "./davinciParts/SimpleExchange.sol";
+import "./davinciParts/SimpleAuction.sol";
 
 /** Main contract, including all components.
 
@@ -21,6 +21,7 @@ contract Davinci is /*
     Issuance,
     JointAccounts,
     TransferFees,
-    */ SimpleExchange {
+    SimpleExchange,
+    */ SimpleAuction {
 
 }
