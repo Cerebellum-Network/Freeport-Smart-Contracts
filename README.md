@@ -10,6 +10,14 @@ See the [documentation](docs/Davinci.md) (regenerate with `npm run doc`).
 
 ## Releases
 
+### 2021-10-21: Simple Auction
+
+- A contract that holds auctions and make transfers in the main Davinci contract.
+- An external function `captureFee` on the Davinci contract that can be used by authorized contracts (i.e., the auction contract).
+- **TODO:** The call to `captureFee` is disabled in order to work with the previous versions of Davinci. After deployment of the Davinci of this commit, this call can be reenabled (see `TODO in SimpleAuction.sol`).
+
+Commit 032fbc7d deployed in dev and staging, see the links to "Simple Auction" in the sections below.
+
 ### 2021-09-13: Staging deployment
 
 - Reduce permissions in migrate and dev_setup scripts.
@@ -17,7 +25,7 @@ See the [documentation](docs/Davinci.md) (regenerate with `npm run doc`).
 Commit 7eb3e339 deployed on Polygon Mumbai.
 
 Contracts [Davinci](https://mumbai.polygonscan.com/address/0xAD56017BAD84Fa4Eab489314C1e158C6adaca598) and
-[Fiat Gateway](https://mumbai.polygonscan.com/address/0x7B7e644c49D6C1e7C4af63eFB8cAD382a7b397fB).
+[Fiat Gateway](https://mumbai.polygonscan.com/address/0x7B7e644c49D6C1e7C4af63eFB8cAD382a7b397fB) and [Simple Auction](https://mumbai.polygonscan.com/address/0x573fc9819FD436C9Dc74b10949b2404C99C54A33).
 
 [Fiat-to-NFT Service Account](https://mumbai.polygonscan.com/address/0x50a2Cf81C5F8991780Ebc80222b835ecC4010956) (
 see [stage_setup](scripts/stage_setup.js)).
@@ -32,7 +40,7 @@ Exchange rate of 0.1 CERE_stage for $0.01.
 
 Commit 07c8ad0f on Polygon Mumbai:
 [Davinci](https://mumbai.polygonscan.com/address/0xC7066eCAd7304Bed38E0b07aD8B9AD4dac92cb2B) and
-[Fiat Gateway](https://mumbai.polygonscan.com/address/0xe4708fcCEA49b9305f48901bc2195664dC198097)
+[Fiat Gateway](https://mumbai.polygonscan.com/address/0xe4708fcCEA49b9305f48901bc2195664dC198097) and [Simple Auction](https://mumbai.polygonscan.com/address/0x9847941016d9d415e4d428FA74E5302555d01F45).
 
 ### 2021-09-03: Fiat Gateway and Simple Exchange
 
