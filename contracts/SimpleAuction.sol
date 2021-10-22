@@ -12,11 +12,13 @@ An auction is characterized by a sequence of transactions and their correspondin
 
 - Any number of `BidOnAuction`: A potential buyer accepts the minimum price or a price at least 10% higher
 than that of the previous bidder.
-The price will be updated, and the closing time may be extended.
+The closing time may be extended.
 A deposit is taken from the new bidder. The deposit of the previous bidder is returned, if any.
+Bidding is no longer possible after the closing time.
 
 - `SettleAuction`: The sale is completed between the seller and the highest bidder, or cancelled if there was no bidder.
 Some royalties may be taken from the sale price, as configured by the NFT creator (see `TransferFees.sol`).
+The settlement is only possible after the closing time.
 
 While an auction is active, it is identified by the tuple `(seller address, NFT ID)`.
 However, after the auction is settled, a new auction with the *same tuple* may start.
