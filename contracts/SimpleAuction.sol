@@ -6,10 +6,20 @@ import "./token/ERC1155/utils/ERC1155Holder.sol";
 
 
 /**
-- Make offers to sell NFTs by auction.
-- Bid.
-- Settle the sale.
-- Capture variable royalties.
+An auction is characterized by a sequence of transactions and their corresponding events:
+
+- `StartAuction`: A seller offers to sell one NFT to the highest bidder, with a minimum price, and a closing time.
+
+- Any number of `BidOnAuction`: A potential buyer accepts the minimum price or a price at least 10% higher
+than that of the previous bidder.
+The price will be updated, and the closing time may be extended.
+A deposit is taken from the new bidder. The deposit of the previous bidder is returned, if any.
+
+- `SettleAuction`: The sale is completed between the seller and the highest bidder, or cancelled if there was no bidder.
+Some royalties may be taken from the sale price, as configured by the NFT creator (see `TransferFees.sol`).
+
+While an auction is active, it is identified by the tuple `(seller address, NFT ID)`.
+However, after the auction is settled, a new auction with the *same tuple* may start.
  */
 contract SimpleAuction is /* AccessControl, */ MetaTxContext, ERC1155Holder {
 
@@ -43,6 +53,7 @@ contract SimpleAuction is /* AccessControl, */ MetaTxContext, ERC1155Holder {
     mapping(address => mapping(uint256 => Bid)) sellerNftBids;
 
     /**
+     * Note: `price` is the minimum price minus 10%, because a bid must be 10% higher, resulting in the requested minimum price.
      */
     event StartAuction(
         address indexed seller,
@@ -51,6 +62,7 @@ contract SimpleAuction is /* AccessControl, */ MetaTxContext, ERC1155Holder {
         uint256 closeTimeSec);
 
     /**
+     * Note: `price`, `closeTimeSec`, and `buyer` may have changed for the auction `(seller, nftId)`.
      */
     event BidOnAuction(
         address indexed seller,
@@ -60,12 +72,13 @@ contract SimpleAuction is /* AccessControl, */ MetaTxContext, ERC1155Holder {
         address buyer);
 
     /**
+     * Note: `buyer == 0` means no buyer, and the NFT went back to the seller.
      */
     event SettleAuction(
         address indexed seller,
         uint256 indexed nftId,
         uint256 price,
-        address buyer); // buyer == 0 means no buyer, and the NFT went back to the seller.
+        address buyer);
 
     /**
      */
