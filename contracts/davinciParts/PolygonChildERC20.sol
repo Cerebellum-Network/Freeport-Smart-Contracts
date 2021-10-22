@@ -1,6 +1,6 @@
 pragma solidity ^0.8.0;
 
-import "./MetaTxContext.sol";
+import "./TransferOperator.sol";
 
 /** An implementation of ChildERC20 used by the Polygon bridge.
  *
@@ -9,7 +9,7 @@ import "./MetaTxContext.sol";
  *
  * See https://docs.matic.network/docs/develop/ethereum-matic/pos/mapping-assets
  */
-abstract contract PolygonChildERC20 is MetaTxContext {
+abstract contract PolygonChildERC20 is TransferOperator {
 
     /** ERC20 Transfer event for bridging this ERC1155 contract to ERC20 on Ethereum.
      */
