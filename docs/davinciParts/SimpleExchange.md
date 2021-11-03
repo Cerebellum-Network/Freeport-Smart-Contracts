@@ -22,13 +22,16 @@ Return the price offered by the given seller for the given NFT type.
 
 
 
-#### `takeOffer(address buyer, address seller, uint256 nftId, uint256 price, uint256 amount)` (public)
+#### `takeOffer(address buyer, address seller, uint256 nftId, uint256 expectedPriceOrZero, uint256 amount)` (public)
 
 Accept an offer, paying the price per unit for an amount of NFTs.
 
 The offer must have been created beforehand by makeOffer.
 
-The same authorization as safeTransferFrom apply to the buyer (sender or approved operator)..
+The same authorization as safeTransferFrom apply to the buyer (sender or approved operator).
+
+The parameter expectedPriceOrZero can be used to validate the price that the buyer expects to pay. This prevents
+a race condition with makeOffer or setExchangeRate. Pass 0 to disable this validation and accept any current price.
 
 
 
