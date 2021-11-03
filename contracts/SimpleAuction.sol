@@ -168,8 +168,7 @@ contract SimpleAuction is /* AccessControl, */ MetaTxContext, ERC1155Holder {
             davinci.safeTransferFrom(address(this), buyer, nftId, 1, "");
 
             // Collect royalty.
-            // TODO: uncomment, requires a deployment of Davinci with public captureFee().
-            //davinci.captureFee(seller, nftId, price, 1);
+            davinci.captureFee(seller, nftId, price, 1);
         } else {
             // Otherwise, there was no buyer,
             // give back the NFT to the seller.

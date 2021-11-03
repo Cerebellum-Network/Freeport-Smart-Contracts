@@ -10,11 +10,15 @@ See the [documentation](docs/Davinci.md) (regenerate with `npm run doc`).
 
 ## Releases
 
+### 2021-11-03: Auction with royalties
+
+- Auction sales now capture royalties, if any.
+
 ### 2021-10-21: Simple Auction
 
 - A contract that holds auctions and make transfers in the main Davinci contract.
 - An external function `captureFee` on the Davinci contract that can be used by authorized contracts (i.e., the auction contract).
-- **TODO:** The call to `captureFee` is disabled in order to work with the previous versions of Davinci. After deployment of the Davinci of this commit, this call can be reenabled (see `TODO in SimpleAuction.sol`).
+- **Note:** The call to `captureFee` is disabled in this deployment in order to work with the previous versions of Davinci. After deployment of the Davinci of this commit, this call can be reenabled (see `TODO in SimpleAuction.sol`).
 
 Commit 032fbc7d deployed in dev and staging, see the links to "Simple Auction" in the sections below.
 
