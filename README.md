@@ -10,13 +10,37 @@ See the [documentation](docs/Davinci.md) (regenerate with `npm run doc`).
 
 ## Releases
 
+### 2021-10-21: Simple Auction
+
+- A contract that holds auctions and make transfers in the main Davinci contract.
+- An external function `captureFee` on the Davinci contract that can be used by authorized contracts (i.e., the auction contract).
+- **TODO:** The call to `captureFee` is disabled in order to work with the previous versions of Davinci. After deployment of the Davinci of this commit, this call can be reenabled (see `TODO in SimpleAuction.sol`).
+
+Commit 032fbc7d deployed in dev and staging, see the links to "Simple Auction" in the sections below.
+
+### 2021-09-13: Staging deployment
+
+- Reduce permissions in migrate and dev_setup scripts.
+
+Commit 7eb3e339 deployed on Polygon Mumbai.
+
+Contracts [Davinci](https://mumbai.polygonscan.com/address/0xAD56017BAD84Fa4Eab489314C1e158C6adaca598) and
+[Fiat Gateway](https://mumbai.polygonscan.com/address/0x7B7e644c49D6C1e7C4af63eFB8cAD382a7b397fB) and [Simple Auction](https://mumbai.polygonscan.com/address/0x573fc9819FD436C9Dc74b10949b2404C99C54A33).
+
+[Fiat-to-NFT Service Account](https://mumbai.polygonscan.com/address/0x50a2Cf81C5F8991780Ebc80222b835ecC4010956) (
+see [stage_setup](scripts/stage_setup.js)).
+
+[Admin Account](https://mumbai.polygonscan.com/address/0x51c5590504251A5993Ba6A46246f87Fa0eaE5897) (Aurel).
+
+Exchange rate of 0.1 CERE_stage for $0.01.
+
 ### 2021-09-06: Exchange rate event and getter
 
 - Add event SetExchangeRate and function getExchangeRate.
 
 Commit 07c8ad0f on Polygon Mumbai:
 [Davinci](https://mumbai.polygonscan.com/address/0xC7066eCAd7304Bed38E0b07aD8B9AD4dac92cb2B) and
-[Fiat Gateway](https://mumbai.polygonscan.com/address/0xe4708fcCEA49b9305f48901bc2195664dC198097)
+[Fiat Gateway](https://mumbai.polygonscan.com/address/0xe4708fcCEA49b9305f48901bc2195664dC198097) and [Simple Auction](https://mumbai.polygonscan.com/address/0x9847941016d9d415e4d428FA74E5302555d01F45).
 
 ### 2021-09-03: Fiat Gateway and Simple Exchange
 
@@ -97,11 +121,17 @@ Write down the contract address and current version in the Releases section abov
 Commit these files in `build/contracts/`: `Davinci.json`, `MinimalForwarder.json`, `BypassForwarder.json`
 , `FiatGateway.json`.
 
-On testnet, setup testing accounts:
+For **dev** on Polygon testnet, setup test accounts:
 
     truffle exec scripts/dev_setup.js --network=polygon_testnet
 
-On testnet, setup the Polygon bridge:
+For **staging** on Polygon testnet, setup test accounts:
+
+    truffle exec scripts/stage_setup.js --network=polygon_testnet
+
+The script will print the address of the different accounts, including the fiat-to-nft service account.
+
+(optional) For tests or staging on Polygon testnet, setup the Polygon bridge:
 
     truffle exec scripts/dev_bridge.js --network=polygon_testnet
 
@@ -112,12 +142,22 @@ Verify on Polyscan using the information in Davinci.json and the flattened code:
 More instructions can be found in the original [README of the template](BUILD.md).
 
 ## How to use test image
-  ### 1. To copy the latest snapshot of db with deployed contract and built contracts use 
- `sudo . ./copy-artifacts.sh dir_path_to (copy to your directory)`\
- `sudo . ./copy-artifacts.sh (copy to default ./artifacts directory)`
+
+### 1. To copy the latest snapshot of db with deployed contract and built contracts use
+
+`sudo . ./copy-artifacts.sh dir_path_to (copy to your directory)`\
+`sudo . ./copy-artifacts.sh (copy to default ./artifacts directory)`
 
 ### 2. To run ganache cli locally with already deployed contract use
+
 `export MNEMONIC='spatial spin account funny glue cancel cushion twelve inmate author night dust'`\
 `export NETWORK_ID=5777`\
 `docker run -d -p 8545:8545 338287888375.dkr.ecr.us-west-2.amazonaws.com/crb-davinci-nft-test:latest --db /app/db --mnemonic $MNEMONIC --networkId $NETWORK_ID`
 
+## How to run e2e test locally
+Readme.md for running e2e-test locally is [here](https://github.com/Cerebellum-Network/e2e-tests/blob/master/README.md#how-to-run-e2e-tests-locally).
+For this service you need to create image locally and tag it with tag `338287888375.dkr.ecr.us-west-2.amazonaws.com/crb-davinci-nft-test:YOUR_CUSTOM_TAG`
+and use `YOUR_CUSTOM_TAG` for running e2e-tests locally.
+
+## Where to check the e2e-tests result after merge in dev?
+After merge in develop, make sure that tests passed in **@e2e-test-results** channel on Cere Slack.

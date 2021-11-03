@@ -13,10 +13,10 @@ import "./davinciParts/SimpleExchange.sol";
 contract Davinci is /*
     ERC1155,
     AccessControl,
+    MetaTxContext,
     BaseNFT,
     Currency,
     TransferOperator,
-    MetaTxContext,
     PolygonChildERC20,
     Issuance,
     JointAccounts,

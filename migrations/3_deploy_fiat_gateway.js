@@ -22,10 +22,10 @@ module.exports = async function (deployer, network, accounts) {
     log("Give the permission to withdraw funds to Admin."); // In constructor.
 
     log("Give the permission to change the exchange rate to Admin.");
-    gateway.grantRole(EXCHANGE_RATE_ORACLE, admin);
+    await gateway.grantRole(EXCHANGE_RATE_ORACLE, admin);
 
     log("Give the permission to execute payments to Admin.");
-    gateway.grantRole(PAYMENT_SERVICE, admin);
+    await gateway.grantRole(PAYMENT_SERVICE, admin);
 
     log();
 };

@@ -3,12 +3,12 @@
 
 pragma solidity ^0.8.0;
 
-import "./TransferOperator.sol";
+import "../access/AccessControl.sol";
 
 /*
  * @dev Context variant with ERC2771 support.
  */
-abstract contract MetaTxContext is TransferOperator {
+abstract contract MetaTxContext is AccessControl {
 
     bytes32 public constant META_TX_FORWARDER = keccak256("META_TX_FORWARDER");
 

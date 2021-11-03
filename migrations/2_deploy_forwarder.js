@@ -18,13 +18,13 @@ module.exports = async function (deployer) {
     const BYPASS_SENDER = await davinci.BYPASS_SENDER.call();
 
     log("Give the permission to forward meta-transactions to Forwarder");
-    davinci.grantRole(META_TX_FORWARDER, forwarder.address);
+    await davinci.grantRole(META_TX_FORWARDER, forwarder.address);
 
     log("Give the permission to forward meta-transactions to Bypass-Forwarder");
-    davinci.grantRole(META_TX_FORWARDER, bypasser.address);
+    await davinci.grantRole(META_TX_FORWARDER, bypasser.address);
 
     log("Give the privilege to not pay royalties to Bypass-Forwarder.");
-    davinci.grantRole(BYPASS_SENDER, bypasser.address);
+    await davinci.grantRole(BYPASS_SENDER, bypasser.address);
 
     log();
 };

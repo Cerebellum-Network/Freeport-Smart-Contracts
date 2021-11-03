@@ -62,11 +62,21 @@ The role BYPASS_SENDER does not pay royalties. This is intended to be used by a 
 
 
 
+#### `captureFee(address from, uint256 nftId, uint256 price, uint256 amount) → uint256` (public)
+
+Collect the royalty due on a transfer.
+
+The royalty is calculated based on NFT configuration and the price. It is collected by an internal transfer of currency between "from" and the beneficiary. Return the amount collected.
+
+The caller must be approved by "from", or a TRANSFER_OPERATOR.
+
+
+
 #### `_captureFee(address from, uint256 nftId, uint256 price, uint256 amount) → uint256` (internal)
 
-Calculate the royalty due on a transfer.
+Collect the royalty due on a transfer.
 
-Collect the royalty using an internal transfer of currency.
+The royalty is calculated based on NFT configuration and the price. It is collected by an internal transfer of currency between "from" and the beneficiary. Return the amount collected.
 
 
 
