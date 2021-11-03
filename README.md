@@ -14,6 +14,17 @@ See the [documentation](docs/Davinci.md) (regenerate with `npm run doc`).
 
 - Auction sales now capture royalties, if any.
 
+Commit 6df6c349 deployed on Polygon Mumbai.
+
+Contracts [Davinci](https://mumbai.polygonscan.com/address/0xd1EdBAC660307c5B6d22E678FB5e22668C70Ad96) and
+[Fiat Gateway](https://mumbai.polygonscan.com/address/0x1f8eC932B6ec39A0326b74E9648A158F88B24082) and [Simple Auction](https://mumbai.polygonscan.com/address/0xC091553cd79D6D94746b9f65E3A9F930B43609E4).
+
+[Fiat-to-NFT Service Account](https://mumbai.polygonscan.com/address/0x50a2Cf81C5F8991780Ebc80222b835ecC4010956) (
+see [stage_setup](scripts/stage_setup.js)).
+[Admin Account](https://mumbai.polygonscan.com/address/0x51c5590504251A5993Ba6A46246f87Fa0eaE5897) (Aurel).
+
+Exchange rate of 0.1 CERE_stage for $0.01.
+
 ### 2021-10-21: Simple Auction
 
 - A contract that holds auctions and make transfers in the main Davinci contract.
