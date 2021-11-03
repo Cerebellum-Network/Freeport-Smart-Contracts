@@ -154,6 +154,17 @@ More instructions can be found in the original [README of the template](BUILD.md
 `export NETWORK_ID=5777`\
 `docker run -d -p 8545:8545 338287888375.dkr.ecr.us-west-2.amazonaws.com/crb-davinci-nft-test:latest --db /app/db --mnemonic $MNEMONIC --networkId $NETWORK_ID`
 
+## How to update Freeport SDK 
+
+1. Open [SDK](https://github.com/Cerebellum-Network/Freeport-Smart-Contracts-SDK) project in IDE, switch to master branch
+2. Copy smart-contract artifacts from `/build/contracts` to SDK's `/src/artifacts`
+3. Run `yarn update-types`
+4. Commit changes with message like *"artifacts from commit e57691bc"*
+5. Check that `npm whoami` returns "cere-io" (otherwise update your NPM_TOKEN env var for publishing @cere packages)
+6. Run `yarn deploy` and publish next version (see [Versioning](https://github.com/Cerebellum-Network/Freeport-Smart-Contracts-SDK#versioning))
+7. Push changes to the remote branch
+8. Install the new version of SDK in projects that use it
+
 ## How to run e2e test locally
 Readme.md for running e2e-test locally is [here](https://github.com/Cerebellum-Network/e2e-tests/blob/master/README.md#how-to-run-e2e-tests-locally).
 For this service you need to create image locally and tag it with tag `338287888375.dkr.ecr.us-west-2.amazonaws.com/crb-davinci-nft-test:YOUR_CUSTOM_TAG`
