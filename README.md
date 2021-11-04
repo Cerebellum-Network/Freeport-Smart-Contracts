@@ -10,6 +10,13 @@ See the [documentation](docs/Davinci.md) (regenerate with `npm run doc`).
 
 ## Releases
 
+### 2021-11-04: Auction with getter
+
+- Add the getter for bids (sellerNftBids).
+- Prevent potential reentrancy bug.
+
+Commit f1405e5e deployed, see the links to "Simple Auction" in the sections 2021-11-03 and 2021-09-13 below.
+
 ### 2021-11-03: Auction with royalties
 
 - Auction sales now capture royalties, if any.
@@ -17,7 +24,7 @@ See the [documentation](docs/Davinci.md) (regenerate with `npm run doc`).
 Commit 6df6c349 deployed on Polygon Mumbai.
 
 Contracts [Davinci](https://mumbai.polygonscan.com/address/0xd1EdBAC660307c5B6d22E678FB5e22668C70Ad96) and
-[Fiat Gateway](https://mumbai.polygonscan.com/address/0x1f8eC932B6ec39A0326b74E9648A158F88B24082) and [Simple Auction](https://mumbai.polygonscan.com/address/0xC091553cd79D6D94746b9f65E3A9F930B43609E4).
+[Fiat Gateway](https://mumbai.polygonscan.com/address/0x1f8eC932B6ec39A0326b74E9648A158F88B24082) and [Simple Auction](https://mumbai.polygonscan.com/address/0x1673a7EBfAcA2B6Be0c76171a5E040a393368422).
 
 [Fiat-to-NFT Service Account](https://mumbai.polygonscan.com/address/0x50a2Cf81C5F8991780Ebc80222b835ecC4010956) (
 see [stage_setup](scripts/stage_setup.js)).
@@ -40,7 +47,7 @@ Commit 032fbc7d deployed in dev and staging, see the links to "Simple Auction" i
 Commit 7eb3e339 deployed on Polygon Mumbai.
 
 Contracts [Davinci](https://mumbai.polygonscan.com/address/0xAD56017BAD84Fa4Eab489314C1e158C6adaca598) and
-[Fiat Gateway](https://mumbai.polygonscan.com/address/0x7B7e644c49D6C1e7C4af63eFB8cAD382a7b397fB) and [Simple Auction](https://mumbai.polygonscan.com/address/0x573fc9819FD436C9Dc74b10949b2404C99C54A33).
+[Fiat Gateway](https://mumbai.polygonscan.com/address/0x7B7e644c49D6C1e7C4af63eFB8cAD382a7b397fB) and [Simple Auction](https://mumbai.polygonscan.com/address/0x5EB723a046d9233309E6BAF46E433F0181791BA0).
 
 [Fiat-to-NFT Service Account](https://mumbai.polygonscan.com/address/0x50a2Cf81C5F8991780Ebc80222b835ecC4010956) (
 see [stage_setup](scripts/stage_setup.js)).
