@@ -10,6 +10,10 @@ See the [documentation](docs/Davinci.md) (regenerate with `npm run doc`).
 
 ## Releases
 
+### 2021-11-04: Auction with getter
+
+Commit 2bab10b2 deployed, see the links to "Simple Auction" in the sections 2021-11-03 and 2021-09-13 below.
+
 ### 2021-11-03: Auction with royalties
 
 - Auction sales now capture royalties, if any.
