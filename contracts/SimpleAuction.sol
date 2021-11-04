@@ -159,6 +159,11 @@ contract SimpleAuction is /* AccessControl, */ MetaTxContext, ERC1155Holder {
         address buyer = bid.buyer;
         uint256 price = bid.price;
 
+        // Reset the storage. Make the auction not exist anymore.
+        bid.buyer = address(0);
+        bid.price = 0;
+        bid.closeTimeSec = 0;
+
         if (buyer != address(0)) {
             // In case there was a buyer,
             // transfer the payment to the seller.
@@ -174,11 +179,6 @@ contract SimpleAuction is /* AccessControl, */ MetaTxContext, ERC1155Holder {
             // give back the NFT to the seller.
             davinci.safeTransferFrom(address(this), seller, nftId, 1, "");
         }
-
-        // Reset the storage. Make the auction not exist anymore.
-        bid.buyer = address(0);
-        bid.price = 0;
-        bid.closeTimeSec = 0;
 
         emit SettleAuction(seller, nftId, price, buyer);
     }
