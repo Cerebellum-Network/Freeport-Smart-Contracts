@@ -5,7 +5,7 @@ const {expectEvent, expectRevert, constants, time} = require('@openzeppelin/test
 const BN = require('bn.js');
 
 contract("SimpleAuction", accounts => {
-    const [deployer, issuer, buyerBob, buyerBill] = accounts;
+    const [deployer, issuer, buyerBob, buyerBill, benificiary] = accounts;
 
     it("sells an NFT by auction", async () => {
 
@@ -13,6 +13,7 @@ contract("SimpleAuction", accounts => {
         const auction = await SimpleAuction.deployed();
         const CURRENCY = await davinci.CURRENCY.call();
         const UNIT = 1e10;
+        const PERCENT = 100; // 1% in basis points.
 
         // Give some initial tokens to the buyers.
         let someMoney = 1000;
@@ -41,6 +42,18 @@ contract("SimpleAuction", accounts => {
 
         await davinci.issue(nftSupply, "0x", {from: issuer});
         log("’Issuer’ creates", nftSupply, "NFTs of type", nftId.toString(16));
+        log();
+
+        await davinci.configureRoyalties(
+            nftId,
+            benificiary,
+            /* primaryCut */ 10 * PERCENT,
+            /* primaryMinimum */ 0,
+            benificiary,
+            /* secondaryCut */ 0,
+            /* secondaryMinimum */ 0,
+            {from: issuer});
+        log("’Issuer’ configures royalties for this NFT type: 10% on primary sales");
         log();
 
         await auction.startAuction(nftId, 100 * UNIT, closeTime, {from: issuer});
@@ -83,10 +96,11 @@ contract("SimpleAuction", accounts => {
 
         // Check every balance after settlement.
         await checkBalances([
-            [issuer, 110, 9], // Earned 110 money, spent 1 of 10 NFTs.
+            [issuer, 110 - 11, 9], // Earned 110 money, spent 11 in royalties, spent 1 of 10 NFTs.
             [buyerBill, someMoney - 110, 1], // Spent 110 money, earned the NFT.
             [buyerBob, someMoney, 0], // No change, BuyerBob got his refund.
             [auction.address, 0, 0], // No change, the contract gave back all deposits.
+            [benificiary, 11, 0], // The beneficiary earned 10% of 110.
             [deployer, 0, 0], // No change.
         ]);
 
