@@ -52,7 +52,7 @@ contract SimpleAuction is /* AccessControl, */ MetaTxContext, ERC1155Holder {
 
     /** Seller => NFT ID => Bid.
      */
-    mapping(address => mapping(uint256 => Bid)) sellerNftBids;
+    mapping(address => mapping(uint256 => Bid)) public sellerNftBids;
 
     /**
      * Note: `price` is the minimum price minus 10%, because a bid must be 10% higher, resulting in the requested minimum price.

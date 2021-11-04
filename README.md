@@ -17,7 +17,7 @@ See the [documentation](docs/Davinci.md) (regenerate with `npm run doc`).
 Commit 6df6c349 deployed on Polygon Mumbai.
 
 Contracts [Davinci](https://mumbai.polygonscan.com/address/0xd1EdBAC660307c5B6d22E678FB5e22668C70Ad96) and
-[Fiat Gateway](https://mumbai.polygonscan.com/address/0x1f8eC932B6ec39A0326b74E9648A158F88B24082) and [Simple Auction](https://mumbai.polygonscan.com/address/0xC091553cd79D6D94746b9f65E3A9F930B43609E4).
+[Fiat Gateway](https://mumbai.polygonscan.com/address/0x1f8eC932B6ec39A0326b74E9648A158F88B24082) and [Simple Auction](https://mumbai.polygonscan.com/address/0x15587AebB46cc17480559EeACd3871ea0AF50d1f).
 
 [Fiat-to-NFT Service Account](https://mumbai.polygonscan.com/address/0x50a2Cf81C5F8991780Ebc80222b835ecC4010956) (
 see [stage_setup](scripts/stage_setup.js)).
@@ -40,7 +40,7 @@ Commit 032fbc7d deployed in dev and staging, see the links to "Simple Auction" i
 Commit 7eb3e339 deployed on Polygon Mumbai.
 
 Contracts [Davinci](https://mumbai.polygonscan.com/address/0xAD56017BAD84Fa4Eab489314C1e158C6adaca598) and
-[Fiat Gateway](https://mumbai.polygonscan.com/address/0x7B7e644c49D6C1e7C4af63eFB8cAD382a7b397fB) and [Simple Auction](https://mumbai.polygonscan.com/address/0x573fc9819FD436C9Dc74b10949b2404C99C54A33).
+[Fiat Gateway](https://mumbai.polygonscan.com/address/0x7B7e644c49D6C1e7C4af63eFB8cAD382a7b397fB) and [Simple Auction](https://mumbai.polygonscan.com/address/0xc123f013Ec4e16F338417e11aC089DA09C3C5610).
 
 [Fiat-to-NFT Service Account](https://mumbai.polygonscan.com/address/0x50a2Cf81C5F8991780Ebc80222b835ecC4010956) (
 see [stage_setup](scripts/stage_setup.js)).
