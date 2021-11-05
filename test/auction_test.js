@@ -70,6 +70,10 @@ contract("SimpleAuction", accounts => {
             [auction.address, 100, 1], // The contract took 100 money as deposit.
         ]);
 
+        await expectRevert(
+            auction.bidOnAuction(issuer, nftId, 109 * UNIT, {from: buyerBill}),
+            "a new bid must be 10% greater than the current bid");
+
         await auction.bidOnAuction(issuer, nftId, 110 * UNIT, {from: buyerBill});
 
         await checkBalances([
