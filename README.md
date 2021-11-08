@@ -10,6 +10,12 @@ See the [documentation](docs/Davinci.md) (regenerate with `npm run doc`).
 
 ## Releases
 
+### 2021-11-08: CID Attachments
+
+- Attach arbitrary objects to NFTs.
+
+NFTAttachment commit 89696561 deployed for Davinci version 2021-09-13 and 2021-11-03 below.
+
 ### 2021-11-04: Auction with getter
 
 - Add the getter for bids (sellerNftBids).
@@ -24,7 +30,7 @@ SimpleAuction commit a74e4db0 deployed for Davinci version 2021-09-13 and 2021-1
 Commit 6df6c349 deployed on Polygon Mumbai.
 
 Contracts [Davinci](https://mumbai.polygonscan.com/address/0xd1EdBAC660307c5B6d22E678FB5e22668C70Ad96) and
-[Fiat Gateway](https://mumbai.polygonscan.com/address/0x1f8eC932B6ec39A0326b74E9648A158F88B24082) and [Simple Auction](https://mumbai.polygonscan.com/address/0xd7cd23C84F9109F57f13eF28319e8787628DD7ad).
+[Fiat Gateway](https://mumbai.polygonscan.com/address/0x1f8eC932B6ec39A0326b74E9648A158F88B24082) and [Simple Auction](https://mumbai.polygonscan.com/address/0xd7cd23C84F9109F57f13eF28319e8787628DD7ad) and [NFT Attachment](https://mumbai.polygonscan.com/address/0x270693f873287a39172856Ad8cfbCd79b040b287).
 
 [Fiat-to-NFT Service Account](https://mumbai.polygonscan.com/address/0x50a2Cf81C5F8991780Ebc80222b835ecC4010956) (
 see [stage_setup](scripts/stage_setup.js)).
@@ -47,7 +53,7 @@ Commit 032fbc7d deployed in dev and staging, see the links to "Simple Auction" i
 Commit 7eb3e339 deployed on Polygon Mumbai.
 
 Contracts [Davinci](https://mumbai.polygonscan.com/address/0xAD56017BAD84Fa4Eab489314C1e158C6adaca598) and
-[Fiat Gateway](https://mumbai.polygonscan.com/address/0x7B7e644c49D6C1e7C4af63eFB8cAD382a7b397fB) and [Simple Auction](https://mumbai.polygonscan.com/address/0x49a08A6d213649b50655979E222C8496ADac050c).
+[Fiat Gateway](https://mumbai.polygonscan.com/address/0x7B7e644c49D6C1e7C4af63eFB8cAD382a7b397fB) and [Simple Auction](https://mumbai.polygonscan.com/address/0x49a08A6d213649b50655979E222C8496ADac050c) and [NFT Attachment](https://mumbai.polygonscan.com/address/0x1282fdeC36aC4aaf025059D69077d4450703eeD0).
 
 [Fiat-to-NFT Service Account](https://mumbai.polygonscan.com/address/0x50a2Cf81C5F8991780Ebc80222b835ecC4010956) (
 see [stage_setup](scripts/stage_setup.js)).
