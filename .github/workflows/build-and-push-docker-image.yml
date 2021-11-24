@@ -6,13 +6,11 @@ on:
 
 env:
   ECR_REPOSITORY: crb-davinci-nft-test
-  IMAGE_TAG: ${{ github.sha }}
 jobs:
-  build-and-push:
+  build-image:
+    needs: unit-tests
     runs-on: ubuntu-18.04
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v1
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v1
         with:
@@ -22,39 +20,63 @@ jobs:
       - name: Login to Amazon ECR
         id: login-ecr
         uses: aws-actions/amazon-ecr-login@v1
-      - name: Build and push image
+      - name: Checkout code base
+        uses: actions/checkout@v2
+        with:
+          path: freeport-smart-contracts
+      - name: Build docker image builder
         env:
           ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+        uses: docker/build-push-action@v2
+        with:
+          context: ./freeport-smart-contracts
+          file: ./freeport-smart-contracts/Dockerfile.builder
+          push: false
+          no-cache: true
+          tags: ${{ env.ECR_REGISTRY }}/${{ env.ECR_REPOSITORY }}:builder
+      - name: Deploy ganache and copy artifacts
+        working-directory: ./freeport-smart-contracts
         run: |
           echo "Installing helper packaging curl wget findutils jq"
           sudo apt-get install curl wget findutils jq
-
-          echo "Build -> Deploy -> Copy artifacts"
-          docker build -f Dockerfile.builder . -t $ECR_REGISTRY/$ECR_REPOSITORY:builder
-          echo "::set-output name=image::$ECR_REGISTRY/$ECR_REPOSITORY:builder"
           sudo ./run-ganache-deploy-copy-artifacts.sh
-
-          echo "Build ganance with snapshot version of deployed contract"
-          sudo docker build -f Dockerfile.runtime -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
-          echo "::set-output name=image::$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG"
-          docker image tag $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG $ECR_REGISTRY/$ECR_REPOSITORY:latest
-
-          echo "Push to docker registry"
-          docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
-          docker push $ECR_REGISTRY/$ECR_REPOSITORY:latest
-          echo "::set-output name=image::$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG"
-
-  trigger:
-    needs: build-and-push
-    strategy:
-      matrix:
-        repo: ['Cerebellum-Network/e2e-tests']
-    runs-on: ubuntu-latest
-    steps:
-      - name: Trigger Cerebellum-Network/e2e-tests repository
-        uses: peter-evans/repository-dispatch@v1
+      - name: Build docker image ganache
+        uses: docker/build-push-action@v2
         with:
-          token: ${{ secrets.TRIGGER_GITHUB_TOKEN }}
-          repository: ${{ matrix.repo }}
-          event-type: DAVINCI_NFT_VERSION_TRIGGER
-          client-payload: '{"DAVINCI_NFT_VERSION": "${{ github.sha }}"}'
+          context: ./freeport-smart-contracts
+          file: ./freeport-smart-contracts/Dockerfile.runtime
+          push: false
+          no-cache: true
+          tags: ${{ env.ECR_REGISTRY }}/${{ env.ECR_REPOSITORY }}:${{ github.sha }}
+  e2e-tests:
+    needs: build-image
+    uses: Cerebellum-Network/freeport-smart-contracts/.github/workflows/e2e-tests.yaml@feature/updateWorkflowWithE2ETests
+    with:
+      FREEPORT_SC_NFT_VERSION: ${{ github.sha }}
+  publish-image:
+    needs: e2e-tests
+    runs-on: ubuntu-18.04
+    steps:
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: us-west-2
+      - name: Login to Amazon ECR
+        id: login-ecr
+        uses: aws-actions/amazon-ecr-login@v1
+      - name: Checkout code base
+        uses: actions/checkout@v2
+        with:
+          path: freeport-smart-contracts
+      - name: Build and Push docker image
+        env:
+          ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+        uses: docker/build-push-action@v2
+        with:
+          context: ./freeport-smart-contracts
+          file: ./freeport-smart-contracts/Dockerfile.runtime
+          push: true
+          no-cache: false
+          tags: ${{ env.ECR_REGISTRY }}/${{ env.ECR_REPOSITORY }}:latest
