@@ -4,8 +4,8 @@
     {
       "inputs": [
         {
-          "internalType": "contract Davinci",
-          "name": "_davinci",
+          "internalType": "contract Freeport",
+          "name": "_freeport",
           "type": "address"
         }
       ],
@@ -158,10 +158,10 @@
     },
     {
       "inputs": [],
-      "name": "davinci",
+      "name": "freeport",
       "outputs": [
         {
-          "internalType": "contract Davinci",
+          "internalType": "contract Freeport",
           "name": "",
           "type": "address"
         }
@@ -425,7 +425,7 @@
       "type": "function"
     }
   ],
-  "metadata": "{\"compiler\":{\"version\":\"0.8.4+commit.c7e474f2\"},\"language\":\"Solidity\",\"output\":{\"abi\":[{\"inputs\":[{\"internalType\":\"contract Davinci\",\"name\":\"_davinci\",\"type\":\"address\"}],\"stateMutability\":\"nonpayable\",\"type\":\"constructor\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"bytes32\",\"name\":\"role\",\"type\":\"bytes32\"},{\"indexed\":true,\"internalType\":\"bytes32\",\"name\":\"previousAdminRole\",\"type\":\"bytes32\"},{\"indexed\":true,\"internalType\":\"bytes32\",\"name\":\"newAdminRole\",\"type\":\"bytes32\"}],\"name\":\"RoleAdminChanged\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"bytes32\",\"name\":\"role\",\"type\":\"bytes32\"},{\"indexed\":true,\"internalType\":\"address\",\"name\":\"account\",\"type\":\"address\"},{\"indexed\":true,\"internalType\":\"address\",\"name\":\"sender\",\"type\":\"address\"}],\"name\":\"RoleGranted\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"bytes32\",\"name\":\"role\",\"type\":\"bytes32\"},{\"indexed\":true,\"internalType\":\"address\",\"name\":\"account\",\"type\":\"address\"},{\"indexed\":true,\"internalType\":\"address\",\"name\":\"sender\",\"type\":\"address\"}],\"name\":\"RoleRevoked\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"cereUnitsPerPenny\",\"type\":\"uint256\"}],\"name\":\"SetExchangeRate\",\"type\":\"event\"},{\"inputs\":[],\"name\":\"CURRENCY\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"DEFAULT_ADMIN_ROLE\",\"outputs\":[{\"internalType\":\"bytes32\",\"name\":\"\",\"type\":\"bytes32\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"EXCHANGE_RATE_ORACLE\",\"outputs\":[{\"internalType\":\"bytes32\",\"name\":\"\",\"type\":\"bytes32\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"PAYMENT_SERVICE\",\"outputs\":[{\"internalType\":\"bytes32\",\"name\":\"\",\"type\":\"bytes32\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"penniesReceived\",\"type\":\"uint256\"},{\"internalType\":\"address\",\"name\":\"buyer\",\"type\":\"address\"},{\"internalType\":\"uint256\",\"name\":\"nonce\",\"type\":\"uint256\"}],\"name\":\"buyCereFromUsd\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"penniesReceived\",\"type\":\"uint256\"},{\"internalType\":\"address\",\"name\":\"buyer\",\"type\":\"address\"},{\"internalType\":\"address\",\"name\":\"seller\",\"type\":\"address\"},{\"internalType\":\"uint256\",\"name\":\"nftId\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"expectedPriceOrZero\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"nonce\",\"type\":\"uint256\"}],\"name\":\"buyNftFromUsd\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"davinci\",\"outputs\":[{\"internalType\":\"contract Davinci\",\"name\":\"\",\"type\":\"address\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"getExchangeRate\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"bytes32\",\"name\":\"role\",\"type\":\"bytes32\"}],\"name\":\"getRoleAdmin\",\"outputs\":[{\"internalType\":\"bytes32\",\"name\":\"\",\"type\":\"bytes32\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"bytes32\",\"name\":\"role\",\"type\":\"bytes32\"},{\"internalType\":\"address\",\"name\":\"account\",\"type\":\"address\"}],\"name\":\"grantRole\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"bytes32\",\"name\":\"role\",\"type\":\"bytes32\"},{\"internalType\":\"address\",\"name\":\"account\",\"type\":\"address\"}],\"name\":\"hasRole\",\"outputs\":[{\"internalType\":\"bool\",\"name\":\"\",\"type\":\"bool\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"bytes32\",\"name\":\"role\",\"type\":\"bytes32\"},{\"internalType\":\"address\",\"name\":\"account\",\"type\":\"address\"}],\"name\":\"renounceRole\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"bytes32\",\"name\":\"role\",\"type\":\"bytes32\"},{\"internalType\":\"address\",\"name\":\"account\",\"type\":\"address\"}],\"name\":\"revokeRole\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"_cereUnitsPerPenny\",\"type\":\"uint256\"}],\"name\":\"setExchangeRate\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"bytes4\",\"name\":\"interfaceId\",\"type\":\"bytes4\"}],\"name\":\"supportsInterface\",\"outputs\":[{\"internalType\":\"bool\",\"name\":\"\",\"type\":\"bool\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"totalCereUnitsSent\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"totalPenniesReceived\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"withdraw\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"nonpayable\",\"type\":\"function\"}],\"devdoc\":{\"kind\":\"dev\",\"methods\":{\"getRoleAdmin(bytes32)\":{\"details\":\"Returns the admin role that controls `role`. See {grantRole} and {revokeRole}. To change a role's admin, use {_setRoleAdmin}.\"},\"grantRole(bytes32,address)\":{\"details\":\"Grants `role` to `account`. If `account` had not been already granted `role`, emits a {RoleGranted} event. Requirements: - the caller must have ``role``'s admin role.\"},\"hasRole(bytes32,address)\":{\"details\":\"Returns `true` if `account` has been granted `role`.\"},\"renounceRole(bytes32,address)\":{\"details\":\"Revokes `role` from the calling account. Roles are often managed via {grantRole} and {revokeRole}: this function's purpose is to provide a mechanism for accounts to lose their privileges if they are compromised (such as when a trusted device is misplaced). If the calling account had been granted `role`, emits a {RoleRevoked} event. Requirements: - the caller must be `account`.\"},\"revokeRole(bytes32,address)\":{\"details\":\"Revokes `role` from `account`. If `account` had been granted `role`, emits a {RoleRevoked} event. Requirements: - the caller must have ``role``'s admin role.\"},\"supportsInterface(bytes4)\":{\"details\":\"See {IERC165-supportsInterface}.\"}},\"version\":1},\"userdoc\":{\"events\":{\"SetExchangeRate(uint256)\":{\"notice\":\"An event emitted when the exchange rate was set to a new value. The rate is given as CERE Units (with 10 decimals) per USD cent (1 penny).\"}},\"kind\":\"user\",\"methods\":{\"CURRENCY()\":{\"notice\":\"The token ID that represents the CERE currency for all payments in this contract. \"},\"buyCereFromUsd(uint256,address,uint256)\":{\"notice\":\"Obtain CERE based on a fiat payment. The amount of fiat is recorded, and exchanged for an amount of CERE. Only the gateway with PAYMENT_SERVICE role can report successful payments.\"},\"buyNftFromUsd(uint256,address,address,uint256,uint256,uint256)\":{\"notice\":\"Obtain CERE and buy an NFT based on a fiat payment. CERE tokens are obtained in the same way as buyCereFromUsd. Then, the tokens are used to buy an NFT in the same transaction. The NFT must be available for sale from the seller in SimpleExchange. Only the gateway with PAYMENT_SERVICE role can report successful payments. The parameter expectedPriceOrZero can be used to validate the price that the buyer expects to pay. This prevents a race condition with makeOffer or setExchangeRate. Pass 0 to disable this validation and accept any current price.\"},\"getExchangeRate()\":{\"notice\":\"Get the current exchange rate in CERE Units (with 10 decimals) per USD cent (1 penny).\"},\"setExchangeRate(uint256)\":{\"notice\":\"Set the exchange rate between fiat (USD) and Davinci currency (CERE). The rate is given as number of CERE Units (with 10 decimals) per USD cent (1 penny). Only the rate service with the EXCHANGE_RATE_ORACLE role can change the rate.\"},\"totalCereUnitsSent()\":{\"notice\":\"How many CERE Units were sold so far.\"},\"totalPenniesReceived()\":{\"notice\":\"How many USD cents were received so far, according to the payment service.\"},\"withdraw()\":{\"notice\":\"Withdraw all CERE from this contract. Only accounts with DEFAULT_ADMIN_ROLE can withdraw.\"}},\"notice\":\"The FiatGateway contract allows buying NFTs from an external fiat payment. This contract connects to the Davinci contract. It must hold a balance of CERE recognized by Davinci. This contract uses the SimpleExchange API to buy NFTs. This contract is operational only when the exchange rate is set to a non-zero value.\",\"version\":1}},\"settings\":{\"compilationTarget\":{\"/home/a/CERE/davinci-nft/contracts/FiatGateway.sol\":\"FiatGateway\"},\"evmVersion\":\"istanbul\",\"libraries\":{},\"metadata\":{\"bytecodeHash\":\"ipfs\"},\"optimizer\":{\"enabled\":true,\"runs\":10},\"remappings\":[]},\"sources\":{\"/home/a/CERE/davinci-nft/contracts/Davinci.sol\":{\"keccak256\":\"0x91ff7a2719ab4a4bd46c64236ed5df2edc46a628ade0f7539c603dbc7e81ae69\",\"urls\":[\"bzz-raw://7ad02e7bafc9a3d9df0098e924adaa6a1e9ce63807801597ba4f263219c0ff84\",\"dweb:/ipfs/QmbdNnfDcQ6kQo8pqjeyB4fHLyhgJGG3hAruaVXsu6SpGy\"]},\"/home/a/CERE/davinci-nft/contracts/FiatGateway.sol\":{\"keccak256\":\"0xa117ccaf7752407983cfdae924ed67e6946b4469284d3f6d167716b3e8a8a7af\",\"urls\":[\"bzz-raw://5b23db30c546e1127dd19fe6b667685d45544661ac98a22f33856367f156fd0c\",\"dweb:/ipfs/QmQ1DeiGUh9C91j5uAjW5mmaEzfZ8xnswFNbjPoJXPxsBM\"]},\"/home/a/CERE/davinci-nft/contracts/access/AccessControl.sol\":{\"keccak256\":\"0x98fac37221212c8f126f198d262a4df86394bd1a9969f61e40739fe8ac013dd8\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://62f98a3c51ff54e1d19c8845da55415c85b4f28c81c0c3b1361eb6eaa905a0c6\",\"dweb:/ipfs/QmTZxiScs2HXZRtscWGjBBXmG4qeFGk1Bq8FGzhbWi1wr3\"]},\"/home/a/CERE/davinci-nft/contracts/davinciParts/BaseNFT.sol\":{\"keccak256\":\"0x2b13cfef09bbd2d5d7e681cdbf3f8d7294437dd761282fdc3ade98058ef633c3\",\"urls\":[\"bzz-raw://c713051b9ad441af6020c87db9797780bc746c67cc740018a3aed06dff6c7e7a\",\"dweb:/ipfs/QmeozyvJycaThbBtJy2LnYDZJzX7Eo6UsCMxHacyDgwvvB\"]},\"/home/a/CERE/davinci-nft/contracts/davinciParts/Currency.sol\":{\"keccak256\":\"0x1008137cd28b99c360bc4b6efb19f37a4f276da3e78e1bddead4b8fc33b612a1\",\"urls\":[\"bzz-raw://001d88d26c9ef52142809d97f6043d53f9e1c5c8023dd07ff93e9a4407dd1844\",\"dweb:/ipfs/QmQJeYHx3aqomh3KmvHG4QvAiZkhUirJm2gTVUDLe573YN\"]},\"/home/a/CERE/davinci-nft/contracts/davinciParts/Issuance.sol\":{\"keccak256\":\"0xbd3fd0a50f969c02b3b23e08bdb48cd37d7cb230e402d8039dede3ec729602ae\",\"urls\":[\"bzz-raw://4eb1370b5bf61f4c6b7ec04549d16619b92a478566675d82d331c5dbcece9f41\",\"dweb:/ipfs/Qmc9JXnD86imGeAGXSTN25PMVRrRBSfCrMdVy3eP3vsrTJ\"]},\"/home/a/CERE/davinci-nft/contracts/davinciParts/JointAccounts.sol\":{\"keccak256\":\"0x46706d42441ad9f47cc1601e1a4bcbb45bc7d15e1e0a6da7299f6a8e309ac9a1\",\"urls\":[\"bzz-raw://cb88d8d36edceca3e6d3ed70131669a804537f6ea91b3ddf787aba89b923d40e\",\"dweb:/ipfs/QmWX7YzXDy3oQHFB55fVoVNxJg9CsoershK2xVUKTgHhPo\"]},\"/home/a/CERE/davinci-nft/contracts/davinciParts/MetaTxContext.sol\":{\"keccak256\":\"0x12579308ed77228d87aad495399c8feff27642efa9aae8fe2fd2049da4140459\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://568cafead94d0ecbee30203822e404d1bf53653257f933db70b6a035223189dd\",\"dweb:/ipfs/QmWmgcDLWNeswQF5WGM4zXpdaXcA4sQdWZbGvfSLEZWF2K\"]},\"/home/a/CERE/davinci-nft/contracts/davinciParts/PolygonChildERC20.sol\":{\"keccak256\":\"0x3506210d9a05ee668b11226a696a9718b5dca3913950d257ffc9eacb65f3bbd8\",\"urls\":[\"bzz-raw://07da0da5853eaf00ad6dd2656d9aba17d677184e0493548aed3bfddd10b8a229\",\"dweb:/ipfs/QmXoEqspi57pRkrfm6Rk2JRQcX1zpYSeydZNohjFFdjUtd\"]},\"/home/a/CERE/davinci-nft/contracts/davinciParts/SimpleExchange.sol\":{\"keccak256\":\"0x99adff6ce49b17721004385476088979b1d79583ba83c81041c762762f543684\",\"urls\":[\"bzz-raw://fb2ca85b23d41f4b1fc339551bd827e95b19101b95c5fccd6b6590a724265e99\",\"dweb:/ipfs/QmeFYdincJfWLG3412Db8PPb5RBKVW86nuzw3AUxKjMw6B\"]},\"/home/a/CERE/davinci-nft/contracts/davinciParts/TransferFees.sol\":{\"keccak256\":\"0xc0bc6eacd5f58ecb10c3e06c9a34d75c7e665d4b85afb9b438d13c9bb515c347\",\"urls\":[\"bzz-raw://d13d012caa46fda6b3853e10a95ce60924f68865b68619591483afea1a3563f2\",\"dweb:/ipfs/QmbeRRXZ8qdEbUrSSzrgfWWr3otMAeB33bXcGGu7JaPAvc\"]},\"/home/a/CERE/davinci-nft/contracts/davinciParts/TransferOperator.sol\":{\"keccak256\":\"0xa3b4dd13b4bfd8894da16813415503a755e8fc1a8e081f5a98ffeb7782395d4c\",\"urls\":[\"bzz-raw://539d2f0d0c50ac93ce9f3da7010c06ee2868bb2a27a282a988d88c5644c34609\",\"dweb:/ipfs/Qmf9j9neJ3h9JfekGZ1FA9uYLv599WZkqjMv4KojtCdWZy\"]},\"/home/a/CERE/davinci-nft/contracts/token/ERC1155/ERC1155.sol\":{\"keccak256\":\"0xeaafe1c2ab42941716da1c12d401bb708528bd08053d043f16c102d4bb219c8c\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://7b5e012cd4f44be154d1d53e49de4298d47b44393086c71aa7009bc6040eef73\",\"dweb:/ipfs/QmbxfsFYjeksnjW8GYTHEiXx19iN47VdcGdyqaSRPuFvSR\"]},\"/home/a/CERE/davinci-nft/contracts/token/ERC1155/IERC1155.sol\":{\"keccak256\":\"0x249bc2a6d919da5f5145950664134cfcf2f66874bda801fd3b8fb861783da079\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://2db9d720fadb1315ba64790815f9f1d80237cca584fc530b8906519bd46ff4cc\",\"dweb:/ipfs/QmXQSGPuGHG5e9ZRVbcUymP3B78cn6ZjfaiaEwd3P3yBCF\"]},\"/home/a/CERE/davinci-nft/contracts/token/ERC1155/IERC1155Receiver.sol\":{\"keccak256\":\"0x7c0ea2d284bad1aa002165ba4c5eac30070be8e56b19dba1ac7c8f2c8bd4832c\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://46cd1e78707bb21fc6255c1cc9356537cc767e74f112553ea9305938a325bacb\",\"dweb:/ipfs/QmcG9KekAb77Bh5S62w8SJ4N8qhsmx8ewWF5cWoxC9DEuN\"]},\"/home/a/CERE/davinci-nft/contracts/token/ERC1155/extensions/IERC1155MetadataURI.sol\":{\"keccak256\":\"0x6ba0564f6970414d1166ee83127b834bbe7dbf699241a3005eb7ae64a2211975\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://9784827a0575eab840a3b2d42900390724c79139063150955c95f5b730545669\",\"dweb:/ipfs/Qmergdvk1vDFSpXxZSXghPm5SxKBUqrqkZdYmsUSaMwaXK\"]},\"/home/a/CERE/davinci-nft/contracts/utils/Address.sol\":{\"keccak256\":\"0x069b2631bb5b5193a58ccf7a06266c7361bd2c20095667af4402817605627f45\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://6a4c96fafff76deda5697c3c5c98cade6e6e1b178254544c106bf360c079ce4e\",\"dweb:/ipfs/QmXmxubE3jnatFgZuN8ay1VV6hZ8WRmhvUjNpeVjki15HX\"]},\"/home/a/CERE/davinci-nft/contracts/utils/Context.sol\":{\"keccak256\":\"0xf930d2df426bfcfc1f7415be724f04081c96f4fb9ec8d0e3a521c07692dface0\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://fc2bfdea0d2562c76fb3c4cf70a86c6ba25c5a30e8f8515c95aafdf8383f8395\",\"dweb:/ipfs/QmTbFya18786ckJfLYUoWau9jBTKfmWnWm5XSViWvB7PXN\"]},\"/home/a/CERE/davinci-nft/contracts/utils/Strings.sol\":{\"keccak256\":\"0x456e9b3a2bfe189b5249857f624f4139e59331db518483b456c4e587a20552e0\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://1123c9545decc48a011370ebab4bf53dda98524fa21f9498e68851ba8f0ffc0f\",\"dweb:/ipfs/QmUpgMg8EFDnv87ePKUjXxXpJT3qwHRj9VDNSnRxu7T9sy\"]},\"/home/a/CERE/davinci-nft/contracts/utils/introspection/ERC165.sol\":{\"keccak256\":\"0x5718c5df9bd67ac68a796961df938821bb5dc0cd4c6118d77e9145afb187409b\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://d10e1d9b26042424789246603906ad06143bf9a928f4e99de8b5e3bdc662f549\",\"dweb:/ipfs/Qmejonoaj5MLekPus229rJQHcC6E9dz2xorjHJR84fMfmn\"]},\"/home/a/CERE/davinci-nft/contracts/utils/introspection/IERC165.sol\":{\"keccak256\":\"0xa28007762d9da9db878dd421960c8cb9a10471f47ab5c1b3309bfe48e9e79ff4\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://796ab6e88af7bf0e78def0f059310c903af6a312b565344e0ff524a0f26e81c6\",\"dweb:/ipfs/QmcsVgLgzWdor3UnAztUkXKNGcysm1MPneWksF72AvnwBx\"]}},\"version\":1}",
+  "metadata": "{\"compiler\":{\"version\":\"0.8.4+commit.c7e474f2\"},\"language\":\"Solidity\",\"output\":{\"abi\":[{\"inputs\":[{\"internalType\":\"contract Freeport\",\"name\":\"_freeport\",\"type\":\"address\"}],\"stateMutability\":\"nonpayable\",\"type\":\"constructor\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"bytes32\",\"name\":\"role\",\"type\":\"bytes32\"},{\"indexed\":true,\"internalType\":\"bytes32\",\"name\":\"previousAdminRole\",\"type\":\"bytes32\"},{\"indexed\":true,\"internalType\":\"bytes32\",\"name\":\"newAdminRole\",\"type\":\"bytes32\"}],\"name\":\"RoleAdminChanged\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"bytes32\",\"name\":\"role\",\"type\":\"bytes32\"},{\"indexed\":true,\"internalType\":\"address\",\"name\":\"account\",\"type\":\"address\"},{\"indexed\":true,\"internalType\":\"address\",\"name\":\"sender\",\"type\":\"address\"}],\"name\":\"RoleGranted\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"bytes32\",\"name\":\"role\",\"type\":\"bytes32\"},{\"indexed\":true,\"internalType\":\"address\",\"name\":\"account\",\"type\":\"address\"},{\"indexed\":true,\"internalType\":\"address\",\"name\":\"sender\",\"type\":\"address\"}],\"name\":\"RoleRevoked\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"cereUnitsPerPenny\",\"type\":\"uint256\"}],\"name\":\"SetExchangeRate\",\"type\":\"event\"},{\"inputs\":[],\"name\":\"CURRENCY\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"DEFAULT_ADMIN_ROLE\",\"outputs\":[{\"internalType\":\"bytes32\",\"name\":\"\",\"type\":\"bytes32\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"EXCHANGE_RATE_ORACLE\",\"outputs\":[{\"internalType\":\"bytes32\",\"name\":\"\",\"type\":\"bytes32\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"PAYMENT_SERVICE\",\"outputs\":[{\"internalType\":\"bytes32\",\"name\":\"\",\"type\":\"bytes32\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"penniesReceived\",\"type\":\"uint256\"},{\"internalType\":\"address\",\"name\":\"buyer\",\"type\":\"address\"},{\"internalType\":\"uint256\",\"name\":\"nonce\",\"type\":\"uint256\"}],\"name\":\"buyCereFromUsd\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"penniesReceived\",\"type\":\"uint256\"},{\"internalType\":\"address\",\"name\":\"buyer\",\"type\":\"address\"},{\"internalType\":\"address\",\"name\":\"seller\",\"type\":\"address\"},{\"internalType\":\"uint256\",\"name\":\"nftId\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"expectedPriceOrZero\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"nonce\",\"type\":\"uint256\"}],\"name\":\"buyNftFromUsd\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"freeport\",\"outputs\":[{\"internalType\":\"contract Freeport\",\"name\":\"\",\"type\":\"address\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"getExchangeRate\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"bytes32\",\"name\":\"role\",\"type\":\"bytes32\"}],\"name\":\"getRoleAdmin\",\"outputs\":[{\"internalType\":\"bytes32\",\"name\":\"\",\"type\":\"bytes32\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"bytes32\",\"name\":\"role\",\"type\":\"bytes32\"},{\"internalType\":\"address\",\"name\":\"account\",\"type\":\"address\"}],\"name\":\"grantRole\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"bytes32\",\"name\":\"role\",\"type\":\"bytes32\"},{\"internalType\":\"address\",\"name\":\"account\",\"type\":\"address\"}],\"name\":\"hasRole\",\"outputs\":[{\"internalType\":\"bool\",\"name\":\"\",\"type\":\"bool\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"bytes32\",\"name\":\"role\",\"type\":\"bytes32\"},{\"internalType\":\"address\",\"name\":\"account\",\"type\":\"address\"}],\"name\":\"renounceRole\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"bytes32\",\"name\":\"role\",\"type\":\"bytes32\"},{\"internalType\":\"address\",\"name\":\"account\",\"type\":\"address\"}],\"name\":\"revokeRole\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"_cereUnitsPerPenny\",\"type\":\"uint256\"}],\"name\":\"setExchangeRate\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"bytes4\",\"name\":\"interfaceId\",\"type\":\"bytes4\"}],\"name\":\"supportsInterface\",\"outputs\":[{\"internalType\":\"bool\",\"name\":\"\",\"type\":\"bool\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"totalCereUnitsSent\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"totalPenniesReceived\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"withdraw\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"nonpayable\",\"type\":\"function\"}],\"devdoc\":{\"kind\":\"dev\",\"methods\":{\"getRoleAdmin(bytes32)\":{\"details\":\"Returns the admin role that controls `role`. See {grantRole} and {revokeRole}. To change a role's admin, use {_setRoleAdmin}.\"},\"grantRole(bytes32,address)\":{\"details\":\"Grants `role` to `account`. If `account` had not been already granted `role`, emits a {RoleGranted} event. Requirements: - the caller must have ``role``'s admin role.\"},\"hasRole(bytes32,address)\":{\"details\":\"Returns `true` if `account` has been granted `role`.\"},\"renounceRole(bytes32,address)\":{\"details\":\"Revokes `role` from the calling account. Roles are often managed via {grantRole} and {revokeRole}: this function's purpose is to provide a mechanism for accounts to lose their privileges if they are compromised (such as when a trusted device is misplaced). If the calling account had been granted `role`, emits a {RoleRevoked} event. Requirements: - the caller must be `account`.\"},\"revokeRole(bytes32,address)\":{\"details\":\"Revokes `role` from `account`. If `account` had been granted `role`, emits a {RoleRevoked} event. Requirements: - the caller must have ``role``'s admin role.\"},\"supportsInterface(bytes4)\":{\"details\":\"See {IERC165-supportsInterface}.\"}},\"version\":1},\"userdoc\":{\"events\":{\"SetExchangeRate(uint256)\":{\"notice\":\"An event emitted when the exchange rate was set to a new value. The rate is given as CERE Units (with 10 decimals) per USD cent (1 penny).\"}},\"kind\":\"user\",\"methods\":{\"CURRENCY()\":{\"notice\":\"The token ID that represents the CERE currency for all payments in this contract. \"},\"buyCereFromUsd(uint256,address,uint256)\":{\"notice\":\"Obtain CERE based on a fiat payment. The amount of fiat is recorded, and exchanged for an amount of CERE. Only the gateway with PAYMENT_SERVICE role can report successful payments.\"},\"buyNftFromUsd(uint256,address,address,uint256,uint256,uint256)\":{\"notice\":\"Obtain CERE and buy an NFT based on a fiat payment. CERE tokens are obtained in the same way as buyCereFromUsd. Then, the tokens are used to buy an NFT in the same transaction. The NFT must be available for sale from the seller in SimpleExchange. Only the gateway with PAYMENT_SERVICE role can report successful payments. The parameter expectedPriceOrZero can be used to validate the price that the buyer expects to pay. This prevents a race condition with makeOffer or setExchangeRate. Pass 0 to disable this validation and accept any current price.\"},\"getExchangeRate()\":{\"notice\":\"Get the current exchange rate in CERE Units (with 10 decimals) per USD cent (1 penny).\"},\"setExchangeRate(uint256)\":{\"notice\":\"Set the exchange rate between fiat (USD) and Freeport currency (CERE). The rate is given as number of CERE Units (with 10 decimals) per USD cent (1 penny). Only the rate service with the EXCHANGE_RATE_ORACLE role can change the rate.\"},\"totalCereUnitsSent()\":{\"notice\":\"How many CERE Units were sold so far.\"},\"totalPenniesReceived()\":{\"notice\":\"How many USD cents were received so far, according to the payment service.\"},\"withdraw()\":{\"notice\":\"Withdraw all CERE from this contract. Only accounts with DEFAULT_ADMIN_ROLE can withdraw.\"}},\"notice\":\"The FiatGateway contract allows buying NFTs from an external fiat payment. This contract connects to the Freeport contract. It must hold a balance of CERE recognized by Freeport. This contract uses the SimpleExchange API to buy NFTs. This contract is operational only when the exchange rate is set to a non-zero value.\",\"version\":1}},\"settings\":{\"compilationTarget\":{\"/home/a/CERE/freeport-nft/contracts/FiatGateway.sol\":\"FiatGateway\"},\"evmVersion\":\"istanbul\",\"libraries\":{},\"metadata\":{\"bytecodeHash\":\"ipfs\"},\"optimizer\":{\"enabled\":true,\"runs\":10},\"remappings\":[]},\"sources\":{\"/home/a/CERE/freeport-nft/contracts/Freeport.sol\":{\"keccak256\":\"0x91ff7a2719ab4a4bd46c64236ed5df2edc46a628ade0f7539c603dbc7e81ae69\",\"urls\":[\"bzz-raw://7ad02e7bafc9a3d9df0098e924adaa6a1e9ce63807801597ba4f263219c0ff84\",\"dweb:/ipfs/QmbdNnfDcQ6kQo8pqjeyB4fHLyhgJGG3hAruaVXsu6SpGy\"]},\"/home/a/CERE/freeport-nft/contracts/FiatGateway.sol\":{\"keccak256\":\"0xa117ccaf7752407983cfdae924ed67e6946b4469284d3f6d167716b3e8a8a7af\",\"urls\":[\"bzz-raw://5b23db30c546e1127dd19fe6b667685d45544661ac98a22f33856367f156fd0c\",\"dweb:/ipfs/QmQ1DeiGUh9C91j5uAjW5mmaEzfZ8xnswFNbjPoJXPxsBM\"]},\"/home/a/CERE/freeport-nft/contracts/access/AccessControl.sol\":{\"keccak256\":\"0x98fac37221212c8f126f198d262a4df86394bd1a9969f61e40739fe8ac013dd8\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://62f98a3c51ff54e1d19c8845da55415c85b4f28c81c0c3b1361eb6eaa905a0c6\",\"dweb:/ipfs/QmTZxiScs2HXZRtscWGjBBXmG4qeFGk1Bq8FGzhbWi1wr3\"]},\"/home/a/CERE/freeport-nft/contracts/freeportParts/BaseNFT.sol\":{\"keccak256\":\"0x2b13cfef09bbd2d5d7e681cdbf3f8d7294437dd761282fdc3ade98058ef633c3\",\"urls\":[\"bzz-raw://c713051b9ad441af6020c87db9797780bc746c67cc740018a3aed06dff6c7e7a\",\"dweb:/ipfs/QmeozyvJycaThbBtJy2LnYDZJzX7Eo6UsCMxHacyDgwvvB\"]},\"/home/a/CERE/freeport-nft/contracts/freeportParts/Currency.sol\":{\"keccak256\":\"0x1008137cd28b99c360bc4b6efb19f37a4f276da3e78e1bddead4b8fc33b612a1\",\"urls\":[\"bzz-raw://001d88d26c9ef52142809d97f6043d53f9e1c5c8023dd07ff93e9a4407dd1844\",\"dweb:/ipfs/QmQJeYHx3aqomh3KmvHG4QvAiZkhUirJm2gTVUDLe573YN\"]},\"/home/a/CERE/freeport-nft/contracts/freeportParts/Issuance.sol\":{\"keccak256\":\"0xbd3fd0a50f969c02b3b23e08bdb48cd37d7cb230e402d8039dede3ec729602ae\",\"urls\":[\"bzz-raw://4eb1370b5bf61f4c6b7ec04549d16619b92a478566675d82d331c5dbcece9f41\",\"dweb:/ipfs/Qmc9JXnD86imGeAGXSTN25PMVRrRBSfCrMdVy3eP3vsrTJ\"]},\"/home/a/CERE/freeport-nft/contracts/freeportParts/JointAccounts.sol\":{\"keccak256\":\"0x46706d42441ad9f47cc1601e1a4bcbb45bc7d15e1e0a6da7299f6a8e309ac9a1\",\"urls\":[\"bzz-raw://cb88d8d36edceca3e6d3ed70131669a804537f6ea91b3ddf787aba89b923d40e\",\"dweb:/ipfs/QmWX7YzXDy3oQHFB55fVoVNxJg9CsoershK2xVUKTgHhPo\"]},\"/home/a/CERE/freeport-nft/contracts/freeportParts/MetaTxContext.sol\":{\"keccak256\":\"0x12579308ed77228d87aad495399c8feff27642efa9aae8fe2fd2049da4140459\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://568cafead94d0ecbee30203822e404d1bf53653257f933db70b6a035223189dd\",\"dweb:/ipfs/QmWmgcDLWNeswQF5WGM4zXpdaXcA4sQdWZbGvfSLEZWF2K\"]},\"/home/a/CERE/freeport-nft/contracts/freeportParts/PolygonChildERC20.sol\":{\"keccak256\":\"0x3506210d9a05ee668b11226a696a9718b5dca3913950d257ffc9eacb65f3bbd8\",\"urls\":[\"bzz-raw://07da0da5853eaf00ad6dd2656d9aba17d677184e0493548aed3bfddd10b8a229\",\"dweb:/ipfs/QmXoEqspi57pRkrfm6Rk2JRQcX1zpYSeydZNohjFFdjUtd\"]},\"/home/a/CERE/freeport-nft/contracts/freeportParts/SimpleExchange.sol\":{\"keccak256\":\"0x99adff6ce49b17721004385476088979b1d79583ba83c81041c762762f543684\",\"urls\":[\"bzz-raw://fb2ca85b23d41f4b1fc339551bd827e95b19101b95c5fccd6b6590a724265e99\",\"dweb:/ipfs/QmeFYdincJfWLG3412Db8PPb5RBKVW86nuzw3AUxKjMw6B\"]},\"/home/a/CERE/freeport-nft/contracts/freeportParts/TransferFees.sol\":{\"keccak256\":\"0xc0bc6eacd5f58ecb10c3e06c9a34d75c7e665d4b85afb9b438d13c9bb515c347\",\"urls\":[\"bzz-raw://d13d012caa46fda6b3853e10a95ce60924f68865b68619591483afea1a3563f2\",\"dweb:/ipfs/QmbeRRXZ8qdEbUrSSzrgfWWr3otMAeB33bXcGGu7JaPAvc\"]},\"/home/a/CERE/freeport-nft/contracts/freeportParts/TransferOperator.sol\":{\"keccak256\":\"0xa3b4dd13b4bfd8894da16813415503a755e8fc1a8e081f5a98ffeb7782395d4c\",\"urls\":[\"bzz-raw://539d2f0d0c50ac93ce9f3da7010c06ee2868bb2a27a282a988d88c5644c34609\",\"dweb:/ipfs/Qmf9j9neJ3h9JfekGZ1FA9uYLv599WZkqjMv4KojtCdWZy\"]},\"/home/a/CERE/freeport-nft/contracts/token/ERC1155/ERC1155.sol\":{\"keccak256\":\"0xeaafe1c2ab42941716da1c12d401bb708528bd08053d043f16c102d4bb219c8c\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://7b5e012cd4f44be154d1d53e49de4298d47b44393086c71aa7009bc6040eef73\",\"dweb:/ipfs/QmbxfsFYjeksnjW8GYTHEiXx19iN47VdcGdyqaSRPuFvSR\"]},\"/home/a/CERE/freeport-nft/contracts/token/ERC1155/IERC1155.sol\":{\"keccak256\":\"0x249bc2a6d919da5f5145950664134cfcf2f66874bda801fd3b8fb861783da079\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://2db9d720fadb1315ba64790815f9f1d80237cca584fc530b8906519bd46ff4cc\",\"dweb:/ipfs/QmXQSGPuGHG5e9ZRVbcUymP3B78cn6ZjfaiaEwd3P3yBCF\"]},\"/home/a/CERE/freeport-nft/contracts/token/ERC1155/IERC1155Receiver.sol\":{\"keccak256\":\"0x7c0ea2d284bad1aa002165ba4c5eac30070be8e56b19dba1ac7c8f2c8bd4832c\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://46cd1e78707bb21fc6255c1cc9356537cc767e74f112553ea9305938a325bacb\",\"dweb:/ipfs/QmcG9KekAb77Bh5S62w8SJ4N8qhsmx8ewWF5cWoxC9DEuN\"]},\"/home/a/CERE/freeport-nft/contracts/token/ERC1155/extensions/IERC1155MetadataURI.sol\":{\"keccak256\":\"0x6ba0564f6970414d1166ee83127b834bbe7dbf699241a3005eb7ae64a2211975\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://9784827a0575eab840a3b2d42900390724c79139063150955c95f5b730545669\",\"dweb:/ipfs/Qmergdvk1vDFSpXxZSXghPm5SxKBUqrqkZdYmsUSaMwaXK\"]},\"/home/a/CERE/freeport-nft/contracts/utils/Address.sol\":{\"keccak256\":\"0x069b2631bb5b5193a58ccf7a06266c7361bd2c20095667af4402817605627f45\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://6a4c96fafff76deda5697c3c5c98cade6e6e1b178254544c106bf360c079ce4e\",\"dweb:/ipfs/QmXmxubE3jnatFgZuN8ay1VV6hZ8WRmhvUjNpeVjki15HX\"]},\"/home/a/CERE/freeport-nft/contracts/utils/Context.sol\":{\"keccak256\":\"0xf930d2df426bfcfc1f7415be724f04081c96f4fb9ec8d0e3a521c07692dface0\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://fc2bfdea0d2562c76fb3c4cf70a86c6ba25c5a30e8f8515c95aafdf8383f8395\",\"dweb:/ipfs/QmTbFya18786ckJfLYUoWau9jBTKfmWnWm5XSViWvB7PXN\"]},\"/home/a/CERE/freeport-nft/contracts/utils/Strings.sol\":{\"keccak256\":\"0x456e9b3a2bfe189b5249857f624f4139e59331db518483b456c4e587a20552e0\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://1123c9545decc48a011370ebab4bf53dda98524fa21f9498e68851ba8f0ffc0f\",\"dweb:/ipfs/QmUpgMg8EFDnv87ePKUjXxXpJT3qwHRj9VDNSnRxu7T9sy\"]},\"/home/a/CERE/freeport-nft/contracts/utils/introspection/ERC165.sol\":{\"keccak256\":\"0x5718c5df9bd67ac68a796961df938821bb5dc0cd4c6118d77e9145afb187409b\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://d10e1d9b26042424789246603906ad06143bf9a928f4e99de8b5e3bdc662f549\",\"dweb:/ipfs/Qmejonoaj5MLekPus229rJQHcC6E9dz2xorjHJR84fMfmn\"]},\"/home/a/CERE/freeport-nft/contracts/utils/introspection/IERC165.sol\":{\"keccak256\":\"0xa28007762d9da9db878dd421960c8cb9a10471f47ab5c1b3309bfe48e9e79ff4\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://796ab6e88af7bf0e78def0f059310c903af6a312b565344e0ff524a0f26e81c6\",\"dweb:/ipfs/QmcsVgLgzWdor3UnAztUkXKNGcysm1MPneWksF72AvnwBx\"]}},\"version\":1}",
   "bytecode": "0x608060405234801561001057600080fd5b50604051610e82380380610e8283398101604081905261002f9161010d565b600180546001600160a01b0319166001600160a01b03831617905561005b60006100563390565b610061565b5061013b565b61006b828261006f565b5050565b6000828152602081815260408083206001600160a01b038516845290915290205460ff1661006b576000828152602081815260408083206001600160a01b03851684529091529020805460ff191660011790556100c93390565b6001600160a01b0316816001600160a01b0316837f2f8788117e7eff1d82e926ec794901d17c78024a50270940304540a733656f0d60405160405180910390a45050565b60006020828403121561011e578081fd5b81516001600160a01b0381168114610134578182fd5b9392505050565b610d388061014a6000396000f3fe608060405234801561001057600080fd5b50600436106100e65760003560e01c806301ffc9a7146100eb5780630ec57d5114610113578063248a9ca31461013e5780632f2ff15d1461015f5780633263ba671461017457806336568abe146101895780633ccfd60b1461019c57806391d14854146101a45780639c750286146101b7578063a217fddf146101c0578063a87a9322146101c8578063c4f7f9c5146101db578063c87113e2146101ee578063d547741f14610203578063db068e0e14610216578063e65372e114610229578063e6aa216c14610232578063f5361219146101c0575b600080fd5b6100fe6100f9366004610a89565b61023a565b60405190151581526020015b60405180910390f35b600154610126906001600160a01b031681565b6040516001600160a01b03909116815260200161010a565b61015161014c366004610a46565b610271565b60405190815260200161010a565b61017261016d366004610a5e565b610286565b005b610151600080516020610ce383398151915281565b610172610197366004610a5e565b6102a8565b61015161032b565b6100fe6101b2366004610a5e565b610432565b61015160045481565b610151600081565b6101726101d6366004610ac9565b61045b565b6101516101e9366004610b20565b610565565b610151600080516020610cc383398151915281565b610172610211366004610a5e565b610683565b610172610224366004610a46565b6106a0565b61015160035481565b600254610151565b60006001600160e01b03198216637965db0b60e01b148061026b57506301ffc9a760e01b6001600160e01b03198316145b92915050565b60009081526020819052604090206001015490565b61028f82610271565b61029981336106f5565b6102a38383610759565b505050565b6001600160a01b038116331461031d5760405162461bcd60e51b815260206004820152602f60248201527f416363657373436f6e74726f6c3a2063616e206f6e6c792072656e6f756e636560448201526e103937b632b9903337b91039b2b63360891b60648201526084015b60405180910390fd5b61032782826107dd565b5050565b60008061033881336106f5565b600033600154604051627eeac760e11b81523060048201526000602482018190529293506001600160a01b039091169062fdd58e9060440160206040518083038186803b15801561038857600080fd5b505afa15801561039c573d6000803e3d6000fd5b505050506040513d601f19601f820116820180604052508101906103c09190610ab1565b600154604051637921219560e11b81529192506001600160a01b03169063f242432a906103f890309086906000908790600401610bc3565b600060405180830381600087803b15801561041257600080fd5b505af1158015610426573d6000803e3d6000fd5b50929550505050505090565b6000918252602082815260408084206001600160a01b0393909316845291905290205460ff1690565b600080516020610ce383398151915261047481336106f5565b6000610481888885610565565b9050838110156104dd5760405162461bcd60e51b815260206004820152602160248201527f52656365697665642066657765722043657265207468616e20657870656374656044820152601960fa1b6064820152608401610314565b60018054604051634880d24760e01b81526001600160a01b038a81166004830152898116602483015260448201899052606482018890526084820184905290911690634880d2479060a401600060405180830381600087803b15801561054257600080fd5b505af1158015610556573d6000803e3d6000fd5b50505050505050505050505050565b6000600080516020610ce383398151915261058081336106f5565b6002546105cf5760405162461bcd60e51b815260206004820181905260248201527f45786368616e67652072617465206d75737420626520636f6e666967757265646044820152606401610314565b6000600254866105df9190610c46565b600154604051637921219560e11b81529192506001600160a01b03169063f242432a9061061790309089906000908790600401610bc3565b600060405180830381600087803b15801561063157600080fd5b505af1158015610645573d6000803e3d6000fd5b50505050856003600082825461065b9190610c2e565b9250508190555080600460008282546106749190610c2e565b90915550909695505050505050565b61068c82610271565b61069681336106f5565b6102a383836107dd565b600080516020610cc38339815191526106b981336106f5565b60028290556040518281527f1d5de90e7c5b244ac5797698b15fe80a92524d933dafd79e001daf844555fb1c9060200160405180910390a15050565b6106ff8282610432565b61032757610717816001600160a01b03166014610842565b610722836020610842565b604051602001610733929190610b54565b60408051601f198184030181529082905262461bcd60e51b825261031491600401610bfb565b6107638282610432565b610327576000828152602081815260408083206001600160a01b03851684529091529020805460ff191660011790556107993390565b6001600160a01b0316816001600160a01b0316837f2f8788117e7eff1d82e926ec794901d17c78024a50270940304540a733656f0d60405160405180910390a45050565b6107e78282610432565b15610327576000828152602081815260408083206001600160a01b0385168085529252808320805460ff1916905551339285917ff6391f5c32d9c69d2a47ea670b442974b53935d1edc7fd64eb21e047a839171b9190a45050565b60606000610851836002610c46565b61085c906002610c2e565b6001600160401b0381111561088157634e487b7160e01b600052604160045260246000fd5b6040519080825280601f01601f1916602001820160405280156108ab576020820181803683370190505b509050600360fc1b816000815181106108d457634e487b7160e01b600052603260045260246000fd5b60200101906001600160f81b031916908160001a905350600f60fb1b8160018151811061091157634e487b7160e01b600052603260045260246000fd5b60200101906001600160f81b031916908160001a9053506000610935846002610c46565b610940906001610c2e565b90505b60018111156109d4576f181899199a1a9b1b9c1cb0b131b232b360811b85600f166010811061098257634e487b7160e01b600052603260045260246000fd5b1a60f81b8282815181106109a657634e487b7160e01b600052603260045260246000fd5b60200101906001600160f81b031916908160001a90535060049490941c936109cd81610c95565b9050610943565b508315610a235760405162461bcd60e51b815260206004820181905260248201527f537472696e67733a20686578206c656e67746820696e73756666696369656e746044820152606401610314565b9392505050565b80356001600160a01b0381168114610a4157600080fd5b919050565b600060208284031215610a57578081fd5b5035919050565b60008060408385031215610a70578081fd5b82359150610a8060208401610a2a565b90509250929050565b600060208284031215610a9a578081fd5b81356001600160e01b031981168114610a23578182fd5b600060208284031215610ac2578081fd5b5051919050565b60008060008060008060c08789031215610ae1578182fd5b86359550610af160208801610a2a565b9450610aff60408801610a2a565b9350606087013592506080870135915060a087013590509295509295509295565b600080600060608486031215610b34578283fd5b83359250610b4460208501610a2a565b9150604084013590509250925092565b76020b1b1b2b9b9a1b7b73a3937b61d1030b1b1b7bab73a1604d1b815260008351610b86816017850160208801610c65565b7001034b99036b4b9b9b4b733903937b6329607d1b6017918401918201528351610bb7816028840160208801610c65565b01602801949350505050565b6001600160a01b0394851681529290931660208301526040820152606081019190915260a06080820181905260009082015260c00190565b6020815260008251806020840152610c1a816040850160208701610c65565b601f01601f19169190910160400192915050565b60008219821115610c4157610c41610cac565b500190565b6000816000190483118215151615610c6057610c60610cac565b500290565b60005b83811015610c80578181015183820152602001610c68565b83811115610c8f576000848401525b50505050565b600081610ca457610ca4610cac565b506000190190565b634e487b7160e01b600052601160045260246000fdfef9dcb70efa80ab2e15e6301babe010c481ee550c5335953c9ba3f97789fcb53979fb255b78648c966adc3c680f08ecaf12e124b92265f0bd145ccad7605f092fa2646970667358221220011fe965c8c6846699cc67d2b0b1da599b00cea9b73f064c2a31ffa6acc3273a64736f6c63430008040033",
   "deployedBytecode": "0x608060405234801561001057600080fd5b50600436106100e65760003560e01c806301ffc9a7146100eb5780630ec57d5114610113578063248a9ca31461013e5780632f2ff15d1461015f5780633263ba671461017457806336568abe146101895780633ccfd60b1461019c57806391d14854146101a45780639c750286146101b7578063a217fddf146101c0578063a87a9322146101c8578063c4f7f9c5146101db578063c87113e2146101ee578063d547741f14610203578063db068e0e14610216578063e65372e114610229578063e6aa216c14610232578063f5361219146101c0575b600080fd5b6100fe6100f9366004610a89565b61023a565b60405190151581526020015b60405180910390f35b600154610126906001600160a01b031681565b6040516001600160a01b03909116815260200161010a565b61015161014c366004610a46565b610271565b60405190815260200161010a565b61017261016d366004610a5e565b610286565b005b610151600080516020610ce383398151915281565b610172610197366004610a5e565b6102a8565b61015161032b565b6100fe6101b2366004610a5e565b610432565b61015160045481565b610151600081565b6101726101d6366004610ac9565b61045b565b6101516101e9366004610b20565b610565565b610151600080516020610cc383398151915281565b610172610211366004610a5e565b610683565b610172610224366004610a46565b6106a0565b61015160035481565b600254610151565b60006001600160e01b03198216637965db0b60e01b148061026b57506301ffc9a760e01b6001600160e01b03198316145b92915050565b60009081526020819052604090206001015490565b61028f82610271565b61029981336106f5565b6102a38383610759565b505050565b6001600160a01b038116331461031d5760405162461bcd60e51b815260206004820152602f60248201527f416363657373436f6e74726f6c3a2063616e206f6e6c792072656e6f756e636560448201526e103937b632b9903337b91039b2b63360891b60648201526084015b60405180910390fd5b61032782826107dd565b5050565b60008061033881336106f5565b600033600154604051627eeac760e11b81523060048201526000602482018190529293506001600160a01b039091169062fdd58e9060440160206040518083038186803b15801561038857600080fd5b505afa15801561039c573d6000803e3d6000fd5b505050506040513d601f19601f820116820180604052508101906103c09190610ab1565b600154604051637921219560e11b81529192506001600160a01b03169063f242432a906103f890309086906000908790600401610bc3565b600060405180830381600087803b15801561041257600080fd5b505af1158015610426573d6000803e3d6000fd5b50929550505050505090565b6000918252602082815260408084206001600160a01b0393909316845291905290205460ff1690565b600080516020610ce383398151915261047481336106f5565b6000610481888885610565565b9050838110156104dd5760405162461bcd60e51b815260206004820152602160248201527f52656365697665642066657765722043657265207468616e20657870656374656044820152601960fa1b6064820152608401610314565b60018054604051634880d24760e01b81526001600160a01b038a81166004830152898116602483015260448201899052606482018890526084820184905290911690634880d2479060a401600060405180830381600087803b15801561054257600080fd5b505af1158015610556573d6000803e3d6000fd5b50505050505050505050505050565b6000600080516020610ce383398151915261058081336106f5565b6002546105cf5760405162461bcd60e51b815260206004820181905260248201527f45786368616e67652072617465206d75737420626520636f6e666967757265646044820152606401610314565b6000600254866105df9190610c46565b600154604051637921219560e11b81529192506001600160a01b03169063f242432a9061061790309089906000908790600401610bc3565b600060405180830381600087803b15801561063157600080fd5b505af1158015610645573d6000803e3d6000fd5b50505050856003600082825461065b9190610c2e565b9250508190555080600460008282546106749190610c2e565b90915550909695505050505050565b61068c82610271565b61069681336106f5565b6102a383836107dd565b600080516020610cc38339815191526106b981336106f5565b60028290556040518281527f1d5de90e7c5b244ac5797698b15fe80a92524d933dafd79e001daf844555fb1c9060200160405180910390a15050565b6106ff8282610432565b61032757610717816001600160a01b03166014610842565b610722836020610842565b604051602001610733929190610b54565b60408051601f198184030181529082905262461bcd60e51b825261031491600401610bfb565b6107638282610432565b610327576000828152602081815260408083206001600160a01b03851684529091529020805460ff191660011790556107993390565b6001600160a01b0316816001600160a01b0316837f2f8788117e7eff1d82e926ec794901d17c78024a50270940304540a733656f0d60405160405180910390a45050565b6107e78282610432565b15610327576000828152602081815260408083206001600160a01b0385168085529252808320805460ff1916905551339285917ff6391f5c32d9c69d2a47ea670b442974b53935d1edc7fd64eb21e047a839171b9190a45050565b60606000610851836002610c46565b61085c906002610c2e565b6001600160401b0381111561088157634e487b7160e01b600052604160045260246000fd5b6040519080825280601f01601f1916602001820160405280156108ab576020820181803683370190505b509050600360fc1b816000815181106108d457634e487b7160e01b600052603260045260246000fd5b60200101906001600160f81b031916908160001a905350600f60fb1b8160018151811061091157634e487b7160e01b600052603260045260246000fd5b60200101906001600160f81b031916908160001a9053506000610935846002610c46565b610940906001610c2e565b90505b60018111156109d4576f181899199a1a9b1b9c1cb0b131b232b360811b85600f166010811061098257634e487b7160e01b600052603260045260246000fd5b1a60f81b8282815181106109a657634e487b7160e01b600052603260045260246000fd5b60200101906001600160f81b031916908160001a90535060049490941c936109cd81610c95565b9050610943565b508315610a235760405162461bcd60e51b815260206004820181905260248201527f537472696e67733a20686578206c656e67746820696e73756666696369656e746044820152606401610314565b9392505050565b80356001600160a01b0381168114610a4157600080fd5b919050565b600060208284031215610a57578081fd5b5035919050565b60008060408385031215610a70578081fd5b82359150610a8060208401610a2a565b90509250929050565b600060208284031215610a9a578081fd5b81356001600160e01b031981168114610a23578182fd5b600060208284031215610ac2578081fd5b5051919050565b60008060008060008060c08789031215610ae1578182fd5b86359550610af160208801610a2a565b9450610aff60408801610a2a565b9350606087013592506080870135915060a087013590509295509295509295565b600080600060608486031215610b34578283fd5b83359250610b4460208501610a2a565b9150604084013590509250925092565b76020b1b1b2b9b9a1b7b73a3937b61d1030b1b1b7bab73a1604d1b815260008351610b86816017850160208801610c65565b7001034b99036b4b9b9b4b733903937b6329607d1b6017918401918201528351610bb7816028840160208801610c65565b01602801949350505050565b6001600160a01b0394851681529290931660208301526040820152606081019190915260a06080820181905260009082015260c00190565b6020815260008251806020840152610c1a816040850160208701610c65565b601f01601f19169190910160400192915050565b60008219821115610c4157610c41610cac565b500190565b6000816000190483118215151615610c6057610c60610cac565b500290565b60005b83811015610c80578181015183820152602001610c68565b83811115610c8f576000848401525b50505050565b600081610ca457610ca4610cac565b506000190190565b634e487b7160e01b600052601160045260246000fdfef9dcb70efa80ab2e15e6301babe010c481ee550c5335953c9ba3f97789fcb53979fb255b78648c966adc3c680f08ecaf12e124b92265f0bd145ccad7605f092fa2646970667358221220011fe965c8c6846699cc67d2b0b1da599b00cea9b73f064c2a31ffa6acc3273a64736f6c63430008040033",
   "immutableReferences": {},
@@ -686,7 +686,7 @@
                 }
               ]
             },
-            "name": "abi_decode_tuple_t_contract$_Davinci_$59_fromMemory",
+            "name": "abi_decode_tuple_t_contract$_Freeport_$59_fromMemory",
             "nodeType": "YulFunctionDefinition",
             "parameters": [
               {
@@ -714,7 +714,7 @@
           }
         ]
       },
-      "contents": "{\n    { }\n    function abi_decode_tuple_t_contract$_Davinci_$59_fromMemory(headStart, dataEnd) -> value0\n    {\n        if slt(sub(dataEnd, headStart), 32) { revert(value0, value0) }\n        let value := mload(headStart)\n        if iszero(eq(value, and(value, sub(shl(160, 1), 1)))) { revert(value0, value0) }\n        value0 := value\n    }\n}",
+      "contents": "{\n    { }\n    function abi_decode_tuple_t_contract$_Freeport_$59_fromMemory(headStart, dataEnd) -> value0\n    {\n        if slt(sub(dataEnd, headStart), 32) { revert(value0, value0) }\n        let value := mload(headStart)\n        if iszero(eq(value, and(value, sub(shl(160, 1), 1)))) { revert(value0, value0) }\n        value0 := value\n    }\n}",
       "id": 28,
       "language": "Yul",
       "name": "#utility.yul"
@@ -4068,7 +4068,7 @@
                 }
               ]
             },
-            "name": "abi_encode_tuple_t_contract$_Davinci_$59__to_t_address__fromStack_reversed",
+            "name": "abi_encode_tuple_t_contract$_Freeport_$59__to_t_address__fromStack_reversed",
             "nodeType": "YulFunctionDefinition",
             "parameters": [
               {
@@ -6078,7 +6078,7 @@
           }
         ]
       },
-      "contents": "{\n    { }\n    function abi_decode_address(offset) -> value\n    {\n        value := calldataload(offset)\n        if iszero(eq(value, and(value, sub(shl(160, 1), 1)))) { revert(0, 0) }\n    }\n    function abi_decode_tuple_t_bytes32(headStart, dataEnd) -> value0\n    {\n        if slt(sub(dataEnd, headStart), 32) { revert(value0, value0) }\n        value0 := calldataload(headStart)\n    }\n    function abi_decode_tuple_t_bytes32t_address(headStart, dataEnd) -> value0, value1\n    {\n        if slt(sub(dataEnd, headStart), 64) { revert(value1, value1) }\n        value0 := calldataload(headStart)\n        value1 := abi_decode_address(add(headStart, 32))\n    }\n    function abi_decode_tuple_t_bytes4(headStart, dataEnd) -> value0\n    {\n        if slt(sub(dataEnd, headStart), 32) { revert(value0, value0) }\n        let value := calldataload(headStart)\n        if iszero(eq(value, and(value, shl(224, 0xffffffff)))) { revert(value0, value0) }\n        value0 := value\n    }\n    function abi_decode_tuple_t_uint256(headStart, dataEnd) -> value0\n    {\n        if slt(sub(dataEnd, headStart), 32) { revert(value0, value0) }\n        value0 := calldataload(headStart)\n    }\n    function abi_decode_tuple_t_uint256_fromMemory(headStart, dataEnd) -> value0\n    {\n        if slt(sub(dataEnd, headStart), 32) { revert(value0, value0) }\n        value0 := mload(headStart)\n    }\n    function abi_decode_tuple_t_uint256t_addresst_addresst_uint256t_uint256t_uint256(headStart, dataEnd) -> value0, value1, value2, value3, value4, value5\n    {\n        if slt(sub(dataEnd, headStart), 192) { revert(value4, value4) }\n        value0 := calldataload(headStart)\n        value1 := abi_decode_address(add(headStart, 32))\n        value2 := abi_decode_address(add(headStart, 64))\n        value3 := calldataload(add(headStart, 96))\n        value4 := calldataload(add(headStart, 128))\n        value5 := calldataload(add(headStart, 160))\n    }\n    function abi_decode_tuple_t_uint256t_addresst_uint256(headStart, dataEnd) -> value0, value1, value2\n    {\n        if slt(sub(dataEnd, headStart), 96) { revert(value0, value0) }\n        value0 := calldataload(headStart)\n        value1 := abi_decode_address(add(headStart, 32))\n        value2 := calldataload(add(headStart, 64))\n    }\n    function abi_encode_tuple_packed_t_stringliteral_da0d07ce4a2849fbfc4cb9d6f939e9bd93016c372ca4a5ff14fe06caf3d67874_t_string_memory_ptr_t_stringliteral_f986ce851518a691bccd44ea42a5a185d1b866ef6cb07984a09b81694d20ab69_t_string_memory_ptr__to_t_string_memory_ptr_t_string_memory_ptr_t_string_memory_ptr_t_string_memory_ptr__nonPadded_inplace_fromStack_reversed(pos, value1, value0) -> end\n    {\n        mstore(pos, \"AccessControl: account \")\n        let length := mload(value0)\n        copy_memory_to_memory(add(value0, 0x20), add(pos, 23), length)\n        let _1 := add(pos, length)\n        mstore(add(_1, 23), \" is missing role \")\n        let length_1 := mload(value1)\n        copy_memory_to_memory(add(value1, 0x20), add(_1, 40), length_1)\n        end := add(add(_1, length_1), 40)\n    }\n    function abi_encode_tuple_t_address_t_address_t_uint256_t_uint256_t_stringliteral_c5d2460186f7233c927e7db2dcc703c0e500b653ca82273b7bfad8045d85a470__to_t_address_t_address_t_uint256_t_uint256_t_bytes_memory_ptr__fromStack_reversed(headStart, value3, value2, value1, value0) -> tail\n    {\n        let _1 := sub(shl(160, 1), 1)\n        mstore(headStart, and(value0, _1))\n        mstore(add(headStart, 32), and(value1, _1))\n        mstore(add(headStart, 64), value2)\n        mstore(add(headStart, 96), value3)\n        mstore(add(headStart, 128), 160)\n        mstore(add(headStart, 160), tail)\n        tail := add(headStart, 192)\n    }\n    function abi_encode_tuple_t_address_t_address_t_uint256_t_uint256_t_uint256__to_t_address_t_address_t_uint256_t_uint256_t_uint256__fromStack_reversed(headStart, value4, value3, value2, value1, value0) -> tail\n    {\n        tail := add(headStart, 160)\n        let _1 := sub(shl(160, 1), 1)\n        mstore(headStart, and(value0, _1))\n        mstore(add(headStart, 32), and(value1, _1))\n        mstore(add(headStart, 64), value2)\n        mstore(add(headStart, 96), value3)\n        mstore(add(headStart, 128), value4)\n    }\n    function abi_encode_tuple_t_address_t_uint256__to_t_address_t_uint256__fromStack_reversed(headStart, value1, value0) -> tail\n    {\n        tail := add(headStart, 64)\n        mstore(headStart, and(value0, sub(shl(160, 1), 1)))\n        mstore(add(headStart, 32), value1)\n    }\n    function abi_encode_tuple_t_bool__to_t_bool__fromStack_reversed(headStart, value0) -> tail\n    {\n        tail := add(headStart, 32)\n        mstore(headStart, iszero(iszero(value0)))\n    }\n    function abi_encode_tuple_t_bytes32__to_t_bytes32__fromStack_reversed(headStart, value0) -> tail\n    {\n        tail := add(headStart, 32)\n        mstore(headStart, value0)\n    }\n    function abi_encode_tuple_t_contract$_Davinci_$59__to_t_address__fromStack_reversed(headStart, value0) -> tail\n    {\n        tail := add(headStart, 32)\n        mstore(headStart, and(value0, sub(shl(160, 1), 1)))\n    }\n    function abi_encode_tuple_t_string_memory_ptr__to_t_string_memory_ptr__fromStack_reversed(headStart, value0) -> tail\n    {\n        mstore(headStart, 32)\n        let length := mload(value0)\n        mstore(add(headStart, 32), length)\n        copy_memory_to_memory(add(value0, 32), add(headStart, 64), length)\n        tail := add(add(headStart, and(add(length, 31), not(31))), 64)\n    }\n    function abi_encode_tuple_t_stringliteral_04fc88320d7c9f639317c75102c103ff0044d3075a5c627e24e76e5bbb2733c2__to_t_string_memory_ptr__fromStack_reversed(headStart) -> tail\n    {\n        mstore(headStart, 32)\n        mstore(add(headStart, 32), 32)\n        mstore(add(headStart, 64), \"Strings: hex length insufficient\")\n        tail := add(headStart, 96)\n    }\n    function abi_encode_tuple_t_stringliteral_65f3fb9e0342d3e968f2d3dca00f77b8f14915c0054df00e65405ce6819e822f__to_t_string_memory_ptr__fromStack_reversed(headStart) -> tail\n    {\n        mstore(headStart, 32)\n        mstore(add(headStart, 32), 33)\n        mstore(add(headStart, 64), \"Received fewer Cere than expecte\")\n        mstore(add(headStart, 96), \"d\")\n        tail := add(headStart, 128)\n    }\n    function abi_encode_tuple_t_stringliteral_d66a356fb674ff8c79920b6a082854658850a64a7882cfed4ce745f506da5fb9__to_t_string_memory_ptr__fromStack_reversed(headStart) -> tail\n    {\n        mstore(headStart, 32)\n        mstore(add(headStart, 32), 32)\n        mstore(add(headStart, 64), \"Exchange rate must be configured\")\n        tail := add(headStart, 96)\n    }\n    function abi_encode_tuple_t_stringliteral_fb06fa8ff2141e8ed74502f6792273793f25f0e9d3cf15344f3f5a0d4948fd4b__to_t_string_memory_ptr__fromStack_reversed(headStart) -> tail\n    {\n        mstore(headStart, 32)\n        mstore(add(headStart, 32), 47)\n        mstore(add(headStart, 64), \"AccessControl: can only renounce\")\n        mstore(add(headStart, 96), \" roles for self\")\n        tail := add(headStart, 128)\n    }\n    function abi_encode_tuple_t_uint256__to_t_uint256__fromStack_reversed(headStart, value0) -> tail\n    {\n        tail := add(headStart, 32)\n        mstore(headStart, value0)\n    }\n    function checked_add_t_uint256(x, y) -> sum\n    {\n        if gt(x, not(y)) { panic_error_0x11() }\n        sum := add(x, y)\n    }\n    function checked_mul_t_uint256(x, y) -> product\n    {\n        if and(iszero(iszero(x)), gt(y, div(not(0), x))) { panic_error_0x11() }\n        product := mul(x, y)\n    }\n    function copy_memory_to_memory(src, dst, length)\n    {\n        let i := 0\n        for { } lt(i, length) { i := add(i, 32) }\n        {\n            mstore(add(dst, i), mload(add(src, i)))\n        }\n        if gt(i, length) { mstore(add(dst, length), 0) }\n    }\n    function decrement_t_uint256(value) -> ret\n    {\n        if iszero(value) { panic_error_0x11() }\n        ret := add(value, not(0))\n    }\n    function panic_error_0x11()\n    {\n        mstore(0, shl(224, 0x4e487b71))\n        mstore(4, 0x11)\n        revert(0, 0x24)\n    }\n}",
+      "contents": "{\n    { }\n    function abi_decode_address(offset) -> value\n    {\n        value := calldataload(offset)\n        if iszero(eq(value, and(value, sub(shl(160, 1), 1)))) { revert(0, 0) }\n    }\n    function abi_decode_tuple_t_bytes32(headStart, dataEnd) -> value0\n    {\n        if slt(sub(dataEnd, headStart), 32) { revert(value0, value0) }\n        value0 := calldataload(headStart)\n    }\n    function abi_decode_tuple_t_bytes32t_address(headStart, dataEnd) -> value0, value1\n    {\n        if slt(sub(dataEnd, headStart), 64) { revert(value1, value1) }\n        value0 := calldataload(headStart)\n        value1 := abi_decode_address(add(headStart, 32))\n    }\n    function abi_decode_tuple_t_bytes4(headStart, dataEnd) -> value0\n    {\n        if slt(sub(dataEnd, headStart), 32) { revert(value0, value0) }\n        let value := calldataload(headStart)\n        if iszero(eq(value, and(value, shl(224, 0xffffffff)))) { revert(value0, value0) }\n        value0 := value\n    }\n    function abi_decode_tuple_t_uint256(headStart, dataEnd) -> value0\n    {\n        if slt(sub(dataEnd, headStart), 32) { revert(value0, value0) }\n        value0 := calldataload(headStart)\n    }\n    function abi_decode_tuple_t_uint256_fromMemory(headStart, dataEnd) -> value0\n    {\n        if slt(sub(dataEnd, headStart), 32) { revert(value0, value0) }\n        value0 := mload(headStart)\n    }\n    function abi_decode_tuple_t_uint256t_addresst_addresst_uint256t_uint256t_uint256(headStart, dataEnd) -> value0, value1, value2, value3, value4, value5\n    {\n        if slt(sub(dataEnd, headStart), 192) { revert(value4, value4) }\n        value0 := calldataload(headStart)\n        value1 := abi_decode_address(add(headStart, 32))\n        value2 := abi_decode_address(add(headStart, 64))\n        value3 := calldataload(add(headStart, 96))\n        value4 := calldataload(add(headStart, 128))\n        value5 := calldataload(add(headStart, 160))\n    }\n    function abi_decode_tuple_t_uint256t_addresst_uint256(headStart, dataEnd) -> value0, value1, value2\n    {\n        if slt(sub(dataEnd, headStart), 96) { revert(value0, value0) }\n        value0 := calldataload(headStart)\n        value1 := abi_decode_address(add(headStart, 32))\n        value2 := calldataload(add(headStart, 64))\n    }\n    function abi_encode_tuple_packed_t_stringliteral_da0d07ce4a2849fbfc4cb9d6f939e9bd93016c372ca4a5ff14fe06caf3d67874_t_string_memory_ptr_t_stringliteral_f986ce851518a691bccd44ea42a5a185d1b866ef6cb07984a09b81694d20ab69_t_string_memory_ptr__to_t_string_memory_ptr_t_string_memory_ptr_t_string_memory_ptr_t_string_memory_ptr__nonPadded_inplace_fromStack_reversed(pos, value1, value0) -> end\n    {\n        mstore(pos, \"AccessControl: account \")\n        let length := mload(value0)\n        copy_memory_to_memory(add(value0, 0x20), add(pos, 23), length)\n        let _1 := add(pos, length)\n        mstore(add(_1, 23), \" is missing role \")\n        let length_1 := mload(value1)\n        copy_memory_to_memory(add(value1, 0x20), add(_1, 40), length_1)\n        end := add(add(_1, length_1), 40)\n    }\n    function abi_encode_tuple_t_address_t_address_t_uint256_t_uint256_t_stringliteral_c5d2460186f7233c927e7db2dcc703c0e500b653ca82273b7bfad8045d85a470__to_t_address_t_address_t_uint256_t_uint256_t_bytes_memory_ptr__fromStack_reversed(headStart, value3, value2, value1, value0) -> tail\n    {\n        let _1 := sub(shl(160, 1), 1)\n        mstore(headStart, and(value0, _1))\n        mstore(add(headStart, 32), and(value1, _1))\n        mstore(add(headStart, 64), value2)\n        mstore(add(headStart, 96), value3)\n        mstore(add(headStart, 128), 160)\n        mstore(add(headStart, 160), tail)\n        tail := add(headStart, 192)\n    }\n    function abi_encode_tuple_t_address_t_address_t_uint256_t_uint256_t_uint256__to_t_address_t_address_t_uint256_t_uint256_t_uint256__fromStack_reversed(headStart, value4, value3, value2, value1, value0) -> tail\n    {\n        tail := add(headStart, 160)\n        let _1 := sub(shl(160, 1), 1)\n        mstore(headStart, and(value0, _1))\n        mstore(add(headStart, 32), and(value1, _1))\n        mstore(add(headStart, 64), value2)\n        mstore(add(headStart, 96), value3)\n        mstore(add(headStart, 128), value4)\n    }\n    function abi_encode_tuple_t_address_t_uint256__to_t_address_t_uint256__fromStack_reversed(headStart, value1, value0) -> tail\n    {\n        tail := add(headStart, 64)\n        mstore(headStart, and(value0, sub(shl(160, 1), 1)))\n        mstore(add(headStart, 32), value1)\n    }\n    function abi_encode_tuple_t_bool__to_t_bool__fromStack_reversed(headStart, value0) -> tail\n    {\n        tail := add(headStart, 32)\n        mstore(headStart, iszero(iszero(value0)))\n    }\n    function abi_encode_tuple_t_bytes32__to_t_bytes32__fromStack_reversed(headStart, value0) -> tail\n    {\n        tail := add(headStart, 32)\n        mstore(headStart, value0)\n    }\n    function abi_encode_tuple_t_contract$_Freeport_$59__to_t_address__fromStack_reversed(headStart, value0) -> tail\n    {\n        tail := add(headStart, 32)\n        mstore(headStart, and(value0, sub(shl(160, 1), 1)))\n    }\n    function abi_encode_tuple_t_string_memory_ptr__to_t_string_memory_ptr__fromStack_reversed(headStart, value0) -> tail\n    {\n        mstore(headStart, 32)\n        let length := mload(value0)\n        mstore(add(headStart, 32), length)\n        copy_memory_to_memory(add(value0, 32), add(headStart, 64), length)\n        tail := add(add(headStart, and(add(length, 31), not(31))), 64)\n    }\n    function abi_encode_tuple_t_stringliteral_04fc88320d7c9f639317c75102c103ff0044d3075a5c627e24e76e5bbb2733c2__to_t_string_memory_ptr__fromStack_reversed(headStart) -> tail\n    {\n        mstore(headStart, 32)\n        mstore(add(headStart, 32), 32)\n        mstore(add(headStart, 64), \"Strings: hex length insufficient\")\n        tail := add(headStart, 96)\n    }\n    function abi_encode_tuple_t_stringliteral_65f3fb9e0342d3e968f2d3dca00f77b8f14915c0054df00e65405ce6819e822f__to_t_string_memory_ptr__fromStack_reversed(headStart) -> tail\n    {\n        mstore(headStart, 32)\n        mstore(add(headStart, 32), 33)\n        mstore(add(headStart, 64), \"Received fewer Cere than expecte\")\n        mstore(add(headStart, 96), \"d\")\n        tail := add(headStart, 128)\n    }\n    function abi_encode_tuple_t_stringliteral_d66a356fb674ff8c79920b6a082854658850a64a7882cfed4ce745f506da5fb9__to_t_string_memory_ptr__fromStack_reversed(headStart) -> tail\n    {\n        mstore(headStart, 32)\n        mstore(add(headStart, 32), 32)\n        mstore(add(headStart, 64), \"Exchange rate must be configured\")\n        tail := add(headStart, 96)\n    }\n    function abi_encode_tuple_t_stringliteral_fb06fa8ff2141e8ed74502f6792273793f25f0e9d3cf15344f3f5a0d4948fd4b__to_t_string_memory_ptr__fromStack_reversed(headStart) -> tail\n    {\n        mstore(headStart, 32)\n        mstore(add(headStart, 32), 47)\n        mstore(add(headStart, 64), \"AccessControl: can only renounce\")\n        mstore(add(headStart, 96), \" roles for self\")\n        tail := add(headStart, 128)\n    }\n    function abi_encode_tuple_t_uint256__to_t_uint256__fromStack_reversed(headStart, value0) -> tail\n    {\n        tail := add(headStart, 32)\n        mstore(headStart, value0)\n    }\n    function checked_add_t_uint256(x, y) -> sum\n    {\n        if gt(x, not(y)) { panic_error_0x11() }\n        sum := add(x, y)\n    }\n    function checked_mul_t_uint256(x, y) -> product\n    {\n        if and(iszero(iszero(x)), gt(y, div(not(0), x))) { panic_error_0x11() }\n        product := mul(x, y)\n    }\n    function copy_memory_to_memory(src, dst, length)\n    {\n        let i := 0\n        for { } lt(i, length) { i := add(i, 32) }\n        {\n            mstore(add(dst, i), mload(add(src, i)))\n        }\n        if gt(i, length) { mstore(add(dst, length), 0) }\n    }\n    function decrement_t_uint256(value) -> ret\n    {\n        if iszero(value) { panic_error_0x11() }\n        ret := add(value, not(0))\n    }\n    function panic_error_0x11()\n    {\n        mstore(0, shl(224, 0x4e487b71))\n        mstore(4, 0x11)\n        revert(0, 0x24)\n    }\n}",
       "id": 28,
       "language": "Yul",
       "name": "#utility.yul"
@@ -6086,10 +6086,10 @@
   ],
   "sourceMap": "440:4267:2:-:0;;;1295:120;;;;;;;;;;;;;;;;;;;;;;;;;;;;:::i;:::-;1335:7;:18;;-1:-1:-1;;;;;;1335:18:2;-1:-1:-1;;;;;1335:18:2;;;;;1364:44;-1:-1:-1;1395:12:2;665:10:22;;586:96;1395:12:2;1364:10;:44::i;:::-;1295:120;440:4267;;7515:110:5;7593:25;7604:4;7610:7;7593:10;:25::i;:::-;7515:110;;:::o;7948:224::-;4452:4;4475:12;;;;;;;;;;;-1:-1:-1;;;;;4475:29:5;;;;;;;;;;;;8017:149;;8060:6;:12;;;;;;;;;;;-1:-1:-1;;;;;8060:29:5;;;;;;;;;:36;;-1:-1:-1;;8060:36:5;8092:4;8060:36;;;8142:12;665:10:22;;586:96;8142:12:5;-1:-1:-1;;;;;8115:40:5;8133:7;-1:-1:-1;;;;;8115:40:5;8127:4;8115:40;;;;;;;;;;7948:224;;:::o;14:324:28:-;98:6;151:2;139:9;130:7;126:23;122:32;119:2;;;172:6;164;157:22;119:2;203:16;;-1:-1:-1;;;;;248:31:28;;238:42;;228:2;;299:6;291;284:22;228:2;327:5;109:229;-1:-1:-1;;;109:229:28:o;:::-;440:4267:2;;;;;;",
   "deployedSourceMap": "440:4267:2:-:0;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;4073:214:5;;;;;;:::i;:::-;;:::i;:::-;;;4642:14:28;;4635:22;4617:41;;4605:2;4590:18;4073:214:5;;;;;;;;784:22:2;;;;;-1:-1:-1;;;;;784:22:2;;;;;;-1:-1:-1;;;;;5029:32:28;;;5011:51;;4999:2;4984:18;784:22:2;4966:102:28;5348:121:5;;;;;;:::i;:::-;;:::i;:::-;;;4815:25:28;;;4803:2;4788:18;5348:121:5;4770:76:28;5719:145:5;;;;;;:::i;:::-;;:::i;:::-;;571:70:2;;-1:-1:-1;;;;;;;;;;;571:70:2;;6736:214:5;;;;;;:::i;:::-;;:::i;2237:356:2:-;;;:::i;4374:137:5:-;;;;;;:::i;:::-;;:::i;1025:30:2:-;;;;;;2394:49:5;;2439:4;2394:49;;4036:487:2;;;;;;:::i;:::-;;:::i;2828:566::-;;;;;;:::i;:::-;;:::i;485:80::-;;-1:-1:-1;;;;;;;;;;;485:80:2;;6098:147:5;;;;;;:::i;:::-;;:::i;1702:199:2:-;;;;;;:::i;:::-;;:::i;932:32::-;;;;;;2010:99;2085:17;;2010:99;;4073:214:5;4158:4;-1:-1:-1;;;;;;4181:47:5;;-1:-1:-1;;;4181:47:5;;:99;;-1:-1:-1;;;;;;;;;;871:40:26;;;4244:36:5;4174:106;4073:214;-1:-1:-1;;4073:214:5:o;5348:121::-;5414:7;5440:12;;;;;;;;;;:22;;;;5348:121::o;5719:145::-;5802:18;5815:4;5802:12;:18::i;:::-;3958:30;3969:4;665:10:22;3958::5;:30::i;:::-;5832:25:::1;5843:4;5849:7;5832:10;:25::i;:::-;5719:145:::0;;;:::o;6736:214::-;-1:-1:-1;;;;;6831:23:5;;665:10:22;6831:23:5;6823:83;;;;-1:-1:-1;;;6823:83:5;;6787:2:28;6823:83:5;;;6769:21:28;6826:2;6806:18;;;6799:30;6865:34;6845:18;;;6838:62;-1:-1:-1;;;6916:18:28;;;6909:45;6971:19;;6823:83:5;;;;;;;;;6917:26;6929:4;6935:7;6917:11;:26::i;:::-;6736:214;;:::o;2237:356:2:-;2310:4;;3958:30:5;2310:4:2;665:10:22;3958::5;:30::i;:::-;2327:13:2::1;665:10:22::0;2380:7:2::1;::::0;:42:::1;::::0;-1:-1:-1;;;2380:42:2;;2406:4:::1;2380:42;::::0;::::1;4372:51:28::0;2366:11:2::1;4439:18:28::0;;;4432:34;;;2327:28:2;;-1:-1:-1;;;;;;2380:7:2;;::::1;::::0;:17:::1;::::0;4345:18:28;;2380:42:2::1;;;;;;;;;;;;;;;;::::0;::::1;;;;;;;;;;;;::::0;::::1;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;:::i;:::-;2433:7;::::0;:129:::1;::::0;-1:-1:-1;;;2433:129:2;;2366:56;;-1:-1:-1;;;;;;2433:7:2::1;::::0;:24:::1;::::0;:129:::1;::::0;2479:4:::1;::::0;2498:5;;2433:7:::1;::::0;2366:56;;2433:129:::1;;;:::i;:::-;;;;;;;;;;;;;;;;;;::::0;::::1;;;;;;;;;;;;::::0;::::1;;;;;-1:-1:-1::0;2580:6:2;;-1:-1:-1;;;;;2237:356:2;;:::o;4374:137:5:-;4452:4;4475:12;;;;;;;;;;;-1:-1:-1;;;;;4475:29:5;;;;;;;;;;;;;;;4374:137::o;4036:487:2:-;-1:-1:-1;;;;;;;;;;;3958:30:5;613:28:2;665:10:22;3958::5;:30::i;:::-;4259:15:2::1;4277:45;4292:15;4309:5;4316;4277:14;:45::i;:::-;4259:63;;4355:19;4341:10;:33;;4333:79;;;::::0;-1:-1:-1;;;4333:79:2;;6024:2:28;4333:79:2::1;::::0;::::1;6006:21:28::0;6063:2;6043:18;;;6036:30;6102:34;6082:18;;;6075:62;-1:-1:-1;;;6153:18:28;;;6146:31;6194:19;;4333:79:2::1;5996:223:28::0;4333:79:2::1;4437:1;4448:7:::0;;:68:::1;::::0;-1:-1:-1;;;4448:68:2;;-1:-1:-1;;;;;3989:15:28;;;4448:68:2::1;::::0;::::1;3971:34:28::0;4041:15;;;4021:18;;;4014:43;4073:18;;;4066:34;;;4116:18;;;4109:34;;;4159:19;;;4152:35;;;4448:7:2;;::::1;::::0;:17:::1;::::0;3905:19:28;;4448:68:2::1;;;;;;;;;;;;;;;;;::::0;::::1;;;;;;;;;;;;::::0;::::1;;;;;;;;;3998:1:5;;4036:487:2::0;;;;;;;:::o;2828:566::-;2976:4;-1:-1:-1;;;;;;;;;;;3958:30:5;613:28:2;665:10:22;3958::5;:30::i;:::-;3000:17:2::1;::::0;2992:67:::1;;;::::0;-1:-1:-1;;;2992:67:2;;6426:2:28;2992:67:2::1;::::0;::::1;6408:21:28::0;;;6445:18;;;6438:30;6504:34;6484:18;;;6477:62;6556:18;;2992:67:2::1;6398:182:28::0;2992:67:2::1;3070:15;3106:17;;3088:15;:35;;;;:::i;:::-;3134:7;::::0;:133:::1;::::0;-1:-1:-1;;;3134:133:2;;3070:53;;-1:-1:-1;;;;;;3134:7:2::1;::::0;:24:::1;::::0;:133:::1;::::0;3180:4:::1;::::0;3199:5;;3134:7:::1;::::0;3070:53;;3134:133:::1;;;:::i;:::-;;;;;;;;;;;;;;;;;;::::0;::::1;;;;;;;;;;;;::::0;::::1;;;;;;;;;3302:15;3278:20;;:39;;;;;;;:::i;:::-;;;;;;;;3349:10;3327:18;;:32;;;;;;;:::i;:::-;::::0;;;-1:-1:-1;3377:10:2;;2828:566;-1:-1:-1;;;;;;2828:566:2:o;6098:147:5:-;6182:18;6195:4;6182:12;:18::i;:::-;3958:30;3969:4;665:10:22;3958::5;:30::i;:::-;6212:26:::1;6224:4;6230:7;6212:11;:26::i;1702:199:2:-:0;-1:-1:-1;;;;;;;;;;;3958:30:5;532:33:2;665:10:22;3958::5;:30::i;:::-;1805:17:2::1;:38:::0;;;1859:35:::1;::::0;4815:25:28;;;1859:35:2::1;::::0;4803:2:28;4788:18;1859:35:2::1;;;;;;;1702:199:::0;;:::o;4792:375:5:-;4871:22;4879:4;4885:7;4871;:22::i;:::-;4867:294;;5000:41;5028:7;-1:-1:-1;;;;;5000:41:5;5038:2;5000:19;:41::i;:::-;5096:38;5124:4;5131:2;5096:19;:38::i;:::-;4923:225;;;;;;;;;:::i;:::-;;;;-1:-1:-1;;4923:225:5;;;;;;;;;;-1:-1:-1;;;4909:241:5;;;;;;;:::i;7948:224::-;8022:22;8030:4;8036:7;8022;:22::i;:::-;8017:149;;8060:6;:12;;;;;;;;;;;-1:-1:-1;;;;;8060:29:5;;;;;;;;;:36;;-1:-1:-1;;8060:36:5;8092:4;8060:36;;;8142:12;665:10:22;;586:96;8142:12:5;-1:-1:-1;;;;;8115:40:5;8133:7;-1:-1:-1;;;;;8115:40:5;8127:4;8115:40;;;;;;;;;;7948:224;;:::o;8178:225::-;8252:22;8260:4;8266:7;8252;:22::i;:::-;8248:149;;;8322:5;8290:12;;;;;;;;;;;-1:-1:-1;;;;;8290:29:5;;;;;;;;;;:37;;-1:-1:-1;;8290:37:5;;;8346:40;665:10:22;;8290:12:5;;8346:40;;8322:5;8346:40;8178:225;;:::o;1531:437:23:-;1606:13;1631:19;1663:10;1667:6;1663:1;:10;:::i;:::-;:14;;1676:1;1663:14;:::i;:::-;-1:-1:-1;;;;;1653:25:23;;;;;-1:-1:-1;;;1653:25:23;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;-1:-1:-1;1653:25:23;;1631:47;;-1:-1:-1;;;1688:6:23;1695:1;1688:9;;;;;;-1:-1:-1;;;1688:9:23;;;;;;;;;;;;:15;-1:-1:-1;;;;;1688:15:23;;;;;;;;;-1:-1:-1;;;1713:6:23;1720:1;1713:9;;;;;;-1:-1:-1;;;1713:9:23;;;;;;;;;;;;:15;-1:-1:-1;;;;;1713:15:23;;;;;;;;-1:-1:-1;1743:9:23;1755:10;1759:6;1755:1;:10;:::i;:::-;:14;;1768:1;1755:14;:::i;:::-;1743:26;;1738:128;1775:1;1771;:5;1738:128;;;-1:-1:-1;;;1818:5:23;1826:3;1818:11;1809:21;;;;;-1:-1:-1;;;1809:21:23;;;;;;;;;;;;1797:6;1804:1;1797:9;;;;;;-1:-1:-1;;;1797:9:23;;;;;;;;;;;;:33;-1:-1:-1;;;;;1797:33:23;;;;;;;;-1:-1:-1;1854:1:23;1844:11;;;;;1778:3;;;:::i;:::-;;;1738:128;;;-1:-1:-1;1883:10:23;;1875:55;;;;-1:-1:-1;;;1875:55:23;;5663:2:28;1875:55:23;;;5645:21:28;;;5682:18;;;5675:30;5741:34;5721:18;;;5714:62;5793:18;;1875:55:23;5635:182:28;1875:55:23;1954:6;1531:437;-1:-1:-1;;;1531:437:23:o;14:173:28:-;82:20;;-1:-1:-1;;;;;131:31:28;;121:42;;111:2;;177:1;174;167:12;111:2;63:124;;;:::o;192:190::-;251:6;304:2;292:9;283:7;279:23;275:32;272:2;;;325:6;317;310:22;272:2;-1:-1:-1;353:23:28;;262:120;-1:-1:-1;262:120:28:o;387:264::-;455:6;463;516:2;504:9;495:7;491:23;487:32;484:2;;;537:6;529;522:22;484:2;578:9;565:23;555:33;;607:38;641:2;630:9;626:18;607:38;:::i;:::-;597:48;;474:177;;;;;:::o;656:306::-;714:6;767:2;755:9;746:7;742:23;738:32;735:2;;;788:6;780;773:22;735:2;819:23;;-1:-1:-1;;;;;;871:32:28;;861:43;;851:2;;923:6;915;908:22;1162:194;1232:6;1285:2;1273:9;1264:7;1260:23;1256:32;1253:2;;;1306:6;1298;1291:22;1253:2;-1:-1:-1;1334:16:28;;1243:113;-1:-1:-1;1243:113:28:o;1361:545::-;1465:6;1473;1481;1489;1497;1505;1558:3;1546:9;1537:7;1533:23;1529:33;1526:2;;;1580:6;1572;1565:22;1526:2;1621:9;1608:23;1598:33;;1650:38;1684:2;1673:9;1669:18;1650:38;:::i;:::-;1640:48;;1707:38;1741:2;1730:9;1726:18;1707:38;:::i;:::-;1697:48;;1792:2;1781:9;1777:18;1764:32;1754:42;;1843:3;1832:9;1828:19;1815:33;1805:43;;1895:3;1884:9;1880:19;1867:33;1857:43;;1516:390;;;;;;;;:::o;1911:332::-;1988:6;1996;2004;2057:2;2045:9;2036:7;2032:23;2028:32;2025:2;;;2078:6;2070;2063:22;2025:2;2119:9;2106:23;2096:33;;2148:38;2182:2;2171:9;2167:18;2148:38;:::i;:::-;2138:48;;2233:2;2222:9;2218:18;2205:32;2195:42;;2015:228;;;;;:::o;2248:786::-;-1:-1:-1;;;2654:3:28;2647:38;2629:3;2714:6;2708:13;2730:62;2785:6;2780:2;2775:3;2771:12;2764:4;2756:6;2752:17;2730:62;:::i;:::-;-1:-1:-1;;;2851:2:28;2811:16;;;2843:11;;;2836:40;2901:13;;2923:63;2901:13;2972:2;2964:11;;2957:4;2945:17;;2923:63;:::i;:::-;3006:17;3025:2;3002:26;;2637:397;-1:-1:-1;;;;2637:397:28:o;3039:630::-;-1:-1:-1;;;;;3390:15:28;;;3372:34;;3442:15;;;;3437:2;3422:18;;3415:43;3489:2;3474:18;;3467:34;3532:2;3517:18;;3510:34;;;;3352:3;3575;3560:19;;3553:32;;;3315:4;3601:19;;;3594:33;3659:3;3644:19;;3324:345::o;5073:383::-;5222:2;5211:9;5204:21;5185:4;5254:6;5248:13;5297:6;5292:2;5281:9;5277:18;5270:34;5313:66;5372:6;5367:2;5356:9;5352:18;5347:2;5339:6;5335:15;5313:66;:::i;:::-;5440:2;5419:15;-1:-1:-1;;5415:29:28;5400:45;;;;5447:2;5396:54;;5194:262;-1:-1:-1;;5194:262:28:o;7183:128::-;7223:3;7254:1;7250:6;7247:1;7244:13;7241:2;;;7260:18;;:::i;:::-;-1:-1:-1;7296:9:28;;7231:80::o;7316:168::-;7356:7;7422:1;7418;7414:6;7410:14;7407:1;7404:21;7399:1;7392:9;7385:17;7381:45;7378:2;;;7429:18;;:::i;:::-;-1:-1:-1;7469:9:28;;7368:116::o;7489:258::-;7561:1;7571:113;7585:6;7582:1;7579:13;7571:113;;;7661:11;;;7655:18;7642:11;;;7635:39;7607:2;7600:10;7571:113;;;7702:6;7699:1;7696:13;7693:2;;;7737:1;7728:6;7723:3;7719:16;7712:27;7693:2;;7542:205;;;:::o;7752:136::-;7791:3;7819:5;7809:2;;7828:18;;:::i;:::-;-1:-1:-1;;;7864:18:28;;7799:89::o;7893:127::-;7954:10;7949:3;7945:20;7942:1;7935:31;7985:4;7982:1;7975:15;8009:4;8006:1;7999:15",
-  "source": "pragma solidity ^0.8.0;\n\nimport \"./access/AccessControl.sol\";\nimport \"./Davinci.sol\";\n\n/** The FiatGateway contract allows buying NFTs from an external fiat payment.\n  *\n  * This contract connects to the Davinci contract.\n  * It must hold a balance of CERE recognized by Davinci.\n  *\n  * This contract uses the SimpleExchange API to buy NFTs.\n  *\n  * This contract is operational only when the exchange rate is set to a non-zero value.\n */\ncontract FiatGateway is AccessControl {\n\n    bytes32 public constant EXCHANGE_RATE_ORACLE = keccak256(\"EXCHANGE_RATE_ORACLE\");\n    bytes32 public constant PAYMENT_SERVICE = keccak256(\"PAYMENT_SERVICE\");\n\n    /** The token ID that represents the CERE currency for all payments in this contract. */\n    uint256 public constant CURRENCY = 0;\n\n    Davinci public davinci;\n    uint cereUnitsPerPenny;\n\n    /** How many USD cents were received so far, according to the payment service.\n     */\n    uint public totalPenniesReceived;\n\n    /** How many CERE Units were sold so far.\n     */\n    uint public totalCereUnitsSent;\n\n    /** An event emitted when the exchange rate was set to a new value.\n     *\n     * The rate is given as CERE Units (with 10 decimals) per USD cent (1 penny).\n     */\n    event SetExchangeRate(\n        uint256 cereUnitsPerPenny);\n\n    constructor(Davinci _davinci) {\n        davinci = _davinci;\n\n        _setupRole(DEFAULT_ADMIN_ROLE, _msgSender());\n    }\n\n    /** Set the exchange rate between fiat (USD) and Davinci currency (CERE).\n      *\n      * The rate is given as number of CERE Units (with 10 decimals) per USD cent (1 penny).\n      *\n      * Only the rate service with the EXCHANGE_RATE_ORACLE role can change the rate.\n     */\n    function setExchangeRate(uint _cereUnitsPerPenny)\n    public onlyRole(EXCHANGE_RATE_ORACLE) {\n\n        cereUnitsPerPenny = _cereUnitsPerPenny;\n\n        emit SetExchangeRate(_cereUnitsPerPenny);\n    }\n\n    /** Get the current exchange rate in CERE Units (with 10 decimals) per USD cent (1 penny).\n     */\n    function getExchangeRate()\n    public view returns (uint) {\n        return cereUnitsPerPenny;\n    }\n\n    /** Withdraw all CERE from this contract.\n      *\n      * Only accounts with DEFAULT_ADMIN_ROLE can withdraw.\n     */\n    function withdraw()\n    public onlyRole(DEFAULT_ADMIN_ROLE)\n    returns (uint) {\n\n        address admin = _msgSender();\n\n        uint amount = davinci.balanceOf(address(this), CURRENCY);\n\n        davinci.safeTransferFrom(\n            address(this),\n            admin,\n            CURRENCY,\n            amount,\n            \"\");\n\n        return amount;\n    }\n\n    /** Obtain CERE based on a fiat payment.\n      *\n      * The amount of fiat is recorded, and exchanged for an amount of CERE.\n      *\n      * Only the gateway with PAYMENT_SERVICE role can report successful payments.\n     */\n    function buyCereFromUsd(\n        uint penniesReceived,\n        address buyer,\n        uint nonce)\n    public onlyRole(PAYMENT_SERVICE)\n    returns (uint) {\n        require(cereUnitsPerPenny != 0, \"Exchange rate must be configured\");\n\n        uint cereToSend = penniesReceived * cereUnitsPerPenny;\n\n        davinci.safeTransferFrom(\n            address(this),\n            buyer,\n            CURRENCY,\n            cereToSend,\n            \"\");\n\n        totalPenniesReceived += penniesReceived;\n        totalCereUnitsSent += cereToSend;\n\n        return cereToSend;\n    }\n\n    /** Obtain CERE and buy an NFT based on a fiat payment.\n      *\n      * CERE tokens are obtained in the same way as buyCereFromUsd.\n      *\n      * Then, the tokens are used to buy an NFT in the same transaction. The NFT must be available for sale from the seller in SimpleExchange.\n      *\n      * Only the gateway with PAYMENT_SERVICE role can report successful payments.\n     *\n     * The parameter expectedPriceOrZero can be used to validate the price that the buyer expects to pay. This prevents\n     * a race condition with makeOffer or setExchangeRate. Pass 0 to disable this validation and accept any current price.\n     */\n    function buyNftFromUsd(\n        uint penniesReceived,\n        address buyer,\n        address seller,\n        uint nftId,\n        uint expectedPriceOrZero,\n        uint nonce)\n    public onlyRole(PAYMENT_SERVICE) {\n\n        uint boughtCere = buyCereFromUsd(penniesReceived, buyer, nonce);\n\n        require(boughtCere >= expectedPriceOrZero, \"Received fewer Cere than expected\");\n\n        uint amount = 1;\n        davinci.takeOffer(buyer, seller, nftId, expectedPriceOrZero, amount);\n    }\n\n    /** Guarantee that a version of Solidity with safe math is used.\n     */\n    function _mathIsSafe() internal pure {\n    unchecked {} // Use a keyword from Solidity 0.8.0.\n    }\n}",
-  "sourcePath": "/home/a/CERE/davinci-nft/contracts/FiatGateway.sol",
+  "source": "pragma solidity ^0.8.0;\n\nimport \"./access/AccessControl.sol\";\nimport \"./Freeport.sol\";\n\n/** The FiatGateway contract allows buying NFTs from an external fiat payment.\n  *\n  * This contract connects to the Freeport contract.\n  * It must hold a balance of CERE recognized by Freeport.\n  *\n  * This contract uses the SimpleExchange API to buy NFTs.\n  *\n  * This contract is operational only when the exchange rate is set to a non-zero value.\n */\ncontract FiatGateway is AccessControl {\n\n    bytes32 public constant EXCHANGE_RATE_ORACLE = keccak256(\"EXCHANGE_RATE_ORACLE\");\n    bytes32 public constant PAYMENT_SERVICE = keccak256(\"PAYMENT_SERVICE\");\n\n    /** The token ID that represents the CERE currency for all payments in this contract. */\n    uint256 public constant CURRENCY = 0;\n\n    Freeport public freeport;\n    uint cereUnitsPerPenny;\n\n    /** How many USD cents were received so far, according to the payment service.\n     */\n    uint public totalPenniesReceived;\n\n    /** How many CERE Units were sold so far.\n     */\n    uint public totalCereUnitsSent;\n\n    /** An event emitted when the exchange rate was set to a new value.\n     *\n     * The rate is given as CERE Units (with 10 decimals) per USD cent (1 penny).\n     */\n    event SetExchangeRate(\n        uint256 cereUnitsPerPenny);\n\n    constructor(Freeport _freeport) {\n        freeport = _freeport;\n\n        _setupRole(DEFAULT_ADMIN_ROLE, _msgSender());\n    }\n\n    /** Set the exchange rate between fiat (USD) and Freeport currency (CERE).\n      *\n      * The rate is given as number of CERE Units (with 10 decimals) per USD cent (1 penny).\n      *\n      * Only the rate service with the EXCHANGE_RATE_ORACLE role can change the rate.\n     */\n    function setExchangeRate(uint _cereUnitsPerPenny)\n    public onlyRole(EXCHANGE_RATE_ORACLE) {\n\n        cereUnitsPerPenny = _cereUnitsPerPenny;\n\n        emit SetExchangeRate(_cereUnitsPerPenny);\n    }\n\n    /** Get the current exchange rate in CERE Units (with 10 decimals) per USD cent (1 penny).\n     */\n    function getExchangeRate()\n    public view returns (uint) {\n        return cereUnitsPerPenny;\n    }\n\n    /** Withdraw all CERE from this contract.\n      *\n      * Only accounts with DEFAULT_ADMIN_ROLE can withdraw.\n     */\n    function withdraw()\n    public onlyRole(DEFAULT_ADMIN_ROLE)\n    returns (uint) {\n\n        address admin = _msgSender();\n\n        uint amount = freeport.balanceOf(address(this), CURRENCY);\n\n        freeport.safeTransferFrom(\n            address(this),\n            admin,\n            CURRENCY,\n            amount,\n            \"\");\n\n        return amount;\n    }\n\n    /** Obtain CERE based on a fiat payment.\n      *\n      * The amount of fiat is recorded, and exchanged for an amount of CERE.\n      *\n      * Only the gateway with PAYMENT_SERVICE role can report successful payments.\n     */\n    function buyCereFromUsd(\n        uint penniesReceived,\n        address buyer,\n        uint nonce)\n    public onlyRole(PAYMENT_SERVICE)\n    returns (uint) {\n        require(cereUnitsPerPenny != 0, \"Exchange rate must be configured\");\n\n        uint cereToSend = penniesReceived * cereUnitsPerPenny;\n\n        freeport.safeTransferFrom(\n            address(this),\n            buyer,\n            CURRENCY,\n            cereToSend,\n            \"\");\n\n        totalPenniesReceived += penniesReceived;\n        totalCereUnitsSent += cereToSend;\n\n        return cereToSend;\n    }\n\n    /** Obtain CERE and buy an NFT based on a fiat payment.\n      *\n      * CERE tokens are obtained in the same way as buyCereFromUsd.\n      *\n      * Then, the tokens are used to buy an NFT in the same transaction. The NFT must be available for sale from the seller in SimpleExchange.\n      *\n      * Only the gateway with PAYMENT_SERVICE role can report successful payments.\n     *\n     * The parameter expectedPriceOrZero can be used to validate the price that the buyer expects to pay. This prevents\n     * a race condition with makeOffer or setExchangeRate. Pass 0 to disable this validation and accept any current price.\n     */\n    function buyNftFromUsd(\n        uint penniesReceived,\n        address buyer,\n        address seller,\n        uint nftId,\n        uint expectedPriceOrZero,\n        uint nonce)\n    public onlyRole(PAYMENT_SERVICE) {\n\n        uint boughtCere = buyCereFromUsd(penniesReceived, buyer, nonce);\n\n        require(boughtCere >= expectedPriceOrZero, \"Received fewer Cere than expected\");\n\n        uint amount = 1;\n        freeport.takeOffer(buyer, seller, nftId, expectedPriceOrZero, amount);\n    }\n\n    /** Guarantee that a version of Solidity with safe math is used.\n     */\n    function _mathIsSafe() internal pure {\n    unchecked {} // Use a keyword from Solidity 0.8.0.\n    }\n}",
+  "sourcePath": "/home/a/CERE/freeport-nft/contracts/FiatGateway.sol",
   "ast": {
-    "absolutePath": "/home/a/CERE/davinci-nft/contracts/FiatGateway.sol",
+    "absolutePath": "/home/a/CERE/freeport-nft/contracts/FiatGateway.sol",
     "exportedSymbols": {
       "AccessControl": [
         1286
@@ -6106,7 +6106,7 @@
       "Currency": [
         1489
       ],
-      "Davinci": [
+      "Freeport": [
         59
       ],
       "ERC1155": [
@@ -6173,7 +6173,7 @@
         "src": "0:23:2"
       },
       {
-        "absolutePath": "/home/a/CERE/davinci-nft/contracts/access/AccessControl.sol",
+        "absolutePath": "/home/a/CERE/freeport-nft/contracts/access/AccessControl.sol",
         "file": "./access/AccessControl.sol",
         "id": 62,
         "nameLocation": "-1:-1:-1",
@@ -6185,8 +6185,8 @@
         "unitAlias": ""
       },
       {
-        "absolutePath": "/home/a/CERE/davinci-nft/contracts/Davinci.sol",
-        "file": "./Davinci.sol",
+        "absolutePath": "/home/a/CERE/freeport-nft/contracts/Freeport.sol",
+        "file": "./Freeport.sol",
         "id": 63,
         "nameLocation": "-1:-1:-1",
         "nodeType": "ImportDirective",
@@ -6218,7 +6218,7 @@
           "id": 64,
           "nodeType": "StructuredDocumentation",
           "src": "87:352:2",
-          "text": "The FiatGateway contract allows buying NFTs from an external fiat payment.\n This contract connects to the Davinci contract.\n It must hold a balance of CERE recognized by Davinci.\n This contract uses the SimpleExchange API to buy NFTs.\n This contract is operational only when the exchange rate is set to a non-zero value."
+          "text": "The FiatGateway contract allows buying NFTs from an external fiat payment.\n This contract connects to the Freeport contract.\n It must hold a balance of CERE recognized by Freeport.\n This contract uses the SimpleExchange API to buy NFTs.\n This contract is operational only when the exchange rate is set to a non-zero value."
         },
         "fullyImplemented": true,
         "id": 289,
@@ -6449,7 +6449,7 @@
             "functionSelector": "0ec57d51",
             "id": 83,
             "mutability": "mutable",
-            "name": "davinci",
+            "name": "freeport",
             "nameLocation": "799:7:2",
             "nodeType": "VariableDeclaration",
             "scope": 289,
@@ -6457,15 +6457,15 @@
             "stateVariable": true,
             "storageLocation": "default",
             "typeDescriptions": {
-              "typeIdentifier": "t_contract$_Davinci_$59",
-              "typeString": "contract Davinci"
+              "typeIdentifier": "t_contract$_Freeport_$59",
+              "typeString": "contract Freeport"
             },
             "typeName": {
               "id": 82,
               "nodeType": "UserDefinedTypeName",
               "pathNode": {
                 "id": 81,
-                "name": "Davinci",
+                "name": "Freeport",
                 "nodeType": "IdentifierPath",
                 "referencedDeclaration": 59,
                 "src": "784:7:2"
@@ -6473,8 +6473,8 @@
               "referencedDeclaration": 59,
               "src": "784:7:2",
               "typeDescriptions": {
-                "typeIdentifier": "t_contract$_Davinci_$59",
-                "typeString": "contract Davinci"
+                "typeIdentifier": "t_contract$_Freeport_$59",
+                "typeString": "contract Freeport"
               }
             },
             "visibility": "public"
@@ -6638,34 +6638,34 @@
                     "lValueRequested": false,
                     "leftHandSide": {
                       "id": 102,
-                      "name": "davinci",
+                      "name": "freeport",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
                       "referencedDeclaration": 83,
                       "src": "1335:7:2",
                       "typeDescriptions": {
-                        "typeIdentifier": "t_contract$_Davinci_$59",
-                        "typeString": "contract Davinci"
+                        "typeIdentifier": "t_contract$_Freeport_$59",
+                        "typeString": "contract Freeport"
                       }
                     },
                     "nodeType": "Assignment",
                     "operator": "=",
                     "rightHandSide": {
                       "id": 103,
-                      "name": "_davinci",
+                      "name": "_freeport",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
                       "referencedDeclaration": 99,
                       "src": "1345:8:2",
                       "typeDescriptions": {
-                        "typeIdentifier": "t_contract$_Davinci_$59",
-                        "typeString": "contract Davinci"
+                        "typeIdentifier": "t_contract$_Freeport_$59",
+                        "typeString": "contract Freeport"
                       }
                     },
                     "src": "1335:18:2",
                     "typeDescriptions": {
-                      "typeIdentifier": "t_contract$_Davinci_$59",
-                      "typeString": "contract Davinci"
+                      "typeIdentifier": "t_contract$_Freeport_$59",
+                      "typeString": "contract Freeport"
                     }
                   },
                   "id": 105,
@@ -6776,7 +6776,7 @@
                   "constant": false,
                   "id": 99,
                   "mutability": "mutable",
-                  "name": "_davinci",
+                  "name": "_freeport",
                   "nameLocation": "1315:8:2",
                   "nodeType": "VariableDeclaration",
                   "scope": 113,
@@ -6784,15 +6784,15 @@
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
-                    "typeIdentifier": "t_contract$_Davinci_$59",
-                    "typeString": "contract Davinci"
+                    "typeIdentifier": "t_contract$_Freeport_$59",
+                    "typeString": "contract Freeport"
                   },
                   "typeName": {
                     "id": 98,
                     "nodeType": "UserDefinedTypeName",
                     "pathNode": {
                       "id": 97,
-                      "name": "Davinci",
+                      "name": "Freeport",
                       "nodeType": "IdentifierPath",
                       "referencedDeclaration": 59,
                       "src": "1307:7:2"
@@ -6800,8 +6800,8 @@
                     "referencedDeclaration": 59,
                     "src": "1307:7:2",
                     "typeDescriptions": {
-                      "typeIdentifier": "t_contract$_Davinci_$59",
-                      "typeString": "contract Davinci"
+                      "typeIdentifier": "t_contract$_Freeport_$59",
+                      "typeString": "contract Freeport"
                     }
                   },
                   "visibility": "internal"
@@ -6929,7 +6929,7 @@
               "id": 114,
               "nodeType": "StructuredDocumentation",
               "src": "1421:276:2",
-              "text": "Set the exchange rate between fiat (USD) and Davinci currency (CERE).\n The rate is given as number of CERE Units (with 10 decimals) per USD cent (1 penny).\n Only the rate service with the EXCHANGE_RATE_ORACLE role can change the rate."
+              "text": "Set the exchange rate between fiat (USD) and Freeport currency (CERE).\n The rate is given as number of CERE Units (with 10 decimals) per USD cent (1 penny).\n Only the rate service with the EXCHANGE_RATE_ORACLE role can change the rate."
             },
             "functionSelector": "db068e0e",
             "id": 131,
@@ -7291,14 +7291,14 @@
                       ],
                       "expression": {
                         "id": 156,
-                        "name": "davinci",
+                        "name": "freeport",
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
                         "referencedDeclaration": 83,
                         "src": "2380:7:2",
                         "typeDescriptions": {
-                          "typeIdentifier": "t_contract$_Davinci_$59",
-                          "typeString": "contract Davinci"
+                          "typeIdentifier": "t_contract$_Freeport_$59",
+                          "typeString": "contract Freeport"
                         }
                       },
                       "id": 157,
@@ -7470,14 +7470,14 @@
                       ],
                       "expression": {
                         "id": 165,
-                        "name": "davinci",
+                        "name": "freeport",
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
                         "referencedDeclaration": 83,
                         "src": "2433:7:2",
                         "typeDescriptions": {
-                          "typeIdentifier": "t_contract$_Davinci_$59",
-                          "typeString": "contract Davinci"
+                          "typeIdentifier": "t_contract$_Freeport_$59",
+                          "typeString": "contract Freeport"
                         }
                       },
                       "id": 167,
@@ -7953,14 +7953,14 @@
                       ],
                       "expression": {
                         "id": 209,
-                        "name": "davinci",
+                        "name": "freeport",
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
                         "referencedDeclaration": 83,
                         "src": "3134:7:2",
                         "typeDescriptions": {
-                          "typeIdentifier": "t_contract$_Davinci_$59",
-                          "typeString": "contract Davinci"
+                          "typeIdentifier": "t_contract$_Freeport_$59",
+                          "typeString": "contract Freeport"
                         }
                       },
                       "id": 211,
@@ -8644,14 +8644,14 @@
                       ],
                       "expression": {
                         "id": 271,
-                        "name": "davinci",
+                        "name": "freeport",
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
                         "referencedDeclaration": 83,
                         "src": "4448:7:2",
                         "typeDescriptions": {
-                          "typeIdentifier": "t_contract$_Davinci_$59",
-                          "typeString": "contract Davinci"
+                          "typeIdentifier": "t_contract$_Freeport_$59",
+                          "typeString": "contract Freeport"
                         }
                       },
                       "id": 273,
@@ -8968,7 +8968,7 @@
     "src": "0:4707:2"
   },
   "legacyAST": {
-    "absolutePath": "/home/a/CERE/davinci-nft/contracts/FiatGateway.sol",
+    "absolutePath": "/home/a/CERE/freeport-nft/contracts/FiatGateway.sol",
     "exportedSymbols": {
       "AccessControl": [
         1286
@@ -8985,7 +8985,7 @@
       "Currency": [
         1489
       ],
-      "Davinci": [
+      "Freeport": [
         59
       ],
       "ERC1155": [
@@ -9052,7 +9052,7 @@
         "src": "0:23:2"
       },
       {
-        "absolutePath": "/home/a/CERE/davinci-nft/contracts/access/AccessControl.sol",
+        "absolutePath": "/home/a/CERE/freeport-nft/contracts/access/AccessControl.sol",
         "file": "./access/AccessControl.sol",
         "id": 62,
         "nameLocation": "-1:-1:-1",
@@ -9064,8 +9064,8 @@
         "unitAlias": ""
       },
       {
-        "absolutePath": "/home/a/CERE/davinci-nft/contracts/Davinci.sol",
-        "file": "./Davinci.sol",
+        "absolutePath": "/home/a/CERE/freeport-nft/contracts/Freeport.sol",
+        "file": "./Freeport.sol",
         "id": 63,
         "nameLocation": "-1:-1:-1",
         "nodeType": "ImportDirective",
@@ -9097,7 +9097,7 @@
           "id": 64,
           "nodeType": "StructuredDocumentation",
           "src": "87:352:2",
-          "text": "The FiatGateway contract allows buying NFTs from an external fiat payment.\n This contract connects to the Davinci contract.\n It must hold a balance of CERE recognized by Davinci.\n This contract uses the SimpleExchange API to buy NFTs.\n This contract is operational only when the exchange rate is set to a non-zero value."
+          "text": "The FiatGateway contract allows buying NFTs from an external fiat payment.\n This contract connects to the Freeport contract.\n It must hold a balance of CERE recognized by Freeport.\n This contract uses the SimpleExchange API to buy NFTs.\n This contract is operational only when the exchange rate is set to a non-zero value."
         },
         "fullyImplemented": true,
         "id": 289,
@@ -9328,7 +9328,7 @@
             "functionSelector": "0ec57d51",
             "id": 83,
             "mutability": "mutable",
-            "name": "davinci",
+            "name": "freeport",
             "nameLocation": "799:7:2",
             "nodeType": "VariableDeclaration",
             "scope": 289,
@@ -9336,15 +9336,15 @@
             "stateVariable": true,
             "storageLocation": "default",
             "typeDescriptions": {
-              "typeIdentifier": "t_contract$_Davinci_$59",
-              "typeString": "contract Davinci"
+              "typeIdentifier": "t_contract$_Freeport_$59",
+              "typeString": "contract Freeport"
             },
             "typeName": {
               "id": 82,
               "nodeType": "UserDefinedTypeName",
               "pathNode": {
                 "id": 81,
-                "name": "Davinci",
+                "name": "Freeport",
                 "nodeType": "IdentifierPath",
                 "referencedDeclaration": 59,
                 "src": "784:7:2"
@@ -9352,8 +9352,8 @@
               "referencedDeclaration": 59,
               "src": "784:7:2",
               "typeDescriptions": {
-                "typeIdentifier": "t_contract$_Davinci_$59",
-                "typeString": "contract Davinci"
+                "typeIdentifier": "t_contract$_Freeport_$59",
+                "typeString": "contract Freeport"
               }
             },
             "visibility": "public"
@@ -9517,34 +9517,34 @@
                     "lValueRequested": false,
                     "leftHandSide": {
                       "id": 102,
-                      "name": "davinci",
+                      "name": "freeport",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
                       "referencedDeclaration": 83,
                       "src": "1335:7:2",
                       "typeDescriptions": {
-                        "typeIdentifier": "t_contract$_Davinci_$59",
-                        "typeString": "contract Davinci"
+                        "typeIdentifier": "t_contract$_Freeport_$59",
+                        "typeString": "contract Freeport"
                       }
                     },
                     "nodeType": "Assignment",
                     "operator": "=",
                     "rightHandSide": {
                       "id": 103,
-                      "name": "_davinci",
+                      "name": "_freeport",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
                       "referencedDeclaration": 99,
                       "src": "1345:8:2",
                       "typeDescriptions": {
-                        "typeIdentifier": "t_contract$_Davinci_$59",
-                        "typeString": "contract Davinci"
+                        "typeIdentifier": "t_contract$_Freeport_$59",
+                        "typeString": "contract Freeport"
                       }
                     },
                     "src": "1335:18:2",
                     "typeDescriptions": {
-                      "typeIdentifier": "t_contract$_Davinci_$59",
-                      "typeString": "contract Davinci"
+                      "typeIdentifier": "t_contract$_Freeport_$59",
+                      "typeString": "contract Freeport"
                     }
                   },
                   "id": 105,
@@ -9655,7 +9655,7 @@
                   "constant": false,
                   "id": 99,
                   "mutability": "mutable",
-                  "name": "_davinci",
+                  "name": "_freeport",
                   "nameLocation": "1315:8:2",
                   "nodeType": "VariableDeclaration",
                   "scope": 113,
@@ -9663,15 +9663,15 @@
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
-                    "typeIdentifier": "t_contract$_Davinci_$59",
-                    "typeString": "contract Davinci"
+                    "typeIdentifier": "t_contract$_Freeport_$59",
+                    "typeString": "contract Freeport"
                   },
                   "typeName": {
                     "id": 98,
                     "nodeType": "UserDefinedTypeName",
                     "pathNode": {
                       "id": 97,
-                      "name": "Davinci",
+                      "name": "Freeport",
                       "nodeType": "IdentifierPath",
                       "referencedDeclaration": 59,
                       "src": "1307:7:2"
@@ -9679,8 +9679,8 @@
                     "referencedDeclaration": 59,
                     "src": "1307:7:2",
                     "typeDescriptions": {
-                      "typeIdentifier": "t_contract$_Davinci_$59",
-                      "typeString": "contract Davinci"
+                      "typeIdentifier": "t_contract$_Freeport_$59",
+                      "typeString": "contract Freeport"
                     }
                   },
                   "visibility": "internal"
@@ -9808,7 +9808,7 @@
               "id": 114,
               "nodeType": "StructuredDocumentation",
               "src": "1421:276:2",
-              "text": "Set the exchange rate between fiat (USD) and Davinci currency (CERE).\n The rate is given as number of CERE Units (with 10 decimals) per USD cent (1 penny).\n Only the rate service with the EXCHANGE_RATE_ORACLE role can change the rate."
+              "text": "Set the exchange rate between fiat (USD) and Freeport currency (CERE).\n The rate is given as number of CERE Units (with 10 decimals) per USD cent (1 penny).\n Only the rate service with the EXCHANGE_RATE_ORACLE role can change the rate."
             },
             "functionSelector": "db068e0e",
             "id": 131,
@@ -10170,14 +10170,14 @@
                       ],
                       "expression": {
                         "id": 156,
-                        "name": "davinci",
+                        "name": "freeport",
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
                         "referencedDeclaration": 83,
                         "src": "2380:7:2",
                         "typeDescriptions": {
-                          "typeIdentifier": "t_contract$_Davinci_$59",
-                          "typeString": "contract Davinci"
+                          "typeIdentifier": "t_contract$_Freeport_$59",
+                          "typeString": "contract Freeport"
                         }
                       },
                       "id": 157,
@@ -10349,14 +10349,14 @@
                       ],
                       "expression": {
                         "id": 165,
-                        "name": "davinci",
+                        "name": "freeport",
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
                         "referencedDeclaration": 83,
                         "src": "2433:7:2",
                         "typeDescriptions": {
-                          "typeIdentifier": "t_contract$_Davinci_$59",
-                          "typeString": "contract Davinci"
+                          "typeIdentifier": "t_contract$_Freeport_$59",
+                          "typeString": "contract Freeport"
                         }
                       },
                       "id": 167,
@@ -10832,14 +10832,14 @@
                       ],
                       "expression": {
                         "id": 209,
-                        "name": "davinci",
+                        "name": "freeport",
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
                         "referencedDeclaration": 83,
                         "src": "3134:7:2",
                         "typeDescriptions": {
-                          "typeIdentifier": "t_contract$_Davinci_$59",
-                          "typeString": "contract Davinci"
+                          "typeIdentifier": "t_contract$_Freeport_$59",
+                          "typeString": "contract Freeport"
                         }
                       },
                       "id": 211,
@@ -11523,14 +11523,14 @@
                       ],
                       "expression": {
                         "id": 271,
-                        "name": "davinci",
+                        "name": "freeport",
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
                         "referencedDeclaration": 83,
                         "src": "4448:7:2",
                         "typeDescriptions": {
-                          "typeIdentifier": "t_contract$_Davinci_$59",
-                          "typeString": "contract Davinci"
+                          "typeIdentifier": "t_contract$_Freeport_$59",
+                          "typeString": "contract Freeport"
                         }
                       },
                       "id": 273,
@@ -12077,7 +12077,7 @@
         "notice": "Get the current exchange rate in CERE Units (with 10 decimals) per USD cent (1 penny)."
       },
       "setExchangeRate(uint256)": {
-        "notice": "Set the exchange rate between fiat (USD) and Davinci currency (CERE). The rate is given as number of CERE Units (with 10 decimals) per USD cent (1 penny). Only the rate service with the EXCHANGE_RATE_ORACLE role can change the rate."
+        "notice": "Set the exchange rate between fiat (USD) and Freeport currency (CERE). The rate is given as number of CERE Units (with 10 decimals) per USD cent (1 penny). Only the rate service with the EXCHANGE_RATE_ORACLE role can change the rate."
       },
       "totalCereUnitsSent()": {
         "notice": "How many CERE Units were sold so far."
@@ -12089,7 +12089,7 @@
         "notice": "Withdraw all CERE from this contract. Only accounts with DEFAULT_ADMIN_ROLE can withdraw."
       }
     },
-    "notice": "The FiatGateway contract allows buying NFTs from an external fiat payment. This contract connects to the Davinci contract. It must hold a balance of CERE recognized by Davinci. This contract uses the SimpleExchange API to buy NFTs. This contract is operational only when the exchange rate is set to a non-zero value.",
+    "notice": "The FiatGateway contract allows buying NFTs from an external fiat payment. This contract connects to the Freeport contract. It must hold a balance of CERE recognized by Freeport. This contract uses the SimpleExchange API to buy NFTs. This contract is operational only when the exchange rate is set to a non-zero value.",
     "version": 1
   }
 }

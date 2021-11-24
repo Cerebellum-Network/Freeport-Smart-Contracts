@@ -1,12 +1,12 @@
 pragma solidity ^0.8.0;
 
 import "./access/AccessControl.sol";
-import "./Davinci.sol";
+import "./Freeport.sol";
 
 /** The FiatGateway contract allows buying NFTs from an external fiat payment.
   *
-  * This contract connects to the Davinci contract.
-  * It must hold a balance of CERE recognized by Davinci.
+  * This contract connects to the Freeport contract.
+  * It must hold a balance of CERE recognized by Freeport.
   *
   * This contract uses the SimpleExchange API to buy NFTs.
   *
@@ -20,7 +20,7 @@ contract FiatGateway is AccessControl {
     /** The token ID that represents the CERE currency for all payments in this contract. */
     uint256 public constant CURRENCY = 0;
 
-    Davinci public davinci;
+    Freeport public freeport;
     uint cereUnitsPerPenny;
 
     /** How many USD cents were received so far, according to the payment service.
@@ -38,13 +38,13 @@ contract FiatGateway is AccessControl {
     event SetExchangeRate(
         uint256 cereUnitsPerPenny);
 
-    constructor(Davinci _davinci) {
-        davinci = _davinci;
+    constructor(Freeport _freeport) {
+        freeport = _freeport;
 
         _setupRole(DEFAULT_ADMIN_ROLE, _msgSender());
     }
 
-    /** Set the exchange rate between fiat (USD) and Davinci currency (CERE).
+    /** Set the exchange rate between fiat (USD) and Freeport currency (CERE).
       *
       * The rate is given as number of CERE Units (with 10 decimals) per USD cent (1 penny).
       *
@@ -75,9 +75,9 @@ contract FiatGateway is AccessControl {
 
         address admin = _msgSender();
 
-        uint amount = davinci.balanceOf(address(this), CURRENCY);
+        uint amount = freeport.balanceOf(address(this), CURRENCY);
 
-        davinci.safeTransferFrom(
+        freeport.safeTransferFrom(
             address(this),
             admin,
             CURRENCY,
@@ -103,7 +103,7 @@ contract FiatGateway is AccessControl {
 
         uint cereToSend = penniesReceived * cereUnitsPerPenny;
 
-        davinci.safeTransferFrom(
+        freeport.safeTransferFrom(
             address(this),
             buyer,
             CURRENCY,
@@ -141,7 +141,7 @@ contract FiatGateway is AccessControl {
         require(boughtCere >= expectedPriceOrZero, "Received fewer Cere than expected");
 
         uint amount = 1;
-        davinci.takeOffer(buyer, seller, nftId, expectedPriceOrZero, amount);
+        freeport.takeOffer(buyer, seller, nftId, expectedPriceOrZero, amount);
     }
 
     /** Guarantee that a version of Solidity with safe math is used.

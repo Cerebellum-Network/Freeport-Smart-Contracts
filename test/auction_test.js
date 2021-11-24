@@ -1,4 +1,4 @@
-const Davinci = artifacts.require("./Davinci.sol");
+const Freeport = artifacts.require("./Freeport.sol");
 const SimpleAuction = artifacts.require("SimpleAuction");
 const log = console.log;
 const {expectEvent, expectRevert, constants, time} = require('@openzeppelin/test-helpers');
@@ -9,27 +9,27 @@ contract("SimpleAuction", accounts => {
 
     it("sells an NFT by auction", async () => {
 
-        const davinci = await Davinci.deployed();
+        const freeport = await Freeport.deployed();
         const auction = await SimpleAuction.deployed();
-        const CURRENCY = await davinci.CURRENCY.call();
+        const CURRENCY = await freeport.CURRENCY.call();
         const UNIT = 1e10;
         const PERCENT = 100; // 1% in basis points.
 
         // Give some initial tokens to the buyers.
         let someMoney = 1000;
         let encodedMoney = web3.eth.abi.encodeParameter('uint256', someMoney * UNIT);
-        await davinci.deposit(buyerBob, encodedMoney);
-        await davinci.deposit(buyerBill, encodedMoney);
+        await freeport.deposit(buyerBob, encodedMoney);
+        await freeport.deposit(buyerBill, encodedMoney);
 
         let nftSupply = 10;
-        let nftId = await davinci.issue.call(nftSupply, "0x", {from: issuer});
+        let nftId = await freeport.issue.call(nftSupply, "0x", {from: issuer});
         let closeTime = (await time.latest()).toNumber() + 1000;
 
         // A helper function to check currency and NFT balances.
         let checkBalances = async (expected) => {
             for (let [account, expectedCurrency, expectedNFTs] of expected) {
-                let currency = await davinci.balanceOf.call(account, CURRENCY);
-                let nfts = await davinci.balanceOf.call(account, nftId);
+                let currency = await freeport.balanceOf.call(account, CURRENCY);
+                let nfts = await freeport.balanceOf.call(account, nftId);
                 assert.equal(currency, expectedCurrency * UNIT);
                 assert.equal(nfts, expectedNFTs);
             }
@@ -40,11 +40,11 @@ contract("SimpleAuction", accounts => {
             auction.startAuction(nftId, 100 * UNIT, closeTime, {from: issuer}),
             "ERC1155: insufficient balance for transfer");
 
-        await davinci.issue(nftSupply, "0x", {from: issuer});
+        await freeport.issue(nftSupply, "0x", {from: issuer});
         log("’Issuer’ creates", nftSupply, "NFTs of type", nftId.toString(16));
         log();
 
-        await davinci.configureRoyalties(
+        await freeport.configureRoyalties(
             nftId,
             benificiary,
             /* primaryCut */ 10 * PERCENT,

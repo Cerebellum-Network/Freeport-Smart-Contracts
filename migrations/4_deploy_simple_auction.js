@@ -1,19 +1,19 @@
-const Davinci = artifacts.require("Davinci");
+const Freeport = artifacts.require("Freeport");
 const SimpleAuction = artifacts.require("SimpleAuction");
 const log = console.log;
 
 module.exports = async function (deployer, network, accounts) {
-    const davinci = await Davinci.deployed();
-    log("Operating on Davinci contract", davinci.address);
+    const freeport = await Freeport.deployed();
+    log("Operating on Freeport contract", freeport.address);
 
-    await deployer.deploy(SimpleAuction, davinci.address);
+    await deployer.deploy(SimpleAuction, freeport.address);
     const auction = await SimpleAuction.deployed();
     log("Operating on SimpleAuction contract", auction.address);
 
-    const TRANSFER_OPERATOR = await davinci.TRANSFER_OPERATOR.call();
+    const TRANSFER_OPERATOR = await freeport.TRANSFER_OPERATOR.call();
 
     log("Give the permission to make transfers to SimpleAuction.")
-    await davinci.grantRole(TRANSFER_OPERATOR, auction.address);
+    await freeport.grantRole(TRANSFER_OPERATOR, auction.address);
 
     log();
 };

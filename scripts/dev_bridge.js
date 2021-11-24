@@ -1,4 +1,4 @@
-const Davinci = artifacts.require("Davinci");
+const Freeport = artifacts.require("Freeport");
 const log = console.log;
 
 // For TESTNET Mumbai
@@ -8,11 +8,11 @@ module.exports = async function (done) {
 
     let accounts = await web3.eth.getAccounts();
 
-    let davinci = await Davinci.deployed();
-    log("Contract", davinci.address, "from account", accounts[0]);
+    let freeport = await Freeport.deployed();
+    log("Contract", freeport.address, "from account", accounts[0]);
 
     log("Set ChildChainManager", childChainManagerProxy);
-    await davinci.updateChildChainManager(childChainManagerProxy);
+    await freeport.updateChildChainManager(childChainManagerProxy);
 
     done();
 };

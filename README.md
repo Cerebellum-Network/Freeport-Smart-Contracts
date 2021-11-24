@@ -1,12 +1,12 @@
-# Davinci Smart Contracts
+# Freeport Smart Contracts
 
 ## Introduction
 
 A set of contracts to hold NFTs, capture royalties, and subscribe to services.
 
-See [Davinci](contracts/Davinci.sol).
+See [Freeport.sol](contracts/Freeport.sol).
 
-See the [documentation](docs/Davinci.md) (regenerate with `npm run doc`).
+See the [documentation](docs/Freeport.md) (regenerate with `npm run doc`).
 
 ## Releases
 
@@ -14,14 +14,14 @@ See the [documentation](docs/Davinci.md) (regenerate with `npm run doc`).
 
 - Attach arbitrary objects to NFTs.
 
-NFTAttachment commit 89696561 deployed for Davinci version 2021-09-13 and 2021-11-03 below.
+NFTAttachment commit 89696561 deployed for Freeport version 2021-09-13 and 2021-11-03 below.
 
 ### 2021-11-04: Auction with getter
 
 - Add the getter for bids (sellerNftBids).
 - Prevent potential reentrancy bug.
 
-SimpleAuction commit a74e4db0 deployed for Davinci version 2021-09-13 and 2021-11-03 below.
+SimpleAuction commit a74e4db0 deployed for Freeport version 2021-09-13 and 2021-11-03 below.
 
 ### 2021-11-03: Auction with royalties
 
@@ -29,7 +29,7 @@ SimpleAuction commit a74e4db0 deployed for Davinci version 2021-09-13 and 2021-1
 
 Commit 6df6c349 deployed on Polygon Mumbai.
 
-Contracts [Davinci](https://mumbai.polygonscan.com/address/0xd1EdBAC660307c5B6d22E678FB5e22668C70Ad96) and
+Contracts [Freeport](https://mumbai.polygonscan.com/address/0xd1EdBAC660307c5B6d22E678FB5e22668C70Ad96) and
 [Fiat Gateway](https://mumbai.polygonscan.com/address/0x1f8eC932B6ec39A0326b74E9648A158F88B24082) and [Simple Auction](https://mumbai.polygonscan.com/address/0xd7cd23C84F9109F57f13eF28319e8787628DD7ad) and [NFT Attachment](https://mumbai.polygonscan.com/address/0x270693f873287a39172856Ad8cfbCd79b040b287).
 
 [Fiat-to-NFT Service Account](https://mumbai.polygonscan.com/address/0x50a2Cf81C5F8991780Ebc80222b835ecC4010956) (
@@ -40,9 +40,9 @@ Exchange rate of 0.1 CERE_stage for $0.01.
 
 ### 2021-10-21: Simple Auction
 
-- A contract that holds auctions and make transfers in the main Davinci contract.
-- An external function `captureFee` on the Davinci contract that can be used by authorized contracts (i.e., the auction contract).
-- **Note:** The call to `captureFee` is disabled in this deployment in order to work with the previous versions of Davinci. After deployment of the Davinci of this commit, this call can be reenabled (see `TODO in SimpleAuction.sol`).
+- A contract that holds auctions and make transfers in the main Freeport contract.
+- An external function `captureFee` on the Freeport contract that can be used by authorized contracts (i.e., the auction contract).
+- **Note:** The call to `captureFee` is disabled in this deployment in order to work with the previous versions of Freeport. After deployment of the Freeport of this commit, this call can be reenabled (see `TODO in SimpleAuction.sol`).
 
 Commit 032fbc7d deployed in dev and staging, see the links to "Simple Auction" in the sections below.
 
@@ -52,7 +52,7 @@ Commit 032fbc7d deployed in dev and staging, see the links to "Simple Auction" i
 
 Commit 7eb3e339 deployed on Polygon Mumbai.
 
-Contracts [Davinci](https://mumbai.polygonscan.com/address/0xAD56017BAD84Fa4Eab489314C1e158C6adaca598) and
+Contracts [Freeport](https://mumbai.polygonscan.com/address/0xAD56017BAD84Fa4Eab489314C1e158C6adaca598) and
 [Fiat Gateway](https://mumbai.polygonscan.com/address/0x7B7e644c49D6C1e7C4af63eFB8cAD382a7b397fB) and [Simple Auction](https://mumbai.polygonscan.com/address/0x49a08A6d213649b50655979E222C8496ADac050c) and [NFT Attachment](https://mumbai.polygonscan.com/address/0x1282fdeC36aC4aaf025059D69077d4450703eeD0).
 
 [Fiat-to-NFT Service Account](https://mumbai.polygonscan.com/address/0x50a2Cf81C5F8991780Ebc80222b835ecC4010956) (
@@ -67,16 +67,16 @@ Exchange rate of 0.1 CERE_stage for $0.01.
 - Add event SetExchangeRate and function getExchangeRate.
 
 Commit 07c8ad0f on Polygon Mumbai:
-[Davinci](https://mumbai.polygonscan.com/address/0xC7066eCAd7304Bed38E0b07aD8B9AD4dac92cb2B) and
+[Freeport](https://mumbai.polygonscan.com/address/0xC7066eCAd7304Bed38E0b07aD8B9AD4dac92cb2B) and
 [Fiat Gateway](https://mumbai.polygonscan.com/address/0xe4708fcCEA49b9305f48901bc2195664dC198097) and [Simple Auction](https://mumbai.polygonscan.com/address/0x9847941016d9d415e4d428FA74E5302555d01F45).
 
 ### 2021-09-03: Fiat Gateway and Simple Exchange
 
 - Validate that enough CERE were bought. See [FiatGateway](docs/FiatGateway.md).
-- Add getOffer function to get the NFT price. See [Davinci](contracts/Davinci.sol).
+- Add getOffer function to get the NFT price. See [Freeport](contracts/Freeport.sol).
 
 Commit e8d42c55 on Polygon Mumbai:
-[Davinci](https://mumbai.polygonscan.com/address/0x411b7f7BB3B3137437A34fE2C7644d56c96EeA39) and
+[Freeport](https://mumbai.polygonscan.com/address/0x411b7f7BB3B3137437A34fE2C7644d56c96EeA39) and
 [Fiat Gateway](https://mumbai.polygonscan.com/address/0xBa51587d0a03dD07a4559823409843aFa49cdEd3)
 
 ### 2021-08-11: Fiat Gateway
@@ -84,13 +84,13 @@ Commit e8d42c55 on Polygon Mumbai:
 - Add a contract to handle fiat payments and buy CERE and NFTs. See [FiatGateway](docs/FiatGateway.md).
 
 Commit be6ed7dc on Polygon Mumbai:
-[Davinci](https://mumbai.polygonscan.com/address/0x4F908981A3CFdd440f7a3d114b06b1695DA8373b) and
+[Freeport](https://mumbai.polygonscan.com/address/0x4F908981A3CFdd440f7a3d114b06b1695DA8373b) and
 [Fiat Gateway](https://mumbai.polygonscan.com/address/0xf038C9F12884b4544497fE5857506D1B78E8aC41)
 
 ### 2021-08-09: Simple Exchange
 
 - Add a basic NFT sale functionality with `make / take` functions. This captures variable royalties based on the NFT
-  price. See [SimpleExchange](docs/davinciParts/SimpleExchange.md).
+  price. See [SimpleExchange](docs/freeportParts/SimpleExchange.md).
 
 Commit e1852250 on Polygon
 Mumbai: [0x656E87eC4607E81896C41de2135db72ee8abce13](https://mumbai.polygonscan.com/address/0x656E87eC4607E81896C41de2135db72ee8abce13)
@@ -104,10 +104,10 @@ Mumbai: [0x656E87eC4607E81896C41de2135db72ee8abce13](https://mumbai.polygonscan.
   and the [deploy script](migrations/2_deploy_forwarder.js).
 
 - Support meta-transactions using the standard ERC2771. See the role `META_TX_FORWARDER`
-  in [MetaTxContext](contracts/davinciParts/MetaTxContext.sol)
+  in [MetaTxContext](contracts/freeportParts/MetaTxContext.sol)
 
 - Add a mechanism to bypass royalties. There can be a meta-transaction forwarder whose transactions are not subject to
-  royalties. See the role `BYPASS_SENDER` in [TransferFees](contracts/davinciParts/TransferFees.sol), used
+  royalties. See the role `BYPASS_SENDER` in [TransferFees](contracts/freeportParts/TransferFees.sol), used
   for [BypassForwarder](contracts/BypassForwarder.sol).
 
 - Support marketplaces in a generic way. The smart contracts from marketplaces can be connected by giving them
@@ -146,7 +146,7 @@ Commit 021f0116 on Polygon Mumbai
 
 Write down the contract address and current version in the Releases section above.
 
-Commit these files in `build/contracts/`: `Davinci.json`, `MinimalForwarder.json`, `BypassForwarder.json`
+Commit these files in `build/contracts/`: `Freeport.json`, `MinimalForwarder.json`, `BypassForwarder.json`
 , `FiatGateway.json`.
 
 For **dev** on Polygon testnet, setup test accounts:
@@ -163,7 +163,7 @@ The script will print the address of the different accounts, including the fiat-
 
     truffle exec scripts/dev_bridge.js --network=polygon_testnet
 
-Verify on Polyscan using the information in Davinci.json and the flattened code:
+Verify on Polyscan using the information in Freeport.json and the flattened code:
 
     npm run flatten
 
