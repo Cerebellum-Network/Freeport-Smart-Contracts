@@ -1,7 +1,7 @@
 pragma solidity ^0.8.0;
 
-import "./davinciParts/MetaTxContext.sol";
-import "./Davinci.sol";
+import "./freeportParts/MetaTxContext.sol";
+import "./Freeport.sol";
 import "./token/ERC1155/utils/ERC1155Holder.sol";
 
 
@@ -33,12 +33,12 @@ contract SimpleAuction is /* AccessControl, */ MetaTxContext, ERC1155Holder {
         || ERC1155Receiver.supportsInterface(interfaceId);
     }
 
-    Davinci public davinci;
+    Freeport public freeport;
 
-    /** This contract must have the TRANSFER_OPERATOR role in the Davinci contract.
+    /** This contract must have the TRANSFER_OPERATOR role in the Freeport contract.
      */
-    constructor(Davinci _davinci) {
-        davinci = _davinci;
+    constructor(Freeport _freeport) {
+        freeport = _freeport;
     }
 
     /** The token ID that represents the CERE currency for all payments in this contract. */
@@ -107,7 +107,7 @@ contract SimpleAuction is /* AccessControl, */ MetaTxContext, ERC1155Holder {
         bid.closeTimeSec = closeTimeSec;
 
         // Take the NFT from the seller.
-        davinci.safeTransferFrom(seller, address(this), nftId, 1, "");
+        freeport.safeTransferFrom(seller, address(this), nftId, 1, "");
 
         emit StartAuction(seller, nftId, price, closeTimeSec);
     }
@@ -135,13 +135,13 @@ contract SimpleAuction is /* AccessControl, */ MetaTxContext, ERC1155Holder {
         // Refund the previous buyer.
         address previousBuyer = bid.buyer;
         if (previousBuyer != address(0)) {
-            davinci.safeTransferFrom(address(this), previousBuyer, CURRENCY, previousDeposit, "");
+            freeport.safeTransferFrom(address(this), previousBuyer, CURRENCY, previousDeposit, "");
         }
 
         // Take the new deposit from the new buyer.
         bid.buyer = buyer;
         bid.price = price;
-        davinci.safeTransferFrom(buyer, address(this), CURRENCY, price, "");
+        freeport.safeTransferFrom(buyer, address(this), CURRENCY, price, "");
 
         emit BidOnAuction(seller, nftId, price, bid.closeTimeSec, buyer);
     }
@@ -167,18 +167,18 @@ contract SimpleAuction is /* AccessControl, */ MetaTxContext, ERC1155Holder {
         if (buyer != address(0)) {
             // In case there was a buyer,
             // transfer the payment to the seller.
-            davinci.safeTransferFrom(address(this), seller, CURRENCY, price, "");
+            freeport.safeTransferFrom(address(this), seller, CURRENCY, price, "");
 
             // Transfer the NFT to the buyer.
-            davinci.safeTransferFrom(address(this), buyer, nftId, 1, "");
+            freeport.safeTransferFrom(address(this), buyer, nftId, 1, "");
 
             // Collect royalty.
-            try davinci.captureFee(seller, nftId, price, 1) {
+            try freeport.captureFee(seller, nftId, price, 1) {
             } catch { }
         } else {
             // Otherwise, there was no buyer,
             // give back the NFT to the seller.
-            davinci.safeTransferFrom(address(this), seller, nftId, 1, "");
+            freeport.safeTransferFrom(address(this), seller, nftId, 1, "");
         }
 
         emit SettleAuction(seller, nftId, price, buyer);

@@ -26,9 +26,9 @@ Supports interfaces of AccessControl and ERC1155Receiver.
 
 
 
-#### `constructor(contract Davinci _davinci)` (public)
+#### `constructor(contract Freeport _freeport)` (public)
 
-This contract must have the TRANSFER_OPERATOR role in the Davinci contract.
+This contract must have the TRANSFER_OPERATOR role in the Freeport contract.
 
 
 

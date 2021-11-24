@@ -2,8 +2,8 @@
 
 The FiatGateway contract allows buying NFTs from an external fiat payment.
 
-This contract connects to the Davinci contract.
-It must hold a balance of CERE recognized by Davinci.
+This contract connects to the Freeport contract.
+It must hold a balance of CERE recognized by Freeport.
 
 This contract uses the SimpleExchange API to buy NFTs.
 
@@ -12,7 +12,7 @@ This contract is operational only when the exchange rate is set to a non-zero va
 
 
 
-#### `constructor(contract Davinci _davinci)` (public)
+#### `constructor(contract Freeport _freeport)` (public)
 
 
 
@@ -20,7 +20,7 @@ This contract is operational only when the exchange rate is set to a non-zero va
 
 #### `setExchangeRate(uint256 _cereUnitsPerPenny)` (public)
 
-Set the exchange rate between fiat (USD) and Davinci currency (CERE).
+Set the exchange rate between fiat (USD) and Freeport currency (CERE).
 
 The rate is given as number of CERE Units (with 10 decimals) per USD cent (1 penny).
 

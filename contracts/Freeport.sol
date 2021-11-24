@@ -1,6 +1,6 @@
 pragma solidity ^0.8.0;
 
-import "./davinciParts/SimpleExchange.sol";
+import "./freeportParts/SimpleExchange.sol";
 
 /** Main contract, including all components.
 
@@ -10,7 +10,7 @@ import "./davinciParts/SimpleExchange.sol";
 - Joint Accounts that distribute their funds over multiple owners.
 - Capture royalties on primary and secondary transfers, configurable per NFT type.
 */
-contract Davinci is /*
+contract Freeport is /*
     ERC1155,
     AccessControl,
     MetaTxContext,

@@ -1,7 +1,7 @@
 {
-  "name": "davinci",
+  "name": "freeport",
   "version": "1.0.0",
-  "description": "The Davinci smart contracts",
+  "description": "The Freeport smart contracts",
   "main": "truffle-config.js",
   "directories": {
     "test": "test"
@@ -11,25 +11,25 @@
     "compile": "truffle compile",
     "migrate": "truffle migrate --network=$npm_config_network",
     "dev-setup": "truffle exec scripts/dev_setup.js --network=$npm_config_network",
-    "flatten": "npx poa-solidity-flattener contracts/Davinci.sol",
+    "flatten": "npx poa-solidity-flattener contracts/Freeport.sol",
     "doc": "npx solidity-docgen --solc-module=solc-0.8 -t doc_template -o docs"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Cerebellum-Network/davinci_nft.git"
+    "url": "git+https://github.com/Cerebellum-Network/Freeport-Smart-Contracts.git"
   },
   "keywords": [
     "Cere",
     "Polygon",
-    "Davinci",
+    "Freeport",
     "NFT"
   ],
   "author": "Aurélien Nicolas and team",
   "license": "Apache-2.0",
   "bugs": {
-    "url": "https://github.com/Cerebellum-Network/davinci_nft/issues"
+    "url": "https://github.com/Cerebellum-Network/Freeport-Smart-Contracts/issues"
   },
-  "homepage": "https://github.com/Cerebellum-Network/davinci_nft#readme",
+  "homepage": "https://github.com/Cerebellum-Network/Freeport-Smart-Contracts#readme",
   "devDependencies": {
     "@maticnetwork/maticjs": "^2.0.40",
     "@openzeppelin/contracts": "4.1.0",

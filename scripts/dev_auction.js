@@ -1,4 +1,4 @@
-const Davinci = artifacts.require("Davinci");
+const Freeport = artifacts.require("Freeport");
 const SimpleAuction = artifacts.require("SimpleAuction");
 const log = console.log;
 
@@ -8,11 +8,11 @@ module.exports = async function (done) {
     let admin = accounts[0];
     let seller = admin;
     let buyer = accounts[1];
-    let davinci = await Davinci.deployed();
+    let freeport = await Freeport.deployed();
     let auction = await SimpleAuction.deployed();
     const CURRENCY = 0;
     const UNIT = 1e10;
-    log("Operating on Davinci contract", davinci.address);
+    log("Operating on Freeport contract", freeport.address);
     log("Operating on SimpleAuction contract", auction.address);
     log("With Seller account", seller);
     log("With Buyer account", buyer);
@@ -20,11 +20,11 @@ module.exports = async function (done) {
     let amount = 1000;
     log("Sending", amount, "CERE to", buyer);
     let encodedAmount = web3.eth.abi.encodeParameter('uint256', amount * UNIT);
-    await davinci.deposit(buyer, encodedAmount, {from: admin});
+    await freeport.deposit(buyer, encodedAmount, {from: admin});
 
-    let nftId = await davinci.issue.call(10, "0x", {from: seller});
+    let nftId = await freeport.issue.call(10, "0x", {from: seller});
     log("Seller mints an NFT", nftId.toString());
-    await davinci.issue(10, "0x", {from: seller});
+    await freeport.issue(10, "0x", {from: seller});
 
     let priceCere = 10;
     let closeTime = parseInt((+new Date()) / 1000) + 60;

@@ -1,4 +1,4 @@
-const Davinci = artifacts.require("Davinci");
+const Freeport = artifacts.require("Freeport");
 const FiatGateway = artifacts.require("FiatGateway");
 const log = console.log;
 
@@ -10,9 +10,9 @@ module.exports = async function (done) {
 
     let accounts = await web3.eth.getAccounts();
     let admin = accounts[0];
-    let davinci = await Davinci.deployed();
+    let freeport = await Freeport.deployed();
     let gateway = await FiatGateway.deployed();
-    log("Operating on Davinci contract", davinci.address);
+    log("Operating on Freeport contract", freeport.address);
     log("Operating on FiatGateway contract", gateway.address);
     log("From admin account", admin);
 
@@ -33,7 +33,7 @@ module.exports = async function (done) {
     let encodedAmount = web3.eth.abi.encodeParameter('uint256', amount);
 
     for (let devAccount of devAccounts) {
-        await davinci.deposit(devAccount, encodedAmount);
+        await freeport.deposit(devAccount, encodedAmount);
         log("Sent 100k of currency to", devAccount);
     }
 

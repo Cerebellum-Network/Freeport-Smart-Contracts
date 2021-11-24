@@ -1,6 +1,6 @@
 pragma solidity ^0.8.0;
 
-import "./davinciParts/MetaTxContext.sol";
+import "./freeportParts/MetaTxContext.sol";
 
 /** The contract NFTAttachment allows users to attach objects to NFTs.
  * Some application can listen for the events and interpret the objects in some way.
