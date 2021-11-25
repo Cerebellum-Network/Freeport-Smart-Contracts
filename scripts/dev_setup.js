@@ -33,7 +33,7 @@ module.exports = async function (done) {
         "0xd1BA02B47986057Ca8d74b75705A8d1E1006D4f5", // Ruslan
     ];
 
-    let amount = 100e3 * 1e10; // 100k with 10 decimals
+    let amount = "10" + "000" + "000" + "0000000000"; // 10M with 10 decimals;
     let encodedAmount = web3.eth.abi.encodeParameter('uint256', amount);
 
     for (let devAccount of devAccounts) {
