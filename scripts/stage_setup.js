@@ -34,7 +34,7 @@ module.exports = async function (done) {
 
     for (let devAccount of devAccounts) {
         await freeport.deposit(devAccount, encodedAmount);
-        log("Sent 100k of currency to", devAccount);
+        log("Sent 10M of currency to", devAccount);
     }
 
     done();
