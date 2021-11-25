@@ -5,8 +5,7 @@ const log = console.log;
 module.exports = async function (done) {
 
     // A fixed account for tests.
-    // Mnemonic: "spatial spin account funny glue cancel cushion twelve inmate author night dust"
-    let serviceAccount = "0xc0DAe4aE8d21250a830B2A79314c9D43cAeab145";
+    let serviceAccount = "0xD2B94CBF0fFAA9bc07126ab53f980Cd95a5Ed243";
 
     let accounts = await web3.eth.getAccounts();
     let admin = accounts[0];

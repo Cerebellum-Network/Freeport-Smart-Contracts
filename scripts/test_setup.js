@@ -4,8 +4,8 @@ const log = console.log;
 
 module.exports = async function (done) {
 
-    // A fixed account for staging.
-    let serviceAccount = "0x53B53189e668dC2ee3bA7A44Bb033E60F400d395";
+    // A fixed account for tests.
+    let serviceAccount = "0xc0DAe4aE8d21250a830B2A79314c9D43cAeab145";
 
     let accounts = await web3.eth.getAccounts();
     let admin = accounts[0];
@@ -25,10 +25,10 @@ module.exports = async function (done) {
 
     let devAccounts = [
         gateway.address,
-        serviceAccount,
+        serviceAccount
     ];
 
-    let amount = 100e3 * 1e10 // 100k with 10 decimals;
+    let amount = 100e3 * 1e10; // 100k with 10 decimals
     let encodedAmount = web3.eth.abi.encodeParameter('uint256', amount);
 
     for (let devAccount of devAccounts) {

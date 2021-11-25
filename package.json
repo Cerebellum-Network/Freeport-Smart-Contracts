@@ -11,6 +11,7 @@
     "compile": "truffle compile",
     "migrate": "truffle migrate --network=$npm_config_network",
     "dev-setup": "truffle exec scripts/dev_setup.js --network=$npm_config_network",
+    "test-setup": "truffle exec scripts/test_setup.js --network=$npm_config_network",
     "flatten": "npx poa-solidity-flattener contracts/Freeport.sol",
     "doc": "npx solidity-docgen --solc-module=solc-0.8 -t doc_template -o docs"
   },
