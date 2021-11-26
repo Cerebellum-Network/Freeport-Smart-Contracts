@@ -32,7 +32,7 @@ Commit 6df6c349 deployed on Polygon Mumbai.
 Contracts [Freeport](https://mumbai.polygonscan.com/address/0xd1EdBAC660307c5B6d22E678FB5e22668C70Ad96) and
 [Fiat Gateway](https://mumbai.polygonscan.com/address/0x1f8eC932B6ec39A0326b74E9648A158F88B24082) and [Simple Auction](https://mumbai.polygonscan.com/address/0xd7cd23C84F9109F57f13eF28319e8787628DD7ad) and [NFT Attachment](https://mumbai.polygonscan.com/address/0x270693f873287a39172856Ad8cfbCd79b040b287).
 
-[Fiat-to-NFT Service Account](https://mumbai.polygonscan.com/address/0x50a2Cf81C5F8991780Ebc80222b835ecC4010956) (
+[Fiat-to-NFT Service Account](https://mumbai.polygonscan.com/address/0xD2B94CBF0fFAA9bc07126ab53f980Cd95a5Ed243) (
 see [stage_setup](scripts/stage_setup.js)).
 [Admin Account](https://mumbai.polygonscan.com/address/0x51c5590504251A5993Ba6A46246f87Fa0eaE5897) (Aurel).
 
@@ -55,7 +55,7 @@ Commit 7eb3e339 deployed on Polygon Mumbai.
 Contracts [Freeport](https://mumbai.polygonscan.com/address/0xAD56017BAD84Fa4Eab489314C1e158C6adaca598) and
 [Fiat Gateway](https://mumbai.polygonscan.com/address/0x7B7e644c49D6C1e7C4af63eFB8cAD382a7b397fB) and [Simple Auction](https://mumbai.polygonscan.com/address/0x49a08A6d213649b50655979E222C8496ADac050c) and [NFT Attachment](https://mumbai.polygonscan.com/address/0x1282fdeC36aC4aaf025059D69077d4450703eeD0).
 
-[Fiat-to-NFT Service Account](https://mumbai.polygonscan.com/address/0x50a2Cf81C5F8991780Ebc80222b835ecC4010956) (
+[Fiat-to-NFT Service Account](https://mumbai.polygonscan.com/address/0x53B53189e668dC2ee3bA7A44Bb033E60F400d395) (
 see [stage_setup](scripts/stage_setup.js)).
 
 [Admin Account](https://mumbai.polygonscan.com/address/0x51c5590504251A5993Ba6A46246f87Fa0eaE5897) (Aurel).
