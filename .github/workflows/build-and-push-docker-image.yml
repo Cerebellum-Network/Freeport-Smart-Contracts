@@ -2,7 +2,7 @@ name: Build and push image to ECR
 on:
   push:
     branches:
-      - feature/RemoveSecrets
+      - master
 
 env:
   ECR_REPOSITORY: crb-davinci-nft-test
