@@ -18,7 +18,7 @@ id=$(docker run -d \
 
 #Deploy contracts
 docker exec "$id" sh -c "cd /app/davinci_nft && npm_config_network=$NPM_CONFIG_NETWORK npm run migrate"
-docker exec "$id" sh -c "cd /app/davinci_nft && npm_config_network=$NPM_CONFIG_NETWORK npm run dev-setup"
+docker exec "$id" sh -c "cd /app/davinci_nft && npm_config_network=$NPM_CONFIG_NETWORK npm run test-setup"
 docker cp "$id":/app/keys.json ./artifacts/keys.json
 #Create snapshot
 curl -H "Content-Type: application/json" -X POST --data \

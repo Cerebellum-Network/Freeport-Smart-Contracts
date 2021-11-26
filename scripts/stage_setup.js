@@ -5,8 +5,7 @@ const log = console.log;
 module.exports = async function (done) {
 
     // A fixed account for staging.
-    // Mnemonic: "fatigue someone trip lottery grass special addict tiny erupt come spider duck"
-    let serviceAccount = "0x50a2Cf81C5F8991780Ebc80222b835ecC4010956";
+    let serviceAccount = "0x53B53189e668dC2ee3bA7A44Bb033E60F400d395";
 
     let accounts = await web3.eth.getAccounts();
     let admin = accounts[0];
