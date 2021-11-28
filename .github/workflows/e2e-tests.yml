@@ -53,6 +53,8 @@ jobs:
           sudo apt-get install curl wget findutils jq
           sudo ./run-ganache-deploy-copy-artifacts.sh
       - name: Build docker image ganache
+        env:
+          ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
         uses: docker/build-push-action@v2
         with:
           context: ./freeport-smart-contracts
