@@ -6,7 +6,7 @@ on:
 env:
   STRIPE_SERVICE_VERSION: latest
   FIAT_TO_NFT_SERVICE_VERSION: latest
-  FREEPORT_SC_NFT_VERSION: latest
+  FREEPORT_SC_NFT_VERSION: ${{ github.sha }}
   DAVINCI_E2E_TEST_VERSION: aaf3c1da997793a1db5e7bc61f574a88c96c42ac
   LOCAL_RUN: false
   ECR_REPOSITORY: crb-davinci-nft-test
@@ -32,6 +32,36 @@ jobs:
       - name: Login to Amazon ECR for another registry
         id: login-ecr-another
         uses: aws-actions/amazon-ecr-login@v1
+      - name: Checkout code base
+        uses: actions/checkout@v2
+        with:
+          path: freeport-smart-contracts
+      - name: Build docker image builder
+        env:
+          ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+        uses: docker/build-push-action@v2
+        with:
+          context: ./freeport-smart-contracts
+          file: ./freeport-smart-contracts/Dockerfile.builder
+          push: false
+          no-cache: true
+          tags: ${{ env.ECR_REGISTRY }}/${{ env.ECR_REPOSITORY }}:builder
+      - name: Deploy ganache and copy artifacts
+        working-directory: ./freeport-smart-contracts
+        run: |
+          echo "Installing helper packaging curl wget findutils jq"
+          sudo apt-get install curl wget findutils jq
+          sudo ./run-ganache-deploy-copy-artifacts.sh
+      - name: Build docker image ganache
+        env:
+          ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+        uses: docker/build-push-action@v2
+        with:
+          context: ./freeport-smart-contracts
+          file: ./freeport-smart-contracts/Dockerfile.runtime
+          push: false
+          no-cache: true
+          tags: ${{ env.ECR_REGISTRY }}/${{ env.ECR_REPOSITORY }}:${{ env.FREEPORT_SC_NFT_VERSION }}
       - name: Checkout e2e tests
         uses: actions/checkout@v2
         with:
