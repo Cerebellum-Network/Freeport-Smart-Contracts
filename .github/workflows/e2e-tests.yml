@@ -1,23 +1,19 @@
 name: 'Run e2e tests'
 
 on:
-  workflow_call:
+  pull_request:
 
 env:
   STRIPE_SERVICE_VERSION: latest
   FIAT_TO_NFT_SERVICE_VERSION: latest
-  DAVINCI_E2E_TEST_VERSION: latest
+  FREEPORT_SC_NFT_VERSION: ${{ github.sha }}
+  DAVINCI_E2E_TEST_VERSION: aaf3c1da997793a1db5e7bc61f574a88c96c42ac
   LOCAL_RUN: false
+  ECR_REPOSITORY: crb-davinci-nft-test
 jobs:
-  e2e-tests:
+  build-and-test-image-wth-e2e-tests:
     runs-on: ubuntu-18.04
     steps:
-      - name: Checkout e2e tests
-        uses: actions/checkout@v2
-        with:
-          repository: Cerebellum-Network/e2e-tests
-          path: e2e-tests
-          token: ${{ secrets.TRIGGER_GITHUB_TOKEN }}
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v1
         with:
@@ -36,10 +32,46 @@ jobs:
       - name: Login to Amazon ECR for another registry
         id: login-ecr-another
         uses: aws-actions/amazon-ecr-login@v1
-      - name: Run e2e tests
+      - name: Checkout code base
+        uses: actions/checkout@v2
+        with:
+          path: freeport-smart-contracts
+      - name: Build docker image builder
+        env:
+          ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+        uses: docker/build-push-action@v2
+        with:
+          context: ./freeport-smart-contracts
+          file: ./freeport-smart-contracts/Dockerfile.builder
+          push: false
+          no-cache: true
+          tags: ${{ env.ECR_REGISTRY }}/${{ env.ECR_REPOSITORY }}:builder
+      - name: Deploy ganache and copy artifacts
+        working-directory: ./freeport-smart-contracts
         run: |
-          echo "Start infrustracture, STRIPE_SERVICE_VERSION=$INPUT_STRIPE_SERVICE_VERSION, FIAT_TO_NFT_SERVICE_VERSION=$FIAT_TO_NFT_SERVICE_VERSION, FREEPORT_SC_NFT_VERSION=$INPUT_FREEPORT_SC_NFT_VERSION"
-          . ./scripts/local/start-infrastructure.sh $STRIPE_SERVICE_VERSION $FIAT_TO_NFT_SERVICE_VERSION $INPUT_FREEPORT_SC_NFT_VERSION $DAVINCI_E2E_TEST_VERSION $LOCAL_RUN
+          echo "Installing helper packaging curl wget findutils jq"
+          sudo apt-get install curl wget findutils jq
+          sudo ./run-ganache-deploy-copy-artifacts.sh
+      - name: Build docker image ganache
+        uses: docker/build-push-action@v2
+        with:
+          context: ./freeport-smart-contracts
+          file: ./freeport-smart-contracts/Dockerfile.runtime
+          push: false
+          no-cache: true
+          tags: ${{ env.ECR_REGISTRY }}/${{ env.ECR_REPOSITORY }}:${{ env.FREEPORT_SC_NFT_VERSION }}
+      - name: Checkout e2e tests
+        uses: actions/checkout@v2
+        with:
+          repository: Cerebellum-Network/e2e-tests
+          path: e2e-tests
+          ref: moveTestsToRepositoriesPipelines
+          token: ${{ secrets.TRIGGER_GITHUB_TOKEN }}
+      - name: Run e2e tests
+        working-directory: ./e2e-tests
+        run: |
+          echo "Start infrustracture, STRIPE_SERVICE_VERSION=$STRIPE_SERVICE_VERSION, FIAT_TO_NFT_SERVICE_VERSION=$FIAT_TO_NFT_SERVICE_VERSION, FREEPORT_SC_NFT_VERSION=$FREEPORT_SC_NFT_VERSION"
+          . ./scripts/local/start-infrastructure.sh $STRIPE_SERVICE_VERSION $FIAT_TO_NFT_SERVICE_VERSION $FREEPORT_SC_NFT_VERSION $DAVINCI_E2E_TEST_VERSION $LOCAL_RUN
 
           echo "Start Success flow"
           . ./scripts/local/flow/start-payment-flow-success.sh
@@ -52,20 +84,17 @@ jobs:
 
           echo "Stop infrustracture"
           . ./scripts/common/stop-infrastructure.sh
-  notification:
-    runs-on: ubuntu-18.04
-    steps:
       - name: Slack Notification Success
         if: ${{ success() }}
         uses: rtCamp/action-slack-notify@v2
         env:
           SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
           SLACK_CHANNEL: e2e-test-results
-          SLACK_COLOR: ${{ job.status }}
+          SLACK_COLOR: "#00FF00"
           SLACK_MESSAGE: 'Run e2e Davinci tests with params:
           STRIPE_SERVICE_VERSION="${{ env.STRIPE_SERVICE_VERSION }}",
           FIAT_TO_NFT_SERVICE_VERSION="${{ env.FIAT_TO_NFT_SERVICE_VERSION }}",
-          FREEPORT_SC_NFT_VERSION="${{ env.INPUT_FREEPORT_SC_NFT_VERSION }}"'
+          FREEPORT_SC_NFT_VERSION="${{ env.FREEPORT_SC_NFT_VERSION }}"'
           SLACK_TITLE: 'Test Results for "${{github.repository}}"'
           SLACK_USERNAME: e2e-davinci-tests-bot
       - name: Slack Notification Failure
@@ -75,10 +104,10 @@ jobs:
           SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
           SLACK_CHANNEL: e2e-test-results
           SLACK_LINK_NAMES: true
-          SLACK_COLOR: ${{ job.status }}
+          SLACK_COLOR: "#FF0000"
           SLACK_MESSAGE: 'Run e2e Davinci tests with params:
           STRIPE_SERVICE_VERSION="${{ env.STRIPE_SERVICE_VERSION }}",
           FIAT_TO_NFT_SERVICE_VERSION="${{ env.FIAT_TO_NFT_SERVICE_VERSION }}",
-          FREEPORT_SC_NFT_VERSION="${{ env.INPUT_FREEPORT_SC_NFT_VERSION }}". Responsible persons: <@UM0FVG0CD>, <@U73DXE8D8>, <@U01UG95HTM1>.'
+          FREEPORT_SC_NFT_VERSION="${{ env.FREEPORT_SC_NFT_VERSION }}". Responsible persons: <@UM0FVG0CD>, <@U73DXE8D8>, <@U01UG95HTM1>.'
           SLACK_TITLE: 'Test Results for "${{github.repository}}"'
           SLACK_USERNAME: e2e-davinci-tests-bot
