@@ -2,13 +2,12 @@ name: Build and push image to ECR
 on:
   push:
     branches:
-      - master
+      - feature/updateWorkflowWithE2ETests
 
 env:
   ECR_REPOSITORY: crb-davinci-nft-test
 jobs:
   build-image:
-    needs: unit-tests
     runs-on: ubuntu-18.04
     steps:
       - name: Configure AWS credentials
@@ -45,38 +44,6 @@ jobs:
         with:
           context: ./freeport-smart-contracts
           file: ./freeport-smart-contracts/Dockerfile.runtime
-          push: false
-          no-cache: true
-          tags: ${{ env.ECR_REGISTRY }}/${{ env.ECR_REPOSITORY }}:${{ github.sha }}
-  e2e-tests:
-    needs: build-image
-    uses: Cerebellum-Network/freeport-smart-contracts/.github/workflows/e2e-tests.yaml@feature/updateWorkflowWithE2ETests
-    with:
-      FREEPORT_SC_NFT_VERSION: ${{ github.sha }}
-  publish-image:
-    needs: e2e-tests
-    runs-on: ubuntu-18.04
-    steps:
-      - name: Configure AWS credentials
-        uses: aws-actions/configure-aws-credentials@v1
-        with:
-          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: us-west-2
-      - name: Login to Amazon ECR
-        id: login-ecr
-        uses: aws-actions/amazon-ecr-login@v1
-      - name: Checkout code base
-        uses: actions/checkout@v2
-        with:
-          path: freeport-smart-contracts
-      - name: Build and Push docker image
-        env:
-          ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
-        uses: docker/build-push-action@v2
-        with:
-          context: ./freeport-smart-contracts
-          file: ./freeport-smart-contracts/Dockerfile.runtime
           push: true
-          no-cache: false
+          no-cache: true
           tags: ${{ env.ECR_REGISTRY }}/${{ env.ECR_REPOSITORY }}:latest
