@@ -37,9 +37,9 @@ jobs:
           echo "Build ganance with snapshot version of deployed contract"
           sudo docker build -f Dockerfile.runtime -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
           echo "::set-output name=image::$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG"
-          docker image tag $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG $ECR_REGISTRY/$ECR_REPOSITORY:test-dev
+          docker image tag $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG $ECR_REGISTRY/$ECR_REPOSITORY:test-test
 
           echo "Push to docker registry"
           docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
-          docker push $ECR_REGISTRY/$ECR_REPOSITORY:test-dev
+          docker push $ECR_REGISTRY/$ECR_REPOSITORY:test-test
           echo "::set-output name=image::$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG"
