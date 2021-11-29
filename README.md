@@ -16,7 +16,7 @@ See the [documentation](docs/Freeport.md) (regenerate with `npm run doc`).
 
 NFTAttachment commit 89696561 deployed for Freeport version 2021-09-13 and 2021-11-03 below.
 
-### 2021-11-04: Auction with getter
+### 2021-11-04: Auction with getter.
 
 - Add the getter for bids (sellerNftBids).
 - Prevent potential reentrancy bug.
