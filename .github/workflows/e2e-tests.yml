@@ -1,0 +1,104 @@
+name: 'Run e2e tests'
+
+on:
+  pull_request:
+
+env:
+  STRIPE_SERVICE_VERSION: latest
+  FIAT_TO_NFT_SERVICE_VERSION: latest
+  FREEPORT_SC_NFT_VERSION: ${{ github.sha }}
+  DAVINCI_E2E_TEST_VERSION: latest
+  LOCAL_RUN: false
+  ECR_REPOSITORY: crb-davinci-nft-test
+jobs:
+  build-and-test-image-wth-e2e-tests:
+    runs-on: ubuntu-18.04
+    steps:
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: us-west-2
+      - name: Login to Amazon ECR
+        id: login-ecr
+        uses: aws-actions/amazon-ecr-login@v1
+      - name: Configure AWS credentials for another registry
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.ORG_AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.ORG_AWS_SECRET_ACCESS_KEY }}
+          aws-region: us-west-2
+      - name: Login to Amazon ECR for another registry
+        id: login-ecr-another
+        uses: aws-actions/amazon-ecr-login@v1
+      - name: Checkout code base
+        uses: actions/checkout@v2
+        with:
+          path: freeport-smart-contracts
+      - name: Build and push image
+        working-directory: ./freeport-smart-contracts
+        env:
+          ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+        run: |
+          echo "Installing helper packaging curl wget findutils jq"
+          sudo apt-get install curl wget findutils jq
+
+          echo "Build -> Deploy -> Copy artifacts"
+          docker build -f Dockerfile.builder . -t $ECR_REGISTRY/$ECR_REPOSITORY:builder
+          echo "::set-output name=image::$ECR_REGISTRY/$ECR_REPOSITORY:builder"
+          sudo ./run-ganache-deploy-copy-artifacts.sh
+
+          echo "Build ganance with snapshot version of deployed contract"
+          sudo docker build -f Dockerfile.runtime -t $ECR_REGISTRY/$ECR_REPOSITORY:$FREEPORT_SC_NFT_VERSION .
+          echo "::set-output name=image::$ECR_REGISTRY/$ECR_REPOSITORY:$FREEPORT_SC_NFT_VERSION"
+      - name: Checkout e2e tests
+        uses: actions/checkout@v2
+        with:
+          repository: Cerebellum-Network/e2e-tests
+          path: e2e-tests
+          token: ${{ secrets.TRIGGER_GITHUB_TOKEN }}
+      - name: Run e2e tests
+        working-directory: ./e2e-tests
+        run: |
+          echo "Start infrustracture, STRIPE_SERVICE_VERSION=$STRIPE_SERVICE_VERSION, FIAT_TO_NFT_SERVICE_VERSION=$FIAT_TO_NFT_SERVICE_VERSION, FREEPORT_SC_NFT_VERSION=$FREEPORT_SC_NFT_VERSION"
+          . ./scripts/local/start-infrastructure.sh $STRIPE_SERVICE_VERSION $FIAT_TO_NFT_SERVICE_VERSION $FREEPORT_SC_NFT_VERSION $DAVINCI_E2E_TEST_VERSION $LOCAL_RUN
+
+          echo "Start Success flow"
+          . ./scripts/local/flow/start-payment-flow-success.sh
+
+          echo "Start Blockchain Error flow"
+          . ./scripts/local/flow/start-payment-flow-error-blockchain.sh
+
+          echo "Start Stripe Error flow"
+          . ./scripts/local/flow/start-payment-flow-error-stripe.sh
+
+          echo "Stop infrustracture"
+          . ./scripts/common/stop-infrastructure.sh
+      - name: Slack Notification Success
+        if: ${{ success() }}
+        uses: rtCamp/action-slack-notify@v2
+        env:
+          SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
+          SLACK_CHANNEL: e2e-test-results
+          SLACK_COLOR: "#00FF00"
+          SLACK_MESSAGE: 'Run e2e Davinci tests with params:
+          STRIPE_SERVICE_VERSION="${{ env.STRIPE_SERVICE_VERSION }}",
+          FIAT_TO_NFT_SERVICE_VERSION="${{ env.FIAT_TO_NFT_SERVICE_VERSION }}",
+          FREEPORT_SC_NFT_VERSION="${{ env.FREEPORT_SC_NFT_VERSION }}"'
+          SLACK_TITLE: 'Test Results for "${{github.repository}}"'
+          SLACK_USERNAME: e2e-davinci-tests-bot
+      - name: Slack Notification Failure
+        if: ${{ failure() }}
+        uses: rtCamp/action-slack-notify@v2
+        env:
+          SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
+          SLACK_CHANNEL: e2e-test-results
+          SLACK_LINK_NAMES: true
+          SLACK_COLOR: "#FF0000"
+          SLACK_MESSAGE: 'Run e2e Davinci tests with params:
+          STRIPE_SERVICE_VERSION="${{ env.STRIPE_SERVICE_VERSION }}",
+          FIAT_TO_NFT_SERVICE_VERSION="${{ env.FIAT_TO_NFT_SERVICE_VERSION }}",
+          FREEPORT_SC_NFT_VERSION="${{ env.FREEPORT_SC_NFT_VERSION }}". Responsible persons: <@UM0FVG0CD>, <@U73DXE8D8>, <@U01UG95HTM1>.'
+          SLACK_TITLE: 'Test Results for "${{github.repository}}"'
+          SLACK_USERNAME: e2e-davinci-tests-bot
