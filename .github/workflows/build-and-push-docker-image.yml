@@ -2,7 +2,7 @@ name: Build and push image to ECR
 on:
   push:
     branches:
-      - master
+      - feature/updateWorkflowWithE2ETests
 
 env:
   ECR_REPOSITORY: crb-davinci-nft-test
