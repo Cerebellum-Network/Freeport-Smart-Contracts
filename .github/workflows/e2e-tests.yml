@@ -60,7 +60,7 @@ jobs:
           context: ./freeport-smart-contracts
           file: ./freeport-smart-contracts/Dockerfile.runtime
           push: false
-          no-cache: true
+          no-cache: false
           tags: ${{ env.ECR_REGISTRY }}/${{ env.ECR_REPOSITORY }}:${{ env.FREEPORT_SC_NFT_VERSION }}
       - name: Checkout e2e tests
         uses: actions/checkout@v2
