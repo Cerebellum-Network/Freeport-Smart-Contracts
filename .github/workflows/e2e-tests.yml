@@ -1,7 +1,7 @@
 name: 'Run e2e tests'
 
 on:
-  pull_request:
+  workflow_call:
 
 env:
   STRIPE_SERVICE_VERSION: latest
