@@ -6,13 +6,10 @@ on:
 
 env:
   ECR_REPOSITORY: crb-davinci-nft-test
-  IMAGE_TAG: ${{ github.sha }}
 jobs:
-  build-and-push:
+  build-image:
     runs-on: ubuntu-18.04
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v1
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v1
         with:
@@ -22,7 +19,12 @@ jobs:
       - name: Login to Amazon ECR
         id: login-ecr
         uses: aws-actions/amazon-ecr-login@v1
+      - name: Checkout code base
+        uses: actions/checkout@v2
+        with:
+          path: freeport-smart-contracts
       - name: Build and push image
+        working-directory: ./freeport-smart-contracts
         env:
           ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
         run: |
@@ -35,26 +37,9 @@ jobs:
           sudo ./run-ganache-deploy-copy-artifacts.sh
 
           echo "Build ganance with snapshot version of deployed contract"
-          sudo docker build -f Dockerfile.runtime -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
-          echo "::set-output name=image::$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG"
-          docker image tag $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG $ECR_REGISTRY/$ECR_REPOSITORY:latest
+          sudo docker build -f Dockerfile.runtime -t $ECR_REGISTRY/$ECR_REPOSITORY:latest .
+          echo "::set-output name=image::$ECR_REGISTRY/$ECR_REPOSITORY:latest"
 
           echo "Push to docker registry"
-          docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
           docker push $ECR_REGISTRY/$ECR_REPOSITORY:latest
-          echo "::set-output name=image::$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG"
-
-  trigger:
-    needs: build-and-push
-    strategy:
-      matrix:
-        repo: ['Cerebellum-Network/e2e-tests']
-    runs-on: ubuntu-latest
-    steps:
-      - name: Trigger Cerebellum-Network/e2e-tests repository
-        uses: peter-evans/repository-dispatch@v1
-        with:
-          token: ${{ secrets.TRIGGER_GITHUB_TOKEN }}
-          repository: ${{ matrix.repo }}
-          event-type: DAVINCI_NFT_VERSION_TRIGGER
-          client-payload: '{"DAVINCI_NFT_VERSION": "${{ github.sha }}"}'
+          echo "::set-output name=image::$ECR_REGISTRY/$ECR_REPOSITORY:latest"
