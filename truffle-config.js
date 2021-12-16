@@ -71,15 +71,16 @@ module.exports = {
         mnemonic: {
           phrase: mnemonic
         },
-        providerOrUrl:  `https://rpc-mainnet.maticvigil.com`,
+        providerOrUrl:  `https://polygon-rpc.com`,
         chainId: 137
       }),
       network_id: 137,
       confirmations: 2,
+      deploymentPollingInterval: 30e3,
       timeoutBlocks: 200,
-      skipDryRun: true,
+      skipDryRun: false,
       chainId: 137,
-      gasPrice: 1e9,
+      gasPrice: 36e9,
     }
   },
 
