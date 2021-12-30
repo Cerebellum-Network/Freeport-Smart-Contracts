@@ -1,8 +1,11 @@
-const Freeport = artifacts.require("./Freeport.sol");
+const Freeport = artifacts.require("Freeport");
 const Forwarder = artifacts.require("MinimalForwarder");
 const FiatGateway = artifacts.require("FiatGateway");
+const ERC20Adapter = artifacts.require("ERC20Adapter");
+const Tether = artifacts.require("Tether");
 const log = console.log;
-const {expectEvent, expectRevert, constants} = require('@openzeppelin/test-helpers');
+const { expectEvent, expectRevert, constants } = require('@openzeppelin/test-helpers');
+const { web3 } = require('@openzeppelin/test-helpers/src/setup');
 const BN = require('bn.js');
 
 
@@ -14,7 +17,7 @@ contract("Freeport", accounts => {
     const buyer2 = accounts[4];
     const relayer = accounts[5];
     const someone = accounts[6];
-
+    const buyer3 = accounts[7];
 
     it("issues unique NFT IDs.", async () => {
         const freeport = await Freeport.deployed();
@@ -31,7 +34,7 @@ contract("Freeport", accounts => {
 
             // Predict NFT ID using the getter, or simulating the issuance.
             let nftId = await freeport.getNftId.call(issuer, i, supply);
-            let nftId2 = await freeport.issue.call(supply, "0x", {from: issuer});
+            let nftId2 = await freeport.issue.call(supply, "0x", { from: issuer });
             assert.equal("0x" + nftId.toString(16), expectedId);
             assert.equal("0x" + nftId2.toString(16), expectedId);
 
@@ -40,7 +43,7 @@ contract("Freeport", accounts => {
             assert.equal(balance, 0);
 
             // Issue.
-            await freeport.issue(supply, "0x", {from: issuer});
+            await freeport.issue(supply, "0x", { from: issuer });
 
             // Balance should be supply
             balance = await freeport.balanceOf(issuer, expectedId);
@@ -68,12 +71,12 @@ contract("Freeport", accounts => {
 
         // Some account cannot deposit.
         await expectRevert(
-            freeport.deposit(someone, encodedAmount, {from: relayer}),
+            freeport.deposit(someone, encodedAmount, { from: relayer }),
             "Only the ChainManager is allowed to deposit");
 
         // Some account cannot set the relayer.
         await expectRevert(
-            freeport.updateChildChainManager(relayer, {from: relayer}),
+            freeport.updateChildChainManager(relayer, { from: relayer }),
             "Only the current ChainManager is allowed to change the ChainManager.");
 
         // The initial childChainManagerProxy is the deployer.
@@ -81,7 +84,7 @@ contract("Freeport", accounts => {
         assert.equal(childChainManagerProxy, deployer);
 
         // The deployer sets the relayer.
-        await freeport.updateChildChainManager(relayer, {from: deployer});
+        await freeport.updateChildChainManager(relayer, { from: deployer });
 
         // The new childChainManagerProxy is the relayer.
         childChainManagerProxy = await freeport.childChainManagerProxy.call();
@@ -89,16 +92,16 @@ contract("Freeport", accounts => {
 
         // The deployer cannot deposit anymore.
         await expectRevert(
-            freeport.deposit(someone, encodedAmount, {from: deployer}),
+            freeport.deposit(someone, encodedAmount, { from: deployer }),
             "Only the ChainManager is allowed to deposit");
 
         // The deployer cannot set the relayer anymore.
         await expectRevert(
-            freeport.updateChildChainManager(deployer, {from: deployer}),
+            freeport.updateChildChainManager(deployer, { from: deployer }),
             "Only the current ChainManager is allowed to change the ChainManager.");
 
         // The relayer deposits to someone’s account from the bridge.
-        await freeport.deposit(someone, encodedAmount, {from: relayer});
+        await freeport.deposit(someone, encodedAmount, { from: relayer });
 
         // Someone got the deposit, taken from the bridge supply.
         let someoneBalance = await freeport.balanceOf.call(someone, CURRENCY);
@@ -108,11 +111,11 @@ contract("Freeport", accounts => {
 
         // Someone cannot withdraw more than what they have.
         await expectRevert(
-            freeport.withdraw(amount + 1, {from: someone}),
+            freeport.withdraw(amount + 1, { from: someone }),
             "ERC1155: insufficient balance for transfer");
 
         // Someone withdraws back into the bridge.
-        let receipt = await freeport.withdraw(amount, {from: someone});
+        let receipt = await freeport.withdraw(amount, { from: someone });
 
         expectEvent(receipt, 'Transfer', {
             from: someone,
@@ -160,8 +163,8 @@ contract("Freeport", accounts => {
         log();
 
         let nftSupply = 10;
-        let nftId = await freeport.issue.call(nftSupply, "0x", {from: issuer});
-        await freeport.issue(nftSupply, "0x", {from: issuer});
+        let nftId = await freeport.issue.call(nftSupply, "0x", { from: issuer });
+        await freeport.issue(nftSupply, "0x", { from: issuer });
         let nftBalance = await freeport.balanceOf.call(issuer, nftId);
         assert.equal(nftBalance, nftSupply, "NFTs should be minted to the issuer");
         log("’Issuer’ creates", nftSupply, "NFTs of type", nftId.toString(16));
@@ -170,7 +173,7 @@ contract("Freeport", accounts => {
         let owners = [issuer, partner];
         let fractions = [9000, 1000];
         let account = await freeport.makeAddressOfJointAccount.call(owners, fractions);
-        await freeport.createJointAccount(owners, fractions, {from: issuer});
+        await freeport.createJointAccount(owners, fractions, { from: issuer });
         log("’Issuer’ creates a Joint Account:", account);
         log("..........................’Issuer’ gets:", fractions[0] * 100 / BASIS_POINTS, "%");
         log(".........................’Partner’ gets:", fractions[1] * 100 / BASIS_POINTS, "%");
@@ -184,25 +187,25 @@ contract("Freeport", accounts => {
             account,
             /* secondaryCut */ 0,
             /* secondaryMinimum */ 50 * UNIT,
-            {from: issuer});
+            { from: issuer });
         log("’Issuer’ configures royalties for this NFT type");
         {
-            let {primaryMinimum, secondaryMinimum} = await freeport.getRoyaltiesForBeneficiary.call(nftId, account);
+            let { primaryMinimum, secondaryMinimum } = await freeport.getRoyaltiesForBeneficiary.call(nftId, account);
             log("Royalties per transfer (primary/secondary):", +primaryMinimum / UNIT, +secondaryMinimum / UNIT, "CERE");
         }
         {
-            let {primaryMinimum, secondaryMinimum} = await freeport.getRoyaltiesForBeneficiary.call(nftId, issuer);
+            let { primaryMinimum, secondaryMinimum } = await freeport.getRoyaltiesForBeneficiary.call(nftId, issuer);
             log("..............................for ’Issuer’:", +primaryMinimum / UNIT, +secondaryMinimum / UNIT, "CERE");
         }
         {
-            let {primaryMinimum, secondaryMinimum} = await freeport.getRoyaltiesForBeneficiary.call(nftId, partner);
+            let { primaryMinimum, secondaryMinimum } = await freeport.getRoyaltiesForBeneficiary.call(nftId, partner);
             log(".............................for ’Partner’:", +primaryMinimum / UNIT, +secondaryMinimum / UNIT, "CERE");
         }
         log();
 
-        await freeport.safeTransferFrom(issuer, buyer, nftId, 3, "0x", {from: issuer});
+        await freeport.safeTransferFrom(issuer, buyer, nftId, 3, "0x", { from: issuer });
         let primaryEarnings = 100 * 3 * UNIT;
-        await freeport.safeTransferFrom(buyer, buyer2, nftId, 2, "0x", {from: buyer});
+        await freeport.safeTransferFrom(buyer, buyer2, nftId, 2, "0x", { from: buyer });
         let secondaryEarnings = 50 * 2 * UNIT;
         log("Primary transfer from ’Issuer’ to ’Buyer’:  ", 3, "NFTs");
         log("Secondary transfer from ’Buyer’ to ’Buyer2’:", 2, "NFTs");
@@ -261,8 +264,8 @@ contract("Freeport", accounts => {
         }
 
         let nftSupply = 1;
-        let nftId = await freeport.issue.call(nftSupply, "0x", {from: issuer});
-        await freeport.issue(nftSupply, "0x", {from: issuer});
+        let nftId = await freeport.issue.call(nftSupply, "0x", { from: issuer });
+        await freeport.issue(nftSupply, "0x", { from: issuer });
         let nftBalance = await freeport.balanceOf.call(issuer, nftId);
         assert.equal(nftBalance, nftSupply, "NFTs should be minted to the issuer");
         log("’Issuer’ creates", nftSupply, "NFTs of type", nftId.toString(16));
@@ -276,13 +279,13 @@ contract("Freeport", accounts => {
             someone,
             /* secondaryCut 5% */ 5 * 100,
             /* secondaryMinimum */ 2 * UNIT,
-            {from: issuer});
+            { from: issuer });
         log("’Issuer’ configures royalties for this NFT type");
 
 
         // Primary sale.
         let price1 = 200 * UNIT;
-        await freeport.makeOffer(nftId, price1, {from: issuer});
+        await freeport.makeOffer(nftId, price1, { from: issuer });
 
         // Check offer.
         let offer1 = await freeport.getOffer(issuer, nftId);
@@ -290,18 +293,18 @@ contract("Freeport", accounts => {
 
         // Cannot take an offer that does not exist (wrong price).
         await expectRevert.unspecified(
-            freeport.takeOffer(buyer, issuer, nftId, price1 - 1, 1, {from: buyer}));
+            freeport.takeOffer(buyer, issuer, nftId, price1 - 1, 1, { from: buyer }));
 
-        await freeport.takeOffer(buyer, issuer, nftId, price1, 1, {from: buyer});
+        await freeport.takeOffer(buyer, issuer, nftId, price1, 1, { from: buyer });
 
         // Cannot take the offer again.
         await expectRevert.unspecified(
-            freeport.takeOffer(buyer, issuer, nftId, price1, 1, {from: buyer}));
+            freeport.takeOffer(buyer, issuer, nftId, price1, 1, { from: buyer }));
 
         // Secondary sale.
         let price2 = 300 * UNIT;
-        await freeport.makeOffer(nftId, price2, {from: buyer});
-        await freeport.takeOffer(buyer2, buyer, nftId, price2, 1, {from: buyer2});
+        await freeport.makeOffer(nftId, price2, { from: buyer });
+        await freeport.takeOffer(buyer2, buyer, nftId, price2, 1, { from: buyer2 });
 
         let partnerFee = price1 * 10 / 100; // Primary royalty on initial price.
         let someoneFee = price2 * 5 / 100; // Secondary royalty on a resale price.
@@ -340,8 +343,8 @@ contract("Freeport", accounts => {
         const freeport = await Freeport.deployed();
 
         // Issue an NFT.
-        let nftId = await freeport.issue.call(1, "0x", {from: issuer});
-        await freeport.issue(1, "0x", {from: issuer});
+        let nftId = await freeport.issue.call(1, "0x", { from: issuer });
+        await freeport.issue(1, "0x", { from: issuer });
 
         // Give the role full operator to a partner account.
         // In reality "partner" should be a smart contract, for instance for a marketplace or a meta-transaction service.
@@ -350,7 +353,7 @@ contract("Freeport", accounts => {
         await freeport.grantRole(TRANSFER_OPERATOR, partner);
 
         // The full operator can transfer.
-        await freeport.safeTransferFrom(issuer, someone, nftId, 1, "0x", {from: partner});
+        await freeport.safeTransferFrom(issuer, someone, nftId, 1, "0x", { from: partner });
 
         let balance = await freeport.balanceOf.call(someone, nftId);
         assert.equal(balance, 1);
@@ -361,10 +364,10 @@ contract("Freeport", accounts => {
         const freeport = await Freeport.deployed();
 
         // Issue an NFT with royalties.
-        let nftId = await freeport.issue.call(1, "0x", {from: issuer});
-        await freeport.issue(1, "0x", {from: issuer});
+        let nftId = await freeport.issue.call(1, "0x", { from: issuer });
+        await freeport.issue(1, "0x", { from: issuer });
         await freeport.configureRoyalties(
-            nftId, issuer, 1, 1, issuer, 1, 1, {from: issuer});
+            nftId, issuer, 1, 1, issuer, 1, 1, { from: issuer });
 
         // Seller has no currency, he cannot pay royalties.
         const CURRENCY = await freeport.CURRENCY.call();
@@ -373,7 +376,7 @@ contract("Freeport", accounts => {
 
         // Transfer fails because royalties are not paid.
         await expectRevert(
-            freeport.safeTransferFrom(issuer, someone, nftId, 1, "0x", {from: issuer}),
+            freeport.safeTransferFrom(issuer, someone, nftId, 1, "0x", { from: issuer }),
             "ERC1155: insufficient balance for transfer");
 
         // Give the role to bypass royalties to the sender.
@@ -381,7 +384,7 @@ contract("Freeport", accounts => {
         await freeport.grantRole(BYPASS_SENDER, issuer);
 
         // Now the transfer will work because there are no royalties or currency needed.
-        await freeport.safeTransferFrom(issuer, someone, nftId, 1, "0x", {from: issuer});
+        await freeport.safeTransferFrom(issuer, someone, nftId, 1, "0x", { from: issuer });
 
         balance = await freeport.balanceOf.call(someone, nftId);
         assert.equal(balance, 1);
@@ -441,7 +444,7 @@ contract("Freeport", accounts => {
         assert.equal(balance, liquidities - priceCere);
 
         // Send back the tokens to clean up.
-        await freeport.safeTransferFrom(buyer, deployer, CURRENCY, priceCere, "0x", {from: buyer});
+        await freeport.safeTransferFrom(buyer, deployer, CURRENCY, priceCere, "0x", { from: buyer });
     });
 
     it("buys an NFT from USD", async () => {
@@ -451,12 +454,12 @@ contract("Freeport", accounts => {
         const UNIT = 1e10;
 
         // Issue an NFT.
-        let nftId = await freeport.issue.call(10, "0x", {from: issuer});
-        await freeport.issue(10, "0x", {from: issuer});
+        let nftId = await freeport.issue.call(10, "0x", { from: issuer });
+        await freeport.issue(10, "0x", { from: issuer });
 
         // Offer to sell.
         let priceCere = 200 * UNIT;
-        await freeport.makeOffer(nftId, priceCere, {from: issuer});
+        await freeport.makeOffer(nftId, priceCere, { from: issuer });
 
         // Top up FiatGateway with CERE.
         let liquidities = 1000 * UNIT;
@@ -495,6 +498,22 @@ contract("Freeport", accounts => {
 
         // Send back the tokens to clean up.
         await gateway.withdraw();
-        await freeport.safeTransferFrom(issuer, deployer, CURRENCY, priceCere, "0x", {from: issuer});
+        await freeport.safeTransferFrom(issuer, deployer, CURRENCY, priceCere, "0x", { from: issuer });
+    });
+
+    it("exchange usdc into internal currency", async () => {
+        const tetherInstance = await Tether.new(39828710009);
+        const ercAdapter = await ERC20Adapter.new(tetherInstance.address);
+
+        await tetherInstance.approve(buyer3, 5000000000, { from: buyer3 });
+        const buyer3Balance = await web3.eth.getBalance(buyer3);
+        log("DECIMALS >>>> ", await tetherInstance.decimals());
+        log("ALLOWANCE >>>> ", await tetherInstance.allowance(buyer3, buyer3));
+        log("BUYER 3 BALANCE >>>> ", buyer3Balance);
+        
+        await ercAdapter.depositERC20(100000, { from: buyer3 });
+        await ercAdapter.withdrawERC20(5000, { from: buyer3 });
+        const finalBalance = await web3.eth.getBalance(buyer3);
+        log("INIT, FINAL >>>> ", initBalance, finalBalance);
     });
 });
