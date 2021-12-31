@@ -6,13 +6,8 @@ import "./BaseNFT.sol";
 */
 abstract contract Currency is BaseNFT {
 
-    /** The token ID that represents the CERE currency for all payments in this contract. */
+    /** The token ID that represents the internal currency for all payments in this contract. */
     uint256 public constant CURRENCY = 0;
-
-    /** The global supply of CERE tokens on all chains.
-     * That is 10 billion tokens, with 10 decimals.
-     */
-    uint256 public constant CURRENCY_SUPPLY = 10e9 * 1e10;
 
     function _forceTransferCurrency(
         address from,

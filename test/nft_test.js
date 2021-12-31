@@ -1,6 +1,7 @@
-const Freeport = artifacts.require("./Freeport.sol");
+const Freeport = artifacts.require("Freeport");
 const Forwarder = artifacts.require("MinimalForwarder");
 const FiatGateway = artifacts.require("FiatGateway");
+const TestERC20 = artifacts.require("TestERC20");
 const log = console.log;
 const {expectEvent, expectRevert, constants} = require('@openzeppelin/test-helpers');
 const BN = require('bn.js');
@@ -496,5 +497,29 @@ contract("Freeport", accounts => {
         // Send back the tokens to clean up.
         await gateway.withdraw();
         await freeport.safeTransferFrom(issuer, deployer, CURRENCY, priceCere, "0x", {from: issuer});
+    });
+
+    it.only("exchange ERC20 into internal currency", async () => {
+        const erc20 = await TestERC20.new();
+        const freeport = await Freeport.new();
+        const CURRENCY = await freeport.CURRENCY.call();
+
+        await freeport.setERC20(erc20.address);
+        await erc20.mint(buyer, 100);
+
+        await erc20.approve(freeport.address, 100, { from: buyer });
+        await freeport.deposit(100, { from: buyer });
+
+        let balanceERC = await erc20.balanceOf(buyer);
+        let balanceFP = await freeport.balanceOf(buyer, CURRENCY);
+        assert.equal(balanceERC, 0);
+        assert.equal(balanceFP, 100);
+
+        await freeport.withdraw(60, { from: buyer });
+
+        balanceERC = await erc20.balanceOf(buyer);
+        balanceFP = await freeport.balanceOf(buyer, CURRENCY);
+        assert.equal(balanceERC, 60);
+        assert.equal(balanceFP, 40);
     });
 });
