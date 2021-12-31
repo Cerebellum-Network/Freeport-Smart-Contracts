@@ -1,5 +1,6 @@
 const Freeport = artifacts.require("./Freeport.sol");
 const SimpleAuction = artifacts.require("SimpleAuction");
+const TestERC20 = artifacts.require("TestERC20");
 const log = console.log;
 const {expectEvent, expectRevert, constants, time} = require('@openzeppelin/test-helpers');
 const BN = require('bn.js');
@@ -7,19 +8,50 @@ const BN = require('bn.js');
 contract("SimpleAuction", accounts => {
     const [deployer, issuer, buyerBob, buyerBill, benificiary] = accounts;
 
+    const CURRENCY = 0;
+    const UNIT = 1e10;
+
+    let deploy = async (freeport) => {
+        let erc20 = await TestERC20.new();
+        if (!freeport) {
+            freeport = await Freeport.new();
+        }
+        await freeport.setERC20(erc20.address);
+
+        let aLot = 100e3 * UNIT;
+        await erc20.mint(deployer, aLot);
+        await erc20.approve(freeport.address, aLot);
+        await freeport.deposit(aLot);
+
+        let deposit = async (account, amount) => {
+            await freeport.safeTransferFrom(deployer, account, CURRENCY, amount, "0x");
+        };
+
+        return {freeport, erc20, deposit};
+    };
+
+    let freeport;
+    let erc20;
+    let deposit;
+
+    before(async () => {
+        let freeportOfMigrations = await Freeport.deployed();
+        let x = await deploy(freeportOfMigrations);
+        freeport = x.freeport;
+        erc20 = x.erc20;
+        deposit = x.deposit;
+    });
+
+
     it("sells an NFT by auction", async () => {
 
-        const freeport = await Freeport.deployed();
         const auction = await SimpleAuction.deployed();
-        const CURRENCY = await freeport.CURRENCY.call();
-        const UNIT = 1e10;
         const PERCENT = 100; // 1% in basis points.
 
         // Give some initial tokens to the buyers.
         let someMoney = 1000;
-        let encodedMoney = web3.eth.abi.encodeParameter('uint256', someMoney * UNIT);
-        await freeport.deposit(buyerBob, encodedMoney);
-        await freeport.deposit(buyerBill, encodedMoney);
+        await deposit(buyerBob, someMoney * UNIT);
+        await deposit(buyerBill, someMoney * UNIT);
 
         let nftSupply = 10;
         let nftId = await freeport.issue.call(nftSupply, "0x", {from: issuer});
@@ -105,7 +137,6 @@ contract("SimpleAuction", accounts => {
             [buyerBob, someMoney, 0], // No change, BuyerBob got his refund.
             [auction.address, 0, 0], // No change, the contract gave back all deposits.
             [benificiary, 11, 0], // The beneficiary earned 10% of 110.
-            [deployer, 0, 0], // No change.
         ]);
 
         // Cannot settle twice.

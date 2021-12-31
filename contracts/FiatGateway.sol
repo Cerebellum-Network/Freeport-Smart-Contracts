@@ -2,6 +2,7 @@ pragma solidity ^0.8.0;
 
 import "./access/AccessControl.sol";
 import "./Freeport.sol";
+import "./token/ERC1155/utils/ERC1155Holder.sol";
 
 /** The FiatGateway contract allows buying NFTs from an external fiat payment.
   *
@@ -12,7 +13,15 @@ import "./Freeport.sol";
   *
   * This contract is operational only when the exchange rate is set to a non-zero value.
  */
-contract FiatGateway is AccessControl {
+contract FiatGateway is AccessControl, ERC1155Holder {
+
+    /** Supports interfaces of AccessControl and ERC1155Receiver.
+     */
+    function supportsInterface(bytes4 interfaceId)
+    public view virtual override(AccessControl, ERC1155Receiver) returns (bool) {
+        return AccessControl.supportsInterface(interfaceId)
+        || ERC1155Receiver.supportsInterface(interfaceId);
+    }
 
     bytes32 public constant EXCHANGE_RATE_ORACLE = keccak256("EXCHANGE_RATE_ORACLE");
     bytes32 public constant PAYMENT_SERVICE = keccak256("PAYMENT_SERVICE");
