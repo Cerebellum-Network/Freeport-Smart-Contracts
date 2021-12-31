@@ -502,18 +502,16 @@ contract("Freeport", accounts => {
     });
 
     it("exchange usdc into internal currency", async () => {
-        const tetherInstance = await Tether.new(39828710009);
+        const tetherInstance = await Tether.new(1000);
         const ercAdapter = await ERC20Adapter.new(tetherInstance.address);
-
-        await tetherInstance.approve(buyer3, 5000000000, { from: buyer3 });
-        const buyer3Balance = await web3.eth.getBalance(buyer3);
-        log("DECIMALS >>>> ", await tetherInstance.decimals());
-        log("ALLOWANCE >>>> ", await tetherInstance.allowance(buyer3, buyer3));
-        log("BUYER 3 BALANCE >>>> ", buyer3Balance);
+        await tetherInstance.buy(buyer3, { from: deployer, value: 50000000 });
+        log("BUYER TETHER BALANCE >>>> ", await tetherInstance.balanceOf(buyer3));
+        await tetherInstance.approve(buyer3, 40000000, { from: buyer3 });
+        log("ALLOWANCE >>>> ",    await tetherInstance.allowance(buyer3, buyer3));
+        log("TOTAL SUPPLY >>>> ", await tetherInstance.totalSupply());
         
-        await ercAdapter.depositERC20(100000, { from: buyer3 });
-        await ercAdapter.withdrawERC20(5000, { from: buyer3 });
-        const finalBalance = await web3.eth.getBalance(buyer3);
-        log("INIT, FINAL >>>> ", initBalance, finalBalance);
+        await ercAdapter.depositERC20(10000, { from: buyer3 });
+        await ercAdapter.withdrawERC20(500, { from: buyer3 });
+        log("FINAL >>>> ", await web3.eth.getBalance(buyer3));
     });
 });
