@@ -10,6 +10,12 @@ See the [documentation](docs/Freeport.md) (regenerate with `npm run doc`).
 
 ## Releases
 
+### 2021-12-31: Mainnet deployment
+
+Commit d328286a on Polygon mainnet.
+
+Contracts [Freeport](https://polygonscan.com/address/0x521296be238B164b9A391b6F6175741826CB5F33).
+
 ### 2021-11-08: CID Attachments
 
 - Attach arbitrary objects to NFTs.
