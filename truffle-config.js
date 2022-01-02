@@ -63,7 +63,8 @@ module.exports = {
       timeoutBlocks: 200,
       skipDryRun: true,
       chainId: 80001,
-      gasPrice: 1e9,
+      gas: 2e6,
+      gasPrice: 10e9,
     },
     //polygon mainnet
     polygon_mainnet: {
@@ -80,7 +81,8 @@ module.exports = {
       timeoutBlocks: 200,
       skipDryRun: false,
       chainId: 137,
-      gasPrice: 36e9,
+      gas: 2e6,
+      gasPrice: 80e9,
     }
   },
 

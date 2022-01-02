@@ -14,7 +14,12 @@ See the [documentation](docs/Freeport.md) (regenerate with `npm run doc`).
 
 Commit d328286a on Polygon mainnet.
 
-Contracts [Freeport](https://polygonscan.com/address/0x521296be238B164b9A391b6F6175741826CB5F33).
+Contracts [Freeport](https://polygonscan.com/address/0x521296be238B164b9A391b6F6175741826CB5F33) and
+[Fiat Gateway](https://polygonscan.com/address/0xf6d782Cd0dC9976170242B94C8E653C7bA489634) and [Simple Auction](https://polygonscan.com/address/0xd26d11faceA9798B3be6C8a42803eb31204DA790) and [NFT Attachment](https://polygonscan.com/address/0x147595af3de969a64f3Fb8A3ACC505325EBE1334) and [Forwarder](https://polygonscan.com/address/0x5e43bA1666B13C346E2ECdeD9dcDaaf02fbb0B22) and [Bypass Forwarder](https://polygonscan.com/address/0x1E77956B211cb4437317CF692141b292B1433f29).
+
+No ERC20 connection yet.
+No Fiat Service Account deployed yet.
+No Meta-tx Relayer Account yet.
 
 ### 2021-11-08: CID Attachments
 
