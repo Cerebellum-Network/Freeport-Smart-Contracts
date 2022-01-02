@@ -13,11 +13,12 @@ contract("Freeport", accounts => {
     const partner = accounts[2];
     const buyer = accounts[3];
     const buyer2 = accounts[4];
-    const relayer = accounts[5];
+    const fiatService = accounts[5];
     const someone = accounts[6];
 
     const CURRENCY = 0;
     const UNIT = 1e10;
+    const aLot = 100e3 * UNIT;
 
     let deploy = async (freeport) => {
         let erc20 = await TestERC20.new();
@@ -26,7 +27,6 @@ contract("Freeport", accounts => {
         }
         await freeport.setERC20(erc20.address);
 
-        let aLot = 100e3 * UNIT;
         await erc20.mint(deployer, aLot);
         await erc20.approve(freeport.address, aLot);
         await freeport.deposit(aLot);
@@ -320,9 +320,14 @@ contract("Freeport", accounts => {
         assert.equal(balance, 1);
     });
 
+    let setupFiatService = async (gateway) => {
+        const PAYMENT_SERVICE = await gateway.PAYMENT_SERVICE.call();
+        await gateway.grantRole(PAYMENT_SERVICE, fiatService);
+    };
+
     it("buys CERE from USD", async () => {
         const gateway = await FiatGateway.deployed();
-        const UNIT = 1e10;
+        await setupFiatService(gateway);
 
         let addressConfigured = await gateway.freeport.call();
         assert.equal(addressConfigured, freeport.address);
@@ -349,7 +354,15 @@ contract("Freeport", accounts => {
         await gateway.buyCereFromUsd(
             pricePennies,
             buyer,
-            0);
+            0,
+            {from: fiatService});
+
+        // Only the service account can do that.
+        await expectRevert.unspecified(gateway.buyCereFromUsd(
+            pricePennies,
+            buyer,
+            0,
+            {from: deployer}));
 
         // Check all balances.
         let balance = await freeport.balanceOf(gateway.address, CURRENCY);
@@ -377,6 +390,7 @@ contract("Freeport", accounts => {
 
     it("buys an NFT from USD", async () => {
         const gateway = await FiatGateway.deployed();
+        await setupFiatService(gateway);
 
         // Issue an NFT.
         let nftId = await freeport.issue.call(10, "0x", {from: issuer});
@@ -402,7 +416,18 @@ contract("Freeport", accounts => {
             issuer,
             nftId,
             priceCere,
-            0);
+            0,
+            {from: fiatService});
+
+        // Only the service account can do that.
+        await expectRevert.unspecified(gateway.buyNftFromUsd(
+            pricePennies,
+            buyer,
+            issuer,
+            nftId,
+            priceCere,
+            0,
+            {from: deployer}));
 
         // Check all balances.
         let balance = await freeport.balanceOf(gateway.address, CURRENCY);
@@ -428,10 +453,15 @@ contract("Freeport", accounts => {
     it("exchange ERC20 into internal currency", async () => {
         let {freeport, erc20, deposit} = await deploy();
 
+        let balanceERC = await erc20.balanceOf(deployer);
+        let balanceFP = await freeport.balanceOf(deployer, CURRENCY);
+        assert.equal(balanceERC, 0);
+        assert.equal(balanceFP, aLot);
+
         await deposit(buyer, 100);
 
-        let balanceERC = await erc20.balanceOf(buyer);
-        let balanceFP = await freeport.balanceOf(buyer, CURRENCY);
+        balanceERC = await erc20.balanceOf(buyer);
+        balanceFP = await freeport.balanceOf(buyer, CURRENCY);
         assert.equal(balanceERC, 0);
         assert.equal(balanceFP, 100);
 
@@ -441,5 +471,25 @@ contract("Freeport", accounts => {
         balanceFP = await freeport.balanceOf(buyer, CURRENCY);
         assert.equal(balanceERC, 60);
         assert.equal(balanceFP, 40);
+
+        // Cannot withdraw more than the balance.
+        await expectRevert(
+            freeport.withdraw(60, {from: buyer}),
+            "ERC1155: burn amount exceeds balance");
+    });
+
+    it("rejects deposits when ERC20 adapter is not configured", async () => {
+        let freeport = await Freeport.new();
+
+        await expectRevert(
+            freeport.deposit(100),
+            "revert"); // Call to 0 address.
+
+        await expectRevert(
+            freeport.withdraw(100),
+            "revert"); // Call to 0 address.
+
+        let balance = await freeport.balanceOf(deployer, CURRENCY);
+        assert.equal(balance, 0);
     });
 });
