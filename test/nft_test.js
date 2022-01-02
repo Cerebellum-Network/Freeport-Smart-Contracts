@@ -17,15 +17,19 @@ contract("Freeport", accounts => {
     const someone = accounts[6];
 
     const CURRENCY = 0;
-    const UNIT = 1e10;
+    const UNIT = 1e6;
     const aLot = 100e3 * UNIT;
 
     let deploy = async (freeport) => {
-        let erc20 = await TestERC20.new();
-        if (!freeport) {
+        let erc20;
+        if (freeport) {
+            let erc20address = await freeport.currencyContract.call();
+            erc20 = await TestERC20.at(erc20address);
+        } else {
             freeport = await Freeport.new();
+            erc20 = await TestERC20.new();
+            await freeport.setERC20(erc20.address);
         }
-        await freeport.setERC20(erc20.address);
 
         await erc20.mint(deployer, aLot);
         await erc20.approve(freeport.address, aLot);
@@ -85,7 +89,6 @@ contract("Freeport", accounts => {
     it("issues an NFT, create a Joint Account, collect royalties, distribute to JA.", async () => {
         log();
         const {freeport, deposit} = await deploy();
-        const UNIT = 1e10;
         let BASIS_POINTS = +await freeport.BASIS_POINTS.call();
         assert.equal(BASIS_POINTS, 100 * 100);
 
@@ -185,7 +188,6 @@ contract("Freeport", accounts => {
         log();
 
         const {freeport, deposit} = await deploy();
-        const UNIT = 1e10;
 
         let pocketMoney = 1000 * UNIT;
         await deposit(buyer, pocketMoney);
