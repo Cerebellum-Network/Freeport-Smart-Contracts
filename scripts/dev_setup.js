@@ -1,4 +1,5 @@
 const Freeport = artifacts.require("Freeport");
+const TestERC20 = artifacts.require("TestERC20");
 const FiatGateway = artifacts.require("FiatGateway");
 const log = console.log;
 
@@ -7,37 +8,45 @@ module.exports = async function (done) {
     // A fixed account for tests.
     let serviceAccount = "0xD2B94CBF0fFAA9bc07126ab53f980Cd95a5Ed243";
 
+    const CURRENCY = 0;
+    let tenM = "10" + "000" + "000" + "000000"; // 10M with 6 decimals;
+    let nineM = "9" + "000" + "000" + "000000"; // 9M with 6 decimals;
+    let hundredK = "100" + "000" + "000000";    // 100K with 6 decimals;
+
     let accounts = await web3.eth.getAccounts();
     let admin = accounts[0];
-    let freeport = await Freeport.deployed();
-    let gateway = await FiatGateway.deployed();
+    let freeport = await Freeport.at("0xC59Af7FbE4553e07aA668C1A13CAa78Cd4550579");
+    let erc20 = await TestERC20.at("0x4e5a86E128f8Fb652169f6652e2Cd17aAe409e96");
+    let gateway = await FiatGateway.at("0xE8949692827C3034c6fF185a38c192ca3059f6e5");
     log("Operating on Freeport contract", freeport.address);
+    log("Operating on TestERC20 contract", erc20.address);
     log("Operating on FiatGateway contract", gateway.address);
     log("From admin account", admin);
 
-    const PAYMENT_SERVICE = await gateway.PAYMENT_SERVICE.call();
-
-    log("Set an exchange rate of 0.1 token for $0.01");
-    await gateway.setExchangeRate(0.1e10);
+    log("Set an exchange rate of 1:1 (0.01 with 6 decimals of ERC20 for $0.01)");
+    await gateway.setExchangeRate(0.01e6);
 
     log("Give the permission to execute payments to the service account", serviceAccount);
+    const PAYMENT_SERVICE = await gateway.PAYMENT_SERVICE.call();
     await gateway.grantRole(PAYMENT_SERVICE, serviceAccount);
 
+    log("Mint and deposit some ERC20 to the admin account.");
+    await erc20.mint(admin, tenM);
+    await erc20.approve(freeport.address, tenM);
+    await freeport.deposit(tenM);
+
+    await freeport.safeTransferFrom(admin, gateway.address, CURRENCY, nineM, "0x");
+    log("Sent 9M of currency to FiatGateway");
+
     let devAccounts = [
-        gateway.address,
-        serviceAccount,
         "0x6d2b28389d3153689c57909829dFCf6241d36388", // Evgeny
         "0x1Bf6FCa28253A1257e4B5B3440F7fbE0c59D1546", // Sergey
         "0x51c5590504251A5993Ba6A46246f87Fa0eaE5897", // Aurel
-        "0xd1BA02B47986057Ca8d74b75705A8d1E1006D4f5", // Ruslan
     ];
 
-    let amount = "10" + "000" + "000" + "0000000000"; // 10M with 10 decimals;
-    let encodedAmount = web3.eth.abi.encodeParameter('uint256', amount);
-
     for (let devAccount of devAccounts) {
-        await freeport.deposit(devAccount, encodedAmount);
-        log("Sent 10M of currency to", devAccount);
+        await freeport.safeTransferFrom(admin, devAccount, CURRENCY, hundredK, "0x");
+        log("Sent 100k of currency to", devAccount);
     }
 
     done();

@@ -36,6 +36,7 @@ module.exports = {
         mnemonic: {
           phrase: mnemonic
         },
+        addressIndex: 1,
         providerOrUrl:
          "https://polygon-mumbai.infura.io/v3/" + infuraProjectId
       }),
@@ -52,6 +53,7 @@ module.exports = {
         mnemonic: {
           phrase: mnemonic
         },
+        addressIndex: 1,
         providerOrUrl:  `https://rpc-mumbai.maticvigil.com`,
         //providerOrUrl:  `https://rpc-mumbai.matic.today`,
         chainId: 80001,
@@ -63,8 +65,8 @@ module.exports = {
       timeoutBlocks: 200,
       skipDryRun: true,
       chainId: 80001,
-      gas: 2e6,
-      gasPrice: 10e9,
+      gas: 4e6,
+      gasPrice: 11e9,
     },
     //polygon mainnet
     polygon_mainnet: {
