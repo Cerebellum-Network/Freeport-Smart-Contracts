@@ -17,7 +17,7 @@ contract Freeport is /*
     BaseNFT,
     Currency,
     TransferOperator,
-    PolygonChildERC20,
+    ERC20Adapter,
     Issuance,
     JointAccounts,
     TransferFees,

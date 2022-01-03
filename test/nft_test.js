@@ -1,6 +1,7 @@
-const Freeport = artifacts.require("./Freeport.sol");
+const Freeport = artifacts.require("Freeport");
 const Forwarder = artifacts.require("MinimalForwarder");
 const FiatGateway = artifacts.require("FiatGateway");
+const TestERC20 = artifacts.require("TestERC20");
 const log = console.log;
 const {expectEvent, expectRevert, constants} = require('@openzeppelin/test-helpers');
 const BN = require('bn.js');
@@ -12,13 +13,49 @@ contract("Freeport", accounts => {
     const partner = accounts[2];
     const buyer = accounts[3];
     const buyer2 = accounts[4];
-    const relayer = accounts[5];
+    const fiatService = accounts[5];
     const someone = accounts[6];
+
+    const CURRENCY = 0;
+    const UNIT = 1e6;
+    const aLot = 100e3 * UNIT;
+
+    let deploy = async (freeport) => {
+        let erc20;
+        if (freeport) {
+            let erc20address = await freeport.currencyContract.call();
+            erc20 = await TestERC20.at(erc20address);
+        } else {
+            freeport = await Freeport.new();
+            erc20 = await TestERC20.new();
+            await freeport.setERC20(erc20.address);
+        }
+
+        await erc20.mint(deployer, aLot);
+        await erc20.approve(freeport.address, aLot);
+        await freeport.deposit(aLot);
+
+        let deposit = async (account, amount) => {
+            await freeport.safeTransferFrom(deployer, account, CURRENCY, amount, "0x");
+        };
+
+        return {freeport, erc20, deposit};
+    };
+
+    let freeport;
+    let erc20;
+    let deposit;
+
+    before(async () => {
+        let freeportOfMigrations = await Freeport.deployed();
+        let x = await deploy(freeportOfMigrations);
+        freeport = x.freeport;
+        erc20 = x.erc20;
+        deposit = x.deposit;
+    });
 
 
     it("issues unique NFT IDs.", async () => {
-        const freeport = await Freeport.deployed();
-
         let issuerLow = issuer.toLowerCase();
         const expectedIds = [
             [5, issuerLow + "000000000000000000000005"],
@@ -49,108 +86,15 @@ contract("Freeport", accounts => {
     });
 
 
-    it("deposits and withdraws from the bridge", async () => {
-        const freeport = await Freeport.new();
-        const CURRENCY = await freeport.CURRENCY.call();
-        const UNIT = 1e10;
-        let amount = 1000 * UNIT;
-        let encodedAmount = web3.eth.abi.encodeParameter('uint256', amount);
-
-        // Check initial supply in the bridge.
-        let currencySupply = await freeport.currencyInBridge.call();
-        assert.equal(currencySupply, 10e9 * UNIT); // 10 billions with 10 decimals.
-
-        // Everybody has 0 tokens.
-        for (let account of accounts) {
-            let balance = await freeport.balanceOf.call(account, CURRENCY);
-            assert.equal(balance, 0);
-        }
-
-        // Some account cannot deposit.
-        await expectRevert(
-            freeport.deposit(someone, encodedAmount, {from: relayer}),
-            "Only the ChainManager is allowed to deposit");
-
-        // Some account cannot set the relayer.
-        await expectRevert(
-            freeport.updateChildChainManager(relayer, {from: relayer}),
-            "Only the current ChainManager is allowed to change the ChainManager.");
-
-        // The initial childChainManagerProxy is the deployer.
-        let childChainManagerProxy = await freeport.childChainManagerProxy.call();
-        assert.equal(childChainManagerProxy, deployer);
-
-        // The deployer sets the relayer.
-        await freeport.updateChildChainManager(relayer, {from: deployer});
-
-        // The new childChainManagerProxy is the relayer.
-        childChainManagerProxy = await freeport.childChainManagerProxy.call();
-        assert.equal(childChainManagerProxy, relayer);
-
-        // The deployer cannot deposit anymore.
-        await expectRevert(
-            freeport.deposit(someone, encodedAmount, {from: deployer}),
-            "Only the ChainManager is allowed to deposit");
-
-        // The deployer cannot set the relayer anymore.
-        await expectRevert(
-            freeport.updateChildChainManager(deployer, {from: deployer}),
-            "Only the current ChainManager is allowed to change the ChainManager.");
-
-        // The relayer deposits to someone’s account from the bridge.
-        await freeport.deposit(someone, encodedAmount, {from: relayer});
-
-        // Someone got the deposit, taken from the bridge supply.
-        let someoneBalance = await freeport.balanceOf.call(someone, CURRENCY);
-        assert.equal(someoneBalance, amount);
-        let currencySupplyAfter = await freeport.currencyInBridge.call();
-        assert.equal(currencySupplyAfter, currencySupply - amount);
-
-        // Someone cannot withdraw more than what they have.
-        await expectRevert(
-            freeport.withdraw(amount + 1, {from: someone}),
-            "ERC1155: insufficient balance for transfer");
-
-        // Someone withdraws back into the bridge.
-        let receipt = await freeport.withdraw(amount, {from: someone});
-
-        expectEvent(receipt, 'Transfer', {
-            from: someone,
-            to: constants.ZERO_ADDRESS, // Must be 0 to be detected by the relayer.
-            value: new BN(amount),
-        });
-
-        expectEvent(receipt, 'TransferSingle', {
-            from: someone,
-            to: constants.ZERO_ADDRESS,
-            value: new BN(amount),
-            operator: someone,
-            id: CURRENCY,
-        });
-
-        // Tokens moved from someone to the bridge.
-        someoneBalance = await freeport.balanceOf.call(someone, CURRENCY);
-        assert.equal(someoneBalance, 0);
-        currencySupplyAfter = await freeport.currencyInBridge.call();
-        assert.equal(+currencySupplyAfter, +currencySupply);
-    });
-
-
     it("issues an NFT, create a Joint Account, collect royalties, distribute to JA.", async () => {
         log();
-        const freeport = await Freeport.new();
-        const CURRENCY = await freeport.CURRENCY.call();
-        const UNIT = 1e10;
+        const {freeport, deposit} = await deploy();
         let BASIS_POINTS = +await freeport.BASIS_POINTS.call();
         assert.equal(BASIS_POINTS, 100 * 100);
 
-        let currencySupply = await freeport.currencyInBridge.call();
-        log("Supply of currencies in the bridge:", +currencySupply / UNIT, "CERE");
-
         let pocketMoney = 1000 * UNIT;
-        let encodedMoney = web3.eth.abi.encodeParameter('uint256', pocketMoney);
-        await freeport.deposit(issuer, encodedMoney);
-        await freeport.deposit(buyer, encodedMoney);
+        await deposit(issuer, pocketMoney);
+        await deposit(buyer, pocketMoney);
         let issuerBalance = await freeport.balanceOf.call(issuer, CURRENCY);
         assert.equal(issuerBalance, pocketMoney);
         let buyerBalance = await freeport.balanceOf.call(buyer, CURRENCY);
@@ -243,14 +187,11 @@ contract("Freeport", accounts => {
     it("executes sales with variable royalties", async () => {
         log();
 
-        const freeport = await Freeport.new();
-        const CURRENCY = await freeport.CURRENCY.call();
-        const UNIT = 1e10;
+        const {freeport, deposit} = await deploy();
 
         let pocketMoney = 1000 * UNIT;
-        let encodedMoney = web3.eth.abi.encodeParameter('uint256', pocketMoney);
-        await freeport.deposit(buyer, encodedMoney);
-        await freeport.deposit(buyer2, encodedMoney);
+        await deposit(buyer, pocketMoney);
+        await deposit(buyer2, pocketMoney);
         log("Deposit", pocketMoney / UNIT, "CERE from the bridge to account ’Buyer’");
         log();
 
@@ -326,7 +267,6 @@ contract("Freeport", accounts => {
 
 
     it("accepts meta-transactions from the forwarder contract", async () => {
-        const freeport = await Freeport.deployed();
         const forwarder = await Forwarder.deployed();
 
         const META_TX_FORWARDER = await freeport.META_TX_FORWARDER.call();
@@ -337,8 +277,6 @@ contract("Freeport", accounts => {
 
 
     it("lets a marketplace or meta-transaction service make transfers.", async () => {
-        const freeport = await Freeport.deployed();
-
         // Issue an NFT.
         let nftId = await freeport.issue.call(1, "0x", {from: issuer});
         await freeport.issue(1, "0x", {from: issuer});
@@ -358,8 +296,6 @@ contract("Freeport", accounts => {
 
 
     it("bypasses royalties on transfers from a bypass sender.", async () => {
-        const freeport = await Freeport.deployed();
-
         // Issue an NFT with royalties.
         let nftId = await freeport.issue.call(1, "0x", {from: issuer});
         await freeport.issue(1, "0x", {from: issuer});
@@ -367,7 +303,6 @@ contract("Freeport", accounts => {
             nftId, issuer, 1, 1, issuer, 1, 1, {from: issuer});
 
         // Seller has no currency, he cannot pay royalties.
-        const CURRENCY = await freeport.CURRENCY.call();
         let balance = await freeport.balanceOf.call(issuer, CURRENCY);
         assert.equal(balance, 0);
 
@@ -387,19 +322,21 @@ contract("Freeport", accounts => {
         assert.equal(balance, 1);
     });
 
+    let setupFiatService = async (gateway) => {
+        const PAYMENT_SERVICE = await gateway.PAYMENT_SERVICE.call();
+        await gateway.grantRole(PAYMENT_SERVICE, fiatService);
+    };
+
     it("buys CERE from USD", async () => {
-        const freeport = await Freeport.deployed();
         const gateway = await FiatGateway.deployed();
-        const CURRENCY = await freeport.CURRENCY.call();
-        const UNIT = 1e10;
+        await setupFiatService(gateway);
 
         let addressConfigured = await gateway.freeport.call();
         assert.equal(addressConfigured, freeport.address);
 
         // Top up FiatGateway with CERE.
         let liquidities = 1000 * UNIT;
-        let encodedLiquidities = web3.eth.abi.encodeParameter('uint256', liquidities);
-        await freeport.deposit(gateway.address, encodedLiquidities);
+        await deposit(gateway.address, liquidities);
 
         // Set exchange rate.
         let cerePerPenny = 0.1 * UNIT;
@@ -419,7 +356,15 @@ contract("Freeport", accounts => {
         await gateway.buyCereFromUsd(
             pricePennies,
             buyer,
-            0);
+            0,
+            {from: fiatService});
+
+        // Only the service account can do that.
+        await expectRevert.unspecified(gateway.buyCereFromUsd(
+            pricePennies,
+            buyer,
+            0,
+            {from: deployer}));
 
         // Check all balances.
         let balance = await freeport.balanceOf(gateway.address, CURRENCY);
@@ -435,20 +380,19 @@ contract("Freeport", accounts => {
         assert.equal(balance, pricePennies);
 
         // Withdraw liquidities to the admin.
+        let initBalance = await freeport.balanceOf(deployer, CURRENCY);
         await gateway.withdraw();
 
         balance = await freeport.balanceOf(deployer, CURRENCY);
-        assert.equal(balance, liquidities - priceCere);
+        assert.equal(balance - initBalance, liquidities - priceCere);
 
         // Send back the tokens to clean up.
         await freeport.safeTransferFrom(buyer, deployer, CURRENCY, priceCere, "0x", {from: buyer});
     });
 
     it("buys an NFT from USD", async () => {
-        const freeport = await Freeport.deployed();
         const gateway = await FiatGateway.deployed();
-        const CURRENCY = await freeport.CURRENCY.call();
-        const UNIT = 1e10;
+        await setupFiatService(gateway);
 
         // Issue an NFT.
         let nftId = await freeport.issue.call(10, "0x", {from: issuer});
@@ -460,8 +404,7 @@ contract("Freeport", accounts => {
 
         // Top up FiatGateway with CERE.
         let liquidities = 1000 * UNIT;
-        let encodedLiquidities = web3.eth.abi.encodeParameter('uint256', liquidities);
-        await freeport.deposit(gateway.address, encodedLiquidities);
+        await deposit(gateway.address, liquidities);
 
         // Set exchange rate.
         let cerePerPenny = 0.1 * UNIT;
@@ -475,7 +418,18 @@ contract("Freeport", accounts => {
             issuer,
             nftId,
             priceCere,
-            0);
+            0,
+            {from: fiatService});
+
+        // Only the service account can do that.
+        await expectRevert.unspecified(gateway.buyNftFromUsd(
+            pricePennies,
+            buyer,
+            issuer,
+            nftId,
+            priceCere,
+            0,
+            {from: deployer}));
 
         // Check all balances.
         let balance = await freeport.balanceOf(gateway.address, CURRENCY);
@@ -496,5 +450,48 @@ contract("Freeport", accounts => {
         // Send back the tokens to clean up.
         await gateway.withdraw();
         await freeport.safeTransferFrom(issuer, deployer, CURRENCY, priceCere, "0x", {from: issuer});
+    });
+
+    it("exchange ERC20 into internal currency", async () => {
+        let {freeport, erc20, deposit} = await deploy();
+
+        let balanceERC = await erc20.balanceOf(deployer);
+        let balanceFP = await freeport.balanceOf(deployer, CURRENCY);
+        assert.equal(balanceERC, 0);
+        assert.equal(balanceFP, aLot);
+
+        await deposit(buyer, 100);
+
+        balanceERC = await erc20.balanceOf(buyer);
+        balanceFP = await freeport.balanceOf(buyer, CURRENCY);
+        assert.equal(balanceERC, 0);
+        assert.equal(balanceFP, 100);
+
+        await freeport.withdraw(60, {from: buyer});
+
+        balanceERC = await erc20.balanceOf(buyer);
+        balanceFP = await freeport.balanceOf(buyer, CURRENCY);
+        assert.equal(balanceERC, 60);
+        assert.equal(balanceFP, 40);
+
+        // Cannot withdraw more than the balance.
+        await expectRevert(
+            freeport.withdraw(60, {from: buyer}),
+            "ERC1155: burn amount exceeds balance");
+    });
+
+    it("rejects deposits when ERC20 adapter is not configured", async () => {
+        let freeport = await Freeport.new();
+
+        await expectRevert(
+            freeport.deposit(100),
+            "revert"); // Call to 0 address.
+
+        await expectRevert(
+            freeport.withdraw(100),
+            "revert"); // Call to 0 address.
+
+        let balance = await freeport.balanceOf(deployer, CURRENCY);
+        assert.equal(balance, 0);
     });
 });

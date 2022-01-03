@@ -10,6 +10,46 @@ See the [documentation](docs/Freeport.md) (regenerate with `npm run doc`).
 
 ## Releases
 
+### 2021-12-31: ERC20 Adapter
+
+Use an ERC20 adapter instead of a Polygon bridge adapter.
+Commit 66661145 deployed.
+
+#### Mainnet
+
+Contracts: [Freeport](https://polygonscan.com/address/0x521296be238B164b9A391b6F6175741826CB5F33) and
+[Fiat Gateway](https://polygonscan.com/address/0xf6d782Cd0dC9976170242B94C8E653C7bA489634) and [Simple Auction](https://polygonscan.com/address/0xd26d11faceA9798B3be6C8a42803eb31204DA790) and [NFT Attachment](https://polygonscan.com/address/0x147595af3de969a64f3Fb8A3ACC505325EBE1334) and [Forwarder](https://polygonscan.com/address/0x5e43bA1666B13C346E2ECdeD9dcDaaf02fbb0B22) and [Bypass Forwarder](https://polygonscan.com/address/0x1E77956B211cb4437317CF692141b292B1433f29).
+
+Accounts:
+No ERC20 connection yet.
+No Fiat Service Account deployed yet.
+No Meta-tx Relayer Account yet.
+[Admin](https://polygonscan.com/address/0x4d632f8513554d7647a326c1f4ca72caeff93e63).
+
+#### Stage
+
+Contracts: [Freeport](https://mumbai.polygonscan.com/address/0x8bD1D3a93C7FB1786fFE3d0610987C3879287698) and
+[Fiat Gateway](https://mumbai.polygonscan.com/address/0x1C59A68ff017f14D1a8B80644F25F047b1CC58C5) and [Simple Auction](https://mumbai.polygonscan.com/address/0x8fD690fFf020547e9Ca027Bf96F7B3A084Be485B) and [NFT Attachment](https://mumbai.polygonscan.com/address/0x2d16772036e7FA7D752b075b6b559A8bE57B8cCe) and [Forwarder](https://mumbai.polygonscan.com/address/0x03988B5eaf8EFC804320B860dBb7f281EdF92420) and [Bypass Forwarder](https://mumbai.polygonscan.com/address/0x7a770bf5a93a3a686FA2B40cA399462ceD10725D) and [TestERC20](https://mumbai.polygonscan.com/address/0x93E73E25F290f8A50281A801109f75CB4E8e3233).
+
+Accounts:
+[Fiat-to-NFT Service](https://mumbai.polygonscan.com/address/0x53B53189e668dC2ee3bA7A44Bb033E60F400d395) (
+see [stage_setup](scripts/stage_setup.js)).
+No Meta-tx Relayer Account yet.
+[Admin](https://mumbai.polygonscan.com/address/0x63846e2D234e4F854F43423014430b4e131f697b).
+
+
+#### Dev
+
+Contracts: [Freeport](https://mumbai.polygonscan.com/address/0xC59Af7FbE4553e07aA668C1A13CAa78Cd4550579) and
+[Fiat Gateway](https://mumbai.polygonscan.com/address/0xE8949692827C3034c6fF185a38c192ca3059f6e5) and [Simple Auction](https://mumbai.polygonscan.com/address/0x8B05131559a510f60f0A496B4428D449390A3f00) and [NFT Attachment](https://mumbai.polygonscan.com/address/0x2e8538913dEF3abAC5c4fCFAD7F40722A19099Ee) and [Forwarder](https://mumbai.polygonscan.com/address/0x2d7FCbBfe773c5E7C7fccbA8434386048267c16D) and [Bypass Forwarder](https://mumbai.polygonscan.com/address/0xF7544C67e382230B2732C8360BfAEeAE840C8b1e) and [TestERC20](https://mumbai.polygonscan.com/address/0x4e5a86E128f8Fb652169f6652e2Cd17aAe409e96).
+
+Accounts:
+[Fiat-to-NFT Service](https://mumbai.polygonscan.com/address/0xD2B94CBF0fFAA9bc07126ab53f980Cd95a5Ed243) (
+see [dev_setup](scripts/dev_setup.js)).
+No Meta-tx Relayer Account yet.
+[Admin](https://mumbai.polygonscan.com/address/0x63846e2D234e4F854F43423014430b4e131f697b).
+
+
 ### 2021-11-08: CID Attachments
 
 - Attach arbitrary objects to NFTs.
@@ -23,7 +63,7 @@ NFTAttachment commit 89696561 deployed for Freeport version 2021-09-13 and 2021-
 
 SimpleAuction commit a74e4db0 deployed for Freeport version 2021-09-13 and 2021-11-03 below.
 
-### 2021-11-03: Auction with royalties
+### 2021-11-03: Auction with royalties (dev deployment)
 
 - Auction sales now capture royalties, if any.
 
@@ -33,7 +73,7 @@ Contracts [Freeport](https://mumbai.polygonscan.com/address/0xd1EdBAC660307c5B6d
 [Fiat Gateway](https://mumbai.polygonscan.com/address/0x1f8eC932B6ec39A0326b74E9648A158F88B24082) and [Simple Auction](https://mumbai.polygonscan.com/address/0xd7cd23C84F9109F57f13eF28319e8787628DD7ad) and [NFT Attachment](https://mumbai.polygonscan.com/address/0x270693f873287a39172856Ad8cfbCd79b040b287).
 
 [Fiat-to-NFT Service Account](https://mumbai.polygonscan.com/address/0xD2B94CBF0fFAA9bc07126ab53f980Cd95a5Ed243) (
-see [stage_setup](scripts/stage_setup.js)).
+see [dev_setup](scripts/dev_setup.js)).
 [Admin Account](https://mumbai.polygonscan.com/address/0x51c5590504251A5993Ba6A46246f87Fa0eaE5897) (Aurel).
 
 Exchange rate of 0.1 CERE_stage for $0.01.
