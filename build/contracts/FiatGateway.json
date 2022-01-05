@@ -9185,39 +9185,39 @@
   "sourceMap": "493:4626:5:-:0;;;1698:124;;;;;;;;;;;;;;;;;;;;;;;;;;;;:::i;:::-;1740:8;:20;;-1:-1:-1;;;;;;1740:20:5;-1:-1:-1;;;;;1740:20:5;;;;;1771:44;-1:-1:-1;1802:12:5;665:10:28;;586:96;1802:12:5;1771:10;:44::i;:::-;1698:124;493:4626;;7515:110:11;7593:25;7604:4;7610:7;7593:10;:25::i;:::-;7515:110;;:::o;7948:224::-;4452:4;4475:12;;;;;;;;;;;-1:-1:-1;;;;;4475:29:11;;;;;;;;;;;;8017:149;;8060:6;:12;;;;;;;;;;;-1:-1:-1;;;;;8060:29:11;;;;;;;;;:36;;-1:-1:-1;;8060:36:11;8092:4;8060:36;;;8142:12;665:10:28;;586:96;8142:12:11;-1:-1:-1;;;;;8115:40:11;8133:7;-1:-1:-1;;;;;8115:40:11;8127:4;8115:40;;;;;;;;;;7948:224;;:::o;14:326:34:-;100:6;153:2;141:9;132:7;128:23;124:32;121:2;;;174:6;166;159:22;121:2;205:16;;-1:-1:-1;;;;;250:31:34;;240:42;;230:2;;301:6;293;286:22;230:2;329:5;111:229;-1:-1:-1;;;111:229:34:o;:::-;493:4626:5;;;;;;",
   "deployedSourceMap": "493:4626:5:-:0;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;627:253;;;;;;:::i;:::-;;:::i;:::-;;;7564:14:34;;7557:22;7539:41;;7527:2;7512:18;627:253:5;;;;;;;;5348:121:11;;;;;;:::i;:::-;;:::i;:::-;;;7737:25:34;;;7725:2;7710:18;5348:121:11;7692:76:34;5719:145:11;;;;;;:::i;:::-;;:::i;:::-;;972:70:5;;-1:-1:-1;;;;;;;;;;;972:70:5;;6736:214:11;;;;;;:::i;:::-;;:::i;2645:358:5:-;;;:::i;4374:137:11:-;;;;;;:::i;:::-;;:::i;1185:24:5:-;;;;;-1:-1:-1;;;;;1185:24:5;;;;;;-1:-1:-1;;;;;8160:32:34;;;8142:51;;8130:2;8115:18;1185:24:5;8097:102:34;1428:30:5;;;;;;2394:49:11;;2439:4;2394:49;;4447:488:5;;;;;;:::i;:::-;;:::i;358:201:25:-;;;;;;:::i;:::-;-1:-1:-1;;;358:201:25;;;;;;;;;;;-1:-1:-1;;;;;;7935:33:34;;;7917:52;;7905:2;7890:18;358:201:25;7872:103:34;3238:567:5;;;;;;:::i;:::-;;:::i;886:80::-;;-1:-1:-1;;;;;;;;;;;886:80:5;;6098:147:11;;;;;;:::i;:::-;;:::i;2110:199:5:-;;;;;;:::i;:::-;;:::i;1335:32::-;;;;;;2418:99;2493:17;;2418:99;;179:173:25;;;;;;:::i;:::-;-1:-1:-1;;;179:173:25;;;;;;;;627:253:5;748:4;771:44;803:11;771:31;:44::i;:::-;:102;;;;827:46;861:11;827:33;:46::i;:::-;764:109;627:253;-1:-1:-1;;627:253:5:o;5348:121:11:-;5414:7;5440:12;;;;;;;;;;:22;;;;5348:121::o;5719:145::-;5802:18;5815:4;5802:12;:18::i;:::-;3958:30;3969:4;665:10:28;3958::11;:30::i;:::-;5832:25:::1;5843:4;5849:7;5832:10;:25::i;:::-;5719:145:::0;;;:::o;6736:214::-;-1:-1:-1;;;;;6831:23:11;;665:10:28;6831:23:11;6823:83;;;;-1:-1:-1;;;6823:83:11;;9918:2:34;6823:83:11;;;9900:21:34;9957:2;9937:18;;;9930:30;9996:34;9976:18;;;9969:62;-1:-1:-1;;;10047:18:34;;;10040:45;10102:19;;6823:83:11;;;;;;;;;6917:26;6929:4;6935:7;6917:11;:26::i;:::-;6736:214;;:::o;2645:358:5:-;2718:4;;3958:30:11;2718:4:5;665:10:28;3958::11;:30::i;:::-;2735:13:5::1;665:10:28::0;2788:8:5::1;::::0;:43:::1;::::0;-1:-1:-1;;;2788:43:5;;2815:4:::1;2788:43;::::0;::::1;7294:51:34::0;2774:11:5::1;7361:18:34::0;;;7354:34;;;2735:28:5;;-1:-1:-1;;;;;;2788:8:5;;::::1;::::0;:18:::1;::::0;7267::34;;2788:43:5::1;;;;;;;;;;;;;;;;::::0;::::1;;;;;;;;;;;;::::0;::::1;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;:::i;:::-;2842:8;::::0;:130:::1;::::0;-1:-1:-1;;;2842:130:5;;2774:57;;-1:-1:-1;;;;;;2842:8:5::1;::::0;:25:::1;::::0;:130:::1;::::0;2889:4:::1;::::0;2908:5;;2842:8:::1;::::0;2774:57;;2842:130:::1;;;:::i;:::-;;;;;;;;;;;;;;;;;;::::0;::::1;;;;;;;;;;;;::::0;::::1;;;;;-1:-1:-1::0;2990:6:5;;-1:-1:-1;;;;;2645:358:5;;:::o;4374:137:11:-;4452:4;4475:12;;;;;;;;;;;-1:-1:-1;;;;;4475:29:11;;;;;;;;;;;;;;;4374:137::o;4447:488:5:-;-1:-1:-1;;;;;;;;;;;3958:30:11;1014:28:5;665:10:28;3958::11;:30::i;:::-;4670:15:5::1;4688:45;4703:15;4720:5;4727;4688:14;:45::i;:::-;4670:63;;4766:19;4752:10;:33;;4744:79;;;::::0;-1:-1:-1;;;4744:79:5;;9155:2:34;4744:79:5::1;::::0;::::1;9137:21:34::0;9194:2;9174:18;;;9167:30;9233:34;9213:18;;;9206:62;-1:-1:-1;;;9284:18:34;;;9277:31;9325:19;;4744:79:5::1;9127:223:34::0;4744:79:5::1;4848:1;4859:8:::0;;:69:::1;::::0;-1:-1:-1;;;4859:69:5;;-1:-1:-1;;;;;6911:15:34;;;4859:69:5::1;::::0;::::1;6893:34:34::0;6963:15;;;6943:18;;;6936:43;6995:18;;;6988:34;;;7038:18;;;7031:34;;;7081:19;;;7074:35;;;4859:8:5;;::::1;::::0;:18:::1;::::0;6827:19:34;;4859:69:5::1;;;;;;;;;;;;;;;;;::::0;::::1;;;;;;;;;;;;::::0;::::1;;;;;;;;;3998:1:11;;4447:488:5::0;;;;;;;:::o;3238:567::-;3386:4;-1:-1:-1;;;;;;;;;;;3958:30:11;1014:28:5;665:10:28;3958::11;:30::i;:::-;3410:17:5::1;::::0;3402:67:::1;;;::::0;-1:-1:-1;;;3402:67:5;;9557:2:34;3402:67:5::1;::::0;::::1;9539:21:34::0;;;9576:18;;;9569:30;9635:34;9615:18;;;9608:62;9687:18;;3402:67:5::1;9529:182:34::0;3402:67:5::1;3480:15;3516:17;;3498:15;:35;;;;:::i;:::-;3544:8;::::0;:134:::1;::::0;-1:-1:-1;;;3544:134:5;;3480:53;;-1:-1:-1;;;;;;3544:8:5::1;::::0;:25:::1;::::0;:134:::1;::::0;3591:4:::1;::::0;3610:5;;3544:8:::1;::::0;3480:53;;3544:134:::1;;;:::i;:::-;;;;;;;;;;;;;;;;;;::::0;::::1;;;;;;;;;;;;::::0;::::1;;;;;;;;;3713:15;3689:20;;:39;;;;;;;:::i;:::-;;;;;;;;3760:10;3738:18;;:32;;;;;;;:::i;:::-;::::0;;;-1:-1:-1;3788:10:5;;3238:567;-1:-1:-1;;;;;;3238:567:5:o;6098:147:11:-;6182:18;6195:4;6182:12;:18::i;:::-;3958:30;3969:4;665:10:28;3958::11;:30::i;:::-;6212:26:::1;6224:4;6230:7;6212:11;:26::i;2110:199:5:-:0;-1:-1:-1;;;;;;;;;;;3958:30:11;933:33:5;665:10:28;3958::11;:30::i;:::-;2213:17:5::1;:38:::0;;;2267:35:::1;::::0;7737:25:34;;;2267:35:5::1;::::0;7725:2:34;7710:18;2267:35:5::1;;;;;;;2110:199:::0;;:::o;4073:214:11:-;4158:4;-1:-1:-1;;;;;;4181:47:11;;-1:-1:-1;;;4181:47:11;;:99;;-1:-1:-1;;;;;;;;;;871:40:32;;;4244:36:11;763:155:32;312:233:26;414:4;-1:-1:-1;;;;;;437:49:26;;-1:-1:-1;;;437:49:26;;:101;;;502:36;526:11;502:23;:36::i;4792:375:11:-;4871:22;4879:4;4885:7;4871;:22::i;:::-;4867:294;;5000:41;5028:7;-1:-1:-1;;;;;5000:41:11;5038:2;5000:19;:41::i;:::-;5096:38;5124:4;5131:2;5096:19;:38::i;:::-;4923:225;;;;;;;;;:::i;:::-;;;;-1:-1:-1;;4923:225:11;;;;;;;;;;-1:-1:-1;;;4909:241:11;;;;;;;:::i;7948:224::-;8022:22;8030:4;8036:7;8022;:22::i;:::-;8017:149;;8060:6;:12;;;;;;;;;;;-1:-1:-1;;;;;8060:29:11;;;;;;;;;:36;;-1:-1:-1;;8060:36:11;8092:4;8060:36;;;8142:12;665:10:28;;586:96;8142:12:11;-1:-1:-1;;;;;8115:40:11;8133:7;-1:-1:-1;;;;;8115:40:11;8127:4;8115:40;;;;;;;;;;7948:224;;:::o;8178:225::-;8252:22;8260:4;8266:7;8252;:22::i;:::-;8248:149;;;8322:5;8290:12;;;;;;;;;;;-1:-1:-1;;;;;8290:29:11;;;;;;;;;;:37;;-1:-1:-1;;8290:37:11;;;8346:40;665:10:28;;8290:12:11;;8346:40;;8322:5;8346:40;8178:225;;:::o;1531:437:29:-;1606:13;1631:19;1663:10;1667:6;1663:1;:10;:::i;:::-;:14;;1676:1;1663:14;:::i;:::-;-1:-1:-1;;;;;1653:25:29;;;;;-1:-1:-1;;;1653:25:29;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;-1:-1:-1;1653:25:29;;1631:47;;-1:-1:-1;;;1688:6:29;1695:1;1688:9;;;;;;-1:-1:-1;;;1688:9:29;;;;;;;;;;;;:15;-1:-1:-1;;;;;1688:15:29;;;;;;;;;-1:-1:-1;;;1713:6:29;1720:1;1713:9;;;;;;-1:-1:-1;;;1713:9:29;;;;;;;;;;;;:15;-1:-1:-1;;;;;1713:15:29;;;;;;;;-1:-1:-1;1743:9:29;1755:10;1759:6;1755:1;:10;:::i;:::-;:14;;1768:1;1755:14;:::i;:::-;1743:26;;1738:128;1775:1;1771;:5;1738:128;;;-1:-1:-1;;;1818:5:29;1826:3;1818:11;1809:21;;;;;-1:-1:-1;;;1809:21:29;;;;;;;;;;;;1797:6;1804:1;1797:9;;;;;;-1:-1:-1;;;1797:9:29;;;;;;;;;;;;:33;-1:-1:-1;;;;;1797:33:29;;;;;;;;-1:-1:-1;1854:1:29;1844:11;;;;;1778:3;;;:::i;:::-;;;1738:128;;;-1:-1:-1;1883:10:29;;1875:55;;;;-1:-1:-1;;;1875:55:29;;8794:2:34;1875:55:29;;;8776:21:34;;;8813:18;;;8806:30;8872:34;8852:18;;;8845:62;8924:18;;1875:55:29;8766:182:34;1875:55:29;1954:6;1531:437;-1:-1:-1;;;1531:437:29:o;14:173:34:-;82:20;;-1:-1:-1;;;;;131:31:34;;121:42;;111:2;;177:1;174;167:12;111:2;63:124;;;:::o;192:743::-;246:5;299:3;292:4;284:6;280:17;276:27;266:2;;321:5;314;307:20;266:2;348:20;;387:4;-1:-1:-1;;;;;403:26:34;;400:2;;;432:18;;:::i;:::-;478:2;475:1;471:10;501:28;525:2;521;517:11;501:28;:::i;:::-;563:15;;;594:12;;;;626:15;;;660;;;656:24;;653:33;-1:-1:-1;650:2:34;;;703:5;696;689:20;650:2;729:5;720:14;;743:163;757:2;754:1;751:9;743:163;;;814:17;;802:30;;775:1;768:9;;;;;852:12;;;;884;;743:163;;;-1:-1:-1;924:5:34;256:679;-1:-1:-1;;;;;;;256:679:34:o;940:550::-;982:5;1035:3;1028:4;1020:6;1016:17;1012:27;1002:2;;1057:5;1050;1043:20;1002:2;1084:20;;-1:-1:-1;;;;;1116:26:34;;1113:2;;;1145:18;;:::i;:::-;1189:55;1232:2;1213:13;;-1:-1:-1;;1209:27:34;1238:4;1205:38;1189:55;:::i;:::-;1269:2;1260:7;1253:19;1315:3;1308:4;1303:2;1295:6;1291:15;1287:26;1284:35;1281:2;;;1336:5;1329;1322:20;1281:2;1405;1398:4;1390:6;1386:17;1379:4;1370:7;1366:18;1353:55;1428:16;;;1446:4;1424:27;1417:42;;;;1432:7;992:498;-1:-1:-1;;992:498:34:o;1495:983::-;1649:6;1657;1665;1673;1681;1734:3;1722:9;1713:7;1709:23;1705:33;1702:2;;;1756:6;1748;1741:22;1702:2;1784:29;1803:9;1784:29;:::i;:::-;1774:39;;1832:38;1866:2;1855:9;1851:18;1832:38;:::i;:::-;1822:48;-1:-1:-1;1921:2:34;1906:18;;1893:32;-1:-1:-1;;;;;1974:14:34;;;1971:2;;;2006:6;1998;1991:22;1971:2;2034:61;2087:7;2078:6;2067:9;2063:22;2034:61;:::i;:::-;2024:71;;2148:2;2137:9;2133:18;2120:32;2104:48;;2177:2;2167:8;2164:16;2161:2;;;2198:6;2190;2183:22;2161:2;2226:63;2281:7;2270:8;2259:9;2255:24;2226:63;:::i;:::-;2216:73;;2342:3;2331:9;2327:19;2314:33;2298:49;;2372:2;2362:8;2359:16;2356:2;;;2393:6;2385;2378:22;2356:2;;2421:51;2464:7;2453:8;2442:9;2438:24;2421:51;:::i;:::-;2411:61;;;1692:786;;;;;;;;:::o;2483:626::-;2587:6;2595;2603;2611;2619;2672:3;2660:9;2651:7;2647:23;2643:33;2640:2;;;2694:6;2686;2679:22;2640:2;2722:29;2741:9;2722:29;:::i;:::-;2712:39;;2770:38;2804:2;2793:9;2789:18;2770:38;:::i;:::-;2760:48;-1:-1:-1;2855:2:34;2840:18;;2827:32;;-1:-1:-1;2906:2:34;2891:18;;2878:32;;-1:-1:-1;2961:3:34;2946:19;;2933:33;-1:-1:-1;;;;;2978:30:34;;2975:2;;;3026:6;3018;3011:22;2975:2;3054:49;3095:7;3086:6;3075:9;3071:22;3054:49;:::i;3114:190::-;3173:6;3226:2;3214:9;3205:7;3201:23;3197:32;3194:2;;;3247:6;3239;3232:22;3194:2;-1:-1:-1;3275:23:34;;3184:120;-1:-1:-1;3184:120:34:o;3309:264::-;3377:6;3385;3438:2;3426:9;3417:7;3413:23;3409:32;3406:2;;;3459:6;3451;3444:22;3406:2;3500:9;3487:23;3477:33;;3529:38;3563:2;3552:9;3548:18;3529:38;:::i;:::-;3519:48;;3396:177;;;;;:::o;3578:306::-;3636:6;3689:2;3677:9;3668:7;3664:23;3660:32;3657:2;;;3710:6;3702;3695:22;3657:2;3741:23;;-1:-1:-1;;;;;;3793:32:34;;3783:43;;3773:2;;3845:6;3837;3830:22;4084:194;4154:6;4207:2;4195:9;4186:7;4182:23;4178:32;4175:2;;;4228:6;4220;4213:22;4175:2;-1:-1:-1;4256:16:34;;4165:113;-1:-1:-1;4165:113:34:o;4283:545::-;4387:6;4395;4403;4411;4419;4427;4480:3;4468:9;4459:7;4455:23;4451:33;4448:2;;;4502:6;4494;4487:22;4448:2;4543:9;4530:23;4520:33;;4572:38;4606:2;4595:9;4591:18;4572:38;:::i;:::-;4562:48;;4629:38;4663:2;4652:9;4648:18;4629:38;:::i;:::-;4619:48;;4714:2;4703:9;4699:18;4686:32;4676:42;;4765:3;4754:9;4750:19;4737:33;4727:43;;4817:3;4806:9;4802:19;4789:33;4779:43;;4438:390;;;;;;;;:::o;4833:332::-;4910:6;4918;4926;4979:2;4967:9;4958:7;4954:23;4950:32;4947:2;;;5000:6;4992;4985:22;4947:2;5041:9;5028:23;5018:33;;5070:38;5104:2;5093:9;5089:18;5070:38;:::i;:::-;5060:48;;5155:2;5144:9;5140:18;5127:32;5117:42;;4937:228;;;;;:::o;5170:786::-;-1:-1:-1;;;5576:3:34;5569:38;5551:3;5636:6;5630:13;5652:62;5707:6;5702:2;5697:3;5693:12;5686:4;5678:6;5674:17;5652:62;:::i;:::-;-1:-1:-1;;;5773:2:34;5733:16;;;5765:11;;;5758:40;5823:13;;5845:63;5823:13;5894:2;5886:11;;5879:4;5867:17;;5845:63;:::i;:::-;5928:17;5947:2;5924:26;;5559:397;-1:-1:-1;;;;5559:397:34:o;5961:630::-;-1:-1:-1;;;;;6312:15:34;;;6294:34;;6364:15;;;;6359:2;6344:18;;6337:43;6411:2;6396:18;;6389:34;6454:2;6439:18;;6432:34;;;;6274:3;6497;6482:19;;6475:32;;;6237:4;6523:19;;;6516:33;6581:3;6566:19;;6246:345::o;8204:383::-;8353:2;8342:9;8335:21;8316:4;8385:6;8379:13;8428:6;8423:2;8412:9;8408:18;8401:34;8444:66;8503:6;8498:2;8487:9;8483:18;8478:2;8470:6;8466:15;8444:66;:::i;:::-;8571:2;8550:15;-1:-1:-1;;8546:29:34;8531:45;;;;8578:2;8527:54;;8325:262;-1:-1:-1;;8325:262:34:o;10314:275::-;10385:2;10379:9;10450:2;10431:13;;-1:-1:-1;;10427:27:34;10415:40;;-1:-1:-1;;;;;10470:34:34;;10506:22;;;10467:62;10464:2;;;10532:18;;:::i;:::-;10568:2;10561:22;10359:230;;-1:-1:-1;10359:230:34:o;10594:128::-;10634:3;10665:1;10661:6;10658:1;10655:13;10652:2;;;10671:18;;:::i;:::-;-1:-1:-1;10707:9:34;;10642:80::o;10727:168::-;10767:7;10833:1;10829;10825:6;10821:14;10818:1;10815:21;10810:1;10803:9;10796:17;10792:45;10789:2;;;10840:18;;:::i;:::-;-1:-1:-1;10880:9:34;;10779:116::o;10900:258::-;10972:1;10982:113;10996:6;10993:1;10990:13;10982:113;;;11072:11;;;11066:18;11053:11;;;11046:39;11018:2;11011:10;10982:113;;;11113:6;11110:1;11107:13;11104:2;;;11148:1;11139:6;11134:3;11130:16;11123:27;11104:2;;10953:205;;;:::o;11163:136::-;11202:3;11230:5;11220:2;;11239:18;;:::i;:::-;-1:-1:-1;;;11275:18:34;;11210:89::o;11304:127::-;11365:10;11360:3;11356:20;11353:1;11346:31;11396:4;11393:1;11386:15;11420:4;11417:1;11410:15;11436:127;11497:10;11492:3;11488:20;11485:1;11478:31;11528:4;11525:1;11518:15;11552:4;11549:1;11542:15",
   "source": "pragma solidity ^0.8.0;\n\nimport \"./access/AccessControl.sol\";\nimport \"./Freeport.sol\";\nimport \"./token/ERC1155/utils/ERC1155Holder.sol\";\n\n/** The FiatGateway contract allows buying NFTs from an external fiat payment.\n  *\n  * This contract connects to the Freeport contract.\n  * It must hold a balance of CERE recognized by Freeport.\n  *\n  * This contract uses the SimpleExchange API to buy NFTs.\n  *\n  * This contract is operational only when the exchange rate is set to a non-zero value.\n */\ncontract FiatGateway is AccessControl, ERC1155Holder {\n\n    /** Supports interfaces of AccessControl and ERC1155Receiver.\n     */\n    function supportsInterface(bytes4 interfaceId)\n    public view virtual override(AccessControl, ERC1155Receiver) returns (bool) {\n        return AccessControl.supportsInterface(interfaceId)\n        || ERC1155Receiver.supportsInterface(interfaceId);\n    }\n\n    bytes32 public constant EXCHANGE_RATE_ORACLE = keccak256(\"EXCHANGE_RATE_ORACLE\");\n    bytes32 public constant PAYMENT_SERVICE = keccak256(\"PAYMENT_SERVICE\");\n\n    /** The token ID that represents the CERE currency for all payments in this contract. */\n    uint256 public constant CURRENCY = 0;\n\n    Freeport public freeport;\n    uint cereUnitsPerPenny;\n\n    /** How many USD cents were received so far, according to the payment service.\n     */\n    uint public totalPenniesReceived;\n\n    /** How many CERE Units were sold so far.\n     */\n    uint public totalCereUnitsSent;\n\n    /** An event emitted when the exchange rate was set to a new value.\n     *\n     * The rate is given as CERE Units (with 10 decimals) per USD cent (1 penny).\n     */\n    event SetExchangeRate(\n        uint256 cereUnitsPerPenny);\n\n    constructor(Freeport _freeport) {\n        freeport = _freeport;\n\n        _setupRole(DEFAULT_ADMIN_ROLE, _msgSender());\n    }\n\n    /** Set the exchange rate between fiat (USD) and Freeport currency (CERE).\n      *\n      * The rate is given as number of CERE Units (with 10 decimals) per USD cent (1 penny).\n      *\n      * Only the rate service with the EXCHANGE_RATE_ORACLE role can change the rate.\n     */\n    function setExchangeRate(uint _cereUnitsPerPenny)\n    public onlyRole(EXCHANGE_RATE_ORACLE) {\n\n        cereUnitsPerPenny = _cereUnitsPerPenny;\n\n        emit SetExchangeRate(_cereUnitsPerPenny);\n    }\n\n    /** Get the current exchange rate in CERE Units (with 10 decimals) per USD cent (1 penny).\n     */\n    function getExchangeRate()\n    public view returns (uint) {\n        return cereUnitsPerPenny;\n    }\n\n    /** Withdraw all CERE from this contract.\n      *\n      * Only accounts with DEFAULT_ADMIN_ROLE can withdraw.\n     */\n    function withdraw()\n    public onlyRole(DEFAULT_ADMIN_ROLE)\n    returns (uint) {\n\n        address admin = _msgSender();\n\n        uint amount = freeport.balanceOf(address(this), CURRENCY);\n\n        freeport.safeTransferFrom(\n            address(this),\n            admin,\n            CURRENCY,\n            amount,\n            \"\");\n\n        return amount;\n    }\n\n    /** Obtain CERE based on a fiat payment.\n      *\n      * The amount of fiat is recorded, and exchanged for an amount of CERE.\n      *\n      * Only the gateway with PAYMENT_SERVICE role can report successful payments.\n     */\n    function buyCereFromUsd(\n        uint penniesReceived,\n        address buyer,\n        uint nonce)\n    public onlyRole(PAYMENT_SERVICE)\n    returns (uint) {\n        require(cereUnitsPerPenny != 0, \"Exchange rate must be configured\");\n\n        uint cereToSend = penniesReceived * cereUnitsPerPenny;\n\n        freeport.safeTransferFrom(\n            address(this),\n            buyer,\n            CURRENCY,\n            cereToSend,\n            \"\");\n\n        totalPenniesReceived += penniesReceived;\n        totalCereUnitsSent += cereToSend;\n\n        return cereToSend;\n    }\n\n    /** Obtain CERE and buy an NFT based on a fiat payment.\n      *\n      * CERE tokens are obtained in the same way as buyCereFromUsd.\n      *\n      * Then, the tokens are used to buy an NFT in the same transaction. The NFT must be available for sale from the seller in SimpleExchange.\n      *\n      * Only the gateway with PAYMENT_SERVICE role can report successful payments.\n     *\n     * The parameter expectedPriceOrZero can be used to validate the price that the buyer expects to pay. This prevents\n     * a race condition with makeOffer or setExchangeRate. Pass 0 to disable this validation and accept any current price.\n     */\n    function buyNftFromUsd(\n        uint penniesReceived,\n        address buyer,\n        address seller,\n        uint nftId,\n        uint expectedPriceOrZero,\n        uint nonce)\n    public onlyRole(PAYMENT_SERVICE) {\n\n        uint boughtCere = buyCereFromUsd(penniesReceived, buyer, nonce);\n\n        require(boughtCere >= expectedPriceOrZero, \"Received fewer Cere than expected\");\n\n        uint amount = 1;\n        freeport.takeOffer(buyer, seller, nftId, expectedPriceOrZero, amount);\n    }\n\n    /** Guarantee that a version of Solidity with safe math is used.\n     */\n    function _mathIsSafe() internal pure {\n    unchecked {} // Use a keyword from Solidity 0.8.0.\n    }\n}",
-  "sourcePath": "/home/a/CERE/Freeport-Smart-Contracts/contracts/FiatGateway.sol",
+  "sourcePath": "/home/nadtech/Visual Studio/Freeport-Smart-Contracts/contracts/FiatGateway.sol",
   "ast": {
     "absolutePath": "project:/contracts/FiatGateway.sol",
     "exportedSymbols": {
       "AccessControl": [
-        2024
+        2053
       ],
       "Address": [
-        5395
+        5424
       ],
       "BaseNFT": [
-        2154
+        2183
       ],
       "Context": [
-        5418
+        5447
       ],
       "Currency": [
-        2221
+        2250
       ],
       "ERC1155": [
-        4836
+        4865
       ],
       "ERC1155Holder": [
-        5065
+        5094
       ],
       "ERC1155Receiver": [
-        5099
+        5128
       ],
       "ERC165": [
-        5927
+        5956
       ],
       "ERC20Adapter": [
-        2319
+        2348
       ],
       "FiatGateway": [
         940
@@ -9226,43 +9226,43 @@
         947
       ],
       "IAccessControl": [
-        1700
+        1729
       ],
       "IERC1155": [
-        4958
+        4987
       ],
       "IERC1155MetadataURI": [
-        5014
+        5043
       ],
       "IERC1155Receiver": [
-        4999
+        5028
       ],
       "IERC165": [
-        5939
+        5968
       ],
       "IERC20": [
         584
       ],
       "Issuance": [
-        2573
+        2602
       ],
       "JointAccounts": [
-        2910
+        2939
       ],
       "MetaTxContext": [
-        2980
+        3009
       ],
       "SimpleExchange": [
-        3157
+        3186
       ],
       "Strings": [
-        5621
+        5650
       ],
       "TransferFees": [
-        3766
+        3795
       ],
       "TransferOperator": [
-        3803
+        3832
       ]
     },
     "id": 941,
@@ -9286,7 +9286,7 @@
         "nameLocation": "-1:-1:-1",
         "nodeType": "ImportDirective",
         "scope": 941,
-        "sourceUnit": 2025,
+        "sourceUnit": 2054,
         "src": "25:36:5",
         "symbolAliases": [],
         "unitAlias": ""
@@ -9310,7 +9310,7 @@
         "nameLocation": "-1:-1:-1",
         "nodeType": "ImportDirective",
         "scope": 941,
-        "sourceUnit": 5066,
+        "sourceUnit": 5095,
         "src": "87:49:5",
         "symbolAliases": [],
         "unitAlias": ""
@@ -9323,7 +9323,7 @@
               "id": 692,
               "name": "AccessControl",
               "nodeType": "IdentifierPath",
-              "referencedDeclaration": 2024,
+              "referencedDeclaration": 2053,
               "src": "517:13:5"
             },
             "id": 693,
@@ -9335,7 +9335,7 @@
               "id": 694,
               "name": "ERC1155Holder",
               "nodeType": "IdentifierPath",
-              "referencedDeclaration": 5065,
+              "referencedDeclaration": 5094,
               "src": "532:13:5"
             },
             "id": 695,
@@ -9355,14 +9355,14 @@
         "id": 940,
         "linearizedBaseContracts": [
           940,
-          5065,
-          5099,
-          4999,
-          2024,
-          5927,
-          5939,
-          1700,
-          5418
+          5094,
+          5128,
+          5028,
+          2053,
+          5956,
+          5968,
+          1729,
+          5447
         ],
         "name": "FiatGateway",
         "nameLocation": "502:11:5",
@@ -9370,8 +9370,8 @@
         "nodes": [
           {
             "baseFunctions": [
-              1784,
-              5098
+              1813,
+              5127
             ],
             "body": {
               "id": 716,
@@ -9416,10 +9416,10 @@
                           "name": "AccessControl",
                           "nodeType": "Identifier",
                           "overloadedDeclarations": [],
-                          "referencedDeclaration": 2024,
+                          "referencedDeclaration": 2053,
                           "src": "771:13:5",
                           "typeDescriptions": {
-                            "typeIdentifier": "t_type$_t_contract$_AccessControl_$2024_$",
+                            "typeIdentifier": "t_type$_t_contract$_AccessControl_$2053_$",
                             "typeString": "type(contract AccessControl)"
                           }
                         },
@@ -9430,7 +9430,7 @@
                         "lValueRequested": false,
                         "memberName": "supportsInterface",
                         "nodeType": "MemberAccess",
-                        "referencedDeclaration": 1784,
+                        "referencedDeclaration": 1813,
                         "src": "771:31:5",
                         "typeDescriptions": {
                           "typeIdentifier": "t_function_internal_view$_t_bytes4_$returns$_t_bool_$",
@@ -9481,10 +9481,10 @@
                           "name": "ERC1155Receiver",
                           "nodeType": "Identifier",
                           "overloadedDeclarations": [],
-                          "referencedDeclaration": 5099,
+                          "referencedDeclaration": 5128,
                           "src": "827:15:5",
                           "typeDescriptions": {
-                            "typeIdentifier": "t_type$_t_contract$_ERC1155Receiver_$5099_$",
+                            "typeIdentifier": "t_type$_t_contract$_ERC1155Receiver_$5128_$",
                             "typeString": "type(contract ERC1155Receiver)"
                           }
                         },
@@ -9495,7 +9495,7 @@
                         "lValueRequested": false,
                         "memberName": "supportsInterface",
                         "nodeType": "MemberAccess",
-                        "referencedDeclaration": 5098,
+                        "referencedDeclaration": 5127,
                         "src": "827:33:5",
                         "typeDescriptions": {
                           "typeIdentifier": "t_function_internal_view$_t_bytes4_$returns$_t_bool_$",
@@ -9552,14 +9552,14 @@
                   "id": 700,
                   "name": "AccessControl",
                   "nodeType": "IdentifierPath",
-                  "referencedDeclaration": 2024,
+                  "referencedDeclaration": 2053,
                   "src": "707:13:5"
                 },
                 {
                   "id": 701,
                   "name": "ERC1155Receiver",
                   "nodeType": "IdentifierPath",
-                  "referencedDeclaration": 5099,
+                  "referencedDeclaration": 5128,
                   "src": "722:15:5"
                 }
               ],
@@ -10085,7 +10085,7 @@
                         "name": "DEFAULT_ADMIN_ROLE",
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
-                        "referencedDeclaration": 1722,
+                        "referencedDeclaration": 1751,
                         "src": "1782:18:5",
                         "typeDescriptions": {
                           "typeIdentifier": "t_bytes32",
@@ -10100,7 +10100,7 @@
                           "name": "_msgSender",
                           "nodeType": "Identifier",
                           "overloadedDeclarations": [],
-                          "referencedDeclaration": 5406,
+                          "referencedDeclaration": 5435,
                           "src": "1802:10:5",
                           "typeDescriptions": {
                             "typeIdentifier": "t_function_internal_view$__$returns$_t_address_$",
@@ -10138,7 +10138,7 @@
                       "name": "_setupRole",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
-                      "referencedDeclaration": 1938,
+                      "referencedDeclaration": 1967,
                       "src": "1771:10:5",
                       "typeDescriptions": {
                         "typeIdentifier": "t_function_internal_nonpayable$_t_bytes32_$_t_address_$returns$__$",
@@ -10362,7 +10362,7 @@
                   "id": 769,
                   "name": "onlyRole",
                   "nodeType": "IdentifierPath",
-                  "referencedDeclaration": 1762,
+                  "referencedDeclaration": 1791,
                   "src": "2171:8:5"
                 },
                 "nodeType": "ModifierInvocation",
@@ -10553,7 +10553,7 @@
                       "name": "_msgSender",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
-                      "referencedDeclaration": 5406,
+                      "referencedDeclaration": 5435,
                       "src": "2751:10:5",
                       "typeDescriptions": {
                         "typeIdentifier": "t_function_internal_view$__$returns$_t_address_$",
@@ -10713,7 +10713,7 @@
                       "lValueRequested": false,
                       "memberName": "balanceOf",
                       "nodeType": "MemberAccess",
-                      "referencedDeclaration": 3919,
+                      "referencedDeclaration": 3948,
                       "src": "2788:18:5",
                       "typeDescriptions": {
                         "typeIdentifier": "t_function_external_view$_t_address_$_t_uint256_$returns$_t_uint256_$",
@@ -10892,7 +10892,7 @@
                       "lValueRequested": false,
                       "memberName": "safeTransferFrom",
                       "nodeType": "MemberAccess",
-                      "referencedDeclaration": 4143,
+                      "referencedDeclaration": 4172,
                       "src": "2842:25:5",
                       "typeDescriptions": {
                         "typeIdentifier": "t_function_external_nonpayable$_t_address_$_t_address_$_t_uint256_$_t_uint256_$_t_bytes_memory_ptr_$returns$__$",
@@ -10956,7 +10956,7 @@
                     "name": "DEFAULT_ADMIN_ROLE",
                     "nodeType": "Identifier",
                     "overloadedDeclarations": [],
-                    "referencedDeclaration": 1722,
+                    "referencedDeclaration": 1751,
                     "src": "2685:18:5",
                     "typeDescriptions": {
                       "typeIdentifier": "t_bytes32",
@@ -10970,7 +10970,7 @@
                   "id": 794,
                   "name": "onlyRole",
                   "nodeType": "IdentifierPath",
-                  "referencedDeclaration": 1762,
+                  "referencedDeclaration": 1791,
                   "src": "2676:8:5"
                 },
                 "nodeType": "ModifierInvocation",
@@ -11375,7 +11375,7 @@
                       "lValueRequested": false,
                       "memberName": "safeTransferFrom",
                       "nodeType": "MemberAccess",
-                      "referencedDeclaration": 4143,
+                      "referencedDeclaration": 4172,
                       "src": "3544:25:5",
                       "typeDescriptions": {
                         "typeIdentifier": "t_function_external_nonpayable$_t_address_$_t_address_$_t_uint256_$_t_uint256_$_t_bytes_memory_ptr_$returns$__$",
@@ -11539,7 +11539,7 @@
                   "id": 841,
                   "name": "onlyRole",
                   "nodeType": "IdentifierPath",
-                  "referencedDeclaration": 1762,
+                  "referencedDeclaration": 1791,
                   "src": "3347:8:5"
                 },
                 "nodeType": "ModifierInvocation",
@@ -12066,7 +12066,7 @@
                       "lValueRequested": false,
                       "memberName": "takeOffer",
                       "nodeType": "MemberAccess",
-                      "referencedDeclaration": 3150,
+                      "referencedDeclaration": 3179,
                       "src": "4859:18:5",
                       "typeDescriptions": {
                         "typeIdentifier": "t_function_external_nonpayable$_t_address_$_t_address_$_t_uint256_$_t_uint256_$_t_uint256_$returns$__$",
@@ -12126,7 +12126,7 @@
                   "id": 899,
                   "name": "onlyRole",
                   "nodeType": "IdentifierPath",
-                  "referencedDeclaration": 1762,
+                  "referencedDeclaration": 1791,
                   "src": "4633:8:5"
                 },
                 "nodeType": "ModifierInvocation",
@@ -12376,34 +12376,34 @@
     "absolutePath": "project:/contracts/FiatGateway.sol",
     "exportedSymbols": {
       "AccessControl": [
-        2024
+        2053
       ],
       "Address": [
-        5395
+        5424
       ],
       "BaseNFT": [
-        2154
+        2183
       ],
       "Context": [
-        5418
+        5447
       ],
       "Currency": [
-        2221
+        2250
       ],
       "ERC1155": [
-        4836
+        4865
       ],
       "ERC1155Holder": [
-        5065
+        5094
       ],
       "ERC1155Receiver": [
-        5099
+        5128
       ],
       "ERC165": [
-        5927
+        5956
       ],
       "ERC20Adapter": [
-        2319
+        2348
       ],
       "FiatGateway": [
         940
@@ -12412,43 +12412,43 @@
         947
       ],
       "IAccessControl": [
-        1700
+        1729
       ],
       "IERC1155": [
-        4958
+        4987
       ],
       "IERC1155MetadataURI": [
-        5014
+        5043
       ],
       "IERC1155Receiver": [
-        4999
+        5028
       ],
       "IERC165": [
-        5939
+        5968
       ],
       "IERC20": [
         584
       ],
       "Issuance": [
-        2573
+        2602
       ],
       "JointAccounts": [
-        2910
+        2939
       ],
       "MetaTxContext": [
-        2980
+        3009
       ],
       "SimpleExchange": [
-        3157
+        3186
       ],
       "Strings": [
-        5621
+        5650
       ],
       "TransferFees": [
-        3766
+        3795
       ],
       "TransferOperator": [
-        3803
+        3832
       ]
     },
     "id": 941,
@@ -12472,7 +12472,7 @@
         "nameLocation": "-1:-1:-1",
         "nodeType": "ImportDirective",
         "scope": 941,
-        "sourceUnit": 2025,
+        "sourceUnit": 2054,
         "src": "25:36:5",
         "symbolAliases": [],
         "unitAlias": ""
@@ -12496,7 +12496,7 @@
         "nameLocation": "-1:-1:-1",
         "nodeType": "ImportDirective",
         "scope": 941,
-        "sourceUnit": 5066,
+        "sourceUnit": 5095,
         "src": "87:49:5",
         "symbolAliases": [],
         "unitAlias": ""
@@ -12509,7 +12509,7 @@
               "id": 692,
               "name": "AccessControl",
               "nodeType": "IdentifierPath",
-              "referencedDeclaration": 2024,
+              "referencedDeclaration": 2053,
               "src": "517:13:5"
             },
             "id": 693,
@@ -12521,7 +12521,7 @@
               "id": 694,
               "name": "ERC1155Holder",
               "nodeType": "IdentifierPath",
-              "referencedDeclaration": 5065,
+              "referencedDeclaration": 5094,
               "src": "532:13:5"
             },
             "id": 695,
@@ -12541,14 +12541,14 @@
         "id": 940,
         "linearizedBaseContracts": [
           940,
-          5065,
-          5099,
-          4999,
-          2024,
-          5927,
-          5939,
-          1700,
-          5418
+          5094,
+          5128,
+          5028,
+          2053,
+          5956,
+          5968,
+          1729,
+          5447
         ],
         "name": "FiatGateway",
         "nameLocation": "502:11:5",
@@ -12556,8 +12556,8 @@
         "nodes": [
           {
             "baseFunctions": [
-              1784,
-              5098
+              1813,
+              5127
             ],
             "body": {
               "id": 716,
@@ -12602,10 +12602,10 @@
                           "name": "AccessControl",
                           "nodeType": "Identifier",
                           "overloadedDeclarations": [],
-                          "referencedDeclaration": 2024,
+                          "referencedDeclaration": 2053,
                           "src": "771:13:5",
                           "typeDescriptions": {
-                            "typeIdentifier": "t_type$_t_contract$_AccessControl_$2024_$",
+                            "typeIdentifier": "t_type$_t_contract$_AccessControl_$2053_$",
                             "typeString": "type(contract AccessControl)"
                           }
                         },
@@ -12616,7 +12616,7 @@
                         "lValueRequested": false,
                         "memberName": "supportsInterface",
                         "nodeType": "MemberAccess",
-                        "referencedDeclaration": 1784,
+                        "referencedDeclaration": 1813,
                         "src": "771:31:5",
                         "typeDescriptions": {
                           "typeIdentifier": "t_function_internal_view$_t_bytes4_$returns$_t_bool_$",
@@ -12667,10 +12667,10 @@
                           "name": "ERC1155Receiver",
                           "nodeType": "Identifier",
                           "overloadedDeclarations": [],
-                          "referencedDeclaration": 5099,
+                          "referencedDeclaration": 5128,
                           "src": "827:15:5",
                           "typeDescriptions": {
-                            "typeIdentifier": "t_type$_t_contract$_ERC1155Receiver_$5099_$",
+                            "typeIdentifier": "t_type$_t_contract$_ERC1155Receiver_$5128_$",
                             "typeString": "type(contract ERC1155Receiver)"
                           }
                         },
@@ -12681,7 +12681,7 @@
                         "lValueRequested": false,
                         "memberName": "supportsInterface",
                         "nodeType": "MemberAccess",
-                        "referencedDeclaration": 5098,
+                        "referencedDeclaration": 5127,
                         "src": "827:33:5",
                         "typeDescriptions": {
                           "typeIdentifier": "t_function_internal_view$_t_bytes4_$returns$_t_bool_$",
@@ -12738,14 +12738,14 @@
                   "id": 700,
                   "name": "AccessControl",
                   "nodeType": "IdentifierPath",
-                  "referencedDeclaration": 2024,
+                  "referencedDeclaration": 2053,
                   "src": "707:13:5"
                 },
                 {
                   "id": 701,
                   "name": "ERC1155Receiver",
                   "nodeType": "IdentifierPath",
-                  "referencedDeclaration": 5099,
+                  "referencedDeclaration": 5128,
                   "src": "722:15:5"
                 }
               ],
@@ -13271,7 +13271,7 @@
                         "name": "DEFAULT_ADMIN_ROLE",
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
-                        "referencedDeclaration": 1722,
+                        "referencedDeclaration": 1751,
                         "src": "1782:18:5",
                         "typeDescriptions": {
                           "typeIdentifier": "t_bytes32",
@@ -13286,7 +13286,7 @@
                           "name": "_msgSender",
                           "nodeType": "Identifier",
                           "overloadedDeclarations": [],
-                          "referencedDeclaration": 5406,
+                          "referencedDeclaration": 5435,
                           "src": "1802:10:5",
                           "typeDescriptions": {
                             "typeIdentifier": "t_function_internal_view$__$returns$_t_address_$",
@@ -13324,7 +13324,7 @@
                       "name": "_setupRole",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
-                      "referencedDeclaration": 1938,
+                      "referencedDeclaration": 1967,
                       "src": "1771:10:5",
                       "typeDescriptions": {
                         "typeIdentifier": "t_function_internal_nonpayable$_t_bytes32_$_t_address_$returns$__$",
@@ -13548,7 +13548,7 @@
                   "id": 769,
                   "name": "onlyRole",
                   "nodeType": "IdentifierPath",
-                  "referencedDeclaration": 1762,
+                  "referencedDeclaration": 1791,
                   "src": "2171:8:5"
                 },
                 "nodeType": "ModifierInvocation",
@@ -13739,7 +13739,7 @@
                       "name": "_msgSender",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
-                      "referencedDeclaration": 5406,
+                      "referencedDeclaration": 5435,
                       "src": "2751:10:5",
                       "typeDescriptions": {
                         "typeIdentifier": "t_function_internal_view$__$returns$_t_address_$",
@@ -13899,7 +13899,7 @@
                       "lValueRequested": false,
                       "memberName": "balanceOf",
                       "nodeType": "MemberAccess",
-                      "referencedDeclaration": 3919,
+                      "referencedDeclaration": 3948,
                       "src": "2788:18:5",
                       "typeDescriptions": {
                         "typeIdentifier": "t_function_external_view$_t_address_$_t_uint256_$returns$_t_uint256_$",
@@ -14078,7 +14078,7 @@
                       "lValueRequested": false,
                       "memberName": "safeTransferFrom",
                       "nodeType": "MemberAccess",
-                      "referencedDeclaration": 4143,
+                      "referencedDeclaration": 4172,
                       "src": "2842:25:5",
                       "typeDescriptions": {
                         "typeIdentifier": "t_function_external_nonpayable$_t_address_$_t_address_$_t_uint256_$_t_uint256_$_t_bytes_memory_ptr_$returns$__$",
@@ -14142,7 +14142,7 @@
                     "name": "DEFAULT_ADMIN_ROLE",
                     "nodeType": "Identifier",
                     "overloadedDeclarations": [],
-                    "referencedDeclaration": 1722,
+                    "referencedDeclaration": 1751,
                     "src": "2685:18:5",
                     "typeDescriptions": {
                       "typeIdentifier": "t_bytes32",
@@ -14156,7 +14156,7 @@
                   "id": 794,
                   "name": "onlyRole",
                   "nodeType": "IdentifierPath",
-                  "referencedDeclaration": 1762,
+                  "referencedDeclaration": 1791,
                   "src": "2676:8:5"
                 },
                 "nodeType": "ModifierInvocation",
@@ -14561,7 +14561,7 @@
                       "lValueRequested": false,
                       "memberName": "safeTransferFrom",
                       "nodeType": "MemberAccess",
-                      "referencedDeclaration": 4143,
+                      "referencedDeclaration": 4172,
                       "src": "3544:25:5",
                       "typeDescriptions": {
                         "typeIdentifier": "t_function_external_nonpayable$_t_address_$_t_address_$_t_uint256_$_t_uint256_$_t_bytes_memory_ptr_$returns$__$",
@@ -14725,7 +14725,7 @@
                   "id": 841,
                   "name": "onlyRole",
                   "nodeType": "IdentifierPath",
-                  "referencedDeclaration": 1762,
+                  "referencedDeclaration": 1791,
                   "src": "3347:8:5"
                 },
                 "nodeType": "ModifierInvocation",
@@ -15252,7 +15252,7 @@
                       "lValueRequested": false,
                       "memberName": "takeOffer",
                       "nodeType": "MemberAccess",
-                      "referencedDeclaration": 3150,
+                      "referencedDeclaration": 3179,
                       "src": "4859:18:5",
                       "typeDescriptions": {
                         "typeIdentifier": "t_function_external_nonpayable$_t_address_$_t_address_$_t_uint256_$_t_uint256_$_t_uint256_$returns$__$",
@@ -15312,7 +15312,7 @@
                   "id": 899,
                   "name": "onlyRole",
                   "nodeType": "IdentifierPath",
-                  "referencedDeclaration": 1762,
+                  "referencedDeclaration": 1791,
                   "src": "4633:8:5"
                 },
                 "nodeType": "ModifierInvocation",
@@ -15834,10 +15834,105 @@
       "links": {},
       "address": "0x97002E5615ec93452D1308d4f914d4e735e1F156",
       "transactionHash": "0x8c2776112be0b9d39034c8c17dffe1ab0454889badcd03aed569b4a4a65c202b"
+    },
+    "1641369027655": {
+      "events": {
+        "0xbd79b86ffe0ab8e8776151514217cd7cacd52c909f66475c3af44e129f0b00ff": {
+          "anonymous": false,
+          "inputs": [
+            {
+              "indexed": true,
+              "internalType": "bytes32",
+              "name": "role",
+              "type": "bytes32"
+            },
+            {
+              "indexed": true,
+              "internalType": "bytes32",
+              "name": "previousAdminRole",
+              "type": "bytes32"
+            },
+            {
+              "indexed": true,
+              "internalType": "bytes32",
+              "name": "newAdminRole",
+              "type": "bytes32"
+            }
+          ],
+          "name": "RoleAdminChanged",
+          "type": "event"
+        },
+        "0x2f8788117e7eff1d82e926ec794901d17c78024a50270940304540a733656f0d": {
+          "anonymous": false,
+          "inputs": [
+            {
+              "indexed": true,
+              "internalType": "bytes32",
+              "name": "role",
+              "type": "bytes32"
+            },
+            {
+              "indexed": true,
+              "internalType": "address",
+              "name": "account",
+              "type": "address"
+            },
+            {
+              "indexed": true,
+              "internalType": "address",
+              "name": "sender",
+              "type": "address"
+            }
+          ],
+          "name": "RoleGranted",
+          "type": "event"
+        },
+        "0xf6391f5c32d9c69d2a47ea670b442974b53935d1edc7fd64eb21e047a839171b": {
+          "anonymous": false,
+          "inputs": [
+            {
+              "indexed": true,
+              "internalType": "bytes32",
+              "name": "role",
+              "type": "bytes32"
+            },
+            {
+              "indexed": true,
+              "internalType": "address",
+              "name": "account",
+              "type": "address"
+            },
+            {
+              "indexed": true,
+              "internalType": "address",
+              "name": "sender",
+              "type": "address"
+            }
+          ],
+          "name": "RoleRevoked",
+          "type": "event"
+        },
+        "0x1d5de90e7c5b244ac5797698b15fe80a92524d933dafd79e001daf844555fb1c": {
+          "anonymous": false,
+          "inputs": [
+            {
+              "indexed": false,
+              "internalType": "uint256",
+              "name": "cereUnitsPerPenny",
+              "type": "uint256"
+            }
+          ],
+          "name": "SetExchangeRate",
+          "type": "event"
+        }
+      },
+      "links": {},
+      "address": "0x0159bE25700B48758cAc3d0534Bf96EB909F88c3",
+      "transactionHash": "0x348d08adb71cd801fa284425ae4bec770e421b1afdb249a3f64ac1612f8e6515"
     }
   },
   "schemaVersion": "3.4.3",
-  "updatedAt": "2022-01-02T15:08:09.510Z",
+  "updatedAt": "2022-01-05T07:52:44.225Z",
   "networkType": "ethereum",
   "devdoc": {
     "kind": "dev",
