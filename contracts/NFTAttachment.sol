@@ -32,16 +32,16 @@ contract NFTAttachment is /* AccessControl, */ MetaTxContext {
     event AttachToNFT(
         address indexed sender,
         uint256 indexed nftId,
-        bytes32 cid);
+        bytes attachment);
 
     /** Attach an object identified by `cid` to the NFT type `nftId`.
      *
      * There is absolutely no validation. It is the responsibility of the reader of this event to decide
      * who the sender is and what the object means.
      */
-    function attachToNFT(uint256 nftId, bytes32 cid)
+    function attachToNFT(uint256 nftId, bytes calldata attachment)
     public {
         address sender = _msgSender();
-        emit AttachToNFT(sender, nftId, cid);
+        emit AttachToNFT(sender, nftId, attachment);
     }
 }
