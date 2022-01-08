@@ -34,69 +34,6 @@ contract NFTAttachment is /* AccessControl, */ MetaTxContext {
         freeport = _freeport;
     }
 
-    /** The account `minter` wished to attach data `attachment` to the NFT type `nftId`.
-     *
-     * The `minter` is the minter who created this NFT type, or may create it in the future if it does not exist.
-     */
-    event MinterAttachToNFT(
-        address indexed minter,
-        uint256 indexed nftId,
-        bytes attachment);
-
-    /** The account `owner` wished to attach data `attachment` to the NFT type `nftId`.
-     *
-     * The `owner` owned at least one NFT of this type at the time of the event.
-     */
-    event OwnerAttachToNFT(
-        address indexed owner,
-        uint256 indexed nftId,
-        bytes attachment);
-
-    /** The account `anonym` wished to attach data `attachment` to the NFT type `nftId`.
-     *
-     * There is absolutely no validation. It is the responsibility of the reader of this event to decide
-     * who the sender is and what the attachment means.
-     */
-    event AnonymAttachToNFT(
-        address indexed anonym,
-        uint256 indexed nftId,
-        bytes attachment);
-
-    /** Attach data `attachment` to the NFT type `nftId`, as the minter of this NFT type.
-     *
-     * This only works for NFT IDs in the Freeport format.
-     */
-    function minterAttachToNFT(uint256 nftId, bytes calldata attachment)
-    public {
-        require(nftId != CURRENCY, "0 is not a valid NFT ID");
-        address minter = _msgSender();
-        address actualMinter = _minterFromNftId(nftId);
-        require(minter == actualMinter, "Only minter");
-        emit MinterAttachToNFT(minter, nftId, attachment);
-    }
-
-    /** Attach data `attachment` to the NFT type `nftId`, as a current owner of an NFT of this type.
-     *
-     * This works for NFTs in the ERC-1155 or Freeport standards.
-     */
-    function ownerAttachToNFT(uint256 nftId, bytes calldata attachment)
-    public {
-        require(nftId != CURRENCY, "0 is not a valid NFT ID");
-        address owner = _msgSender();
-        uint256 balance = freeport.balanceOf(owner, nftId);
-        require(balance > 0, "Only current owner");
-        emit OwnerAttachToNFT(owner, nftId, attachment);
-    }
-
-    /** Attach data `attachment` to the NFT type `nftId`, as any account.
-     */
-    function anonymAttachToNFT(uint256 nftId, bytes calldata attachment)
-    public {
-        require(nftId != CURRENCY, "0 is not a valid NFT ID");
-        address anonym = _msgSender();
-        emit AnonymAttachToNFT(anonym, nftId, attachment);
-    }
-
     /** Parse an NFT ID into its issuer, its supply, and an arbitrary nonce.
      *
      * This does not imply that the NFTs exist.
@@ -108,4 +45,75 @@ contract NFTAttachment is /* AccessControl, */ MetaTxContext {
         minter = address(uint160((id & 0xFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF000000000000000000000000) >> (32 + 64)));
         return minter;
     }
+
+    // ----
+    event MinterAttachToNFT1(
+        address indexed minter,
+        uint256 indexed nftId,
+        bytes attachment);
+
+    function minterAttachToNFT1(uint256 nftId, bytes calldata attachment)
+    public {
+        require(nftId != CURRENCY, "0 is not a valid NFT ID");
+        address minter = _msgSender();
+        address actualMinter = _minterFromNftId(nftId);
+        require(minter == actualMinter, "Only minter");
+        emit MinterAttachToNFT1(minter, nftId, attachment);
+    }
+
+    // ----
+    event MinterAttachToNFT2(
+        address indexed minter,
+        uint256 indexed nftId,
+        bytes32 a, bytes32 b);
+
+    function minterAttachToNFT2(uint256 nftId, bytes32 a, bytes32 b)
+    public {
+        require(nftId != CURRENCY, "0 is not a valid NFT ID");
+        address minter = _msgSender();
+        address actualMinter = _minterFromNftId(nftId);
+        require(minter == actualMinter, "Only minter");
+        emit MinterAttachToNFT2(minter, nftId, a, b);
+    }
+
+    // ----
+    event MinterAttachToNFT3(
+        address indexed minter,
+        uint256 indexed nftId,
+        bytes32 a, bytes32 b, bytes32 c, bytes32 d);
+
+    function minterAttachToNFT3(uint256 nftId, bytes32 a, bytes32 b, bytes32 c, bytes32 d)
+    public {
+        require(nftId != CURRENCY, "0 is not a valid NFT ID");
+        address minter = _msgSender();
+        address actualMinter = _minterFromNftId(nftId);
+        require(minter == actualMinter, "Only minter");
+        emit MinterAttachToNFT3(minter, nftId, a, b, c, d);
+    }
+
+    // ----
+    event MinterAttachToNFT4(
+        uint64 len,
+        address indexed minter,
+        uint256 indexed nftId,
+        bytes32 a, bytes32 b, bytes32 c);
+
+    function minterAttachToNFT4(uint256 nftId, uint64 len, bytes32 a, bytes32 b, bytes32 c)
+    public {
+        require(nftId != CURRENCY, "0 is not a valid NFT ID");
+        address minter = _msgSender();
+        address actualMinter = _minterFromNftId(nftId);
+        require(minter == actualMinter, "Only minter");
+        emit MinterAttachToNFT4(len, minter, nftId, a, b, c);
+    }
+
+    // ----
+    function minterAttachToNFT0(uint256 nftId, bytes calldata attachment)
+    public {
+        require(nftId != CURRENCY, "0 is not a valid NFT ID");
+        address minter = _msgSender();
+        address actualMinter = _minterFromNftId(nftId);
+        require(minter == actualMinter, "Only minter");
+    }
+
 }
