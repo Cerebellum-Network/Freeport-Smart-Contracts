@@ -116,7 +116,7 @@ abstract contract TransferFees is JointAccounts {
         uint256 secondaryRoyaltyMinimum)
     public {
         address issuer = _msgSender();
-        require(_isIssuer(issuer, nftId), "Only the issuer of this NFT can set royalties");
+        require(isMinter(issuer, nftId), "Only the issuer of this NFT can set royalties");
         require(block.timestamp >= royaltiesConfigLockedUntil[nftId], "Royalties configuration is locked for now");
 
         require(primaryRoyaltyAccount != address(0) || (primaryRoyaltyCut == 0 && primaryRoyaltyMinimum == 0),
@@ -152,7 +152,7 @@ abstract contract TransferFees is JointAccounts {
         uint256 lockUntil)
     public {
         address issuer = _msgSender();
-        require(_isIssuer(issuer, nftId));
+        require(isMinter(issuer, nftId), "Only the issuer of this NFT can lock royalties");
 
         require(lockUntil > royaltiesConfigLockedUntil[nftId], "Royalties configuration cannot be unlocked earlier");
         royaltiesConfigLockedUntil[nftId] = lockUntil;
