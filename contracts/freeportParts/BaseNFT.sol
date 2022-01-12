@@ -29,9 +29,7 @@ abstract contract BaseNFT is ERC1155, MetaTxContext {
     }
 
     constructor()
-    ERC1155("https://cere.network/nft/{id}.json") {
-        _setupRole(DEFAULT_ADMIN_ROLE, _msgSender());
-    }
+    ERC1155("https://cere.network/nft/{id}.json") {}
 
     function _forceTransfer(
         address from,
