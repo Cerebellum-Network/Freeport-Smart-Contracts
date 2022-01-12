@@ -3,6 +3,8 @@ const ethers = require("ethers");
 const sdk = require("@cere/freeport-sdk");
 const {Biconomy} = require("@biconomy/mexa");
 
+const BICONOMY_API_KEY = process.env.BICONOMY_API_KEY;
+
 const waitOnBiconomy = (biconomy) => new Promise((resolve, reject) => {
     biconomy.onEvent(biconomy.READY, resolve).onEvent(biconomy.ERROR, reject);
 });
@@ -18,7 +20,7 @@ module.exports = async function (done) {
         let biconomy = new Biconomy(truffleProvider,
             {
                 walletProvider: truffleProvider,
-                apiKey: "WijpEd4xz.589021f1-32b9-438e-bc34-e289bd81b016",
+                apiKey: BICONOMY_API_KEY,
                 debug: true
             });
 
@@ -38,15 +40,15 @@ module.exports = async function (done) {
             contractAddress: freeportAddress,
         });
 
-        let tx = await freeport.issue(10, [0]);
+        let tx = await freeport.issue(10, [0], {gasLimit: 1e6});
         log("TX", tx);
         let receipt = await tx.wait();
         log("RECEIPT", receipt);
 
         let event = receipt.events[0];
-        //console.assert(event.eventSignature === "TransferSingle(address,address,address,uint256,uint256)");
-        //console.assert(event.args.from === '0x0000000000000000000000000000000000000000');
-        //console.assert(event.args.to === accounts[0]);
+        console.assert(event.eventSignature === "TransferSingle(address,address,address,uint256,uint256)");
+        console.assert(event.args.from === '0x0000000000000000000000000000000000000000');
+        console.assert(event.args.to === accounts[0]);
 
         log("OK");
         done();
