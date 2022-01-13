@@ -26,7 +26,7 @@ Contracts: [Freeport](https://polygonscan.com/address/0x521296be238B164b9A391b6F
 
 Accounts:
 No ERC20 connection yet.
-[Fiat-to-NFT Service](https://mumbai.polygonscan.com/address/0x2352f1167F1c1c5273bB64a1FEEAf9dF49702A19) (
+[Fiat-to-NFT Service](https://polygonscan.com/address/0x2352f1167F1c1c5273bB64a1FEEAf9dF49702A19) (
 see [prod_setup](scripts/prod_setup.js)).
 No Meta-tx Relayer Account yet.
 [Admin](https://polygonscan.com/address/0x4d632f8513554d7647a326c1f4ca72caeff93e63).
