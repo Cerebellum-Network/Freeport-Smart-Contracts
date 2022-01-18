@@ -39,6 +39,7 @@ module.exports = async function (done) {
     log("Sent 9M of currency to FiatGateway");
 
     let devAccounts = [
+        "0x6108E8aFFe0c51D4e2515A773aeF16b19ED6feB9", // e2e tests (Pavel)
         "0x6d2b28389d3153689c57909829dFCf6241d36388", // Evgeny
         "0x1Bf6FCa28253A1257e4B5B3440F7fbE0c59D1546", // Sergey
         "0x51c5590504251A5993Ba6A46246f87Fa0eaE5897", // Aurel
