@@ -4,7 +4,7 @@ const log = console.log;
 
 module.exports = async function (done) {
     // USDC on Polygon.
-    const usdcAddress = "0x2791bca1f2de4661ed88a30c99a7a9449aa84174";
+    const usdcAddress = "0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174";
 
     let accounts = await web3.eth.getAccounts();
     let admin = accounts[0];

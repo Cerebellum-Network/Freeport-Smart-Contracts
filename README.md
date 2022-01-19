@@ -22,10 +22,9 @@ Commit caefd460 deployed.
 #### Mainnet
 
 Contracts: [Freeport](https://polygonscan.com/address/0x521296be238B164b9A391b6F6175741826CB5F33) and
-[Fiat Gateway](https://polygonscan.com/address/0xf6d782Cd0dC9976170242B94C8E653C7bA489634) and [Simple Auction](https://polygonscan.com/address/0xd26d11faceA9798B3be6C8a42803eb31204DA790) and [NFT Attachment](https://polygonscan.com/address/0x5E376313fddBE3010F5d9fbC446C63d803590445) and [Forwarder](https://polygonscan.com/address/0x5e43bA1666B13C346E2ECdeD9dcDaaf02fbb0B22) and [Bypass Forwarder](https://polygonscan.com/address/0x1E77956B211cb4437317CF692141b292B1433f29).
+[Fiat Gateway](https://polygonscan.com/address/0xf6d782Cd0dC9976170242B94C8E653C7bA489634) and [Simple Auction](https://polygonscan.com/address/0xd26d11faceA9798B3be6C8a42803eb31204DA790) and [NFT Attachment](https://polygonscan.com/address/0x5E376313fddBE3010F5d9fbC446C63d803590445) and [Forwarder](https://polygonscan.com/address/0x5e43bA1666B13C346E2ECdeD9dcDaaf02fbb0B22) and [Bypass Forwarder](https://polygonscan.com/address/0x1E77956B211cb4437317CF692141b292B1433f29) and [USDC ERC20](https://polygonscan.com/address/0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174).
 
 Accounts:
-No ERC20 connection yet.
 [Fiat-to-NFT Service](https://polygonscan.com/address/0x2352f1167F1c1c5273bB64a1FEEAf9dF49702A19) (
 see [prod_setup](scripts/prod_setup.js)).
 No Meta-tx Relayer Account yet.
