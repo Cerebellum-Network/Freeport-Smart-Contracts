@@ -224,7 +224,7 @@ More instructions can be found in the original [README of the template](BUILD.md
 
 `export MNEMONIC='spatial spin account funny glue cancel cushion twelve inmate author night dust'`\
 `export NETWORK_ID=5777`\
-`docker run -d -p 8545:8545 338287888375.dkr.ecr.us-west-2.amazonaws.com/crb-davinci-nft-test:latest --db /app/db --mnemonic $MNEMONIC --networkId $NETWORK_ID`
+`docker run -d -p 8545:8545 524725240689.dkr.ecr.us-west-2.amazonaws.com/crb-davinci-nft-test:latest --db /app/db --mnemonic $MNEMONIC --networkId $NETWORK_ID`
 
 ## How to update Freeport SDK 
 
@@ -239,7 +239,7 @@ More instructions can be found in the original [README of the template](BUILD.md
 
 ## How to run e2e test locally
 Readme.md for running e2e-test locally is [here](https://github.com/Cerebellum-Network/e2e-tests/blob/master/README.md#how-to-run-e2e-tests-locally).
-For this service you need to create image locally and tag it with tag `338287888375.dkr.ecr.us-west-2.amazonaws.com/crb-davinci-nft-test:YOUR_CUSTOM_TAG`
+For this service you need to create image locally and tag it with tag `524725240689.dkr.ecr.us-west-2.amazonaws.com/crb-davinci-nft-test:YOUR_CUSTOM_TAG`
 and use `YOUR_CUSTOM_TAG` for running e2e-tests locally.
 
 ## Where to check the e2e-tests result after merge in dev?

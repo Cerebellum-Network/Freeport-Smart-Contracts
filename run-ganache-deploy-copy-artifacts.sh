@@ -10,7 +10,7 @@ id=$(docker run -d \
   --network=bridge \
   -v "$PWD"/artifacts/db:/app/db \
   -v "$PWD"/artifacts/contracts:/app/davinci_nft/build/contracts \
-  338287888375.dkr.ecr.us-west-2.amazonaws.com/crb-davinci-nft-test:builder \
+  524725240689.dkr.ecr.us-west-2.amazonaws.com/crb-davinci-nft-test:builder \
   --db /app/db \
   --account_keys_path /app/keys.json \
   --mnemonic "$MNEMONIC" \
