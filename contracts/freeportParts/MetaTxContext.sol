@@ -9,6 +9,9 @@ import "./Upgradeable.sol";
  * @dev Context variant with ERC2771 support.
  */
 abstract contract MetaTxContext is Upgradeable {
+    function __MetaTxContext_init() internal {
+        __Upgradeable_init();
+    }
 
     bytes32 public constant META_TX_FORWARDER = keccak256("META_TX_FORWARDER");
 

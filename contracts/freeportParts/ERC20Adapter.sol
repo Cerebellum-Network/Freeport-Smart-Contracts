@@ -6,6 +6,9 @@ import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 /**
  */
 abstract contract ERC20Adapter is TransferOperator {
+    function __ERC20Adapter_init() internal {
+        __TransferOperator_init();
+    }
 
     /**
       The address of ERC-20 token's contract

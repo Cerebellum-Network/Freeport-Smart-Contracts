@@ -3,7 +3,7 @@
 
 pragma solidity ^0.8.0;
 
-import "@openzeppelin/contracts/proxy/utils/UUPSUpgradeable.sol";
+import "@openzeppelin/contracts-upgradeable/proxy/utils/UUPSUpgradeable.sol";
 import "@openzeppelin/contracts-upgradeable/access/AccessControlUpgradeable.sol";
 
 /*
@@ -11,6 +11,9 @@ import "@openzeppelin/contracts-upgradeable/access/AccessControlUpgradeable.sol"
  */
 abstract contract Upgradeable is UUPSUpgradeable, AccessControlUpgradeable {
     function __Upgradeable_init() internal {
+        __UUPSUpgradeable_init();
+        __AccessControl_init();
+
         _setupRole(DEFAULT_ADMIN_ROLE, msg.sender);
     }
 

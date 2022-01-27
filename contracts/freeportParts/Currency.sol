@@ -5,6 +5,9 @@ import "./BaseNFT.sol";
 /** Define a currency for fees.
 */
 abstract contract Currency is BaseNFT {
+    function __Currency_init() internal {
+        __BaseNFT_init();
+    }
 
     /** The token ID that represents the internal currency for all payments in this contract. */
     uint256 public constant CURRENCY = 0;

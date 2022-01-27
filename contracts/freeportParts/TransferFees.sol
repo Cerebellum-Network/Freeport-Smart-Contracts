@@ -8,6 +8,9 @@ import "./JointAccounts.sol";
 - Report configured royalties to service providers (supports Joint Accounts).
  */
 abstract contract TransferFees is JointAccounts {
+    function __TransferFees_init() internal {
+        __JointAccounts_init();
+    }
 
     bytes32 public constant BYPASS_SENDER = keccak256("BYPASS_SENDER");
 

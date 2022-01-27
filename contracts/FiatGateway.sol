@@ -1,8 +1,9 @@
 pragma solidity ^0.8.0;
 
-import "./access/AccessControl.sol";
+import "./freeportParts/Upgradeable.sol";
 import "./Freeport.sol";
-import "./token/ERC1155/utils/ERC1155Holder.sol";
+import "@openzeppelin/contracts-upgradeable/token/ERC1155/utils/ERC1155HolderUpgradeable.sol";
+import "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol";
 
 /** The FiatGateway contract allows buying NFTs from an external fiat payment.
   *
@@ -13,14 +14,14 @@ import "./token/ERC1155/utils/ERC1155Holder.sol";
   *
   * This contract is operational only when the exchange rate is set to a non-zero value.
  */
-contract FiatGateway is AccessControl, ERC1155Holder {
+contract FiatGateway is Upgradeable, ERC1155HolderUpgradeable {
 
     /** Supports interfaces of AccessControl and ERC1155Receiver.
      */
     function supportsInterface(bytes4 interfaceId)
-    public view virtual override(AccessControl, ERC1155Receiver) returns (bool) {
-        return AccessControl.supportsInterface(interfaceId)
-        || ERC1155Receiver.supportsInterface(interfaceId);
+    public view virtual override(AccessControlUpgradeable, ERC1155ReceiverUpgradeable) returns (bool) {
+        return AccessControlUpgradeable.supportsInterface(interfaceId)
+        || ERC1155ReceiverUpgradeable.supportsInterface(interfaceId);
     }
 
     bytes32 public constant EXCHANGE_RATE_ORACLE = keccak256("EXCHANGE_RATE_ORACLE");
@@ -47,10 +48,11 @@ contract FiatGateway is AccessControl, ERC1155Holder {
     event SetExchangeRate(
         uint256 cereUnitsPerPenny);
 
-    constructor(Freeport _freeport) {
-        freeport = _freeport;
+    function initialize(Freeport _freeport) public initializer {
+        __Upgradeable_init();
+        __ERC1155Holder_init();
 
-        _setupRole(DEFAULT_ADMIN_ROLE, _msgSender());
+        freeport = _freeport;
     }
 
     /** Set the exchange rate between fiat (USD) and Freeport currency (CERE).

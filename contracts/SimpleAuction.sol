@@ -40,7 +40,8 @@ contract SimpleAuction is /* AccessControl, */ MetaTxContext, ERC1155HolderUpgra
     /** Initialize this contract and its dependencies.
      */
     function initialize(Freeport _freeport) public initializer {
-        __Upgradeable_init();
+        __MetaTxContext_init();
+        __ERC1155Holder_init();
 
         freeport = _freeport;
     }

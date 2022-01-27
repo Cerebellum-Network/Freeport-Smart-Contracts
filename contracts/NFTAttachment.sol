@@ -30,7 +30,7 @@ contract NFTAttachment is /* AccessControl, */ MetaTxContext {
      * The event `OwnerAttachToNFT` is supported for ERC-1155 NFTs, including Freeport.
      */
     function initialize(Freeport _freeport) public initializer {
-        __Upgradeable_init();
+        __MetaTxContext_init();
 
         require(address(_freeport) != address(0));
         freeport = _freeport;

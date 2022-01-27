@@ -6,6 +6,9 @@ import "./Currency.sol";
  * This is useful to connect a marketplace contract.
  */
 abstract contract TransferOperator is Currency {
+    function __TransferOperator_init() internal {
+        __Currency_init();
+    }
 
     bytes32 public constant TRANSFER_OPERATOR = keccak256("TRANSFER_OPERATOR");
 
