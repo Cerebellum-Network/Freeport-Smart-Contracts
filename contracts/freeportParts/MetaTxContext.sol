@@ -10,6 +10,10 @@ import "../access/AccessControl.sol";
  */
 abstract contract MetaTxContext is AccessControl {
 
+    constructor() {
+        _setupRole(DEFAULT_ADMIN_ROLE, _msgSender());
+    }
+
     bytes32 public constant META_TX_FORWARDER = keccak256("META_TX_FORWARDER");
 
     function isTrustedForwarder(address forwarder) public view virtual returns (bool) {
