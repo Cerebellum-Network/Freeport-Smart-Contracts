@@ -2,8 +2,8 @@ pragma solidity ^0.8.0;
 
 import "./freeportParts/MetaTxContext.sol";
 import "./Freeport.sol";
-import "./token/ERC1155/utils/ERC1155Holder.sol";
-
+import "@openzeppelin/contracts-upgradeable/token/ERC1155/utils/ERC1155HolderUpgradeable.sol";
+import "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol";
 
 /**
 An auction is characterized by a sequence of transactions and their corresponding events:
@@ -22,22 +22,26 @@ The settlement is only possible after the closing time.
 
 While an auction is active, it is identified by the tuple `(seller address, NFT ID)`.
 However, after the auction is settled, a new auction with the *same tuple* may start.
+
+This contract must have the TRANSFER_OPERATOR role in the Freeport contract.
  */
-contract SimpleAuction is /* AccessControl, */ MetaTxContext, ERC1155Holder {
+contract SimpleAuction is /* AccessControl, */ MetaTxContext, ERC1155HolderUpgradeable {
 
     /** Supports interfaces of AccessControl and ERC1155Receiver.
      */
     function supportsInterface(bytes4 interfaceId)
-    public view virtual override(AccessControl, ERC1155Receiver) returns (bool) {
-        return AccessControl.supportsInterface(interfaceId)
-        || ERC1155Receiver.supportsInterface(interfaceId);
+    public view virtual override(AccessControlUpgradeable, ERC1155ReceiverUpgradeable) returns (bool) {
+        return AccessControlUpgradeable.supportsInterface(interfaceId)
+        || ERC1155ReceiverUpgradeable.supportsInterface(interfaceId);
     }
 
     Freeport public freeport;
 
-    /** This contract must have the TRANSFER_OPERATOR role in the Freeport contract.
+    /** Initialize this contract and its dependencies.
      */
-    constructor(Freeport _freeport) {
+    function initialize(Freeport _freeport) public initializer {
+        __Upgradeable_init();
+
         freeport = _freeport;
     }
 
@@ -174,7 +178,7 @@ contract SimpleAuction is /* AccessControl, */ MetaTxContext, ERC1155Holder {
 
             // Collect royalty.
             try freeport.captureFee(seller, nftId, price, 1) {
-            } catch { }
+            } catch {}
         } else {
             // Otherwise, there was no buyer,
             // give back the NFT to the seller.

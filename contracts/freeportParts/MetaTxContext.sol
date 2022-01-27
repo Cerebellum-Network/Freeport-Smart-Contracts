@@ -3,16 +3,12 @@
 
 pragma solidity ^0.8.0;
 
-import "../access/AccessControl.sol";
+import "./Upgradeable.sol";
 
 /*
  * @dev Context variant with ERC2771 support.
  */
-abstract contract MetaTxContext is AccessControl {
-
-    constructor() {
-        _setupRole(DEFAULT_ADMIN_ROLE, _msgSender());
-    }
+abstract contract MetaTxContext is Upgradeable {
 
     bytes32 public constant META_TX_FORWARDER = keccak256("META_TX_FORWARDER");
 

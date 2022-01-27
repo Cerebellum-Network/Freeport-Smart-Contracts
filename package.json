@@ -36,11 +36,14 @@
     "@cere/freeport-sdk": "5.2.0-dev",
     "@maticnetwork/maticjs": "^2.0.40",
     "@openzeppelin/contracts": "4.1.0",
+    "@openzeppelin/contracts-upgradeable": "4.1.0",
     "@openzeppelin/test-helpers": "^0.5.12",
+    "@openzeppelin/truffle-upgrades": "^1.12.0",
     "@poanet/solidity-flattener": "^3.0.6",
     "@truffle/hdwallet-provider": "^1.4.1",
     "dotenv": "^9.0.0",
     "solc-0.8": "npm:solc@0.8.4",
-    "solidity-docgen": "^0.5.13"
+    "solidity-docgen": "^0.5.13",
+    "truffle": "^5.3.10"
   }
 }
