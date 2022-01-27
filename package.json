@@ -7,9 +7,9 @@
     "test": "test"
   },
   "scripts": {
-    "test": "truffle test --network=$npm_config_network",
-    "compile": "truffle compile",
-    "migrate": "truffle migrate --network=$npm_config_network",
+    "test": "truffle test --compile-all --network=$npm_config_network",
+    "compile": "truffle compile --all",
+    "migrate": "truffle migrate --compile-all --network=$npm_config_network",
     "dev-setup": "truffle exec scripts/dev_setup.js --network=$npm_config_network",
     "test-setup": "truffle exec scripts/test_setup.js --network=$npm_config_network",
     "flatten": "npx poa-solidity-flattener contracts/Freeport.sol",
