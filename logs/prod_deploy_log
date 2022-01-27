@@ -1,0 +1,232 @@
+> Compiled successfully using:
+   - solc: 0.8.4+commit.c7e474f2.Emscripten.clang
+
+
+Starting migrations...
+======================
+> Network name:    'polygon_mainnet'
+> Network id:      137
+> Block gas limit: 30000000 (0x1c9c380)
+
+
+1_deploy_freeport.js
+====================
+
+   Deploying 'Freeport'
+   --------------------
+   > transaction hash:    0x1a55dd3479b036e99a06baf24e2ff3ec08383128b2bd5c29e017d9193a9d8137
+   > Blocks: 0            Seconds: 0
+   > contract address:    0x3B8094ec44C000cDe161d4A4720348989CEC2ABD
+   > block number:        24261973
+   > block timestamp:     1643365900
+   > account:             0x4D632F8513554d7647a326c1f4ca72caEfF93e63
+   > balance:             7.38152384
+   > gas used:            3740219 (0x39123b)
+   > gas price:           40 gwei
+   > value sent:          0 ETH
+   > total cost:          0.14960876 ETH
+
+   Pausing for 2 confirmations...
+   ------------------------------
+   > confirmation number: 15 (block: 24261983)
+
+   Deploying 'ERC1967Proxy'
+   ------------------------
+   > transaction hash:    0xdd861efd91b3ee9dda1e51bbfbdcca293fff41389c0871d0a9e069af725b8b53
+   > Blocks: 0            Seconds: 0
+   > contract address:    0xf9AC6022F786f6f64Fd8abf661190b8517D92396
+   > block number:        24261992
+   > block timestamp:     1643365938
+   > account:             0x4D632F8513554d7647a326c1f4ca72caEfF93e63
+   > balance:             7.36676796
+   > gas used:            368897 (0x5a101)
+   > gas price:           40 gwei
+   > value sent:          0 ETH
+   > total cost:          0.01475588 ETH
+
+   Pausing for 2 confirmations...
+   ------------------------------
+   > confirmation number: 16 (block: 24262003)
+Deployed Freeport proxy 0xf9AC6022F786f6f64Fd8abf661190b8517D92396
+   > Saving artifacts
+   -------------------------------------
+   > Total cost:          0.16436464 ETH
+
+
+2_deploy_forwarder.js
+=====================
+Skipping unused Forwarder contracts
+   -------------------------------------
+   > Total cost:                   0 ETH
+
+
+3_deploy_fiat_gateway.js
+========================
+Operating on Freeport contract 0xf9AC6022F786f6f64Fd8abf661190b8517D92396
+From admin account 0x4D632F8513554d7647a326c1f4ca72caEfF93e63
+
+   Deploying 'FiatGateway'
+   -----------------------
+   > transaction hash:    0xf86e6211cf9e7ce73766d672fa540292a0f0aa194d8e328962ec7241c5ba05b2
+   > Blocks: 0            Seconds: 0
+   > contract address:    0xcFA1A0141976d8589E47508c03E3BA27Fc211F0e
+   > block number:        24262012
+   > block timestamp:     1643365978
+   > account:             0x4D632F8513554d7647a326c1f4ca72caEfF93e63
+   > balance:             7.3102406
+   > gas used:            1413184 (0x159040)
+   > gas price:           40 gwei
+   > value sent:          0 ETH
+   > total cost:          0.05652736 ETH
+
+   Pausing for 2 confirmations...
+   ------------------------------
+   > confirmation number: 14 (block: 24262021)
+
+   Deploying 'ERC1967Proxy'
+   ------------------------
+   > transaction hash:    0xf5c567c1b7baf8f8d44d1313de3398ef6d22e34e9329810ca5fa98038ca224db
+   > Blocks: 0            Seconds: 0
+   > contract address:    0x4478e3B0B71531DAc9d0ECe9357eBB0043669804
+   > block number:        24262030
+   > block timestamp:     1643366018
+   > account:             0x4D632F8513554d7647a326c1f4ca72caEfF93e63
+   > balance:             7.29736412
+   > gas used:            321912 (0x4e978)
+   > gas price:           40 gwei
+   > value sent:          0 ETH
+   > total cost:          0.01287648 ETH
+
+   Pausing for 2 confirmations...
+   ------------------------------
+   > confirmation number: 15 (block: 24262040)
+Deployed FiatGateway proxy 0x4478e3B0B71531DAc9d0ECe9357eBB0043669804
+Give the permission to make transfers to FiatGateway.
+Operating on Admin account 0x4D632F8513554d7647a326c1f4ca72caEfF93e63
+Give the permission to withdraw funds to Admin.
+Give the permission to change the exchange rate to Admin.
+
+   > Saving artifacts
+   -------------------------------------
+   > Total cost:          0.06940384 ETH
+
+
+4_deploy_simple_auction.js
+==========================
+Operating on Freeport contract 0xf9AC6022F786f6f64Fd8abf661190b8517D92396
+
+   Deploying 'SimpleAuction'
+   -------------------------
+   > transaction hash:    0xd017f24504e4b153d58461ecea57e1957ebe5be522c7f8bfd3fddc3bec118b97
+   > Blocks: 0            Seconds: 0
+   > contract address:    0xBA9a6021D8a91060D3A18FfF3EFC93d3d8017AB9
+   > block number:        24262054
+   > block timestamp:     1643366066
+   > account:             0x4D632F8513554d7647a326c1f4ca72caEfF93e63
+   > balance:             7.22552848
+   > gas used:            1680187 (0x19a33b)
+   > gas price:           40 gwei
+   > value sent:          0 ETH
+   > total cost:          0.06720748 ETH
+
+   Pausing for 2 confirmations...
+   ------------------------------
+   > confirmation number: 14 (block: 24262062)
+
+   Deploying 'ERC1967Proxy'
+   ------------------------
+   > transaction hash:    0xe77d950f5eaca5fdcd9a2c0ed8b8aad95413b691c7913368a92a658ac663c242
+   > Blocks: 0            Seconds: 0
+   > contract address:    0xf6a530242B233B1b4208c449D6C72FB7c6133cC0
+   > block number:        24262072
+   > block timestamp:     1643366102
+   > account:             0x4D632F8513554d7647a326c1f4ca72caEfF93e63
+   > balance:             7.2125542
+   > gas used:            324357 (0x4f305)
+   > gas price:           40 gwei
+   > value sent:          0 ETH
+   > total cost:          0.01297428 ETH
+
+   Pausing for 2 confirmations...
+   ------------------------------
+   > confirmation number: 12 (block: 24262079)
+Deployed SimpleAuction proxy 0xf6a530242B233B1b4208c449D6C72FB7c6133cC0
+Give the permission to make transfers to SimpleAuction.
+
+   > Saving artifacts
+   -------------------------------------
+   > Total cost:          0.08018176 ETH
+
+
+5_deploy_nft_attachment.js
+==========================
+Operating on Freeport contract 0xf9AC6022F786f6f64Fd8abf661190b8517D92396
+
+   Deploying 'NFTAttachment'
+   -------------------------
+   > transaction hash:    0xef845d373ce27fdd9561113a6c4600bdc790c0ba64e7fb82680fcdb748be6e3a
+   > Blocks: 0            Seconds: 0
+   > contract address:    0xb7b73a29FD5218884Ef4395ADe0e6661D30d0c7b
+   > block number:        24262091
+   > block timestamp:     1643366144
+   > account:             0x4D632F8513554d7647a326c1f4ca72caEfF93e63
+   > balance:             7.16162056
+   > gas used:            1213970 (0x128612)
+   > gas price:           40 gwei
+   > value sent:          0 ETH
+   > total cost:          0.0485588 ETH
+
+   Pausing for 2 confirmations...
+   ------------------------------
+   > confirmation number: 16 (block: 24262101)
+
+   Deploying 'ERC1967Proxy'
+   ------------------------
+   > transaction hash:    0x2cd8fbd2ce161fb9f371ca2638e9acf834681abd12ede8c4b2479f769d2e48a9
+   > Blocks: 0            Seconds: 0
+   > contract address:    0x651f2C6942F1c290632Ad5bB61D9ece789f82f35
+   > block number:        24262109
+   > block timestamp:     1643366180
+   > account:             0x4D632F8513554d7647a326c1f4ca72caEfF93e63
+   > balance:             7.14870104
+   > gas used:            322988 (0x4edac)
+   > gas price:           40 gwei
+   > value sent:          0 ETH
+   > total cost:          0.01291952 ETH
+
+   Pausing for 2 confirmations...
+   ------------------------------
+   > confirmation number: 14 (block: 24262118)
+Deployed NFTAttachment proxy 0x651f2C6942F1c290632Ad5bB61D9ece789f82f35
+
+   > Saving artifacts
+   -------------------------------------
+   > Total cost:          0.06147832 ETH
+
+
+6_deploy_testerc20.js
+=====================
+Not deploying test ERC20 on mainnet.
+   -------------------------------------
+   > Total cost:                   0 ETH
+
+
+7_biconomy.js
+=============
+Using Biconomy Forwarder 0x86C80a8aa58e0A4fa09A69624c31Ab2a6CAD56b8 for network polygon_mainnet
+From admin account 0x4D632F8513554d7647a326c1f4ca72caEfF93e63
+Operating on Freeport contract 0xf9AC6022F786f6f64Fd8abf661190b8517D92396
+Operating on SimpleAuction contract 0xf6a530242B233B1b4208c449D6C72FB7c6133cC0
+Give the permission to forward meta-transactions on Freeport to the Biconomy Forwarder
+Give the permission to forward meta-transactions on SimpleAuction to the Biconomy Forwarder
+
+   -------------------------------------
+   > Total cost:                   0 ETH
+
+
+Summary
+=======
+> Total deployments:   8
+> Final cost:          0.37542856 ETH
+
+

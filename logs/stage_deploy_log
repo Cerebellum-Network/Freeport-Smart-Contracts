@@ -1,0 +1,177 @@
+> Compiled successfully using:
+   - solc: 0.8.4+commit.c7e474f2.Emscripten.clang
+
+
+Starting migrations...
+======================
+> Network name:    'polygon_testnet'
+> Network id:      80001
+> Block gas limit: 20000000 (0x1312d00)
+
+
+1_deploy_freeport.js
+====================
+
+   Deploying 'ERC1967Proxy'
+   ------------------------
+   > transaction hash:    0xf501dea25ddce3f8db99d9ff7fa7880e02f2818a59dcf2e869d2a626fae4aa5e
+   > Blocks: 0            Seconds: 0
+   > contract address:    0xacd8105cBA046307d2228794ba2F81aA15e82E0D
+   > block number:        24344144
+   > block timestamp:     1643365109
+   > account:             0x63846e2D234e4F854F43423014430b4e131f697b
+   > balance:             1.131124315002746492
+   > gas used:            368909 (0x5a10d)
+   > gas price:           11 gwei
+   > value sent:          0 ETH
+   > total cost:          0.004057999 ETH
+
+   Pausing for 1 confirmations...
+   ------------------------------
+   > confirmation number: 15 (block: 24344159)
+Deployed Freeport proxy 0xacd8105cBA046307d2228794ba2F81aA15e82E0D
+   > Saving artifacts
+   -------------------------------------
+   > Total cost:         0.004057999 ETH
+
+
+2_deploy_forwarder.js
+=====================
+Skipping unused Forwarder contracts
+   -------------------------------------
+   > Total cost:                   0 ETH
+
+
+3_deploy_fiat_gateway.js
+========================
+Operating on Freeport contract 0xacd8105cBA046307d2228794ba2F81aA15e82E0D
+From admin account 0x63846e2D234e4F854F43423014430b4e131f697b
+
+   Deploying 'ERC1967Proxy'
+   ------------------------
+   > transaction hash:    0xbb687688ba22bc54e2224af08f36c8eac6f12d7eaee4e8491097b81959ea753d
+   > Blocks: 0            Seconds: 0
+   > contract address:    0xe25b31Aa454E28110E28C694ded69cD241A27Db1
+   > block number:        24344164
+   > block timestamp:     1643365149
+   > account:             0x63846e2D234e4F854F43423014430b4e131f697b
+   > balance:             1.127583283002746492
+   > gas used:            321912 (0x4e978)
+   > gas price:           11 gwei
+   > value sent:          0 ETH
+   > total cost:          0.003541032 ETH
+
+   Pausing for 1 confirmations...
+   ------------------------------
+   > confirmation number: 15 (block: 24344179)
+Deployed FiatGateway proxy 0xe25b31Aa454E28110E28C694ded69cD241A27Db1
+Give the permission to make transfers to FiatGateway.
+Operating on Admin account 0x63846e2D234e4F854F43423014430b4e131f697b
+Give the permission to withdraw funds to Admin.
+Give the permission to change the exchange rate to Admin.
+
+   > Saving artifacts
+   -------------------------------------
+   > Total cost:         0.003541032 ETH
+
+
+4_deploy_simple_auction.js
+==========================
+Operating on Freeport contract 0xacd8105cBA046307d2228794ba2F81aA15e82E0D
+
+   Deploying 'ERC1967Proxy'
+   ------------------------
+   > transaction hash:    0x1fcba2dca9c9ab13d379b59a822ec51f197f9318aaf1ac053985ef636fe65829
+   > Blocks: 0            Seconds: 0
+   > contract address:    0x71091eA5466E3Ca50971bd51c11069e5629a49dB
+   > block number:        24344189
+   > block timestamp:     1643365199
+   > account:             0x63846e2D234e4F854F43423014430b4e131f697b
+   > balance:             1.122742480002746492
+   > gas used:            324357 (0x4f305)
+   > gas price:           11 gwei
+   > value sent:          0 ETH
+   > total cost:          0.003567927 ETH
+
+   Pausing for 1 confirmations...
+   ------------------------------
+   > confirmation number: 14 (block: 24344202)
+Deployed SimpleAuction proxy 0x71091eA5466E3Ca50971bd51c11069e5629a49dB
+Give the permission to make transfers to SimpleAuction.
+
+   > Saving artifacts
+   -------------------------------------
+   > Total cost:         0.003567927 ETH
+
+
+5_deploy_nft_attachment.js
+==========================
+Operating on Freeport contract 0xacd8105cBA046307d2228794ba2F81aA15e82E0D
+
+   Deploying 'ERC1967Proxy'
+   ------------------------
+   > transaction hash:    0xd0873e97daca7c8b0c39d0963bd9401eb376cd269673bef9f1661ad10e90599f
+   > Blocks: 0            Seconds: 0
+   > contract address:    0x84766787c6b9131927A76634F7DDCfcf3ff2e9d1
+   > block number:        24344209
+   > block timestamp:     1643365243
+   > account:             0x63846e2D234e4F854F43423014430b4e131f697b
+   > balance:             1.118536531002746492
+   > gas used:            322988 (0x4edac)
+   > gas price:           11 gwei
+   > value sent:          0 ETH
+   > total cost:          0.003552868 ETH
+
+   Pausing for 1 confirmations...
+   ------------------------------
+   > confirmation number: 15 (block: 24344224)
+Deployed NFTAttachment proxy 0x84766787c6b9131927A76634F7DDCfcf3ff2e9d1
+
+   > Saving artifacts
+   -------------------------------------
+   > Total cost:         0.003552868 ETH
+
+
+6_deploy_testerc20.js
+=====================
+Operating on Freeport contract 0xacd8105cBA046307d2228794ba2F81aA15e82E0D
+Operating on TestERC20 contract 0x93E73E25F290f8A50281A801109f75CB4E8e3233
+Connect Freeport to TestERC20
+   -------------------------------------
+   > Total cost:                   0 ETH
+
+
+7_biconomy.js
+=============
+Using Biconomy Forwarder 0x9399BB24DBB5C4b782C70c2969F58716Ebbd6a3b for network polygon_testnet
+From admin account 0x63846e2D234e4F854F43423014430b4e131f697b
+Operating on Freeport contract 0xacd8105cBA046307d2228794ba2F81aA15e82E0D
+Operating on SimpleAuction contract 0x71091eA5466E3Ca50971bd51c11069e5629a49dB
+Give the permission to forward meta-transactions on Freeport to the Biconomy Forwarder
+Give the permission to forward meta-transactions on SimpleAuction to the Biconomy Forwarder
+
+   -------------------------------------
+   > Total cost:                   0 ETH
+
+
+Summary
+=======
+> Total deployments:   4
+> Final cost:          0.014719826 ETH
+
+
+✗ truffle exec scripts/stage_setup.js --network polygon_testnet
+Using network 'polygon_testnet'.
+
+Operating on Freeport contract 0xacd8105cBA046307d2228794ba2F81aA15e82E0D
+Operating on TestERC20 contract 0x93E73E25F290f8A50281A801109f75CB4E8e3233
+Operating on FiatGateway contract 0xe25b31Aa454E28110E28C694ded69cD241A27Db1
+From admin account 0x63846e2D234e4F854F43423014430b4e131f697b
+Set an exchange rate of 1:1 (0.01 with 6 decimals of ERC20 for $0.01)
+Give the permission to execute payments to the service account 0x53B53189e668dC2ee3bA7A44Bb033E60F400d395
+Mint and deposit some ERC20 to the admin account.
+Sent 5M of currency to FiatGateway
+Sent 1M of currency to 0x6108E8aFFe0c51D4e2515A773aeF16b19ED6feB9
+Sent 1M of currency to 0x6d2b28389d3153689c57909829dFCf6241d36388
+Sent 1M of currency to 0x1Bf6FCa28253A1257e4B5B3440F7fbE0c59D1546
+Sent 1M of currency to 0x51c5590504251A5993Ba6A46246f87Fa0eaE5897
