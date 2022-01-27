@@ -1,15 +1,17 @@
 // @openzeppelin/contracts-upgradeable @ 4.1.0
+// Changes: make _balances not private.
+//
 // SPDX-License-Identifier: MIT
 
 pragma solidity ^0.8.0;
 
-import "./IERC1155Upgradeable.sol";
-import "./IERC1155ReceiverUpgradeable.sol";
-import "./extensions/IERC1155MetadataURIUpgradeable.sol";
-import "../../utils/AddressUpgradeable.sol";
-import "../../utils/ContextUpgradeable.sol";
-import "../../utils/introspection/ERC165Upgradeable.sol";
-import "../../proxy/utils/Initializable.sol";
+import "@openzeppelin/contracts-upgradeable/token/ERC1155/IERC1155Upgradeable.sol";
+import "@openzeppelin/contracts-upgradeable/token/ERC1155/IERC1155ReceiverUpgradeable.sol";
+import "@openzeppelin/contracts-upgradeable/token/ERC1155/extensions/IERC1155MetadataURIUpgradeable.sol";
+import "@openzeppelin/contracts-upgradeable/utils/AddressUpgradeable.sol";
+import "@openzeppelin/contracts-upgradeable/utils/ContextUpgradeable.sol";
+import "@openzeppelin/contracts-upgradeable/utils/introspection/ERC165Upgradeable.sol";
+import "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol";
 
 /**
  * @dev Implementation of the basic standard multi-token.
@@ -22,7 +24,7 @@ contract ERC1155Upgradeable is Initializable, ContextUpgradeable, ERC165Upgradea
     using AddressUpgradeable for address;
 
     // Mapping from token ID to account balances
-    mapping (uint256 => mapping(address => uint256)) private _balances;
+    mapping (uint256 => mapping(address => uint256)) _balances;
 
     // Mapping from account to operator approvals
     mapping (address => mapping(address => bool)) private _operatorApprovals;
