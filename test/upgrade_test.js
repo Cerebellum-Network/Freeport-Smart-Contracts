@@ -11,7 +11,7 @@ const {expectEvent, expectRevert, constants, time} = require('@openzeppelin/test
 const BN = require('bn.js');
 
 contract("Upgrades", accounts => {
-    const [deployer, issuer, buyerBob, buyerBill, benificiary] = accounts;
+    const [deployer, bob] = accounts;
 
     const CURRENCY = 0;
     const UNIT = 1e6;
@@ -34,6 +34,36 @@ contract("Upgrades", accounts => {
         expect(await gateway.hasRole(ADMIN_ROLE, deployer)).equal(true);
         expect(await auction.hasRole(ADMIN_ROLE, deployer)).equal(true);
         expect(await attachment.hasRole(ADMIN_ROLE, deployer)).equal(true);
+    });
+
+    it("cannot be initialized again", async () => {
+        await expectRevert(
+            freeport.initialize(),
+            "Initializable: contract is already initialized");
+        await expectRevert(
+            gateway.initialize(freeport.address),
+            "Initializable: contract is already initialized");
+        await expectRevert(
+            auction.initialize(freeport.address),
+            "Initializable: contract is already initialized");
+        await expectRevert(
+            attachment.initialize(freeport.address),
+            "Initializable: contract is already initialized");
+    });
+
+    it("cannot be upgraded by non-admin", async () => {
+        await expectRevert(
+            freeport.upgradeTo(freeport.address, {from: bob}),
+            "Only Admin");
+        await expectRevert(
+            gateway.upgradeTo(freeport.address, {from: bob}),
+            "Only Admin");
+        await expectRevert(
+            auction.upgradeTo(freeport.address, {from: bob}),
+            "Only Admin");
+        await expectRevert(
+            attachment.upgradeTo(freeport.address, {from: bob}),
+            "Only Admin");
     });
 
     it("Freeport and SimpleAuction can be upgraded", async () => {
