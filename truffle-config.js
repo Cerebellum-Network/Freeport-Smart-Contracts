@@ -83,8 +83,8 @@ module.exports = {
       timeoutBlocks: 200,
       skipDryRun: false,
       chainId: 137,
-      gas: 2e6,
-      gasPrice: 80e9,
+      gas: 5e6,
+      gasPrice: 40e9,
     }
   },
 

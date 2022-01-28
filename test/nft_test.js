@@ -3,6 +3,7 @@ const Forwarder = artifacts.require("MinimalForwarder");
 const FiatGateway = artifacts.require("FiatGateway");
 const TestERC20 = artifacts.require("TestERC20");
 const log = console.log;
+const {deployProxy} = require('@openzeppelin/truffle-upgrades');
 const {expectEvent, expectRevert, constants} = require('@openzeppelin/test-helpers');
 const BN = require('bn.js');
 
@@ -26,7 +27,7 @@ contract("Freeport", accounts => {
             let erc20address = await freeport.currencyContract.call();
             erc20 = await TestERC20.at(erc20address);
         } else {
-            freeport = await Freeport.new();
+            freeport = await deployProxy(Freeport, [], {kind: "uups"});
             erc20 = await TestERC20.new();
             await freeport.setERC20(erc20.address);
         }
@@ -481,7 +482,7 @@ contract("Freeport", accounts => {
     });
 
     it("rejects deposits when ERC20 adapter is not configured", async () => {
-        let freeport = await Freeport.new();
+        let freeport = await deployProxy(Freeport, [], {kind: "uups"});
 
         await expectRevert(
             freeport.deposit(100),

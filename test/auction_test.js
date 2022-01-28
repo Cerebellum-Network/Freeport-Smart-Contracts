@@ -2,6 +2,7 @@ const Freeport = artifacts.require("./Freeport.sol");
 const SimpleAuction = artifacts.require("SimpleAuction");
 const TestERC20 = artifacts.require("TestERC20");
 const log = console.log;
+const {deployProxy} = require('@openzeppelin/truffle-upgrades');
 const {expectEvent, expectRevert, constants, time} = require('@openzeppelin/test-helpers');
 const BN = require('bn.js');
 
@@ -18,7 +19,7 @@ contract("SimpleAuction", accounts => {
             let erc20address = await freeport.currencyContract.call();
             erc20 = await TestERC20.at(erc20address);
         } else {
-            freeport = await Freeport.new();
+            freeport = await deployProxy(Freeport, [], {kind: "uups"});
             erc20 = await TestERC20.new();
             await freeport.setERC20(erc20.address);
         }

@@ -23,4 +23,9 @@ contract Freeport is /*
     TransferFees,
     */ SimpleExchange {
 
+    /** Initialize this contract and its dependencies.
+     */
+    function initialize() public initializer {
+        __SimpleExchange_init();
+    }
 }

@@ -2,7 +2,7 @@
 
 pragma solidity ^0.8.0;
 
-import "./access/AccessControl.sol";
+import "@openzeppelin/contracts/access/AccessControl.sol";
 import "./MinimalForwarder.sol";
 
 /* `BypassForwarder` is a variant of `MinimalForwarder` used to forward transactions that bypass royalties.

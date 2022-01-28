@@ -15,6 +15,10 @@ The following attributes of a type of NFT are immutable. They are used to derive
 
 */
 abstract contract Issuance is ERC20Adapter {
+    function __Issuance_init() internal {
+        __ERC20Adapter_init();
+    }
+
     /** A counter of NFT types issued by each issuer.
      * This is used to generate unique NFT IDs.
      */

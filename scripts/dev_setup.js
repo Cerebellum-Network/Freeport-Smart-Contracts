@@ -10,14 +10,14 @@ module.exports = async function (done) {
 
     const CURRENCY = 0;
     let tenM = "10" + "000" + "000" + "000000"; // 10M with 6 decimals;
-    let nineM = "9" + "000" + "000" + "000000"; // 9M with 6 decimals;
-    let hundredK = "100" + "000" + "000000";    // 100K with 6 decimals;
+    let fiveM = "5" + "000" + "000" + "000000"; // 5M with 6 decimals;
+    let oneM = "1" + "000" + "000" + "000000"; // 1M with 6 decimals;
 
     let accounts = await web3.eth.getAccounts();
     let admin = accounts[0];
-    let freeport = await Freeport.at("0xC59Af7FbE4553e07aA668C1A13CAa78Cd4550579");
+    let freeport = await Freeport.at("0x702BA959B5542B2Bf88a1C5924F73Ed97482c64B");
     let erc20 = await TestERC20.at("0x4e5a86E128f8Fb652169f6652e2Cd17aAe409e96");
-    let gateway = await FiatGateway.at("0xE8949692827C3034c6fF185a38c192ca3059f6e5");
+    let gateway = await FiatGateway.at("0x106Bf3D61952faE9279B08bdcB2e548316E0C1Ae");
     log("Operating on Freeport contract", freeport.address);
     log("Operating on TestERC20 contract", erc20.address);
     log("Operating on FiatGateway contract", gateway.address);
@@ -35,8 +35,8 @@ module.exports = async function (done) {
     await erc20.approve(freeport.address, tenM);
     await freeport.deposit(tenM);
 
-    await freeport.safeTransferFrom(admin, gateway.address, CURRENCY, nineM, "0x");
-    log("Sent 9M of currency to FiatGateway");
+    await freeport.safeTransferFrom(admin, gateway.address, CURRENCY, fiveM, "0x");
+    log("Sent 5M of currency to FiatGateway");
 
     let devAccounts = [
         "0x6108E8aFFe0c51D4e2515A773aeF16b19ED6feB9", // e2e tests (Pavel)
@@ -46,8 +46,8 @@ module.exports = async function (done) {
     ];
 
     for (let devAccount of devAccounts) {
-        await freeport.safeTransferFrom(admin, devAccount, CURRENCY, hundredK, "0x");
-        log("Sent 100k of currency to", devAccount);
+        await freeport.safeTransferFrom(admin, devAccount, CURRENCY, oneM, "0x");
+        log("Sent 1M of currency to", devAccount);
     }
 
     done();
