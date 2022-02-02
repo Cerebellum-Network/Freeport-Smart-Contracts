@@ -33,7 +33,7 @@
   "homepage": "https://github.com/Cerebellum-Network/Freeport-Smart-Contracts#readme",
   "devDependencies": {
     "@biconomy/mexa": "^2.0.25",
-    "@cere/freeport-sdk": "5.2.0-dev",
+    "@cere/freeport-sdk": "^7.0.0",
     "@maticnetwork/maticjs": "^2.0.40",
     "@openzeppelin/contracts": "4.1.0",
     "@openzeppelin/contracts-upgradeable": "4.1.0",
