@@ -2,6 +2,7 @@ pragma solidity ^0.8.0;
 
 import "./freeportParts/MetaTxContext.sol";
 import "./Freeport.sol";
+import "@openzeppelin/contracts-upgradeable/token/ERC1155/IERC1155Upgradeable.sol";
 import "@openzeppelin/contracts-upgradeable/token/ERC1155/utils/ERC1155HolderUpgradeable.sol";
 import "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol";
 
@@ -119,9 +120,11 @@ contract SimpleAuction is /* AccessControl, */ MetaTxContext, ERC1155HolderUpgra
 
     /**
      */
-    function bidOnAuction(address seller, uint256 nftId, uint256 price)
+    function bidOnAuction(address seller, uint256 nftId, uint256 price, uint nftTicketId, address nftTicketAddress)
     public {
         address buyer = _msgSender();
+        IERC1155Upgradeable nftTicket = IERC1155Upgradeable(nftTicketAddress);
+        require(nftTicket.balanceOf(buyer, nftTicketId) == 1, "Nft ticket required to place bid");
         Bid storage bid = sellerNftBids[seller][nftId];
 
         // Check that the auction exists and is open.
