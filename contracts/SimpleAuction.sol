@@ -112,7 +112,7 @@ contract SimpleAuction is /* AccessControl, */ MetaTxContext, ERC1155HolderUpgra
         bid.closeTimeSec = closeTimeSec;
 
         // Take the NFT from the seller.
-        freeport.safeTransferFrom(seller, address(this), nftId, 1, "");
+        freeport.transferFrom(seller, address(this), nftId, 1);
 
         emit StartAuction(seller, nftId, price, closeTimeSec);
     }
@@ -172,10 +172,10 @@ contract SimpleAuction is /* AccessControl, */ MetaTxContext, ERC1155HolderUpgra
         if (buyer != address(0)) {
             // In case there was a buyer,
             // transfer the payment to the seller.
-            freeport.safeTransferFrom(address(this), seller, CURRENCY, price, "");
+            freeport.transferFrom(address(this), seller, CURRENCY, price);
 
             // Transfer the NFT to the buyer.
-            freeport.safeTransferFrom(address(this), buyer, nftId, 1, "");
+            freeport.transferFrom(address(this), buyer, nftId, 1);
 
             // Collect royalty.
             try freeport.captureFee(seller, nftId, price, 1) {
@@ -183,7 +183,7 @@ contract SimpleAuction is /* AccessControl, */ MetaTxContext, ERC1155HolderUpgra
         } else {
             // Otherwise, there was no buyer,
             // give back the NFT to the seller.
-            freeport.safeTransferFrom(address(this), seller, nftId, 1, "");
+            freeport.transferFrom(address(this), seller, nftId, 1);
         }
 
         emit SettleAuction(seller, nftId, price, buyer);

@@ -32,6 +32,25 @@ abstract contract BaseNFT is ERC1155Upgradeable, MetaTxContext {
         || AccessControlUpgradeable.supportsInterface(interfaceId);
     }
 
+    /** transferFrom performs a simple transfer, without calling the hooks
+     *  (no _beforeTokenTransfer and no onERC1155Received).
+     */
+    function transferFrom(
+        address from,
+        address to,
+        uint id,
+        uint amount
+    )
+    public
+    {
+        require(to != address(0), "ERC1155: transfer to the zero address");
+        require(
+            from == _msgSender() || isApprovedForAll(from, _msgSender()),
+            "ERC1155: caller is not owner nor approved"
+        );
+        _forceTransfer(from, to, id, amount);
+    }
+
     function _forceTransfer(
         address from,
         address to,

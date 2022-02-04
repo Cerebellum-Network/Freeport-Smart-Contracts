@@ -10,6 +10,10 @@ See the [documentation](docs/Freeport.md) (regenerate with `npm run doc`).
 
 ## Releases
 
+### vNext: Auction bug fixes
+
+Additional public function has been implemented in BaseNFT contract that rely on forceTranfer function internally. New one is used instead of safeTransferFrom because using it had been caused fees collection doubly.
+
 ### 2022-01-28: Upgradeability
 
 Make Freeport, FiatGateway, SimpleAuction, and NFTAttachment upgradeable.
