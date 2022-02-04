@@ -10,9 +10,7 @@ See the [documentation](docs/Freeport.md) (regenerate with `npm run doc`).
 
 ## Deployments
 
-v1.0.0 (5baf28d4) deployed on the 2022-01-28.
-
-#### On Polygon (Production)
+#### v1.0.0 on Polygon (Production)
 
 Contracts: [Freeport](https://polygonscan.com/address/0xf9AC6022F786f6f64Fd8abf661190b8517D92396) and
 [Fiat Gateway](https://polygonscan.com/address/0x4478e3B0B71531DAc9d0ECe9357eBB0043669804)
@@ -25,7 +23,7 @@ Accounts:
 see [prod_setup](scripts/prod_setup.js)). Biconomy enabled.
 [Admin](https://polygonscan.com/address/0x4d632f8513554d7647a326c1f4ca72caeff93e63).
 
-#### On Polygon Mumbai testnet (Staging)
+#### v1.0.0 on Polygon Mumbai testnet (Staging)
 
 Contracts: [Freeport](https://mumbai.polygonscan.com/address/0xacd8105cBA046307d2228794ba2F81aA15e82E0D) and
 [Fiat Gateway](https://mumbai.polygonscan.com/address/0xe25b31Aa454E28110E28C694ded69cD241A27Db1)
@@ -38,7 +36,7 @@ Accounts:
 see [stage_setup](scripts/stage_setup.js)). Biconomy enabled.
 [Admin](https://mumbai.polygonscan.com/address/0x63846e2D234e4F854F43423014430b4e131f697b).
 
-#### On Polygon Mumbai testnet (Dev)
+#### v1.1.0 on Polygon Mumbai testnet (Dev)
 
 Contracts: [Freeport](https://mumbai.polygonscan.com/address/0x702BA959B5542B2Bf88a1C5924F73Ed97482c64B) and
 [Fiat Gateway](https://mumbai.polygonscan.com/address/0x106Bf3D61952faE9279B08bdcB2e548316E0C1Ae)

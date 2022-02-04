@@ -6,7 +6,13 @@ module.exports = async function (deployer, network, accounts) {
     const freeport = await Freeport.deployed();
     log("Operating on Freeport contract", freeport.address);
 
-    await upgradeProxy(freeport.address, Freeport, {deployer, kind: "uups"});
+    try {
+        const freeport2 = await upgradeProxy(freeport.address, Freeport, {deployer, kind: "uups"});
+        log("Upgraded", freeport2.address);
+    } catch (e) {
+        log("Error", e);
+        throw e;
+    }
 
     log();
 };

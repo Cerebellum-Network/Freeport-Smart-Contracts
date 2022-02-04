@@ -54,7 +54,8 @@ module.exports = {
           phrase: mnemonic
         },
         addressIndex: 1,
-        providerOrUrl:  `https://rpc-mumbai.maticvigil.com`,
+        providerOrUrl:  `https://matic-mumbai.chainstacklabs.com`,
+        //providerOrUrl:  `https://rpc-mumbai.maticvigil.com`, // Not working with upgradeProxy
         //providerOrUrl:  `https://rpc-mumbai.matic.today`,
         chainId: 80001,
         pollingInterval: 30e3,
@@ -65,8 +66,8 @@ module.exports = {
       timeoutBlocks: 200,
       skipDryRun: true,
       chainId: 80001,
-      gas: 4e6,
-      gasPrice: 11e9,
+      gas: 5e6,
+      gasPrice: 4e9,
     },
     //polygon mainnet
     polygon_mainnet: {
