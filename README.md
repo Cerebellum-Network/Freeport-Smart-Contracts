@@ -12,7 +12,9 @@ See the [documentation](docs/Freeport.md) (regenerate with `npm run doc`).
 
 ### vNext: Auction bug fixes
 
-Additional public function has been implemented in BaseNFT contract that rely on forceTranfer function internally. New one is used instead of safeTransferFrom because using it had been caused fees collection doubly.
+- Fix a bug of incorrect royalty collection in auctions.
+- Fix a vulnerability that may allow a buyer to disrupt an auction.
+- Additional public function transferFrom has been implemented in Freeport contract to support the above fixes.
 
 ### 2022-01-28: Upgradeability
 

@@ -23,6 +23,9 @@ The settlement is only possible after the closing time.
 While an auction is active, it is identified by the tuple `(seller address, NFT ID)`.
 However, after the auction is settled, a new auction with the *same tuple* may start.
 
+This contract is not meant to be used from another contract; if it is,
+it will not call onERC1155Received hooks for security reasons.
+
 This contract must have the TRANSFER_OPERATOR role in the Freeport contract.
  */
 contract SimpleAuction is /* AccessControl, */ MetaTxContext, ERC1155HolderUpgradeable {
@@ -94,6 +97,9 @@ contract SimpleAuction is /* AccessControl, */ MetaTxContext, ERC1155HolderUpgra
         address seller = _msgSender();
         Bid storage bid = sellerNftBids[seller][nftId];
 
+        // Cannot put the currency on auction.
+        require(nftId != CURRENCY, "cannot auction currency");
+
         // Check that the auction does not exist.
         require(bid.closeTimeSec == 0, "the auction must not exist");
 
@@ -140,13 +146,13 @@ contract SimpleAuction is /* AccessControl, */ MetaTxContext, ERC1155HolderUpgra
         // Refund the previous buyer.
         address previousBuyer = bid.buyer;
         if (previousBuyer != address(0)) {
-            freeport.safeTransferFrom(address(this), previousBuyer, CURRENCY, previousDeposit, "");
+            freeport.transferFrom(address(this), previousBuyer, CURRENCY, previousDeposit);
         }
 
         // Take the new deposit from the new buyer.
         bid.buyer = buyer;
         bid.price = price;
-        freeport.safeTransferFrom(buyer, address(this), CURRENCY, price, "");
+        freeport.transferFrom(buyer, address(this), CURRENCY, price);
 
         emit BidOnAuction(seller, nftId, price, bid.closeTimeSec, buyer);
     }
