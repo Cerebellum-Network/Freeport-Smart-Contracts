@@ -2,3 +2,5 @@
 .env.test
 node_modules
 .idea
+# Ignore upgrades in ganache
+.openzeppelin/unknown-1337.json

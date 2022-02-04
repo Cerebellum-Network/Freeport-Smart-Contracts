@@ -10,7 +10,7 @@ See the [documentation](docs/Freeport.md) (regenerate with `npm run doc`).
 
 ## Releases
 
-### 2022-01-30: NFT transfer
+### vNext: Auction bug fixes
 
 Additional public function has been implemented in BaseNFT contract that rely on forceTranfer function internally. New one is used instead of safeTransferFrom because using it had been caused fees collection doubly.
 

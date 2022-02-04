@@ -112,7 +112,7 @@ contract SimpleAuction is /* AccessControl, */ MetaTxContext, ERC1155HolderUpgra
         bid.closeTimeSec = closeTimeSec;
 
         // Take the NFT from the seller.
-        freeport.safeTransferFrom(seller, address(this), nftId, 1, "");
+        freeport.transferFrom(seller, address(this), nftId, 1);
 
         emit StartAuction(seller, nftId, price, closeTimeSec);
     }
