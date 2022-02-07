@@ -447,9 +447,11 @@ contract("Freeport", accounts => {
         balance = await erc20.balanceOf(issuer);
         assert.equal(balance, priceCere);
 
-        // Send back the tokens to clean up.
+        // Admin withdraws what remains in the gateway.
         balance = await gateway.withdrawERC20.call();
+        assert.equal(balance, liquidities - priceCere);
         await gateway.withdrawERC20();
+        balance = await erc20.balanceOf(accounts[0]);
         assert.equal(balance, liquidities - priceCere);
     });
 
