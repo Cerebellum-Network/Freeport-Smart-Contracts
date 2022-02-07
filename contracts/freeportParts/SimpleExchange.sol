@@ -68,7 +68,9 @@ abstract contract SimpleExchange is TransferFees {
      *
      * The offer must have been created beforehand by makeOffer.
      *
-     * The same authorization as safeTransferFrom apply to the buyer (sender or approved operator).
+     * The buyer receives the NFT.
+     * The sender pays the seller. The sender is not necessarily the same as buyer, see FiatGateway.
+     * The same authorization as safeTransferFrom apply to the caller (sender or approved operator).
      *
      * The parameter expectedPriceOrZero can be used to validate the price that the buyer expects to pay. This prevents
      * a race condition with makeOffer or setExchangeRate. Pass 0 to disable this validation and accept any current price.

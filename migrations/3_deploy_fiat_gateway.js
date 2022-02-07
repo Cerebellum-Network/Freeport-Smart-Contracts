@@ -16,8 +16,9 @@ module.exports = async function (deployer, network, accounts) {
     const EXCHANGE_RATE_ORACLE = await gateway.EXCHANGE_RATE_ORACLE.call();
     const PAYMENT_SERVICE = await gateway.PAYMENT_SERVICE.call();
 
-    log("Give the permission to make transfers to FiatGateway.")
-    await freeport.grantRole(TRANSFER_OPERATOR, gateway.address);
+    // No longer necessary after v2.0.0
+    //log("Give the permission to make transfers to FiatGateway.")
+    //await freeport.grantRole(TRANSFER_OPERATOR, gateway.address);
 
     log("Operating on Admin account", admin);
     log("Give the permission to withdraw funds to Admin."); // In constructor.
