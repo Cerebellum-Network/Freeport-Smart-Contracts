@@ -31,19 +31,22 @@ contract FiatGateway is Upgradeable, ERC1155HolderUpgradeable {
     uint256 public constant CURRENCY = 0;
 
     Freeport public freeport;
+
+    /** The current exchange rate of ERC20 Units (with 6 decimals) per USD cent (1 penny).
+     */
     uint cereUnitsPerPenny;
 
     /** How many USD cents were received so far, according to the payment service.
      */
     uint public totalPenniesReceived;
 
-    /** How many CERE Units were sold so far.
+    /** Discontinued variable.
      */
     uint public totalCereUnitsSent;
 
     /** An event emitted when the exchange rate was set to a new value.
      *
-     * The rate is given as CERE Units (with 10 decimals) per USD cent (1 penny).
+     * The rate is given as ERC20 Units (with 6 decimals) per USD cent (1 penny).
      */
     event SetExchangeRate(
         uint256 cereUnitsPerPenny);
@@ -55,9 +58,23 @@ contract FiatGateway is Upgradeable, ERC1155HolderUpgradeable {
         freeport = _freeport;
     }
 
+    /** Initialize this contract after version 2.0.0.
+     *
+     * Allow deposit of USDC into Freeport.
+     */
+    function initialize_v2_0_0() public {
+        IERC20 erc20 = freeport.currencyContract();
+
+        bool init = erc20.allowance(address(this), address(freeport)) > 0;
+        if (init) return;
+
+        uint256 maxInt = 0xffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff;
+        erc20.approve(address(freeport), maxInt);
+    }
+
     /** Set the exchange rate between fiat (USD) and Freeport currency (CERE).
       *
-      * The rate is given as number of CERE Units (with 10 decimals) per USD cent (1 penny).
+      * The rate is given as number of ERC20 Units (with 6 decimals) per USD cent (1 penny).
       *
       * Only the rate service with the EXCHANGE_RATE_ORACLE role can change the rate.
      */
@@ -76,16 +93,32 @@ contract FiatGateway is Upgradeable, ERC1155HolderUpgradeable {
         return cereUnitsPerPenny;
     }
 
-    /** Withdraw all CERE from this contract.
+    /** Withdraw all ERC20 from this contract.
       *
       * Only accounts with DEFAULT_ADMIN_ROLE can withdraw.
      */
-    function withdraw()
+    function withdrawERC20()
     public onlyRole(DEFAULT_ADMIN_ROLE)
     returns (uint) {
-
         address admin = _msgSender();
+        IERC20 erc20 = freeport.currencyContract();
+        uint amount = erc20.balanceOf(address(this));
 
+        erc20.transfer(admin, amount);
+
+        return amount;
+    }
+
+    /** Deprecated. Only ERC20 is relevant.
+      *
+      * Withdraw all internal currency from this contract.
+      *
+      * Only accounts with DEFAULT_ADMIN_ROLE can withdraw.
+     */
+    function withdrawCurrency()
+    public onlyRole(DEFAULT_ADMIN_ROLE)
+    returns (uint) {
+        address admin = _msgSender();
         uint amount = freeport.balanceOf(address(this), CURRENCY);
 
         freeport.safeTransferFrom(
@@ -131,6 +164,8 @@ contract FiatGateway is Upgradeable, ERC1155HolderUpgradeable {
         uint expectedPriceOrZero,
         uint nonce)
     public onlyRole(PAYMENT_SERVICE) {
+        // Keep track of the total off-chain payments reported.
+        totalPenniesReceived += penniesReceived;
 
         uint boughtTokens = penniesReceived * cereUnitsPerPenny;
         require(boughtTokens >= expectedPriceOrZero, "Insufficient payment");

@@ -382,7 +382,7 @@ contract("Freeport", accounts => {
 
         // Withdraw liquidities to the admin.
         let initBalance = await freeport.balanceOf(deployer, CURRENCY);
-        await gateway.withdraw();
+        await gateway.withdrawCurrency();
 
         balance = await freeport.balanceOf(deployer, CURRENCY);
         assert.equal(balance - initBalance, liquidities - priceCere);
@@ -449,7 +449,7 @@ contract("Freeport", accounts => {
         assert.equal(balance, 1);
 
         // Send back the tokens to clean up.
-        await gateway.withdraw();
+        await gateway.withdrawCurrency();
         await freeport.safeTransferFrom(issuer, deployer, CURRENCY, priceCere, "0x", {from: issuer});
     });
 

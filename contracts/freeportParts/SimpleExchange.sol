@@ -84,8 +84,10 @@ abstract contract SimpleExchange is TransferFees {
         require(price != 0, "Not for sale");
         require(expectedPriceOrZero == 0 || expectedPriceOrZero == price, "Unexpected price");
 
-        // Pay. This verifies the intent of the payer.
         uint totalPrice = price * amount;
+        // Deposit ERC20 from payer. This verifies the intent of the payer.
+        deposit(totalPrice);
+        // Pay the seller. This verifies the intent of the payer.
         safeTransferFrom(payer, seller, CURRENCY, totalPrice, "");
 
         // Take a fee from the seller (really a cut of the above payment).

@@ -12,9 +12,8 @@ module.exports = async function (deployer, network, accounts) {
 
     const TRANSFER_OPERATOR = await freeport.TRANSFER_OPERATOR.call();
 
-    // No longer necessary after v2.0.0
-    //log("Give the permission to make transfers to SimpleAuction.")
-    //await freeport.grantRole(TRANSFER_OPERATOR, auction.address);
+    log("Give the permission to make transfers to SimpleAuction.")
+    await freeport.grantRole(TRANSFER_OPERATOR, auction.address);
 
     log();
 };

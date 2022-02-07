@@ -50,6 +50,7 @@ contract SimpleAuction is /* AccessControl, */ MetaTxContext, ERC1155HolderUpgra
     }
 
     /** Initialize this contract after version 2.0.0.
+     *
      * Allow deposit of USDC into Freeport.
      */
     function initialize_v2_0_0() public {
@@ -131,6 +132,7 @@ contract SimpleAuction is /* AccessControl, */ MetaTxContext, ERC1155HolderUpgra
         bid.closeTimeSec = closeTimeSec;
 
         // Take the NFT from the seller.
+        // Use the TRANSFER_OPERATOR role.
         freeport.transferFrom(seller, address(this), nftId, 1);
 
         emit StartAuction(seller, nftId, price, closeTimeSec);
