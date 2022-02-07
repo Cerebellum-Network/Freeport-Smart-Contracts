@@ -75,14 +75,16 @@ abstract contract SimpleExchange is TransferFees {
      */
     function takeOffer(address buyer, address seller, uint256 nftId, uint256 expectedPriceOrZero, uint256 amount)
     public {
+        address payer = _msgSender();
+
         // Check and update the amount offered.
         uint256 price = sellerNftPriceOffers[seller][nftId];
         require(price != 0, "Not for sale");
         require(expectedPriceOrZero == 0 || expectedPriceOrZero == price, "Unexpected price");
 
-        // Pay. This verifies the intent of the buyer.
+        // Pay. This verifies the intent of the payer.
         uint totalPrice = price * amount;
-        safeTransferFrom(buyer, seller, CURRENCY, totalPrice, "");
+        safeTransferFrom(payer, seller, CURRENCY, totalPrice, "");
 
         // Take a fee from the seller (really a cut of the above payment).
         uint totalFee = _captureFee(seller, nftId, price, amount);

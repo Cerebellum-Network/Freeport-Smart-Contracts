@@ -64,9 +64,11 @@ contract("SimpleAuction", accounts => {
 
         // A helper function to check currency and NFT balances.
         let checkBalances = async (expected) => {
-            for (let [account, expectedCurrency, expectedNFTs] of expected) {
+            for (let [account, expectedERC20, expectedCurrency, expectedNFTs] of expected) {
+                let ercBalance = await erc20.balanceOf(account);
                 let currency = await freeport.balanceOf.call(account, CURRENCY);
                 let nfts = await freeport.balanceOf.call(account, nftId);
+                assert.equal(ercBalance, expectedERC20 * UNIT);
                 assert.equal(currency, expectedCurrency * UNIT);
                 assert.equal(nfts, expectedNFTs);
             }
@@ -100,6 +102,8 @@ contract("SimpleAuction", accounts => {
             [auction.address, 0, 1], // The contract took 1 NFT as deposit.
         ]);
 
+        await erc20.mint(buyerBob, 100 * UNIT);
+        await erc20.approve(auction.address, 1e9 * UNIT, {from: buyerBob});
         await auction.bidOnAuction(issuer, nftId, 100 * UNIT, {from: buyerBob});
 
         await checkBalances([

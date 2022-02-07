@@ -49,6 +49,19 @@ contract SimpleAuction is /* AccessControl, */ MetaTxContext, ERC1155HolderUpgra
         freeport = _freeport;
     }
 
+    /** Initialize this contract after version 2.0.0.
+     * Allow deposit of USDC into Freeport.
+     */
+    function initialize_v2_0_0() public {
+        IERC20 erc20 = freeport.currencyContract();
+
+        bool init = erc20.allowance(address(this), address(freeport)) > 0;
+        if (init) return;
+
+        uint256 maxInt = 0xffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff;
+        erc20.approve(address(freeport), maxInt);
+    }
+
     /** The token ID that represents the CERE currency for all payments in this contract. */
     uint256 public constant CURRENCY = 0;
 
@@ -195,24 +208,33 @@ contract SimpleAuction is /* AccessControl, */ MetaTxContext, ERC1155HolderUpgra
         emit SettleAuction(seller, nftId, price, buyer);
     }
 
+    /** Take USDC as deposit.
+     */
     function _takeDeposit(
         address from,
         uint amount
     ) internal {
-        freeport.transferFrom(from, address(this), CURRENCY, amount);
+        freeport.currencyContract().transferFrom(from, address(this), amount);
     }
 
+    /** Return the USDC deposit.
+     */
     function _returnDeposit(
         address to,
         uint amount
     ) internal {
-        freeport.transferFrom(address(this), to, CURRENCY, amount);
+        freeport.currencyContract().transfer(to, amount);
     }
 
+    /** Convert the USDC deposit into Freeport-USDC and pay out to the seller.
+     *
+     * This supports joint accounts and royalties (captureFee).
+     */
     function _finalizePayment(
         address to,
         uint amount
     ) internal {
+        freeport.deposit(amount);
         freeport.transferFrom(address(this), to, CURRENCY, amount);
     }
 }
