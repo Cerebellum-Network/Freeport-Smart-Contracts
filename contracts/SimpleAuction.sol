@@ -146,13 +146,13 @@ contract SimpleAuction is /* AccessControl, */ MetaTxContext, ERC1155HolderUpgra
         // Refund the previous buyer.
         address previousBuyer = bid.buyer;
         if (previousBuyer != address(0)) {
-            freeport.transferFrom(address(this), previousBuyer, CURRENCY, previousDeposit);
+            _returnDeposit(previousBuyer, previousDeposit);
         }
 
         // Take the new deposit from the new buyer.
         bid.buyer = buyer;
         bid.price = price;
-        freeport.transferFrom(buyer, address(this), CURRENCY, price);
+        _takeDeposit(buyer, price);
 
         emit BidOnAuction(seller, nftId, price, bid.closeTimeSec, buyer);
     }
@@ -178,7 +178,7 @@ contract SimpleAuction is /* AccessControl, */ MetaTxContext, ERC1155HolderUpgra
         if (buyer != address(0)) {
             // In case there was a buyer,
             // transfer the payment to the seller.
-            freeport.transferFrom(address(this), seller, CURRENCY, price);
+            _finalizePayment(seller, price);
 
             // Transfer the NFT to the buyer.
             freeport.transferFrom(address(this), buyer, nftId, 1);
@@ -193,5 +193,26 @@ contract SimpleAuction is /* AccessControl, */ MetaTxContext, ERC1155HolderUpgra
         }
 
         emit SettleAuction(seller, nftId, price, buyer);
+    }
+
+    function _takeDeposit(
+        address from,
+        uint amount
+    ) internal {
+        freeport.transferFrom(from, address(this), CURRENCY, amount);
+    }
+
+    function _returnDeposit(
+        address to,
+        uint amount
+    ) internal {
+        freeport.transferFrom(address(this), to, CURRENCY, amount);
+    }
+
+    function _finalizePayment(
+        address to,
+        uint amount
+    ) internal {
+        freeport.transferFrom(address(this), to, CURRENCY, amount);
     }
 }
