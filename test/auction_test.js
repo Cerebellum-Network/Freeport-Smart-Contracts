@@ -2,9 +2,11 @@ const Freeport = artifacts.require("./Freeport.sol");
 const SimpleAuction = artifacts.require("SimpleAuction");
 const TestERC20 = artifacts.require("TestERC20");
 const log = console.log;
-const {deployProxy} = require('@openzeppelin/truffle-upgrades');
-const {expectEvent, expectRevert, constants, time} = require('@openzeppelin/test-helpers');
+const { deployProxy } = require('@openzeppelin/truffle-upgrades');
+const { expectEvent, expectRevert, constants, time } = require('@openzeppelin/test-helpers');
 const BN = require('bn.js');
+const { typedData } = require("./utils");
+const ethers = require("ethers");
 
 contract("SimpleAuction", accounts => {
     const [deployer, issuer, buyerBob, buyerBill, benificiary] = accounts;
@@ -19,7 +21,7 @@ contract("SimpleAuction", accounts => {
             let erc20address = await freeport.currencyContract.call();
             erc20 = await TestERC20.at(erc20address);
         } else {
-            freeport = await deployProxy(Freeport, [], {kind: "uups"});
+            freeport = await deployProxy(Freeport, [], { kind: "uups" });
             erc20 = await TestERC20.new();
             await freeport.setERC20(erc20.address);
         }
@@ -32,7 +34,7 @@ contract("SimpleAuction", accounts => {
             await freeport.safeTransferFrom(deployer, account, CURRENCY, amount, "0x");
         };
 
-        return {freeport, erc20, deposit};
+        return { freeport, erc20, deposit };
     };
 
     let freeport;
@@ -50,6 +52,7 @@ contract("SimpleAuction", accounts => {
 
     it("sells an NFT by auction", async () => {
 
+        const mnemonic = process.env.MNEMONIC;
         const auction = await SimpleAuction.deployed();
         const PERCENT = 100; // 1% in basis points.
 
@@ -59,7 +62,7 @@ contract("SimpleAuction", accounts => {
         await deposit(buyerBill, someMoney * UNIT);
 
         let nftSupply = 10;
-        let nftId = await freeport.issue.call(nftSupply, "0x", {from: issuer});
+        let nftId = await freeport.issue.call(nftSupply, "0x", { from: issuer });
         let closeTime = (await time.latest()).toNumber() + 1000;
 
         // A helper function to check currency and NFT balances.
@@ -71,13 +74,13 @@ contract("SimpleAuction", accounts => {
                 assert.equal(nfts, expectedNFTs);
             }
         };
-
+        
         // The issuer cannot auction an NFT that he does not have yet.
         await expectRevert(
-            auction.startAuction(nftId, 100 * UNIT, closeTime, {from: issuer}),
+            auction.startAuction(nftId, 100 * UNIT, closeTime, { from: issuer }),
             "ERC1155: insufficient balance for transfer");
 
-        await freeport.issue(nftSupply, "0x", {from: issuer});
+        await freeport.issue(nftSupply, "0x", { from: issuer });
         log("’Issuer’ creates", nftSupply, "NFTs of type", nftId.toString(16));
         log();
 
@@ -89,18 +92,20 @@ contract("SimpleAuction", accounts => {
             benificiary,
             /* secondaryCut */ 0,
             /* secondaryMinimum */ 0,
-            {from: issuer});
+            { from: issuer });
         log("’Issuer’ configures royalties for this NFT type: 10% on primary sales");
         log();
 
-        await auction.startAuction(nftId, 100 * UNIT, closeTime, {from: issuer});
+        await auction.startAuction(nftId, 100 * UNIT, closeTime, { from: issuer });
 
         await checkBalances([
             [issuer, 0, 9], // The seller put 1 of 10 NFTs as deposit.
             [auction.address, 0, 1], // The contract took 1 NFT as deposit.
         ]);
-
-        await auction.bidOnAuction(issuer, nftId, 100 * UNIT, {from: buyerBob});
+        const signer = new ethers.Wallet.fromMnemonic(mnemonic);
+        const {domain, types, data} = typedData(issuer, nftId);
+        const signedTypedData = signer._signTypedData(domain, types, data);
+        await auction.bidOnAuction(issuer, nftId, 100 * UNIT, signedTypedData, { from: buyerBob });
 
         await checkBalances([
             [buyerBob, someMoney - 100, 0], // BuyerBob put 100 money as deposit.
@@ -108,10 +113,10 @@ contract("SimpleAuction", accounts => {
         ]);
 
         await expectRevert(
-            auction.bidOnAuction(issuer, nftId, 109 * UNIT, {from: buyerBill}),
+            auction.bidOnAuction(issuer, nftId, 109 * UNIT, signedTypedData, { from: buyerBill }),
             "a new bid must be 10% greater than the current bid");
 
-        await auction.bidOnAuction(issuer, nftId, 110 * UNIT, {from: buyerBill});
+        await auction.bidOnAuction(issuer, nftId, 110 * UNIT, signedTypedData, { from: buyerBill });
 
         await checkBalances([
             [buyerBob, someMoney, 0], // BuyerBob got back his 100 money.
@@ -121,7 +126,7 @@ contract("SimpleAuction", accounts => {
 
         // Cannot restart an active auction.
         await expectRevert(
-            auction.startAuction(nftId, 100 * UNIT, closeTime, {from: issuer}),
+            auction.startAuction(nftId, 100 * UNIT, closeTime, { from: issuer }),
             "the auction must not exist");
 
         // Cannot settle before the close time.
@@ -150,6 +155,6 @@ contract("SimpleAuction", accounts => {
             "the auction must exist");
 
         // Can start another auction.
-        await auction.startAuction(nftId, 100 * UNIT, closeTime + 2000, {from: issuer});
+        await auction.startAuction(nftId, 100 * UNIT, closeTime + 2000, { from: issuer });
     });
 });

@@ -8,6 +8,7 @@ module.exports = async function (done) {
     let admin = accounts[0];
     let seller = admin;
     let buyer = accounts[1];
+    let authorizer = accounts[2];
     let freeport = await Freeport.deployed();
     let auction = await SimpleAuction.deployed();
     const CURRENCY = 0;
@@ -16,6 +17,7 @@ module.exports = async function (done) {
     log("Operating on SimpleAuction contract", auction.address);
     log("With Seller account", seller);
     log("With Buyer account", buyer);
+    log("With authorizer account", authorizer);
 
     let amount = 1000;
     log("Sending", amount, "CERE to", buyer);
@@ -28,6 +30,10 @@ module.exports = async function (done) {
 
     let priceCere = 10;
     let closeTime = parseInt((+new Date()) / 1000) + 60;
+
+    log("Grant role to address for bid authorization");
+    const BUY_AUTHORIZER_ROLE = await auction.BUY_AUTHORIZER_ROLE.call();
+    await auction.grantRole(BUY_AUTHORIZER_ROLE, authorizer);
 
     log("Issuer auction one NFT with a minimum price", priceCere, "CERE, close time in 1 minute (", closeTime, "UNIX seconds).");
     await auction.startAuction(nftId, priceCere * UNIT, closeTime, {from: seller});

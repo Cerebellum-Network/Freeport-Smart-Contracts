@@ -2,6 +2,7 @@ pragma solidity ^0.8.0;
 
 import "./freeportParts/MetaTxContext.sol";
 import "./Freeport.sol";
+import "./SignatureVerifier.sol";
 import "@openzeppelin/contracts-upgradeable/token/ERC1155/utils/ERC1155HolderUpgradeable.sol";
 import "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol";
 
@@ -28,7 +29,7 @@ it will not call onERC1155Received hooks for security reasons.
 
 This contract must have the TRANSFER_OPERATOR role in the Freeport contract.
  */
-contract SimpleAuction is /* AccessControl, */ MetaTxContext, ERC1155HolderUpgradeable {
+contract SimpleAuction is /* AccessControl, */ MetaTxContext, ERC1155HolderUpgradeable, SignatureVerifier {
 
     /** Supports interfaces of AccessControl and ERC1155Receiver.
      */
@@ -125,9 +126,12 @@ contract SimpleAuction is /* AccessControl, */ MetaTxContext, ERC1155HolderUpgra
 
     /**
      */
-    function bidOnAuction(address seller, uint256 nftId, uint256 price)
+    function bidOnAuction(address seller, uint256 nftId, uint256 price, bytes32 signature)
     public {
         address buyer = _msgSender();
+        address verifier = recoverAddressFromSignature(buyer, nftId, signature);
+        require(hasRole(BUY_AUTHORIZER_ROLE, verifier), "Authroizer doesn't have a role");
+        
         Bid storage bid = sellerNftBids[seller][nftId];
 
         // Check that the auction exists and is open.
