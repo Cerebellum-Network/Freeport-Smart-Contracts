@@ -1,5 +1,10 @@
 ### Next release
 
+- Make SimpleAuction, SimpleExchange, and FiatGateway work with ERC20 directly.
+- Remove the function FiatGateway.buyCereFromUsd.
+
+### v1.1.0
+
 - Fix a bug of incorrect royalty collection in auctions.
 - Fix a vulnerability that may allow a buyer to disrupt an auction.
 - Additional public function transferFrom has been implemented in Freeport contract to support the above fixes.

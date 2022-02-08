@@ -32,12 +32,18 @@ contract("SimpleAuction", accounts => {
             await freeport.safeTransferFrom(deployer, account, CURRENCY, amount, "0x");
         };
 
-        return {freeport, erc20, deposit};
+        let withdraw = async (account) => {
+            let balance = await freeport.balanceOf(account, CURRENCY);
+            await freeport.withdraw(balance, {from: account});
+        };
+
+        return {freeport, erc20, deposit, withdraw};
     };
 
     let freeport;
     let erc20;
     let deposit;
+    let withdraw;
 
     before(async () => {
         let freeportOfMigrations = await Freeport.deployed();
@@ -45,6 +51,7 @@ contract("SimpleAuction", accounts => {
         freeport = x.freeport;
         erc20 = x.erc20;
         deposit = x.deposit;
+        withdraw = x.withdraw;
     });
 
 
@@ -55,8 +62,8 @@ contract("SimpleAuction", accounts => {
 
         // Give some initial tokens to the buyers.
         let someMoney = 1000;
-        await deposit(buyerBob, someMoney * UNIT);
-        await deposit(buyerBill, someMoney * UNIT);
+        await erc20.mint(buyerBob, someMoney * UNIT);
+        await erc20.mint(buyerBill, someMoney * UNIT);
 
         let nftSupply = 10;
         let nftId = await freeport.issue.call(nftSupply, "0x", {from: issuer});
@@ -64,10 +71,12 @@ contract("SimpleAuction", accounts => {
 
         // A helper function to check currency and NFT balances.
         let checkBalances = async (expected) => {
-            for (let [account, expectedCurrency, expectedNFTs] of expected) {
+            for (let [account, expectedERC20, expectedNFTs] of expected) {
+                let ercBalance = await erc20.balanceOf(account);
                 let currency = await freeport.balanceOf.call(account, CURRENCY);
                 let nfts = await freeport.balanceOf.call(account, nftId);
-                assert.equal(currency, expectedCurrency * UNIT);
+                assert.equal(ercBalance, expectedERC20 * UNIT);
+                assert.equal(currency, 0);
                 assert.equal(nfts, expectedNFTs);
             }
         };
@@ -100,6 +109,7 @@ contract("SimpleAuction", accounts => {
             [auction.address, 0, 1], // The contract took 1 NFT as deposit.
         ]);
 
+        await erc20.approve(auction.address, 1e9 * UNIT, {from: buyerBob});
         await auction.bidOnAuction(issuer, nftId, 100 * UNIT, {from: buyerBob});
 
         await checkBalances([
@@ -111,6 +121,7 @@ contract("SimpleAuction", accounts => {
             auction.bidOnAuction(issuer, nftId, 109 * UNIT, {from: buyerBill}),
             "a new bid must be 10% greater than the current bid");
 
+        await erc20.approve(auction.address, 1e9 * UNIT, {from: buyerBill});
         await auction.bidOnAuction(issuer, nftId, 110 * UNIT, {from: buyerBill});
 
         await checkBalances([
@@ -134,6 +145,10 @@ contract("SimpleAuction", accounts => {
 
         // Settle the sale to buyer2 at 110 tokens.
         await auction.settleAuction(issuer, nftId);
+
+        // Issuer and benificiaries withdraw their earnings to ERC20.
+        await withdraw(issuer);
+        await withdraw(benificiary);
 
         // Check every balance after settlement.
         await checkBalances([

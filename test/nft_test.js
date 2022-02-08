@@ -40,12 +40,18 @@ contract("Freeport", accounts => {
             await freeport.safeTransferFrom(deployer, account, CURRENCY, amount, "0x");
         };
 
-        return {freeport, erc20, deposit};
+        let withdraw = async (account) => {
+            let balance = await freeport.balanceOf(account, CURRENCY);
+            await freeport.withdraw(balance, {from: account});
+        };
+
+        return {freeport, erc20, deposit, withdraw};
     };
 
     let freeport;
     let erc20;
     let deposit;
+    let withdraw;
 
     before(async () => {
         let freeportOfMigrations = await Freeport.deployed();
@@ -53,6 +59,7 @@ contract("Freeport", accounts => {
         freeport = x.freeport;
         erc20 = x.erc20;
         deposit = x.deposit;
+        withdraw = x.withdraw;
     });
 
 
@@ -188,12 +195,12 @@ contract("Freeport", accounts => {
     it("executes sales with variable royalties", async () => {
         log();
 
-        const {freeport, deposit} = await deploy();
+        const {freeport, erc20, deposit, withdraw} = await deploy();
 
         let pocketMoney = 1000 * UNIT;
-        await deposit(buyer, pocketMoney);
-        await deposit(buyer2, pocketMoney);
-        log("Deposit", pocketMoney / UNIT, "CERE from the bridge to account ’Buyer’");
+        await erc20.mint(buyer, pocketMoney);
+        await erc20.mint(buyer2, pocketMoney);
+        log("Deposit", pocketMoney / UNIT, "USDC to account ’Buyer’");
         log();
 
         // Other actors have no currency.
@@ -234,6 +241,8 @@ contract("Freeport", accounts => {
         await expectRevert.unspecified(
             freeport.takeOffer(buyer, issuer, nftId, price1 - 1, 1, {from: buyer}));
 
+        // Buy.
+        await erc20.approve(freeport.address, 1e9 * UNIT, {from: buyer});
         await freeport.takeOffer(buyer, issuer, nftId, price1, 1, {from: buyer});
 
         // Cannot take the offer again.
@@ -243,13 +252,20 @@ contract("Freeport", accounts => {
         // Secondary sale.
         let price2 = 300 * UNIT;
         await freeport.makeOffer(nftId, price2, {from: buyer});
+        // Buy.
+        await erc20.approve(freeport.address, 1e9 * UNIT, {from: buyer2});
         await freeport.takeOffer(buyer2, buyer, nftId, price2, 1, {from: buyer2});
 
         let partnerFee = price1 * 10 / 100; // Primary royalty on initial price.
         let someoneFee = price2 * 5 / 100; // Secondary royalty on a resale price.
 
+        await withdraw(issuer);
+        await withdraw(buyer);
+        await withdraw(partner);
+        await withdraw(someone);
+
         // Check everybody’s money after the deals.
-        for (let account of [
+        for (let [account, expectedERC20] of [
             // Issuer got the initial price and paid a primary fee.
             [issuer, price1 - partnerFee],
             // Buyer bought at the initial price, resold at another price, and paid a secondary fee.
@@ -261,8 +277,10 @@ contract("Freeport", accounts => {
             // Someone got a secondary fee.
             [someone, someoneFee],
         ]) {
-            let balance = await freeport.balanceOf.call(account[0], CURRENCY);
-            assert.equal(balance, account[1]);
+            let ercBalance = await erc20.balanceOf(account);
+            assert.equal(ercBalance, expectedERC20);
+            let internalBalance = await freeport.balanceOf.call(account, CURRENCY);
+            assert.equal(internalBalance, 0);
         }
     });
 
@@ -328,7 +346,7 @@ contract("Freeport", accounts => {
         await gateway.grantRole(PAYMENT_SERVICE, fiatService);
     };
 
-    it("buys CERE from USD", async () => {
+    it("cannot buy CERE from USD", async () => {
         const gateway = await FiatGateway.deployed();
         await setupFiatService(gateway);
 
@@ -354,41 +372,13 @@ contract("Freeport", accounts => {
         // Buy some CERE after a fiat payment.
         let priceCere = 200 * UNIT;
         let pricePennies = priceCere / cerePerPenny;
-        await gateway.buyCereFromUsd(
-            pricePennies,
-            buyer,
-            0,
-            {from: fiatService});
-
-        // Only the service account can do that.
-        await expectRevert.unspecified(gateway.buyCereFromUsd(
-            pricePennies,
-            buyer,
-            0,
-            {from: deployer}));
-
-        // Check all balances.
-        let balance = await freeport.balanceOf(gateway.address, CURRENCY);
-        assert.equal(balance, liquidities - priceCere);
-
-        balance = await freeport.balanceOf(buyer, CURRENCY);
-        assert.equal(balance, priceCere);
-
-        balance = await gateway.totalCereUnitsSent();
-        assert.equal(balance, priceCere);
-
-        balance = await gateway.totalPenniesReceived();
-        assert.equal(balance, pricePennies);
-
-        // Withdraw liquidities to the admin.
-        let initBalance = await freeport.balanceOf(deployer, CURRENCY);
-        await gateway.withdraw();
-
-        balance = await freeport.balanceOf(deployer, CURRENCY);
-        assert.equal(balance - initBalance, liquidities - priceCere);
-
-        // Send back the tokens to clean up.
-        await freeport.safeTransferFrom(buyer, deployer, CURRENCY, priceCere, "0x", {from: buyer});
+        await expectRevert(
+            gateway.buyCereFromUsd(
+                pricePennies,
+                buyer,
+                0,
+                {from: fiatService}),
+            "Discontinued");
     });
 
     it("buys an NFT from USD", async () => {
@@ -405,7 +395,7 @@ contract("Freeport", accounts => {
 
         // Top up FiatGateway with CERE.
         let liquidities = 1000 * UNIT;
-        await deposit(gateway.address, liquidities);
+        await erc20.mint(gateway.address, liquidities);
 
         // Set exchange rate.
         let cerePerPenny = 0.1 * UNIT;
@@ -433,7 +423,7 @@ contract("Freeport", accounts => {
             {from: deployer}));
 
         // Check all balances.
-        let balance = await freeport.balanceOf(gateway.address, CURRENCY);
+        let balance = await erc20.balanceOf(gateway.address);
         assert.equal(balance, liquidities - priceCere);
 
         balance = await freeport.balanceOf(issuer, CURRENCY);
@@ -448,9 +438,21 @@ contract("Freeport", accounts => {
         balance = await freeport.balanceOf(buyer, nftId);
         assert.equal(balance, 1);
 
-        // Send back the tokens to clean up.
-        await gateway.withdraw();
-        await freeport.safeTransferFrom(issuer, deployer, CURRENCY, priceCere, "0x", {from: issuer});
+        // Issuer withdraws to ERC20.
+        await withdraw(issuer);
+
+        balance = await freeport.balanceOf(issuer, CURRENCY);
+        assert.equal(balance, 0);
+
+        balance = await erc20.balanceOf(issuer);
+        assert.equal(balance, priceCere);
+
+        // Admin withdraws what remains in the gateway.
+        balance = await gateway.withdrawERC20.call();
+        assert.equal(balance, liquidities - priceCere);
+        await gateway.withdrawERC20();
+        balance = await erc20.balanceOf(accounts[0]);
+        assert.equal(balance, liquidities - priceCere);
     });
 
     it("exchange ERC20 into internal currency", async () => {

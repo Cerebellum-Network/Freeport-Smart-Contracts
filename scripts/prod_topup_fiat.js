@@ -28,19 +28,15 @@ module.exports = async function (done) {
 
         const usdcCheck = await freeport.currencyContract.call();
         console.assert(usdcCheck === usdc.address, "Unexpected USDC address");
-        let gatewayBalanceBefore = await freeport.balanceOf(gateway.address, CURRENCY);
+        let gatewayBalanceBefore = await erc20.balanceOf(gateway.address);
         log("Balance of FiatGateway contract: USDC", gatewayBalanceBefore.toNumber());
 
-        log("Amount: USDC", usdcAmount);
-        log("Approve Freeport to take a deposit");
-        await usdc.approve(freeport.address, usdcAmount);
-        log("Deposit into Freeport");
-        await freeport.deposit(usdcAmount);
-        log("Transfer to the FiatGateway contract");
-        await freeport.safeTransferFrom(admin, gateway.address, CURRENCY, usdcAmount, "0x");
+        log();
+        log("Transfer to the FiatGateway contract, amount: USDC", usdcAmount);
+        await usdc.transfer(gateway.address, usdcAmount);
 
         // Check after.
-        let gatewayBalanceAfter = await freeport.balanceOf(gateway.address, CURRENCY);
+        let gatewayBalanceAfter = await erc20.balanceOf(gateway.address);
         log("Balance of FiatGateway: USDC", gatewayBalanceAfter.toNumber());
 
         // ---- Top up MATIC ----

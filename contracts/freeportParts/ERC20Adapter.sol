@@ -30,7 +30,7 @@ abstract contract ERC20Adapter is TransferOperator {
       Deposit currency from ERC20 into the internal currency.
       This requires payer to approve deposit.
      */
-    function deposit(uint256 amount) external {
+    function deposit(uint256 amount) public {
         address user = _msgSender();
         currencyContract.transferFrom(user, address(this), amount);
         _mint(user, CURRENCY, amount, "");

@@ -49,6 +49,20 @@ contract SimpleAuction is /* AccessControl, */ MetaTxContext, ERC1155HolderUpgra
         freeport = _freeport;
     }
 
+    /** Initialize this contract after version 2.0.0.
+     *
+     * Allow deposit of USDC into Freeport.
+     */
+    function initialize_v2_0_0() public {
+        IERC20 erc20 = freeport.currencyContract();
+
+        bool init = erc20.allowance(address(this), address(freeport)) > 0;
+        if (init) return;
+
+        uint256 maxInt = 0xffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff;
+        erc20.approve(address(freeport), maxInt);
+    }
+
     /** The token ID that represents the CERE currency for all payments in this contract. */
     uint256 public constant CURRENCY = 0;
 
@@ -118,6 +132,7 @@ contract SimpleAuction is /* AccessControl, */ MetaTxContext, ERC1155HolderUpgra
         bid.closeTimeSec = closeTimeSec;
 
         // Take the NFT from the seller.
+        // Use the TRANSFER_OPERATOR role.
         freeport.transferFrom(seller, address(this), nftId, 1);
 
         emit StartAuction(seller, nftId, price, closeTimeSec);
@@ -146,13 +161,13 @@ contract SimpleAuction is /* AccessControl, */ MetaTxContext, ERC1155HolderUpgra
         // Refund the previous buyer.
         address previousBuyer = bid.buyer;
         if (previousBuyer != address(0)) {
-            freeport.transferFrom(address(this), previousBuyer, CURRENCY, previousDeposit);
+            _returnDeposit(previousBuyer, previousDeposit);
         }
 
         // Take the new deposit from the new buyer.
         bid.buyer = buyer;
         bid.price = price;
-        freeport.transferFrom(buyer, address(this), CURRENCY, price);
+        _takeDeposit(buyer, price);
 
         emit BidOnAuction(seller, nftId, price, bid.closeTimeSec, buyer);
     }
@@ -178,7 +193,7 @@ contract SimpleAuction is /* AccessControl, */ MetaTxContext, ERC1155HolderUpgra
         if (buyer != address(0)) {
             // In case there was a buyer,
             // transfer the payment to the seller.
-            freeport.transferFrom(address(this), seller, CURRENCY, price);
+            _finalizePayment(seller, price);
 
             // Transfer the NFT to the buyer.
             freeport.transferFrom(address(this), buyer, nftId, 1);
@@ -193,5 +208,35 @@ contract SimpleAuction is /* AccessControl, */ MetaTxContext, ERC1155HolderUpgra
         }
 
         emit SettleAuction(seller, nftId, price, buyer);
+    }
+
+    /** Take USDC as deposit.
+     */
+    function _takeDeposit(
+        address from,
+        uint amount
+    ) internal {
+        freeport.currencyContract().transferFrom(from, address(this), amount);
+    }
+
+    /** Return the USDC deposit.
+     */
+    function _returnDeposit(
+        address to,
+        uint amount
+    ) internal {
+        freeport.currencyContract().transfer(to, amount);
+    }
+
+    /** Convert the USDC deposit into Freeport-USDC and pay out to the seller.
+     *
+     * This supports joint accounts and royalties (captureFee).
+     */
+    function _finalizePayment(
+        address to,
+        uint amount
+    ) internal {
+        freeport.deposit(amount);
+        freeport.transferFrom(address(this), to, CURRENCY, amount);
     }
 }
