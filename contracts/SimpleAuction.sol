@@ -6,6 +6,8 @@ import "./SignatureVerifier.sol";
 import "@openzeppelin/contracts-upgradeable/token/ERC1155/utils/ERC1155HolderUpgradeable.sol";
 import "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol";
 
+
+
 /**
 An auction is characterized by a sequence of transactions and their corresponding events:
 
@@ -46,7 +48,7 @@ contract SimpleAuction is /* AccessControl, */ MetaTxContext, ERC1155HolderUpgra
     function initialize(Freeport _freeport) public initializer {
         __MetaTxContext_init();
         __ERC1155Holder_init();
-
+        __SignatureVerifier_init();
         freeport = _freeport;
     }
 
@@ -126,7 +128,7 @@ contract SimpleAuction is /* AccessControl, */ MetaTxContext, ERC1155HolderUpgra
 
     /**
      */
-    function bidOnAuction(address seller, uint256 nftId, uint256 price, bytes32 signature)
+    function bidOnAuction(address seller, uint256 nftId, uint256 price, bytes calldata signature)
     public {
         address buyer = _msgSender();
         address verifier = recoverAddressFromSignature(buyer, nftId, signature);
