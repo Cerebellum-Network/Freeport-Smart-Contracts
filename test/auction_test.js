@@ -124,6 +124,11 @@ contract("SimpleAuction", accounts => {
         await erc20.approve(auction.address, 1e9 * UNIT, {from: buyerBill});
         await auction.bidOnAuction(issuer, nftId, 110 * UNIT, {from: buyerBill});
 
+        let tooMuchMoney = someMoney + 1;
+        await expectRevert(
+            auction.bidOnAuction(issuer, nftId, tooMuchMoney * UNIT, {from: buyerBob}),
+            "ERC20: transfer amount exceeds balance");
+
         await checkBalances([
             [buyerBob, someMoney, 0], // BuyerBob got back his 100 money.
             [buyerBill, someMoney - 110, 0], // BuyerBill put 110 money as deposit.
