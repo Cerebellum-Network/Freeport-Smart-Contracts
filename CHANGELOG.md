@@ -1,5 +1,7 @@
 ### Next release
 
+### v2.0.0
+
 - Make SimpleAuction, SimpleExchange, and FiatGateway work with ERC20 directly.
 - Remove the function FiatGateway.buyCereFromUsd.
 
