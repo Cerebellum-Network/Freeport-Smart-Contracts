@@ -1,14 +1,16 @@
 const Freeport = artifacts.require("Freeport");
 const SimpleAuction = artifacts.require("SimpleAuction");
+const {getAuthorizerWallet} = require("../test/utils");
 const log = console.log;
 
 module.exports = async function (done) {
 
+    const signer = getAuthorizerWallet();
     let accounts = await web3.eth.getAccounts();
     let admin = accounts[0];
     let seller = admin;
     let buyer = accounts[1];
-    let authorizer = accounts[2];
+    let authorizer = signer.address;
     let freeport = await Freeport.deployed();
     let auction = await SimpleAuction.deployed();
     const CURRENCY = 0;
@@ -17,7 +19,7 @@ module.exports = async function (done) {
     log("Operating on SimpleAuction contract", auction.address);
     log("With Seller account", seller);
     log("With Buyer account", buyer);
-    log("With authorizer account", authorizer);
+    log("With Authorizer account", authorizer);
 
     let amount = 1000;
     log("Sending", amount, "CERE to", buyer);
