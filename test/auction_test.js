@@ -34,12 +34,18 @@ contract("SimpleAuction", accounts => {
             await freeport.safeTransferFrom(deployer, account, CURRENCY, amount, "0x");
         };
 
-        return { freeport, erc20, deposit };
+        let withdraw = async (account) => {
+            let balance = await freeport.balanceOf(account, CURRENCY);
+            await freeport.withdraw(balance, {from: account});
+        };
+
+        return {freeport, erc20, deposit, withdraw};
     };
 
     let freeport;
     let erc20;
     let deposit;
+    let withdraw;
 
     before(async () => {
         let freeportOfMigrations = await Freeport.deployed();
@@ -47,6 +53,7 @@ contract("SimpleAuction", accounts => {
         freeport = x.freeport;
         erc20 = x.erc20;
         deposit = x.deposit;
+        withdraw = x.withdraw;
     });
 
 
@@ -58,8 +65,8 @@ contract("SimpleAuction", accounts => {
 
         // Give some initial tokens to the buyers.
         let someMoney = 1000;
-        await deposit(buyerBob, someMoney * UNIT);
-        await deposit(buyerBill, someMoney * UNIT);
+        await erc20.mint(buyerBob, someMoney * UNIT);
+        await erc20.mint(buyerBill, someMoney * UNIT);
 
         let nftSupply = 10;
         let nftId = await freeport.issue.call(nftSupply, "0x", { from: issuer });
@@ -67,10 +74,12 @@ contract("SimpleAuction", accounts => {
 
         // A helper function to check currency and NFT balances.
         let checkBalances = async (expected) => {
-            for (let [account, expectedCurrency, expectedNFTs] of expected) {
+            for (let [account, expectedERC20, expectedNFTs] of expected) {
+                let ercBalance = await erc20.balanceOf(account);
                 let currency = await freeport.balanceOf.call(account, CURRENCY);
                 let nfts = await freeport.balanceOf.call(account, nftId);
-                assert.equal(currency, expectedCurrency * UNIT);
+                assert.equal(ercBalance, expectedERC20 * UNIT);
+                assert.equal(currency, 0);
                 assert.equal(nfts, expectedNFTs);
             }
         };
@@ -102,10 +111,9 @@ contract("SimpleAuction", accounts => {
             [issuer, 0, 9], // The seller put 1 of 10 NFTs as deposit.
             [auction.address, 0, 1], // The contract took 1 NFT as deposit.
         ]);
-        const signer = new ethers.Wallet.fromMnemonic(mnemonic);
-        const {domain, types, data} = typedData(issuer, nftId);
-        const signedTypedData = signer._signTypedData(domain, types, data);
-        await auction.bidOnAuction(issuer, nftId, 100 * UNIT, signedTypedData, { from: buyerBob });
+
+        await erc20.approve(auction.address, 1e9 * UNIT, {from: buyerBob});
+        await auction.bidOnAuction(issuer, nftId, 100 * UNIT, {from: buyerBob});
 
         await checkBalances([
             [buyerBob, someMoney - 100, 0], // BuyerBob put 100 money as deposit.
@@ -116,7 +124,13 @@ contract("SimpleAuction", accounts => {
             auction.bidOnAuction(issuer, nftId, 109 * UNIT, signedTypedData, { from: buyerBill }),
             "a new bid must be 10% greater than the current bid");
 
-        await auction.bidOnAuction(issuer, nftId, 110 * UNIT, signedTypedData, { from: buyerBill });
+        await erc20.approve(auction.address, 1e9 * UNIT, {from: buyerBill});
+        await auction.bidOnAuction(issuer, nftId, 110 * UNIT, {from: buyerBill});
+
+        let tooMuchMoney = someMoney + 1;
+        await expectRevert(
+            auction.bidOnAuction(issuer, nftId, tooMuchMoney * UNIT, {from: buyerBob}),
+            "ERC20: transfer amount exceeds balance");
 
         await checkBalances([
             [buyerBob, someMoney, 0], // BuyerBob got back his 100 money.
@@ -139,6 +153,10 @@ contract("SimpleAuction", accounts => {
 
         // Settle the sale to buyer2 at 110 tokens.
         await auction.settleAuction(issuer, nftId);
+
+        // Issuer and benificiaries withdraw their earnings to ERC20.
+        await withdraw(issuer);
+        await withdraw(benificiary);
 
         // Check every balance after settlement.
         await checkBalances([

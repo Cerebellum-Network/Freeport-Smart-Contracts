@@ -21,7 +21,8 @@ contract("Upgrades", accounts => {
 
     before(async () => {
         freeport = await Freeport.deployed();
-        erc20 = await freeport.currencyContract();
+        let erc20Address = await freeport.currencyContract();
+        erc20 = await TestERC20.at(erc20Address);
         gateway = await FiatGateway.deployed();
         auction = await SimpleAuction.deployed();
         attachment = await NFTAttachment.deployed();
@@ -34,6 +35,14 @@ contract("Upgrades", accounts => {
         expect(await gateway.hasRole(ADMIN_ROLE, deployer)).equal(true);
         expect(await auction.hasRole(ADMIN_ROLE, deployer)).equal(true);
         expect(await attachment.hasRole(ADMIN_ROLE, deployer)).equal(true);
+    });
+
+    it("initialize_v2_0_0 set ERC20 allowances", async () => {
+        let allowanceGateway = await erc20.allowance(gateway.address, freeport.address);
+        expect(allowanceGateway.gt(1e9 * 1e6)).equal(true);
+
+        let allowanceAuction = await erc20.allowance(auction.address, freeport.address);
+        expect(allowanceAuction.gt(1e9 * 1e6)).equal(true);
     });
 
     it("cannot be initialized again", async () => {

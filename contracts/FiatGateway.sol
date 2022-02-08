@@ -31,19 +31,22 @@ contract FiatGateway is Upgradeable, ERC1155HolderUpgradeable {
     uint256 public constant CURRENCY = 0;
 
     Freeport public freeport;
+
+    /** The current exchange rate of ERC20 Units (with 6 decimals) per USD cent (1 penny).
+     */
     uint cereUnitsPerPenny;
 
     /** How many USD cents were received so far, according to the payment service.
      */
     uint public totalPenniesReceived;
 
-    /** How many CERE Units were sold so far.
+    /** Discontinued variable.
      */
     uint public totalCereUnitsSent;
 
     /** An event emitted when the exchange rate was set to a new value.
      *
-     * The rate is given as CERE Units (with 10 decimals) per USD cent (1 penny).
+     * The rate is given as ERC20 Units (with 6 decimals) per USD cent (1 penny).
      */
     event SetExchangeRate(
         uint256 cereUnitsPerPenny);
@@ -55,9 +58,23 @@ contract FiatGateway is Upgradeable, ERC1155HolderUpgradeable {
         freeport = _freeport;
     }
 
+    /** Initialize this contract after version 2.0.0.
+     *
+     * Allow deposit of USDC into Freeport.
+     */
+    function initialize_v2_0_0() public {
+        IERC20 erc20 = freeport.currencyContract();
+
+        bool init = erc20.allowance(address(this), address(freeport)) > 0;
+        if (init) return;
+
+        uint256 maxInt = 0xffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff;
+        erc20.approve(address(freeport), maxInt);
+    }
+
     /** Set the exchange rate between fiat (USD) and Freeport currency (CERE).
       *
-      * The rate is given as number of CERE Units (with 10 decimals) per USD cent (1 penny).
+      * The rate is given as number of ERC20 Units (with 6 decimals) per USD cent (1 penny).
       *
       * Only the rate service with the EXCHANGE_RATE_ORACLE role can change the rate.
      */
@@ -76,16 +93,32 @@ contract FiatGateway is Upgradeable, ERC1155HolderUpgradeable {
         return cereUnitsPerPenny;
     }
 
-    /** Withdraw all CERE from this contract.
+    /** Withdraw all ERC20 from this contract.
       *
       * Only accounts with DEFAULT_ADMIN_ROLE can withdraw.
      */
-    function withdraw()
+    function withdrawERC20()
     public onlyRole(DEFAULT_ADMIN_ROLE)
     returns (uint) {
-
         address admin = _msgSender();
+        IERC20 erc20 = freeport.currencyContract();
+        uint amount = erc20.balanceOf(address(this));
 
+        erc20.transfer(admin, amount);
+
+        return amount;
+    }
+
+    /** Deprecated. Only ERC20 is relevant.
+      *
+      * Withdraw all internal currency from this contract.
+      *
+      * Only accounts with DEFAULT_ADMIN_ROLE can withdraw.
+     */
+    function withdrawCurrency()
+    public onlyRole(DEFAULT_ADMIN_ROLE)
+    returns (uint) {
+        address admin = _msgSender();
         uint amount = freeport.balanceOf(address(this), CURRENCY);
 
         freeport.safeTransferFrom(
@@ -98,11 +131,7 @@ contract FiatGateway is Upgradeable, ERC1155HolderUpgradeable {
         return amount;
     }
 
-    /** Obtain CERE based on a fiat payment.
-      *
-      * The amount of fiat is recorded, and exchanged for an amount of CERE.
-      *
-      * Only the gateway with PAYMENT_SERVICE role can report successful payments.
+    /** Discontinued function, return an error.
      */
     function buyCereFromUsd(
         uint penniesReceived,
@@ -110,26 +139,13 @@ contract FiatGateway is Upgradeable, ERC1155HolderUpgradeable {
         uint nonce)
     public onlyRole(PAYMENT_SERVICE)
     returns (uint) {
-        require(cereUnitsPerPenny != 0, "Exchange rate must be configured");
-
-        uint cereToSend = penniesReceived * cereUnitsPerPenny;
-
-        freeport.safeTransferFrom(
-            address(this),
-            buyer,
-            CURRENCY,
-            cereToSend,
-            "");
-
-        totalPenniesReceived += penniesReceived;
-        totalCereUnitsSent += cereToSend;
-
-        return cereToSend;
+        revert("Discontinued");
+        return 0;
     }
 
-    /** Obtain CERE and buy an NFT based on a fiat payment.
+    /** Buy an NFT based on an off-chain fiat payment.
       *
-      * CERE tokens are obtained in the same way as buyCereFromUsd.
+      * The amount of fiat received is validated against the NFT price, using the configured exchange rate.
       *
       * Then, the tokens are used to buy an NFT in the same transaction. The NFT must be available for sale from the seller in SimpleExchange.
       *
@@ -137,6 +153,8 @@ contract FiatGateway is Upgradeable, ERC1155HolderUpgradeable {
      *
      * The parameter expectedPriceOrZero can be used to validate the price that the buyer expects to pay. This prevents
      * a race condition with makeOffer or setExchangeRate. Pass 0 to disable this validation and accept any current price.
+     *
+     * The parameter nonce is ignored and accepted for compatibility.
      */
     function buyNftFromUsd(
         uint penniesReceived,
@@ -146,10 +164,11 @@ contract FiatGateway is Upgradeable, ERC1155HolderUpgradeable {
         uint expectedPriceOrZero,
         uint nonce)
     public onlyRole(PAYMENT_SERVICE) {
+        // Keep track of the total off-chain payments reported.
+        totalPenniesReceived += penniesReceived;
 
-        uint boughtCere = buyCereFromUsd(penniesReceived, buyer, nonce);
-
-        require(boughtCere >= expectedPriceOrZero, "Received fewer Cere than expected");
+        uint boughtTokens = penniesReceived * cereUnitsPerPenny;
+        require(boughtTokens >= expectedPriceOrZero, "Insufficient payment");
 
         uint amount = 1;
         freeport.takeOffer(buyer, seller, nftId, expectedPriceOrZero, amount);

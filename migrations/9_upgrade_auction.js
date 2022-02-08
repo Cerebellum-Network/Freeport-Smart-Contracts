@@ -9,6 +9,9 @@ module.exports = async function (deployer, network, accounts) {
     try {
         const auction2 = await upgradeProxy(auction.address, SimpleAuction, {deployer, kind: "uups"});
         log("Upgraded", auction2.address);
+
+        await auction2.initialize_v2_0_0();
+        log("Done initialize_v2_0_0");
     } catch (e) {
         log("Error", e);
         throw e;

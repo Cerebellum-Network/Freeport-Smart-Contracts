@@ -10,7 +10,6 @@ module.exports = async function (done) {
 
     const CURRENCY = 0;
     let tenM = "10" + "000" + "000" + "000000"; // 10M with 6 decimals;
-    let fiveM = "5" + "000" + "000" + "000000"; // 5M with 6 decimals;
     let oneM = "1" + "000" + "000" + "000000"; // 1M with 6 decimals;
 
     let accounts = await web3.eth.getAccounts();
@@ -30,15 +29,11 @@ module.exports = async function (done) {
     const PAYMENT_SERVICE = await gateway.PAYMENT_SERVICE.call();
     await gateway.grantRole(PAYMENT_SERVICE, serviceAccount);
 
-    log("Mint and deposit some ERC20 to the admin account.");
-    await erc20.mint(admin, tenM);
-    await erc20.approve(freeport.address, tenM);
-    await freeport.deposit(tenM);
-
-    await freeport.safeTransferFrom(admin, gateway.address, CURRENCY, fiveM, "0x");
-    log("Sent 5M of currency to FiatGateway");
+    await erc20.mint(gateway.address, tenM);
+    log("Sent 10M of currency to FiatGateway");
 
     let devAccounts = [
+        admin,
         "0x6108E8aFFe0c51D4e2515A773aeF16b19ED6feB9", // e2e tests (Pavel)
         "0x6d2b28389d3153689c57909829dFCf6241d36388", // Evgeny
         "0x1Bf6FCa28253A1257e4B5B3440F7fbE0c59D1546", // Sergey
@@ -46,7 +41,7 @@ module.exports = async function (done) {
     ];
 
     for (let devAccount of devAccounts) {
-        await freeport.safeTransferFrom(admin, devAccount, CURRENCY, oneM, "0x");
+        await erc20.mint(devAccount, oneM);
         log("Sent 1M of currency to", devAccount);
     }
 

@@ -68,21 +68,29 @@ abstract contract SimpleExchange is TransferFees {
      *
      * The offer must have been created beforehand by makeOffer.
      *
-     * The same authorization as safeTransferFrom apply to the buyer (sender or approved operator).
+     * The sender pays ERC20. The sender is not necessarily the same as buyer, see FiatGateway.
+     *
+     * The seller receives internal currency (equivalent to the ERC20 payment, see the function withdraw).
+     *
+     * The buyer receives the NFT.
      *
      * The parameter expectedPriceOrZero can be used to validate the price that the buyer expects to pay. This prevents
      * a race condition with makeOffer or setExchangeRate. Pass 0 to disable this validation and accept any current price.
      */
     function takeOffer(address buyer, address seller, uint256 nftId, uint256 expectedPriceOrZero, uint256 amount)
     public {
+        address payer = _msgSender();
+
         // Check and update the amount offered.
         uint256 price = sellerNftPriceOffers[seller][nftId];
         require(price != 0, "Not for sale");
         require(expectedPriceOrZero == 0 || expectedPriceOrZero == price, "Unexpected price");
 
-        // Pay. This verifies the intent of the buyer.
         uint totalPrice = price * amount;
-        safeTransferFrom(buyer, seller, CURRENCY, totalPrice, "");
+        // Deposit ERC20 from payer. This verifies the intent of the payer.
+        deposit(totalPrice);
+        // Pay the seller. This verifies the intent of the payer.
+        safeTransferFrom(payer, seller, CURRENCY, totalPrice, "");
 
         // Take a fee from the seller (really a cut of the above payment).
         uint totalFee = _captureFee(seller, nftId, price, amount);
