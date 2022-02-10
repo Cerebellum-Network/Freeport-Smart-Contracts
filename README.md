@@ -21,7 +21,7 @@ and [USDC ERC20](https://polygonscan.com/address/0x2791Bca1f2de4661ED88A30C99A7a
 Accounts:
 [Fiat-to-NFT Service](https://polygonscan.com/address/0x2352f1167F1c1c5273bB64a1FEEAf9dF49702A19) (
 see [prod_setup](scripts/prod_setup.js)). Biconomy enabled.
-[Admin](https://polygonscan.com/address/0x4d632f8513554d7647a326c1f4ca72caeff93e63).
+[Admin](https://polygonscan.com/address/0x87A0892F98914c567379475a806A1419143406F6).
 
 #### v2.0.0 on Polygon Mumbai testnet (Staging)
 
