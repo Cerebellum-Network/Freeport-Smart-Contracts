@@ -10,7 +10,7 @@ See the [documentation](docs/Freeport.md) (regenerate with `npm run doc`).
 
 ## Deployments
 
-#### v1.0.0 on Polygon (Production)
+#### v2.0.0 on Polygon (Production)
 
 Contracts: [Freeport](https://polygonscan.com/address/0xf9AC6022F786f6f64Fd8abf661190b8517D92396) and
 [Fiat Gateway](https://polygonscan.com/address/0x4478e3B0B71531DAc9d0ECe9357eBB0043669804)
@@ -23,7 +23,7 @@ Accounts:
 see [prod_setup](scripts/prod_setup.js)). Biconomy enabled.
 [Admin](https://polygonscan.com/address/0x4d632f8513554d7647a326c1f4ca72caeff93e63).
 
-#### v1.0.0 on Polygon Mumbai testnet (Staging)
+#### v2.0.0 on Polygon Mumbai testnet (Staging)
 
 Contracts: [Freeport](https://mumbai.polygonscan.com/address/0xacd8105cBA046307d2228794ba2F81aA15e82E0D) and
 [Fiat Gateway](https://mumbai.polygonscan.com/address/0xe25b31Aa454E28110E28C694ded69cD241A27Db1)

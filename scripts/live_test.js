@@ -5,6 +5,7 @@ const SimpleAuction = artifacts.require("SimpleAuction");
 const {time} = require('@openzeppelin/test-helpers');
 const log = console.log;
 const isDev = (config.network === 'development');
+const assert = require('assert').strict;
 
 
 module.exports = async function (done) {
@@ -51,13 +52,18 @@ module.exports = async function (done) {
         await freeport.takeOffer(buyer, seller, nftId, price, 1, {from: buyer});
         log("takeOffer ok");
 
+        // Withdraw revenues.
+        let balance1 = await freeport.balanceOf(seller, CURRENCY);
+        await freeport.withdraw(balance1, {from: seller});
+        log("withdraw ok");
+
         // Check balances.
         let balanceSeller1 = await erc20.balanceOf(seller);
         let balanceBuyer1 = await erc20.balanceOf(buyer);
         let changeSeller1 = +balanceSeller1 - balanceSeller0;
         let changeBuyer1 = +balanceBuyer1 - balanceBuyer0;
-        console.assert(changeSeller1 === price);
-        console.assert(changeBuyer1 === -price);
+        assert.equal(changeSeller1, price);
+        assert.equal(changeBuyer1, -price);
         log("balances ok");
 
         // Put on auction.
@@ -90,8 +96,8 @@ module.exports = async function (done) {
         let balanceBuyer2 = await erc20.balanceOf(buyer);
         let changeSeller2 = +balanceSeller2 - balanceSeller1;
         let changeBuyer2 = +balanceBuyer2 - balanceBuyer1;
-        console.assert(changeSeller2 === price * 3);
-        console.assert(changeBuyer2 === -price * 3);
+        assert.equal(changeSeller2, price * 3);
+        assert.equal(changeBuyer2, -price * 3);
         log("balances ok");
 
         done();

@@ -75,14 +75,16 @@ module.exports = {
         mnemonic: {
           phrase: mnemonic
         },
-        providerOrUrl:  `https://polygon-rpc.com`,
+        providerOrUrl: "https://polygon-mainnet.infura.io/v3/" + infuraProjectId,
+        //providerOrUrl:  `https://matic-mainnet.chainstacklabs.com`,
+        //providerOrUrl:  `https://polygon-rpc.com`, // Not working with upgradeProxy
         chainId: 137
       }),
       network_id: 137,
-      confirmations: 2,
+      confirmations: 1,
       deploymentPollingInterval: 30e3,
       timeoutBlocks: 200,
-      skipDryRun: false,
+      skipDryRun: true,
       chainId: 137,
       gas: 5e6,
       gasPrice: 40e9,
