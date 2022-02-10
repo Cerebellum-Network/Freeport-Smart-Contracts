@@ -6,7 +6,7 @@ const {deployProxy} = require('@openzeppelin/truffle-upgrades');
 const {expectRevert, time} = require('@openzeppelin/test-helpers');
 const BN = require('bn.js');
 const {typedData} = require("./utils");
-const {getAuthorizerWallet} = require("./utils");
+const {getSigner} = require("./utils");
 
 contract("SimpleAuction", accounts => {
     const [deployer, issuer, buyerBob, buyerBill, benificiary] = accounts;
@@ -14,8 +14,7 @@ contract("SimpleAuction", accounts => {
     const CURRENCY = 0;
     const UNIT = 1e6;
     const aLot = 100e3 * UNIT;
-    const signer = getAuthorizerWallet(web3.currentProvider);
-
+   
     let deploy = async (freeport) => {
         let erc20;
         if (freeport) {
@@ -26,7 +25,7 @@ contract("SimpleAuction", accounts => {
             erc20 = await TestERC20.new();
             await freeport.setERC20(erc20.address);
         }
-
+        
         await erc20.mint(deployer, aLot);
         await erc20.approve(freeport.address, aLot);
         await freeport.deposit(aLot);
@@ -71,6 +70,7 @@ contract("SimpleAuction", accounts => {
         let nftSupply = 10;
         let nftId = await freeport.issue.call(nftSupply, "0x", { from: issuer });
         let closeTime = (await time.latest()).toNumber() + 1000;
+        const signer = await getSigner();
         let {domain, types, value} = typedData(issuer, nftId);
         let signature = await signer._signTypedData(domain, types, value);
 

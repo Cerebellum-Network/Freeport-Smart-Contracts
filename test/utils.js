@@ -1,18 +1,21 @@
 const {version} = require("../package.json");
-const {Wallet, providers} = require("ethers");
+const {Wallet} = require("ethers");
+const {createProviderSigner, createProvider} = require("@cere/freeport-sdk");
 
-function getAuthorizerWallet(truffleProvider) {
-  const wallet = new Wallet.fromMnemonic(process.env.MNEMONIC);
-  const ethersProvider = new providers.Web3Provider(truffleProvider);    
-  const privateKey = wallet.privateKey;
-  return new Wallet(privateKey, ethersProvider);
+async function getSigner() {
+  const BICONOMY_API_KEY = process.env.BICONOMY_API_KEY;
+  const {signer, provider} = await createProviderSigner({
+    rpcUrl: process.env.HTTP_PROVIDER_URL,
+    mnemonic: process.env.MNEMONIC,
+    biconomyApiKey: BICONOMY_API_KEY,
+    biconomyDebug: true
+  });
+  return provider.getSigner();
 }  
 
 function typedData(addr, nftId) {
   return {
-    domain: {
-      name: "Freeport",
-      version: version
+    domain: {      
     },
     types: {
       Bid: [

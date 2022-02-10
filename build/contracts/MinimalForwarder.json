@@ -10840,10 +10840,16 @@
       "links": {},
       "address": "0x7169268CaE4a7A6F56E4bba7Ec9922b6488a8759",
       "transactionHash": "0xabf58fb74b43e590b929cc67e6015336b3ddbd1dcf99f7f361b74c6cf7448ad9"
+    },
+    "1644488368958": {
+      "events": {},
+      "links": {},
+      "address": "0xD29Ada3c57524C1999d286A4669581bC3D9C7C7A",
+      "transactionHash": "0x41989cfdd216d8aab032e4a37d045b37909726417c21da760053c7fe1ad05d70"
     }
   },
   "schemaVersion": "3.4.4",
-  "updatedAt": "2022-02-08T19:04:43.786Z",
+  "updatedAt": "2022-02-10T10:24:10.937Z",
   "networkType": "ethereum",
   "devdoc": {
     "kind": "dev",
