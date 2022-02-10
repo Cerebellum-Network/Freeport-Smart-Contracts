@@ -18,7 +18,7 @@ abstract contract SignatureVerifier is EIP712Upgradeable {
   bytes32 public constant BUY_AUTHORIZER_ROLE = keccak256("BUY_AUTHORIZER");
 
   function __SignatureVerifier_init() internal initializer {
-        __EIP712_init("SignatureVerifier", "0.0.1");
+        __EIP712_init("Freeport", "2");
   }
 
   function recoverAddressFromSignature(address buyer, uint nftId, bytes memory signature) internal view returns(address) {
