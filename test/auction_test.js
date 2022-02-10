@@ -5,8 +5,7 @@ const log = console.log;
 const {deployProxy} = require('@openzeppelin/truffle-upgrades');
 const {expectRevert, time} = require('@openzeppelin/test-helpers');
 const BN = require('bn.js');
-const {typedData} = require("./utils");
-const {getSigner} = require("./utils");
+const {getSigner, typedData} = require("./utils");
 
 contract("SimpleAuction", accounts => {
     const [deployer, issuer, buyerBob, buyerBill, benificiary] = accounts;
@@ -73,7 +72,7 @@ contract("SimpleAuction", accounts => {
         const signer = await getSigner();
         let {domain, types, value} = typedData(issuer, nftId);
         let signature = await signer._signTypedData(domain, types, value);
-
+        //let signature = "";
         // A helper function to check currency and NFT balances.
         let checkBalances = async (expected) => {
             for (let [account, expectedERC20, expectedNFTs] of expected) {

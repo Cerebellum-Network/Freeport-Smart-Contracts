@@ -1,6 +1,4 @@
-const {version} = require("../package.json");
-const {Wallet} = require("ethers");
-const {createProviderSigner, createProvider} = require("@cere/freeport-sdk");
+const {createProviderSigner} = require("@cere/freeport-sdk");
 
 async function getSigner() {
   const BICONOMY_API_KEY = process.env.BICONOMY_API_KEY;
@@ -10,6 +8,7 @@ async function getSigner() {
     biconomyApiKey: BICONOMY_API_KEY,
     biconomyDebug: true
   });
+  console.log("SIGNER >>> ", provider.getSigner());
   return provider.getSigner();
 }  
 
@@ -39,6 +38,6 @@ function typedData(addr, nftId) {
 }
 
 module.exports = {
-  getAuthorizerWallet,
+  getSigner,
   typedData
 }
