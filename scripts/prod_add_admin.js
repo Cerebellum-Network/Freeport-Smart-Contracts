@@ -1,5 +1,6 @@
 const Freeport = artifacts.require("Freeport");
 const FiatGateway = artifacts.require("FiatGateway");
+const SimpleAuction = artifacts.require("SimpleAuction");
 const log = console.log;
 
 module.exports = async function (done) {
@@ -8,13 +9,25 @@ module.exports = async function (done) {
 
     const accounts = await web3.eth.getAccounts();
     const admin = accounts[0];
-    const freeport = await Freeport.deployed();
-    const DEFAULT_ADMIN_ROLE = await freeport.DEFAULT_ADMIN_ROLE.call();
-    log("Operating on Freeport contract", freeport.address);
     log("From admin account", admin);
+    let freeport = await Freeport.deployed();
+    let gateway = await FiatGateway.deployed();
+    let auction = await SimpleAuction.deployed();
+    const DEFAULT_ADMIN_ROLE = await freeport.DEFAULT_ADMIN_ROLE.call();
 
-    log("Make Gnosis admin", gnosis);
-    await freeport.grantRole(DEFAULT_ADMIN_ROLE, gnosis);
+    const contracts = [
+        ["Freeport", freeport],
+        ["FiatGateway", gateway],
+        ["SimpleAuction", auction],
+    ];
+
+    for (let [contractName, contract] of contracts) {
+        log();
+        log("Operating on", contractName, contract.address);
+
+        log("Make Gnosis admin", gnosis);
+        await contract.grantRole(DEFAULT_ADMIN_ROLE, gnosis);
+    }
 
     done();
 };
