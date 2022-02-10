@@ -1,16 +1,13 @@
 const Freeport = artifacts.require("Freeport");
 const SimpleAuction = artifacts.require("SimpleAuction");
-const {getAuthorizerWallet} = require("../test/utils");
 const log = console.log;
 
 module.exports = async function (done) {
 
-    const signer = getAuthorizerWallet();
     let accounts = await web3.eth.getAccounts();
     let admin = accounts[0];
     let seller = admin;
     let buyer = accounts[1];
-    let authorizer = signer.address;
     let freeport = await Freeport.deployed();
     let auction = await SimpleAuction.deployed();
     const CURRENCY = 0;
@@ -19,8 +16,7 @@ module.exports = async function (done) {
     log("Operating on SimpleAuction contract", auction.address);
     log("With Seller account", seller);
     log("With Buyer account", buyer);
-    log("With Authorizer account", authorizer);
-
+    
     let amount = 1000;
     log("Sending", amount, "CERE to", buyer);
     let encodedAmount = web3.eth.abi.encodeParameter('uint256', amount * UNIT);
@@ -32,11 +28,7 @@ module.exports = async function (done) {
 
     let priceCere = 10;
     let closeTime = parseInt((+new Date()) / 1000) + 60;
-
-    log("Grant role to address for bid authorization");
-    const BUY_AUTHORIZER_ROLE = await auction.BUY_AUTHORIZER_ROLE.call();
-    await auction.grantRole(BUY_AUTHORIZER_ROLE, authorizer);
-
+    
     log("Issuer auction one NFT with a minimum price", priceCere, "CERE, close time in 1 minute (", closeTime, "UNIX seconds).");
     await auction.startAuction(nftId, priceCere * UNIT, closeTime, {from: seller});
 

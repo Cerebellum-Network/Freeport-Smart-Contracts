@@ -1836,7 +1836,7 @@
   },
   "networks": {},
   "schemaVersion": "3.4.4",
-  "updatedAt": "2022-02-10T11:57:16.820Z",
+  "updatedAt": "2022-02-10T18:26:30.023Z",
   "devdoc": {
     "details": "Base contract for building openzeppelin-upgrades compatible implementations for the {ERC1967Proxy}. It includes publicly available upgrade functions that are called by the plugin and by the secure upgrade mechanism to verify continuation of the upgradability. The {_authorizeUpgrade} function MUST be overridden to include access restriction to the upgrade mechanism. _Available since v4.1._",
     "kind": "dev",
