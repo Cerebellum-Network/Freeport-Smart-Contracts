@@ -26,15 +26,13 @@ function typedData(addr, nftId) {
         },
         {
           name: 'nftId',
-          type: 'uint'
+          type: 'string'
         }      
       ]
     },
-    value: {
-      buyer: {
-        seller: addr,
-        nftId: nftId
-      }
+    value: {      
+      seller: addr,
+      nftId: nftId
     }
   }
 }
