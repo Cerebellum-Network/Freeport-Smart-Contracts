@@ -1,6 +1,7 @@
 const Freeport = artifacts.require("Freeport");
 const FiatGateway = artifacts.require("FiatGateway");
 const SimpleAuction = artifacts.require("SimpleAuction");
+const NFTAttachment = artifacts.require("NFTAttachment");
 const log = console.log;
 
 module.exports = async function (done) {
@@ -9,12 +10,14 @@ module.exports = async function (done) {
         let freeport = await Freeport.deployed();
         let gateway = await FiatGateway.deployed();
         let auction = await SimpleAuction.deployed();
+        let attachment = await NFTAttachment.deployed();
         const DEFAULT_ADMIN_ROLE = await freeport.DEFAULT_ADMIN_ROLE();
 
         const contracts = [
             ["Freeport", freeport],
             ["FiatGateway", gateway],
             ["SimpleAuction", auction],
+            ["NFTAttachment", attachment],
         ];
 
         const accounts = [
