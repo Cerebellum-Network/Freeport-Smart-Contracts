@@ -29,7 +29,7 @@ jobs:
           ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
         run: |
           echo "Installing helper packaging curl wget findutils jq"
-          sudo apt-get install curl wget findutils jq
+          sudo apt-get install curl wget findutils jq git
 
           echo "Build -> Deploy -> Copy artifacts"
           docker build -f Dockerfile.builder . -t $ECR_REGISTRY/$ECR_REPOSITORY:builder
