@@ -10999,7 +10999,7 @@
   },
   "networks": {},
   "schemaVersion": "3.4.4",
-  "updatedAt": "2022-02-11T14:45:36.916Z",
+  "updatedAt": "2022-02-15T11:12:34.373Z",
   "devdoc": {
     "custom:oz-upgrades-unsafe-allow": "delegatecall",
     "details": "This abstract contract provides getters and event emitting update functions for https://eips.ethereum.org/EIPS/eip-1967[EIP1967] slots. _Available since v4.1._",

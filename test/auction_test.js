@@ -72,9 +72,8 @@ contract("SimpleAuction", accounts => {
         const signer = await getSigner();
         let {domain, types, value} = typedData(issuer, nftId);
         let signature = await signer._signTypedData(domain, types, value);
-        //let signature = "";
-        // A helper function to check currency and NFT balances.
-        let checkBalances = async (expected) => {
+        
+        let checkBalances = async expected => {
             for (let [account, expectedERC20, expectedNFTs] of expected) {
                 let ercBalance = await erc20.balanceOf(account);
                 let currency = await freeport.balanceOf.call(account, CURRENCY);

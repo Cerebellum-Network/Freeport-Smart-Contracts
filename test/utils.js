@@ -1,38 +1,29 @@
-const {createProvider, createProviderSigner} = require("@cere/freeport-sdk");
-const {Wallet} = require("ethers");
+const { createProvider, createProviderSigner } = require("@cere/freeport-sdk");
+const { Wallet, utils } = require("ethers");
 
 async function getSigner() {
-  //const {signer, provider} = await createProviderSigner({
-  //  rpcUrl: process.env.HTTP_PROVIDER_URL,
-  //  mnemonic: process.env.MNEMONIC,
-  //  biconomyApiKey: process.env.BICONOMY_API_KEY,
-  //  biconomyDebug: true
-  //});
-  //return provider.getSigner();
   const mnemonic = Wallet.fromMnemonic(process.env.MNEMONIC);
   const provider = await createProvider(process.env.HTTP_PROVIDER_URL);
   return new Wallet(mnemonic.privateKey, provider);
-}  
+}
 
 function typedData(addr, nftId) {
   return {
-    domain: {      
+    domain: {
+      name: 'Freeport',
+      version: '2.0.0',
+      chainId: 80001,
+      verifyingContract: '',
     },
     types: {
       Bid: [
-        {
-          name: 'seller',
-          type: 'address'
-        },
-        {
-          name: 'nftId',
-          type: 'string'
-        }      
+        { name: 'seller', type: 'address' },
+        { name: 'nftId', type: 'string' }
       ]
     },
-    value: {      
-      seller: addr,
-      nftId: nftId
+    value: {
+      seller: `'${addr}'`,
+      nftId: nftId    
     }
   }
 }
