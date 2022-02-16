@@ -27,8 +27,8 @@ module.exports = async function (done) {
     log("Operating on FiatGateway contract", gateway.address);
     log("Operating on SimpleAuction contract", auction.address);
     log("From admin account", admin);
-    log("With Authorizer account", authorizer);
-
+    log("With Authorizer account", authorizer.address);
+    
     const PAYMENT_SERVICE = await gateway.PAYMENT_SERVICE.call();
 
     log("Grant role to address for bid authorization");
