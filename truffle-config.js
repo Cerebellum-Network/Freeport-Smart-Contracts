@@ -12,7 +12,7 @@ module.exports = {
       host: "127.0.0.1",     // Localhost (default: none)
       port: 8545,            // Standard Ethereum port (default: none)
       network_id: "*",       // Any network (default: none)
-      gasPrice: 1e9,
+      gasPrice: 1e9      
     },
     //polygon Infura mainnet
     polygon_infura_mainnet: {
@@ -90,12 +90,13 @@ module.exports = {
       gasPrice: 40e9,
     }
   },
-
+  ens: {
+    enabled: true
+  },
   // Set default mocha options here, use special reporters etc.
   mocha: {
     // timeout: 100000
   },
-
   // Configure your compilers
   compilers: {
     solc: {

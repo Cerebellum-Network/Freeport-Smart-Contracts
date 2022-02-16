@@ -1,6 +1,8 @@
 const Freeport = artifacts.require("Freeport");
 const TestERC20 = artifacts.require("TestERC20");
 const FiatGateway = artifacts.require("FiatGateway");
+const SimpleAuction = artifacts.require("SimpleAuction");
+const {getSigner} = require("../test/utils");
 const log = console.log;
 
 module.exports = async function (done) {
