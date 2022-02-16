@@ -11,18 +11,16 @@ function typedData(addr, nftId) {
   return {
     domain: {
       name: 'Freeport',
-      version: '2.0.0',
-      chainId: 80001,
-      verifyingContract: '',
+      version: '2'
     },
     types: {
       Bid: [
-        { name: 'seller', type: 'address' },
+        { name: 'buyer', type: 'address' },
         { name: 'nftId', type: 'string' }
       ]
     },
     value: {
-      seller: `'${addr}'`,
+      buyer: `'${addr}'`,
       nftId: nftId    
     }
   }
