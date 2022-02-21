@@ -1,5 +1,7 @@
 ### Next release
 
+- Added withdrawal of share from joint account in USDC
+
 ### v2.0.0
 
 - Make SimpleAuction, SimpleExchange, and FiatGateway work with ERC20 directly.
