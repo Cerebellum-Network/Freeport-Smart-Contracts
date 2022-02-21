@@ -103,6 +103,7 @@ contract("Freeport", accounts => {
         let pocketMoney = 1000 * UNIT;
         await deposit(issuer, pocketMoney);
         await deposit(buyer, pocketMoney);
+        await deposit(partner, pocketMoney);
         let issuerBalance = await freeport.balanceOf.call(issuer, CURRENCY);
         assert.equal(issuerBalance, pocketMoney);
         let buyerBalance = await freeport.balanceOf.call(buyer, CURRENCY);
@@ -161,7 +162,10 @@ contract("Freeport", accounts => {
         log();
 
         let issuerBalanceAfter = await freeport.balanceOf.call(issuer, CURRENCY);
+        log("Issuer balance >>>>> ", issuerBalanceAfter / UNIT);
         assert.equal(issuerBalanceAfter, issuerBalance - primaryEarnings);
+        let partnerBalanceAfter = await freeport.balanceOf.call(partner, CURRENCY);
+        log("Buyer balance >>>>> ", partnerBalanceAfter / UNIT);
         let buyerBalanceAfter = await freeport.balanceOf.call(buyer, CURRENCY);
         assert.equal(buyerBalanceAfter, buyerBalance - secondaryEarnings);
         log("’Issuer’ paid", primaryEarnings / UNIT, "in primary royalties.");
