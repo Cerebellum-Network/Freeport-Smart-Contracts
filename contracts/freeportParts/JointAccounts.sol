@@ -87,7 +87,7 @@ abstract contract JointAccounts is Issuance {
         for (uint i = 0; i < shares.length; i++) {
             JointAccountShare storage share = shares[i];
             uint256 ownerBalance = accountBalance * share.fraction / BASIS_POINTS;
-            sendShare(share.owner, ownerBalance);
+            sendShare(account, share.owner, ownerBalance);
         }
     }
 

@@ -45,8 +45,8 @@ abstract contract ERC20Adapter is TransferOperator {
         currencyContract.transfer(user, amount);
     }
 
-    function sendShare(address beneficiar, uint256 amount) internal {
-        _burn(beneficiar, CURRENCY, amount);
+    function sendShare(address distributor, address beneficiar, uint256 amount) internal {
+        _burn(distributor, CURRENCY, amount);
         currencyContract.transfer(beneficiar, amount);
     }
 
