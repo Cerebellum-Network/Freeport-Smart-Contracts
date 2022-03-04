@@ -661,7 +661,7 @@
         1564
       ],
       "ERC1155Upgradeable": [
-        8216
+        8239
       ],
       "ERC165Upgradeable": [
         2166
@@ -691,7 +691,7 @@
         885
       ],
       "MetaTxContext": [
-        6262
+        6285
       ],
       "StorageSlotUpgradeable": [
         1624
@@ -703,7 +703,7 @@
         959
       ],
       "Upgradeable": [
-        7156
+        7179
       ]
     },
     "id": 5402,
@@ -727,7 +727,7 @@
         "nameLocation": "-1:-1:-1",
         "nodeType": "ImportDirective",
         "scope": 5402,
-        "sourceUnit": 8217,
+        "sourceUnit": 8240,
         "src": "25:49:38",
         "symbolAliases": [],
         "unitAlias": ""
@@ -751,7 +751,7 @@
         "nameLocation": "-1:-1:-1",
         "nodeType": "ImportDirective",
         "scope": 5402,
-        "sourceUnit": 6263,
+        "sourceUnit": 6286,
         "src": "157:29:38",
         "symbolAliases": [],
         "unitAlias": ""
@@ -764,7 +764,7 @@
               "id": 5236,
               "name": "ERC1155Upgradeable",
               "nodeType": "IdentifierPath",
-              "referencedDeclaration": 8216,
+              "referencedDeclaration": 8239,
               "src": "339:18:38"
             },
             "id": 5237,
@@ -776,7 +776,7 @@
               "id": 5238,
               "name": "MetaTxContext",
               "nodeType": "IdentifierPath",
-              "referencedDeclaration": 6262,
+              "referencedDeclaration": 6285,
               "src": "359:13:38"
             },
             "id": 5239,
@@ -796,10 +796,10 @@
         "id": 5401,
         "linearizedBaseContracts": [
           5401,
-          6262,
-          7156,
+          6285,
+          7179,
           395,
-          8216,
+          8239,
           1137,
           1122,
           2166,
@@ -851,7 +851,7 @@
                       "name": "__ERC1155_init",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
-                      "referencedDeclaration": 7212,
+                      "referencedDeclaration": 7235,
                       "src": "424:14:38",
                       "typeDescriptions": {
                         "typeIdentifier": "t_function_internal_nonpayable$_t_string_memory_ptr_$returns$__$",
@@ -886,7 +886,7 @@
                       "name": "__MetaTxContext_init",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
-                      "referencedDeclaration": 6197,
+                      "referencedDeclaration": 6220,
                       "src": "503:20:38",
                       "typeDescriptions": {
                         "typeIdentifier": "t_function_internal_nonpayable$__$returns$__$",
@@ -942,7 +942,7 @@
           {
             "baseFunctions": [
               1548,
-              6234
+              6257
             ],
             "body": {
               "id": 5262,
@@ -959,10 +959,10 @@
                         "name": "MetaTxContext",
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
-                        "referencedDeclaration": 6262,
+                        "referencedDeclaration": 6285,
                         "src": "733:13:38",
                         "typeDescriptions": {
-                          "typeIdentifier": "t_type$_t_contract$_MetaTxContext_$6262_$",
+                          "typeIdentifier": "t_type$_t_contract$_MetaTxContext_$6285_$",
                           "typeString": "type(contract MetaTxContext)"
                         }
                       },
@@ -973,7 +973,7 @@
                       "lValueRequested": false,
                       "memberName": "_msgSender",
                       "nodeType": "MemberAccess",
-                      "referencedDeclaration": 6234,
+                      "referencedDeclaration": 6257,
                       "src": "733:24:38",
                       "typeDescriptions": {
                         "typeIdentifier": "t_function_internal_view$__$returns$_t_address_$",
@@ -1024,7 +1024,7 @@
                   "id": 5253,
                   "name": "MetaTxContext",
                   "nodeType": "IdentifierPath",
-                  "referencedDeclaration": 6262,
+                  "referencedDeclaration": 6285,
                   "src": "676:13:38"
                 }
               ],
@@ -1080,7 +1080,7 @@
           {
             "baseFunctions": [
               1559,
-              6261
+              6284
             ],
             "body": {
               "id": 5275,
@@ -1097,10 +1097,10 @@
                         "name": "MetaTxContext",
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
-                        "referencedDeclaration": 6262,
+                        "referencedDeclaration": 6285,
                         "src": "965:13:38",
                         "typeDescriptions": {
-                          "typeIdentifier": "t_type$_t_contract$_MetaTxContext_$6262_$",
+                          "typeIdentifier": "t_type$_t_contract$_MetaTxContext_$6285_$",
                           "typeString": "type(contract MetaTxContext)"
                         }
                       },
@@ -1111,7 +1111,7 @@
                       "lValueRequested": false,
                       "memberName": "_msgData",
                       "nodeType": "MemberAccess",
-                      "referencedDeclaration": 6261,
+                      "referencedDeclaration": 6284,
                       "src": "965:22:38",
                       "typeDescriptions": {
                         "typeIdentifier": "t_function_internal_view$__$returns$_t_bytes_calldata_ptr_$",
@@ -1162,7 +1162,7 @@
                   "id": 5266,
                   "name": "MetaTxContext",
                   "nodeType": "IdentifierPath",
-                  "referencedDeclaration": 6262,
+                  "referencedDeclaration": 6285,
                   "src": "908:13:38"
                 }
               ],
@@ -1217,7 +1217,7 @@
           {
             "baseFunctions": [
               151,
-              7255
+              7278
             ],
             "body": {
               "id": 5297,
@@ -1262,10 +1262,10 @@
                           "name": "ERC1155Upgradeable",
                           "nodeType": "Identifier",
                           "overloadedDeclarations": [],
-                          "referencedDeclaration": 8216,
+                          "referencedDeclaration": 8239,
                           "src": "1248:18:38",
                           "typeDescriptions": {
-                            "typeIdentifier": "t_type$_t_contract$_ERC1155Upgradeable_$8216_$",
+                            "typeIdentifier": "t_type$_t_contract$_ERC1155Upgradeable_$8239_$",
                             "typeString": "type(contract ERC1155Upgradeable)"
                           }
                         },
@@ -1276,7 +1276,7 @@
                         "lValueRequested": false,
                         "memberName": "supportsInterface",
                         "nodeType": "MemberAccess",
-                        "referencedDeclaration": 7255,
+                        "referencedDeclaration": 7278,
                         "src": "1248:36:38",
                         "typeDescriptions": {
                           "typeIdentifier": "t_function_internal_view$_t_bytes4_$returns$_t_bool_$",
@@ -1398,7 +1398,7 @@
                   "id": 5281,
                   "name": "ERC1155Upgradeable",
                   "nodeType": "IdentifierPath",
-                  "referencedDeclaration": 8216,
+                  "referencedDeclaration": 8239,
                   "src": "1170:18:38"
                 },
                 {
@@ -1784,7 +1784,7 @@
                             "name": "isApprovedForAll",
                             "nodeType": "Identifier",
                             "overloadedDeclarations": [],
-                            "referencedDeclaration": 7411,
+                            "referencedDeclaration": 7434,
                             "src": "1774:16:38",
                             "typeDescriptions": {
                               "typeIdentifier": "t_function_internal_view$_t_address_$_t_address_$returns$_t_bool_$",
@@ -2166,7 +2166,7 @@
                         "name": "_balances",
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
-                        "referencedDeclaration": 7185,
+                        "referencedDeclaration": 7208,
                         "src": "2092:9:38",
                         "typeDescriptions": {
                           "typeIdentifier": "t_mapping$_t_uint256_$_t_mapping$_t_address_$_t_uint256_$_$",
@@ -2344,7 +2344,7 @@
                           "name": "_balances",
                           "nodeType": "Identifier",
                           "overloadedDeclarations": [],
-                          "referencedDeclaration": 7185,
+                          "referencedDeclaration": 7208,
                           "src": "2207:9:38",
                           "typeDescriptions": {
                             "typeIdentifier": "t_mapping$_t_uint256_$_t_mapping$_t_address_$_t_uint256_$_$",
@@ -2467,7 +2467,7 @@
                           "name": "_balances",
                           "nodeType": "Identifier",
                           "overloadedDeclarations": [],
-                          "referencedDeclaration": 7185,
+                          "referencedDeclaration": 7208,
                           "src": "2259:9:38",
                           "typeDescriptions": {
                             "typeIdentifier": "t_mapping$_t_uint256_$_t_mapping$_t_address_$_t_uint256_$_$",
@@ -2895,7 +2895,7 @@
         1564
       ],
       "ERC1155Upgradeable": [
-        8216
+        8239
       ],
       "ERC165Upgradeable": [
         2166
@@ -2925,7 +2925,7 @@
         885
       ],
       "MetaTxContext": [
-        6262
+        6285
       ],
       "StorageSlotUpgradeable": [
         1624
@@ -2937,7 +2937,7 @@
         959
       ],
       "Upgradeable": [
-        7156
+        7179
       ]
     },
     "id": 5402,
@@ -2961,7 +2961,7 @@
         "nameLocation": "-1:-1:-1",
         "nodeType": "ImportDirective",
         "scope": 5402,
-        "sourceUnit": 8217,
+        "sourceUnit": 8240,
         "src": "25:49:38",
         "symbolAliases": [],
         "unitAlias": ""
@@ -2985,7 +2985,7 @@
         "nameLocation": "-1:-1:-1",
         "nodeType": "ImportDirective",
         "scope": 5402,
-        "sourceUnit": 6263,
+        "sourceUnit": 6286,
         "src": "157:29:38",
         "symbolAliases": [],
         "unitAlias": ""
@@ -2998,7 +2998,7 @@
               "id": 5236,
               "name": "ERC1155Upgradeable",
               "nodeType": "IdentifierPath",
-              "referencedDeclaration": 8216,
+              "referencedDeclaration": 8239,
               "src": "339:18:38"
             },
             "id": 5237,
@@ -3010,7 +3010,7 @@
               "id": 5238,
               "name": "MetaTxContext",
               "nodeType": "IdentifierPath",
-              "referencedDeclaration": 6262,
+              "referencedDeclaration": 6285,
               "src": "359:13:38"
             },
             "id": 5239,
@@ -3030,10 +3030,10 @@
         "id": 5401,
         "linearizedBaseContracts": [
           5401,
-          6262,
-          7156,
+          6285,
+          7179,
           395,
-          8216,
+          8239,
           1137,
           1122,
           2166,
@@ -3085,7 +3085,7 @@
                       "name": "__ERC1155_init",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
-                      "referencedDeclaration": 7212,
+                      "referencedDeclaration": 7235,
                       "src": "424:14:38",
                       "typeDescriptions": {
                         "typeIdentifier": "t_function_internal_nonpayable$_t_string_memory_ptr_$returns$__$",
@@ -3120,7 +3120,7 @@
                       "name": "__MetaTxContext_init",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
-                      "referencedDeclaration": 6197,
+                      "referencedDeclaration": 6220,
                       "src": "503:20:38",
                       "typeDescriptions": {
                         "typeIdentifier": "t_function_internal_nonpayable$__$returns$__$",
@@ -3176,7 +3176,7 @@
           {
             "baseFunctions": [
               1548,
-              6234
+              6257
             ],
             "body": {
               "id": 5262,
@@ -3193,10 +3193,10 @@
                         "name": "MetaTxContext",
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
-                        "referencedDeclaration": 6262,
+                        "referencedDeclaration": 6285,
                         "src": "733:13:38",
                         "typeDescriptions": {
-                          "typeIdentifier": "t_type$_t_contract$_MetaTxContext_$6262_$",
+                          "typeIdentifier": "t_type$_t_contract$_MetaTxContext_$6285_$",
                           "typeString": "type(contract MetaTxContext)"
                         }
                       },
@@ -3207,7 +3207,7 @@
                       "lValueRequested": false,
                       "memberName": "_msgSender",
                       "nodeType": "MemberAccess",
-                      "referencedDeclaration": 6234,
+                      "referencedDeclaration": 6257,
                       "src": "733:24:38",
                       "typeDescriptions": {
                         "typeIdentifier": "t_function_internal_view$__$returns$_t_address_$",
@@ -3258,7 +3258,7 @@
                   "id": 5253,
                   "name": "MetaTxContext",
                   "nodeType": "IdentifierPath",
-                  "referencedDeclaration": 6262,
+                  "referencedDeclaration": 6285,
                   "src": "676:13:38"
                 }
               ],
@@ -3314,7 +3314,7 @@
           {
             "baseFunctions": [
               1559,
-              6261
+              6284
             ],
             "body": {
               "id": 5275,
@@ -3331,10 +3331,10 @@
                         "name": "MetaTxContext",
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
-                        "referencedDeclaration": 6262,
+                        "referencedDeclaration": 6285,
                         "src": "965:13:38",
                         "typeDescriptions": {
-                          "typeIdentifier": "t_type$_t_contract$_MetaTxContext_$6262_$",
+                          "typeIdentifier": "t_type$_t_contract$_MetaTxContext_$6285_$",
                           "typeString": "type(contract MetaTxContext)"
                         }
                       },
@@ -3345,7 +3345,7 @@
                       "lValueRequested": false,
                       "memberName": "_msgData",
                       "nodeType": "MemberAccess",
-                      "referencedDeclaration": 6261,
+                      "referencedDeclaration": 6284,
                       "src": "965:22:38",
                       "typeDescriptions": {
                         "typeIdentifier": "t_function_internal_view$__$returns$_t_bytes_calldata_ptr_$",
@@ -3396,7 +3396,7 @@
                   "id": 5266,
                   "name": "MetaTxContext",
                   "nodeType": "IdentifierPath",
-                  "referencedDeclaration": 6262,
+                  "referencedDeclaration": 6285,
                   "src": "908:13:38"
                 }
               ],
@@ -3451,7 +3451,7 @@
           {
             "baseFunctions": [
               151,
-              7255
+              7278
             ],
             "body": {
               "id": 5297,
@@ -3496,10 +3496,10 @@
                           "name": "ERC1155Upgradeable",
                           "nodeType": "Identifier",
                           "overloadedDeclarations": [],
-                          "referencedDeclaration": 8216,
+                          "referencedDeclaration": 8239,
                           "src": "1248:18:38",
                           "typeDescriptions": {
-                            "typeIdentifier": "t_type$_t_contract$_ERC1155Upgradeable_$8216_$",
+                            "typeIdentifier": "t_type$_t_contract$_ERC1155Upgradeable_$8239_$",
                             "typeString": "type(contract ERC1155Upgradeable)"
                           }
                         },
@@ -3510,7 +3510,7 @@
                         "lValueRequested": false,
                         "memberName": "supportsInterface",
                         "nodeType": "MemberAccess",
-                        "referencedDeclaration": 7255,
+                        "referencedDeclaration": 7278,
                         "src": "1248:36:38",
                         "typeDescriptions": {
                           "typeIdentifier": "t_function_internal_view$_t_bytes4_$returns$_t_bool_$",
@@ -3632,7 +3632,7 @@
                   "id": 5281,
                   "name": "ERC1155Upgradeable",
                   "nodeType": "IdentifierPath",
-                  "referencedDeclaration": 8216,
+                  "referencedDeclaration": 8239,
                   "src": "1170:18:38"
                 },
                 {
@@ -4018,7 +4018,7 @@
                             "name": "isApprovedForAll",
                             "nodeType": "Identifier",
                             "overloadedDeclarations": [],
-                            "referencedDeclaration": 7411,
+                            "referencedDeclaration": 7434,
                             "src": "1774:16:38",
                             "typeDescriptions": {
                               "typeIdentifier": "t_function_internal_view$_t_address_$_t_address_$returns$_t_bool_$",
@@ -4400,7 +4400,7 @@
                         "name": "_balances",
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
-                        "referencedDeclaration": 7185,
+                        "referencedDeclaration": 7208,
                         "src": "2092:9:38",
                         "typeDescriptions": {
                           "typeIdentifier": "t_mapping$_t_uint256_$_t_mapping$_t_address_$_t_uint256_$_$",
@@ -4578,7 +4578,7 @@
                           "name": "_balances",
                           "nodeType": "Identifier",
                           "overloadedDeclarations": [],
-                          "referencedDeclaration": 7185,
+                          "referencedDeclaration": 7208,
                           "src": "2207:9:38",
                           "typeDescriptions": {
                             "typeIdentifier": "t_mapping$_t_uint256_$_t_mapping$_t_address_$_t_uint256_$_$",
@@ -4701,7 +4701,7 @@
                           "name": "_balances",
                           "nodeType": "Identifier",
                           "overloadedDeclarations": [],
-                          "referencedDeclaration": 7185,
+                          "referencedDeclaration": 7208,
                           "src": "2259:9:38",
                           "typeDescriptions": {
                             "typeIdentifier": "t_mapping$_t_uint256_$_t_mapping$_t_address_$_t_uint256_$_$",
@@ -5119,7 +5119,7 @@
   },
   "networks": {},
   "schemaVersion": "3.4.4",
-  "updatedAt": "2022-02-15T14:15:57.762Z",
+  "updatedAt": "2022-03-03T08:46:14.440Z",
   "devdoc": {
     "kind": "dev",
     "methods": {
