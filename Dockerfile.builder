@@ -5,8 +5,15 @@ LABEL description="This is the build stage install all dependecies"
 WORKDIR /davinci_nft
 COPY . /davinci_nft
 
+RUN apt-get update && \
+      apt-get -y install sudo
+
+RUN useradd -m docker && echo "docker:docker" | chpasswd && adduser docker sudo
+
+USER docker
+
 # Install truffle globally and all dependencies
-RUN sudo npm install -g truffle@5.4.7
+RUN npm install -g truffle@5.4.7
 RUN npm install
 
 # Compile polygon
