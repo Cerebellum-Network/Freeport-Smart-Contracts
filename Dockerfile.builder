@@ -15,4 +15,3 @@ RUN npm run compile
 FROM trufflesuite/ganache-cli:v6.12.2 as runtime
 COPY --from=builder /davinci_nft /app/davinci_nft
 RUN cd /app/davinci_nft && npm install -g truffle@latest
-npm
