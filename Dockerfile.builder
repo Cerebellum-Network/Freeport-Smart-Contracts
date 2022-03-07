@@ -6,7 +6,7 @@ WORKDIR /davinci_nft
 COPY . /davinci_nft
 
 # Install truffle globally and all dependencies
-RUN npm install -g truffle@5.4.7
+RUN sudo npm install -g truffle@5.4.7
 RUN npm install
 
 # Compile polygon
