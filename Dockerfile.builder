@@ -1,4 +1,4 @@
-FROM node:14-alpine as builder
+FROM node:17-alpine3.14 as builder
 LABEL maintainer="team@cere.network"
 LABEL description="This is the build stage install all dependecies"
 
@@ -15,3 +15,4 @@ RUN npm run compile
 FROM trufflesuite/ganache-cli:v6.12.2 as runtime
 COPY --from=builder /davinci_nft /app/davinci_nft
 RUN cd /app/davinci_nft && npm install -g truffle@latest
+npm
