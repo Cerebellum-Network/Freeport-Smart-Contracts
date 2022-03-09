@@ -8328,16 +8328,16 @@
         1519
       ],
       "BaseNFT": [
-        5401
+        5457
       ],
       "ContextUpgradeable": [
         1564
       ],
       "Currency": [
-        5475
+        5531
       ],
       "ERC1155Upgradeable": [
-        8239
+        8295
       ],
       "ERC165Upgradeable": [
         2166
@@ -8346,7 +8346,7 @@
         829
       ],
       "ERC20Adapter": [
-        5603
+        5659
       ],
       "Freeport": [
         4087
@@ -8376,19 +8376,19 @@
         885
       ],
       "Issuance": [
-        5864
+        5920
       ],
       "JointAccounts": [
-        6208
+        6264
       ],
       "MetaTxContext": [
-        6285
+        6341
       ],
       "NFTAttachment": [
         4467
       ],
       "SimpleExchange": [
-        6478
+        6534
       ],
       "StorageSlotUpgradeable": [
         1624
@@ -8397,16 +8397,16 @@
         1827
       ],
       "TransferFees": [
-        7094
+        7150
       ],
       "TransferOperator": [
-        7138
+        7194
       ],
       "UUPSUpgradeable": [
         959
       ],
       "Upgradeable": [
-        7179
+        7235
       ]
     },
     "id": 4468,
@@ -8430,7 +8430,7 @@
         "nameLocation": "-1:-1:-1",
         "nodeType": "ImportDirective",
         "scope": 4468,
-        "sourceUnit": 6286,
+        "sourceUnit": 6342,
         "src": "25:43:32",
         "symbolAliases": [],
         "unitAlias": ""
@@ -8455,7 +8455,7 @@
               "id": 4263,
               "name": "MetaTxContext",
               "nodeType": "IdentifierPath",
-              "referencedDeclaration": 6285,
+              "referencedDeclaration": 6341,
               "src": "673:13:32"
             },
             "id": 4264,
@@ -8475,8 +8475,8 @@
         "id": 4467,
         "linearizedBaseContracts": [
           4467,
-          6285,
-          7179,
+          6341,
+          7235,
           395,
           2166,
           2178,
@@ -8595,7 +8595,7 @@
                       "name": "__MetaTxContext_init",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
-                      "referencedDeclaration": 6220,
+                      "referencedDeclaration": 6276,
                       "src": "1247:20:32",
                       "typeDescriptions": {
                         "typeIdentifier": "t_function_internal_nonpayable$__$returns$__$",
@@ -9398,9 +9398,9 @@
                       "name": "_msgSender",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [
-                        6257
+                        6313
                       ],
-                      "referencedDeclaration": 6257,
+                      "referencedDeclaration": 6313,
                       "src": "2723:10:32",
                       "typeDescriptions": {
                         "typeIdentifier": "t_function_internal_view$__$returns$_t_address_$",
@@ -9946,9 +9946,9 @@
                       "name": "_msgSender",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [
-                        6257
+                        6313
                       ],
-                      "referencedDeclaration": 6257,
+                      "referencedDeclaration": 6313,
                       "src": "3269:10:32",
                       "typeDescriptions": {
                         "typeIdentifier": "t_function_internal_view$__$returns$_t_address_$",
@@ -10064,7 +10064,7 @@
                       "lValueRequested": false,
                       "memberName": "balanceOf",
                       "nodeType": "MemberAccess",
-                      "referencedDeclaration": 7318,
+                      "referencedDeclaration": 7374,
                       "src": "3309:18:32",
                       "typeDescriptions": {
                         "typeIdentifier": "t_function_external_view$_t_address_$_t_uint256_$returns$_t_uint256_$",
@@ -10528,9 +10528,9 @@
                       "name": "_msgSender",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [
-                        6257
+                        6313
                       ],
-                      "referencedDeclaration": 6257,
+                      "referencedDeclaration": 6313,
                       "src": "3715:10:32",
                       "typeDescriptions": {
                         "typeIdentifier": "t_function_internal_view$__$returns$_t_address_$",
@@ -11127,16 +11127,16 @@
         1519
       ],
       "BaseNFT": [
-        5401
+        5457
       ],
       "ContextUpgradeable": [
         1564
       ],
       "Currency": [
-        5475
+        5531
       ],
       "ERC1155Upgradeable": [
-        8239
+        8295
       ],
       "ERC165Upgradeable": [
         2166
@@ -11145,7 +11145,7 @@
         829
       ],
       "ERC20Adapter": [
-        5603
+        5659
       ],
       "Freeport": [
         4087
@@ -11175,19 +11175,19 @@
         885
       ],
       "Issuance": [
-        5864
+        5920
       ],
       "JointAccounts": [
-        6208
+        6264
       ],
       "MetaTxContext": [
-        6285
+        6341
       ],
       "NFTAttachment": [
         4467
       ],
       "SimpleExchange": [
-        6478
+        6534
       ],
       "StorageSlotUpgradeable": [
         1624
@@ -11196,16 +11196,16 @@
         1827
       ],
       "TransferFees": [
-        7094
+        7150
       ],
       "TransferOperator": [
-        7138
+        7194
       ],
       "UUPSUpgradeable": [
         959
       ],
       "Upgradeable": [
-        7179
+        7235
       ]
     },
     "id": 4468,
@@ -11229,7 +11229,7 @@
         "nameLocation": "-1:-1:-1",
         "nodeType": "ImportDirective",
         "scope": 4468,
-        "sourceUnit": 6286,
+        "sourceUnit": 6342,
         "src": "25:43:32",
         "symbolAliases": [],
         "unitAlias": ""
@@ -11254,7 +11254,7 @@
               "id": 4263,
               "name": "MetaTxContext",
               "nodeType": "IdentifierPath",
-              "referencedDeclaration": 6285,
+              "referencedDeclaration": 6341,
               "src": "673:13:32"
             },
             "id": 4264,
@@ -11274,8 +11274,8 @@
         "id": 4467,
         "linearizedBaseContracts": [
           4467,
-          6285,
-          7179,
+          6341,
+          7235,
           395,
           2166,
           2178,
@@ -11394,7 +11394,7 @@
                       "name": "__MetaTxContext_init",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
-                      "referencedDeclaration": 6220,
+                      "referencedDeclaration": 6276,
                       "src": "1247:20:32",
                       "typeDescriptions": {
                         "typeIdentifier": "t_function_internal_nonpayable$__$returns$__$",
@@ -12197,9 +12197,9 @@
                       "name": "_msgSender",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [
-                        6257
+                        6313
                       ],
-                      "referencedDeclaration": 6257,
+                      "referencedDeclaration": 6313,
                       "src": "2723:10:32",
                       "typeDescriptions": {
                         "typeIdentifier": "t_function_internal_view$__$returns$_t_address_$",
@@ -12745,9 +12745,9 @@
                       "name": "_msgSender",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [
-                        6257
+                        6313
                       ],
-                      "referencedDeclaration": 6257,
+                      "referencedDeclaration": 6313,
                       "src": "3269:10:32",
                       "typeDescriptions": {
                         "typeIdentifier": "t_function_internal_view$__$returns$_t_address_$",
@@ -12863,7 +12863,7 @@
                       "lValueRequested": false,
                       "memberName": "balanceOf",
                       "nodeType": "MemberAccess",
-                      "referencedDeclaration": 7318,
+                      "referencedDeclaration": 7374,
                       "src": "3309:18:32",
                       "typeDescriptions": {
                         "typeIdentifier": "t_function_external_view$_t_address_$_t_uint256_$returns$_t_uint256_$",
@@ -13327,9 +13327,9 @@
                       "name": "_msgSender",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [
-                        6257
+                        6313
                       ],
-                      "referencedDeclaration": 6257,
+                      "referencedDeclaration": 6313,
                       "src": "3715:10:32",
                       "typeDescriptions": {
                         "typeIdentifier": "t_function_internal_view$__$returns$_t_address_$",
@@ -14008,10 +14008,16 @@
       "links": {},
       "address": "0x047226789f93Cd3F1c781C9f9c15f0401f2Eb290",
       "transactionHash": "0xb6a59a8979d8fb1b2694989d620feb358a778a553cf8f0e2b29d10052a73e85c"
+    },
+    "1646839918616": {
+      "events": {},
+      "links": {},
+      "address": "0xfcDeF9a3F926d1fe4078BD548fFC02C951cB8029",
+      "transactionHash": "0x091621bce200b980651af033aa4f22e49bcfe74ee34d9050850cc07ae89c2a7a"
     }
   },
-  "schemaVersion": "3.4.4",
-  "updatedAt": "2022-03-03T08:46:21.848Z",
+  "schemaVersion": "3.4.5",
+  "updatedAt": "2022-03-09T15:42:20.653Z",
   "networkType": "ethereum",
   "devdoc": {
     "kind": "dev",

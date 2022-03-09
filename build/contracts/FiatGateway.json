@@ -11924,13 +11924,13 @@
         1519
       ],
       "BaseNFT": [
-        5401
+        5457
       ],
       "ContextUpgradeable": [
         1564
       ],
       "Currency": [
-        5475
+        5531
       ],
       "ERC1155HolderUpgradeable": [
         1216
@@ -11939,7 +11939,7 @@
         1275
       ],
       "ERC1155Upgradeable": [
-        8239
+        8295
       ],
       "ERC165Upgradeable": [
         2166
@@ -11948,7 +11948,7 @@
         829
       ],
       "ERC20Adapter": [
-        5603
+        5659
       ],
       "FiatGateway": [
         4070
@@ -11981,16 +11981,16 @@
         885
       ],
       "Issuance": [
-        5864
+        5920
       ],
       "JointAccounts": [
-        6208
+        6264
       ],
       "MetaTxContext": [
-        6285
+        6341
       ],
       "SimpleExchange": [
-        6478
+        6534
       ],
       "StorageSlotUpgradeable": [
         1624
@@ -11999,16 +11999,16 @@
         1827
       ],
       "TransferFees": [
-        7094
+        7150
       ],
       "TransferOperator": [
-        7138
+        7194
       ],
       "UUPSUpgradeable": [
         959
       ],
       "Upgradeable": [
-        7179
+        7235
       ]
     },
     "id": 4071,
@@ -12032,7 +12032,7 @@
         "nameLocation": "-1:-1:-1",
         "nodeType": "ImportDirective",
         "scope": 4071,
-        "sourceUnit": 7180,
+        "sourceUnit": 7236,
         "src": "25:41:29",
         "symbolAliases": [],
         "unitAlias": ""
@@ -12081,7 +12081,7 @@
               "id": 3761,
               "name": "Upgradeable",
               "nodeType": "IdentifierPath",
-              "referencedDeclaration": 7179,
+              "referencedDeclaration": 7235,
               "src": "643:11:29"
             },
             "id": 3762,
@@ -12116,7 +12116,7 @@
           1216,
           1275,
           1000,
-          7179,
+          7235,
           395,
           2166,
           2178,
@@ -12811,7 +12811,7 @@
                       "name": "__Upgradeable_init",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
-                      "referencedDeclaration": 7162,
+                      "referencedDeclaration": 7218,
                       "src": "2031:18:29",
                       "typeDescriptions": {
                         "typeIdentifier": "t_function_internal_nonpayable$__$returns$__$",
@@ -13062,7 +13062,7 @@
                       "lValueRequested": false,
                       "memberName": "currencyContract",
                       "nodeType": "MemberAccess",
-                      "referencedDeclaration": 5492,
+                      "referencedDeclaration": 5548,
                       "src": "2301:25:29",
                       "typeDescriptions": {
                         "typeIdentifier": "t_function_external_view$__$returns$_t_contract$_IERC20_$3131_$",
@@ -13979,7 +13979,7 @@
                       "lValueRequested": false,
                       "memberName": "currencyContract",
                       "nodeType": "MemberAccess",
-                      "referencedDeclaration": 5492,
+                      "referencedDeclaration": 5548,
                       "src": "3552:25:29",
                       "typeDescriptions": {
                         "typeIdentifier": "t_function_external_view$__$returns$_t_contract$_IERC20_$3131_$",
@@ -14549,7 +14549,7 @@
                       "lValueRequested": false,
                       "memberName": "balanceOf",
                       "nodeType": "MemberAccess",
-                      "referencedDeclaration": 7318,
+                      "referencedDeclaration": 7374,
                       "src": "4046:18:29",
                       "typeDescriptions": {
                         "typeIdentifier": "t_function_external_view$_t_address_$_t_uint256_$returns$_t_uint256_$",
@@ -14728,7 +14728,7 @@
                       "lValueRequested": false,
                       "memberName": "safeTransferFrom",
                       "nodeType": "MemberAccess",
-                      "referencedDeclaration": 7542,
+                      "referencedDeclaration": 7598,
                       "src": "4100:25:29",
                       "typeDescriptions": {
                         "typeIdentifier": "t_function_external_nonpayable$_t_address_$_t_address_$_t_uint256_$_t_uint256_$_t_bytes_memory_ptr_$returns$__$",
@@ -15516,7 +15516,7 @@
                       "lValueRequested": false,
                       "memberName": "takeOffer",
                       "nodeType": "MemberAccess",
-                      "referencedDeclaration": 6471,
+                      "referencedDeclaration": 6527,
                       "src": "5793:18:29",
                       "typeDescriptions": {
                         "typeIdentifier": "t_function_external_nonpayable$_t_address_$_t_address_$_t_uint256_$_t_uint256_$_t_uint256_$returns$__$",
@@ -15832,13 +15832,13 @@
         1519
       ],
       "BaseNFT": [
-        5401
+        5457
       ],
       "ContextUpgradeable": [
         1564
       ],
       "Currency": [
-        5475
+        5531
       ],
       "ERC1155HolderUpgradeable": [
         1216
@@ -15847,7 +15847,7 @@
         1275
       ],
       "ERC1155Upgradeable": [
-        8239
+        8295
       ],
       "ERC165Upgradeable": [
         2166
@@ -15856,7 +15856,7 @@
         829
       ],
       "ERC20Adapter": [
-        5603
+        5659
       ],
       "FiatGateway": [
         4070
@@ -15889,16 +15889,16 @@
         885
       ],
       "Issuance": [
-        5864
+        5920
       ],
       "JointAccounts": [
-        6208
+        6264
       ],
       "MetaTxContext": [
-        6285
+        6341
       ],
       "SimpleExchange": [
-        6478
+        6534
       ],
       "StorageSlotUpgradeable": [
         1624
@@ -15907,16 +15907,16 @@
         1827
       ],
       "TransferFees": [
-        7094
+        7150
       ],
       "TransferOperator": [
-        7138
+        7194
       ],
       "UUPSUpgradeable": [
         959
       ],
       "Upgradeable": [
-        7179
+        7235
       ]
     },
     "id": 4071,
@@ -15940,7 +15940,7 @@
         "nameLocation": "-1:-1:-1",
         "nodeType": "ImportDirective",
         "scope": 4071,
-        "sourceUnit": 7180,
+        "sourceUnit": 7236,
         "src": "25:41:29",
         "symbolAliases": [],
         "unitAlias": ""
@@ -15989,7 +15989,7 @@
               "id": 3761,
               "name": "Upgradeable",
               "nodeType": "IdentifierPath",
-              "referencedDeclaration": 7179,
+              "referencedDeclaration": 7235,
               "src": "643:11:29"
             },
             "id": 3762,
@@ -16024,7 +16024,7 @@
           1216,
           1275,
           1000,
-          7179,
+          7235,
           395,
           2166,
           2178,
@@ -16719,7 +16719,7 @@
                       "name": "__Upgradeable_init",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
-                      "referencedDeclaration": 7162,
+                      "referencedDeclaration": 7218,
                       "src": "2031:18:29",
                       "typeDescriptions": {
                         "typeIdentifier": "t_function_internal_nonpayable$__$returns$__$",
@@ -16970,7 +16970,7 @@
                       "lValueRequested": false,
                       "memberName": "currencyContract",
                       "nodeType": "MemberAccess",
-                      "referencedDeclaration": 5492,
+                      "referencedDeclaration": 5548,
                       "src": "2301:25:29",
                       "typeDescriptions": {
                         "typeIdentifier": "t_function_external_view$__$returns$_t_contract$_IERC20_$3131_$",
@@ -17887,7 +17887,7 @@
                       "lValueRequested": false,
                       "memberName": "currencyContract",
                       "nodeType": "MemberAccess",
-                      "referencedDeclaration": 5492,
+                      "referencedDeclaration": 5548,
                       "src": "3552:25:29",
                       "typeDescriptions": {
                         "typeIdentifier": "t_function_external_view$__$returns$_t_contract$_IERC20_$3131_$",
@@ -18457,7 +18457,7 @@
                       "lValueRequested": false,
                       "memberName": "balanceOf",
                       "nodeType": "MemberAccess",
-                      "referencedDeclaration": 7318,
+                      "referencedDeclaration": 7374,
                       "src": "4046:18:29",
                       "typeDescriptions": {
                         "typeIdentifier": "t_function_external_view$_t_address_$_t_uint256_$returns$_t_uint256_$",
@@ -18636,7 +18636,7 @@
                       "lValueRequested": false,
                       "memberName": "safeTransferFrom",
                       "nodeType": "MemberAccess",
-                      "referencedDeclaration": 7542,
+                      "referencedDeclaration": 7598,
                       "src": "4100:25:29",
                       "typeDescriptions": {
                         "typeIdentifier": "t_function_external_nonpayable$_t_address_$_t_address_$_t_uint256_$_t_uint256_$_t_bytes_memory_ptr_$returns$__$",
@@ -19424,7 +19424,7 @@
                       "lValueRequested": false,
                       "memberName": "takeOffer",
                       "nodeType": "MemberAccess",
-                      "referencedDeclaration": 6471,
+                      "referencedDeclaration": 6527,
                       "src": "5793:18:29",
                       "typeDescriptions": {
                         "typeIdentifier": "t_function_external_nonpayable$_t_address_$_t_address_$_t_uint256_$_t_uint256_$_t_uint256_$returns$__$",
@@ -21832,10 +21832,150 @@
       "links": {},
       "address": "0x7e1703605Ff33010741ad17768349789a08D691A",
       "transactionHash": "0x1aa0130239f277e565c9875f80242f99f0fbf0ff0022b46cb89802b40cb5c3d8"
+    },
+    "1646839918616": {
+      "events": {
+        "0x7e644d79422f17c01e4894b5f4f588d331ebfa28653d42ae832dc59e38c9798f": {
+          "anonymous": false,
+          "inputs": [
+            {
+              "indexed": false,
+              "internalType": "address",
+              "name": "previousAdmin",
+              "type": "address"
+            },
+            {
+              "indexed": false,
+              "internalType": "address",
+              "name": "newAdmin",
+              "type": "address"
+            }
+          ],
+          "name": "AdminChanged",
+          "type": "event"
+        },
+        "0x1cf3b03a6cf19fa2baba4df148e9dcabedea7f8a5c07840e207e5c089be95d3e": {
+          "anonymous": false,
+          "inputs": [
+            {
+              "indexed": true,
+              "internalType": "address",
+              "name": "beacon",
+              "type": "address"
+            }
+          ],
+          "name": "BeaconUpgraded",
+          "type": "event"
+        },
+        "0xbd79b86ffe0ab8e8776151514217cd7cacd52c909f66475c3af44e129f0b00ff": {
+          "anonymous": false,
+          "inputs": [
+            {
+              "indexed": true,
+              "internalType": "bytes32",
+              "name": "role",
+              "type": "bytes32"
+            },
+            {
+              "indexed": true,
+              "internalType": "bytes32",
+              "name": "previousAdminRole",
+              "type": "bytes32"
+            },
+            {
+              "indexed": true,
+              "internalType": "bytes32",
+              "name": "newAdminRole",
+              "type": "bytes32"
+            }
+          ],
+          "name": "RoleAdminChanged",
+          "type": "event"
+        },
+        "0x2f8788117e7eff1d82e926ec794901d17c78024a50270940304540a733656f0d": {
+          "anonymous": false,
+          "inputs": [
+            {
+              "indexed": true,
+              "internalType": "bytes32",
+              "name": "role",
+              "type": "bytes32"
+            },
+            {
+              "indexed": true,
+              "internalType": "address",
+              "name": "account",
+              "type": "address"
+            },
+            {
+              "indexed": true,
+              "internalType": "address",
+              "name": "sender",
+              "type": "address"
+            }
+          ],
+          "name": "RoleGranted",
+          "type": "event"
+        },
+        "0xf6391f5c32d9c69d2a47ea670b442974b53935d1edc7fd64eb21e047a839171b": {
+          "anonymous": false,
+          "inputs": [
+            {
+              "indexed": true,
+              "internalType": "bytes32",
+              "name": "role",
+              "type": "bytes32"
+            },
+            {
+              "indexed": true,
+              "internalType": "address",
+              "name": "account",
+              "type": "address"
+            },
+            {
+              "indexed": true,
+              "internalType": "address",
+              "name": "sender",
+              "type": "address"
+            }
+          ],
+          "name": "RoleRevoked",
+          "type": "event"
+        },
+        "0x1d5de90e7c5b244ac5797698b15fe80a92524d933dafd79e001daf844555fb1c": {
+          "anonymous": false,
+          "inputs": [
+            {
+              "indexed": false,
+              "internalType": "uint256",
+              "name": "cereUnitsPerPenny",
+              "type": "uint256"
+            }
+          ],
+          "name": "SetExchangeRate",
+          "type": "event"
+        },
+        "0xbc7cd75a20ee27fd9adebab32041f755214dbc6bffa90cc0225b39da2e5c2d3b": {
+          "anonymous": false,
+          "inputs": [
+            {
+              "indexed": true,
+              "internalType": "address",
+              "name": "implementation",
+              "type": "address"
+            }
+          ],
+          "name": "Upgraded",
+          "type": "event"
+        }
+      },
+      "links": {},
+      "address": "0x80aaf5606d4989C2bD8f7499916F2359b33Eb1A8",
+      "transactionHash": "0x58f50f0dfa1e27004557652191a452fcd1b9d974fc75e454b3840413b1612187"
     }
   },
-  "schemaVersion": "3.4.4",
-  "updatedAt": "2022-03-03T08:46:25.984Z",
+  "schemaVersion": "3.4.5",
+  "updatedAt": "2022-03-09T15:42:24.779Z",
   "networkType": "ethereum",
   "devdoc": {
     "kind": "dev",

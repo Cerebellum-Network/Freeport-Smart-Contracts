@@ -4670,8 +4670,8 @@
     "version": "0.8.4+commit.c7e474f2.Emscripten.clang"
   },
   "networks": {},
-  "schemaVersion": "3.4.4",
-  "updatedAt": "2022-03-03T08:46:14.258Z",
+  "schemaVersion": "3.4.5",
+  "updatedAt": "2022-03-09T15:42:03.102Z",
   "devdoc": {
     "details": "Elliptic Curve Digital Signature Algorithm (ECDSA) operations. These functions can be used to verify that a message was signed by the holder of the private keys of a given address.",
     "kind": "dev",

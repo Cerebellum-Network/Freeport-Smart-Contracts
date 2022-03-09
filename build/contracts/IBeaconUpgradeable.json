@@ -254,8 +254,8 @@
     "version": "0.8.4+commit.c7e474f2.Emscripten.clang"
   },
   "networks": {},
-  "schemaVersion": "3.4.4",
-  "updatedAt": "2022-03-03T08:46:14.229Z",
+  "schemaVersion": "3.4.5",
+  "updatedAt": "2022-03-09T15:42:03.067Z",
   "devdoc": {
     "details": "This is the interface that {BeaconProxy} expects of its beacon.",
     "kind": "dev",

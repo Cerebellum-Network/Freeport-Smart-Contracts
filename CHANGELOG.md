@@ -1,5 +1,6 @@
 ### Next release
 
+- (Un)secured auction support
 - Added withdrawal of share from joint account in USDC
 
 ### v2.0.0

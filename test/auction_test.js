@@ -5,7 +5,6 @@ const log = console.log;
 const {deployProxy} = require('@openzeppelin/truffle-upgrades');
 const {expectRevert, time} = require('@openzeppelin/test-helpers');
 const BN = require('bn.js');
-const {getSigner, typedData} = require("./utils");
 
 contract("SimpleAuction", accounts => {
     const [deployer, issuer, buyerBob, buyerBill, benificiary] = accounts;
@@ -69,9 +68,6 @@ contract("SimpleAuction", accounts => {
         let nftSupply = 10;
         let nftId = await freeport.issue.call(nftSupply, "0x", { from: issuer });
         let closeTime = (await time.latest()).toNumber() + 1000;
-        const signer = await getSigner();
-        let {domain, types, value} = typedData(issuer, nftId);
-        let signature = await signer._signTypedData(domain, types, value);
         
         let checkBalances = async expected => {
             for (let [account, expectedERC20, expectedNFTs] of expected) {
@@ -113,7 +109,7 @@ contract("SimpleAuction", accounts => {
         ]);
 
         await erc20.approve(auction.address, 1e9 * UNIT, {from: buyerBob});
-        await auction.bidOnAuction(issuer, nftId, 100 * UNIT, signature, {from: buyerBob});
+        await auction.bidOnAuction(issuer, nftId, 100 * UNIT, {from: buyerBob});
 
         await checkBalances([
             [buyerBob, someMoney - 100, 0], // BuyerBob put 100 money as deposit.
@@ -121,15 +117,15 @@ contract("SimpleAuction", accounts => {
         ]);
 
         await expectRevert(
-            auction.bidOnAuction(issuer, nftId, 109 * UNIT, signature, { from: buyerBill }),
+            auction.bidOnAuction(issuer, nftId, 109 * UNIT, { from: buyerBill }),
             "a new bid must be 10% greater than the current bid");
         
         await erc20.approve(auction.address, 1e9 * UNIT, {from: buyerBill});
-        await auction.bidOnAuction(issuer, nftId, 110 * UNIT, signature, {from: buyerBill});
+        await auction.bidOnAuction(issuer, nftId, 110 * UNIT, {from: buyerBill});
 
         let tooMuchMoney = someMoney + 1;
         await expectRevert(
-            auction.bidOnAuction(issuer, nftId, tooMuchMoney * UNIT, signature, {from: buyerBob}),
+            auction.bidOnAuction(issuer, nftId, tooMuchMoney * UNIT, {from: buyerBob}),
             "ERC20: transfer amount exceeds balance");
 
         await checkBalances([

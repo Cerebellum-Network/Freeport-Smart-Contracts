@@ -6,8 +6,6 @@ import "./SignatureVerifier.sol";
 import "@openzeppelin/contracts-upgradeable/token/ERC1155/utils/ERC1155HolderUpgradeable.sol";
 import "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol";
 
-
-
 /**
 An auction is characterized by a sequence of transactions and their corresponding events:
 
@@ -73,6 +71,7 @@ contract SimpleAuction is /* AccessControl, */ MetaTxContext, ERC1155HolderUpgra
         address buyer; // 0 means no buyer yet.
         uint256 price; // The highest bid price. The initial value is set by the seller.
         uint256 closeTimeSec; // Bidding is open until the close time. After this time, the settlement becomes possible. A non-zero value also means that the auction exists.
+        bool secured;
     }
 
     /** Seller => NFT ID => Bid.
@@ -86,7 +85,8 @@ contract SimpleAuction is /* AccessControl, */ MetaTxContext, ERC1155HolderUpgra
         address indexed seller,
         uint256 indexed nftId,
         uint256 price,
-        uint256 closeTimeSec);
+        uint256 closeTimeSec,
+        bool secured);
 
     /**
      * Note: `price`, `closeTimeSec`, and `buyer` may have changed for the auction `(seller, nftId)`.
@@ -96,7 +96,8 @@ contract SimpleAuction is /* AccessControl, */ MetaTxContext, ERC1155HolderUpgra
         uint256 indexed nftId,
         uint256 price,
         uint256 closeTimeSec,
-        address buyer);
+        address buyer,
+        bool secured);
 
     /**
      * Note: `buyer == 0` means no buyer, and the NFT went back to the seller.
@@ -107,9 +108,14 @@ contract SimpleAuction is /* AccessControl, */ MetaTxContext, ERC1155HolderUpgra
         uint256 price,
         address buyer);
 
+    function startAuction(uint256 nftId, uint256 minPrice, uint closeTimeSec) 
+    public {
+        startSecuredAuction(nftId, minPrice, closeTimeSec, false);
+    }
+
     /**
      */
-    function startAuction(uint256 nftId, uint256 minPrice, uint closeTimeSec)
+    function startSecuredAuction(uint256 nftId, uint256 minPrice, uint closeTimeSec, bool secured)
     public {
         address seller = _msgSender();
         Bid storage bid = sellerNftBids[seller][nftId];
@@ -133,23 +139,30 @@ contract SimpleAuction is /* AccessControl, */ MetaTxContext, ERC1155HolderUpgra
         bid.buyer = address(0);
         bid.price = price;
         bid.closeTimeSec = closeTimeSec;
+        bid.secured = secured;
 
         // Take the NFT from the seller.
         // Use the TRANSFER_OPERATOR role.
         freeport.transferFrom(seller, address(this), nftId, 1);
 
-        emit StartAuction(seller, nftId, price, closeTimeSec);
+        emit StartAuction(seller, nftId, price, closeTimeSec, secured);
+    }
+
+    function bidOnAuction(address seller, uint256 nftId, uint256 price) public {
+        bidOnSecuredAuction(seller, nftId, price, "");
     }
 
     /**
      */
-    function bidOnAuction(address seller, uint256 nftId, uint256 price, bytes calldata signature)
+    function bidOnSecuredAuction(address seller, uint256 nftId, uint256 price, bytes memory signature)
     public {
         address buyer = _msgSender();
-        address verifier = recoverAddressFromSignature(buyer, nftId, signature);
-        require(hasRole(BUY_AUTHORIZER_ROLE, verifier), "Authroizer doesn't have a role");
-        
         Bid storage bid = sellerNftBids[seller][nftId];
+        
+        if (bid.secured) {
+            address verifier = recoverAddressFromSignature(buyer, nftId, signature);
+            require(hasRole(BUY_AUTHORIZER_ROLE, verifier), "Authroizer doesn't have a role");        
+        }
 
         // Check that the auction exists and is open.
         require(block.timestamp < bid.closeTimeSec, "the auction must be open");
@@ -173,9 +186,8 @@ contract SimpleAuction is /* AccessControl, */ MetaTxContext, ERC1155HolderUpgra
         // Take the new deposit from the new buyer.
         bid.buyer = buyer;
         bid.price = price;
-        _takeDeposit(buyer, price);
-
-        emit BidOnAuction(seller, nftId, price, bid.closeTimeSec, buyer);
+        
+        emit BidOnAuction(seller, nftId, price, bid.closeTimeSec, buyer, bid.secured);
     }
 
     function settleAuction(address seller, uint256 nftId)
@@ -195,6 +207,7 @@ contract SimpleAuction is /* AccessControl, */ MetaTxContext, ERC1155HolderUpgra
         bid.buyer = address(0);
         bid.price = 0;
         bid.closeTimeSec = 0;
+        bid.secured = false;
 
         if (buyer != address(0)) {
             // In case there was a buyer,
