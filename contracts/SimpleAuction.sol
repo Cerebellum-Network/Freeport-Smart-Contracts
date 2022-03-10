@@ -186,6 +186,7 @@ contract SimpleAuction is /* AccessControl, */ MetaTxContext, ERC1155HolderUpgra
         // Take the new deposit from the new buyer.
         bid.buyer = buyer;
         bid.price = price;
+        _takeDeposit(buyer, price);
         
         emit BidOnAuction(seller, nftId, price, bid.closeTimeSec, buyer, bid.secured);
     }

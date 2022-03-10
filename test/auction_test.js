@@ -7,7 +7,7 @@ const {expectRevert, time} = require('@openzeppelin/test-helpers');
 const BN = require('bn.js');
 
 contract("SimpleAuction", accounts => {
-    const [deployer, issuer, buyerBob, buyerBill, benificiary] = accounts;
+    const [deployer, issuer, buyerBob, buyerBill, beneficiary] = accounts;
 
     const CURRENCY = 0;
     const UNIT = 1e6;
@@ -91,10 +91,10 @@ contract("SimpleAuction", accounts => {
 
         await freeport.configureRoyalties(
             nftId,
-            benificiary,
+            beneficiary,
             /* primaryCut */ 10 * PERCENT,
             /* primaryMinimum */ 0,
-            benificiary,
+            beneficiary,
             /* secondaryCut */ 0,
             /* secondaryMinimum */ 0,
             { from: issuer });
@@ -152,7 +152,7 @@ contract("SimpleAuction", accounts => {
 
         // Issuer and benificiaries withdraw their earnings to ERC20.
         await withdraw(issuer);
-        await withdraw(benificiary);
+        await withdraw(beneficiary);
 
         // Check every balance after settlement.
         await checkBalances([
@@ -160,7 +160,7 @@ contract("SimpleAuction", accounts => {
             [buyerBill, someMoney - 110, 1], // Spent 110 money, earned the NFT.
             [buyerBob, someMoney, 0], // No change, BuyerBob got his refund.
             [auction.address, 0, 0], // No change, the contract gave back all deposits.
-            [benificiary, 11, 0], // The beneficiary earned 10% of 110.
+            [beneficiary, 11, 0], // The beneficiary earned 10% of 110.
         ]);
 
         // Cannot settle twice.

@@ -255,7 +255,7 @@
   },
   "networks": {},
   "schemaVersion": "3.4.5",
-  "updatedAt": "2022-03-09T15:42:03.067Z",
+  "updatedAt": "2022-03-10T09:35:17.667Z",
   "devdoc": {
     "details": "This is the interface that {BeaconProxy} expects of its beacon.",
     "kind": "dev",
