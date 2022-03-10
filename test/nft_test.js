@@ -4,7 +4,7 @@ const FiatGateway = artifacts.require("FiatGateway");
 const TestERC20 = artifacts.require("TestERC20");
 const log = console.log;
 const {deployProxy} = require('@openzeppelin/truffle-upgrades');
-const {expectEvent, expectRevert} = require('@openzeppelin/test-helpers');
+const {expectEvent, expectRevert, constants} = require('@openzeppelin/test-helpers');
 const BN = require('bn.js');
 
 
@@ -20,7 +20,6 @@ contract("Freeport", accounts => {
     const CURRENCY = 0;
     const UNIT = 1e6;
     const aLot = 100e3 * UNIT;
-    const freeportUSDCAmount = 10e3 * UNIT;
 
     let deploy = async (freeport) => {
         let erc20;
@@ -34,7 +33,6 @@ contract("Freeport", accounts => {
         }
 
         await erc20.mint(deployer, aLot);
-        await erc20.mint(freeport.address, freeportUSDCAmount);
         await erc20.approve(freeport.address, aLot);
         await freeport.deposit(aLot);
 
@@ -98,7 +96,7 @@ contract("Freeport", accounts => {
 
     it("issues an NFT, create a Joint Account, collect royalties, distribute to JA.", async () => {
         log();
-        const {freeport, deposit, erc20} = await deploy();
+        const {freeport, deposit} = await deploy();
         let BASIS_POINTS = +await freeport.BASIS_POINTS.call();
         assert.equal(BASIS_POINTS, 100 * 100);
 
@@ -187,17 +185,8 @@ contract("Freeport", accounts => {
             assert.equal(royaltyEarned, totalEarnings * 1 / 10);
         }
         log();
-        
-        const partner1BalanceBeforeDistr = await erc20.balanceOf(issuer);
-        const partner2BalanceBeforeDistr = await erc20.balanceOf(partner);
 
         await freeport.distributeJointAccount(account);
-
-        const partner1BalanceAfterDistr = await erc20.balanceOf(issuer);
-        const partner2BalanceAfterDistr = await erc20.balanceOf(partner);
-        assert(partner1BalanceBeforeDistr < partner1BalanceAfterDistr, "Balance must be increased after distribution");
-        assert(partner2BalanceBeforeDistr < partner2BalanceAfterDistr, "Balance must be increased after distribution");
-        
         log("Withdraw the funds from the Joint Account to ’Issuer’ and to ’Partner’");
         log();
     });

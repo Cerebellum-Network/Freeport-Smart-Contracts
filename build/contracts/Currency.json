@@ -677,7 +677,7 @@
         5475
       ],
       "ERC1155Upgradeable": [
-        8239
+        8216
       ],
       "ERC165Upgradeable": [
         2166
@@ -707,7 +707,7 @@
         885
       ],
       "MetaTxContext": [
-        6285
+        6262
       ],
       "StorageSlotUpgradeable": [
         1624
@@ -719,7 +719,7 @@
         959
       ],
       "Upgradeable": [
-        7179
+        7156
       ]
     },
     "id": 5476,
@@ -777,10 +777,10 @@
         "linearizedBaseContracts": [
           5475,
           5401,
-          6285,
-          7179,
+          6262,
+          7156,
           395,
-          8239,
+          8216,
           1137,
           1122,
           2166,
@@ -960,7 +960,7 @@
                         "name": "_balances",
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
-                        "referencedDeclaration": 7208,
+                        "referencedDeclaration": 7185,
                         "src": "488:9:39",
                         "typeDescriptions": {
                           "typeIdentifier": "t_mapping$_t_uint256_$_t_mapping$_t_address_$_t_uint256_$_$",
@@ -1138,7 +1138,7 @@
                           "name": "_balances",
                           "nodeType": "Identifier",
                           "overloadedDeclarations": [],
-                          "referencedDeclaration": 7208,
+                          "referencedDeclaration": 7185,
                           "src": "609:9:39",
                           "typeDescriptions": {
                             "typeIdentifier": "t_mapping$_t_uint256_$_t_mapping$_t_address_$_t_uint256_$_$",
@@ -1261,7 +1261,7 @@
                           "name": "_balances",
                           "nodeType": "Identifier",
                           "overloadedDeclarations": [],
-                          "referencedDeclaration": 7208,
+                          "referencedDeclaration": 7185,
                           "src": "667:9:39",
                           "typeDescriptions": {
                             "typeIdentifier": "t_mapping$_t_uint256_$_t_mapping$_t_address_$_t_uint256_$_$",
@@ -1665,7 +1665,7 @@
         5475
       ],
       "ERC1155Upgradeable": [
-        8239
+        8216
       ],
       "ERC165Upgradeable": [
         2166
@@ -1695,7 +1695,7 @@
         885
       ],
       "MetaTxContext": [
-        6285
+        6262
       ],
       "StorageSlotUpgradeable": [
         1624
@@ -1707,7 +1707,7 @@
         959
       ],
       "Upgradeable": [
-        7179
+        7156
       ]
     },
     "id": 5476,
@@ -1765,10 +1765,10 @@
         "linearizedBaseContracts": [
           5475,
           5401,
-          6285,
-          7179,
+          6262,
+          7156,
           395,
-          8239,
+          8216,
           1137,
           1122,
           2166,
@@ -1948,7 +1948,7 @@
                         "name": "_balances",
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
-                        "referencedDeclaration": 7208,
+                        "referencedDeclaration": 7185,
                         "src": "488:9:39",
                         "typeDescriptions": {
                           "typeIdentifier": "t_mapping$_t_uint256_$_t_mapping$_t_address_$_t_uint256_$_$",
@@ -2126,7 +2126,7 @@
                           "name": "_balances",
                           "nodeType": "Identifier",
                           "overloadedDeclarations": [],
-                          "referencedDeclaration": 7208,
+                          "referencedDeclaration": 7185,
                           "src": "609:9:39",
                           "typeDescriptions": {
                             "typeIdentifier": "t_mapping$_t_uint256_$_t_mapping$_t_address_$_t_uint256_$_$",
@@ -2249,7 +2249,7 @@
                           "name": "_balances",
                           "nodeType": "Identifier",
                           "overloadedDeclarations": [],
-                          "referencedDeclaration": 7208,
+                          "referencedDeclaration": 7185,
                           "src": "667:9:39",
                           "typeDescriptions": {
                             "typeIdentifier": "t_mapping$_t_uint256_$_t_mapping$_t_address_$_t_uint256_$_$",
@@ -2640,7 +2640,7 @@
   },
   "networks": {},
   "schemaVersion": "3.4.4",
-  "updatedAt": "2022-03-03T08:46:14.443Z",
+  "updatedAt": "2022-02-15T14:15:57.764Z",
   "devdoc": {
     "kind": "dev",
     "methods": {
