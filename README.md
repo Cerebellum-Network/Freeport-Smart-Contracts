@@ -62,6 +62,26 @@ Accounts:
 see [dev_setup](scripts/dev_setup.js)). Biconomy enabled.
 [Admin](https://mumbai.polygonscan.com/address/0x63846e2D234e4F854F43423014430b4e131f697b).
 
+## How to upgrade
+
+Review all code changes since the last deployed release. Understand how upgradeable contracts work (see [doc](https://docs.openzeppelin.com/upgrades-plugins/1.x/writing-upgradeable)). Pay attention to:
+- Events: make sure the event listeners are upgraded to support **both new and old** versions of events at the same time.
+- Structure changes: make sure existing fields do not change in any way, only new fields are added.
+- Existing data: the existing objects in the contract will have a zero value for new fields; make sure the code handles this correctly.
+- Functions: make sure that no public function was removed or signature changed.
+- Initialization: if a new feature requires some initialization, make sure this happens in a new `initialize_vX.X.X` function, and that this function is called during the upgrade (example: [initialize_v2_0_0](https://github.com/Cerebellum-Network/Freeport-Smart-Contracts/blob/bc0aae14cc6d0dbbdb3656b6aba6e15085b03fbf/migrations/9_upgrade_auction.js#L13)).
+- Unit tests: understand what behavior changed.
+
+Bump the version, maintain [CHANGELOG.md](CHANGELOG.md), and create a release in github.
+
+Choose a [migration script](migrations/) depending on which contract to upgrade (e.g.: N=8), then run:
+
+    npm run test
+    export MNEMONIC="  …mnemonic of a wallet that is admin…  "
+    npm run migrate --network=polygon_testnet -f N --to N
+
+Release the JS SDK (see [instructions](https://github.com/Cerebellum-Network/Freeport-Smart-Contracts-SDK#publishing-to-npm)).
+
 ## How to deploy
 
     npm test
