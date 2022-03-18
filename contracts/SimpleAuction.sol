@@ -96,8 +96,7 @@ contract SimpleAuction is /* AccessControl, */ MetaTxContext, ERC1155HolderUpgra
         uint256 indexed nftId,
         uint256 price,
         uint256 closeTimeSec,
-        address buyer,
-        bool secured);
+        address buyer);
 
     /**
      * Note: `buyer == 0` means no buyer, and the NFT went back to the seller.
@@ -188,7 +187,7 @@ contract SimpleAuction is /* AccessControl, */ MetaTxContext, ERC1155HolderUpgra
         bid.price = price;
         _takeDeposit(buyer, price);
         
-        emit BidOnAuction(seller, nftId, price, bid.closeTimeSec, buyer, bid.secured);
+        emit BidOnAuction(seller, nftId, price, bid.closeTimeSec, buyer);
     }
 
     function settleAuction(address seller, uint256 nftId)
