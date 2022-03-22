@@ -9,8 +9,8 @@ import "./TransferFees.sol";
 - Capture variable royalties.
  */
 abstract contract SimpleExchange is TransferFees {
-    function __SimpleExchange_init() internal {
-        __TransferFees_init();
+    function __SimpleExchange_init(string memory baseURL) internal {
+        __TransferFees_init(baseURL);
     }
 
     /** Seller => NFT ID => Price.

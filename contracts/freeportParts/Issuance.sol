@@ -1,6 +1,7 @@
 pragma solidity ^0.8.0;
 
 import "./ERC20Adapter.sol";
+import "@openzeppelin/contracts/utils/Strings.sol";
 
 /**
 - Issue NFTs.
@@ -15,7 +16,8 @@ The following attributes of a type of NFT are immutable. They are used to derive
 
 */
 abstract contract Issuance is ERC20Adapter {
-    function __Issuance_init() internal {
+    function __Issuance_init(string memory baseURL) internal {
+        metadataBaseURL = baseURL;
         __ERC20Adapter_init();
     }
 
@@ -23,6 +25,8 @@ abstract contract Issuance is ERC20Adapter {
      * This is used to generate unique NFT IDs.
      */
     mapping(address => uint32) public issuanceNonces;
+
+    string private metadataBaseURL;
 
     /** Issue a supply of NFTs of a new type, and return its ID.
      *
@@ -84,6 +88,14 @@ abstract contract Issuance is ERC20Adapter {
         return id;
     }
 
+    function metadataURL(uint nftId) public view returns (string memory) {
+        string memory base = metadataBaseURL;
+        string memory id = Strings.toString(nftId);
+        string memory path = "/metadata";
+    
+        return string(abi.encodePacked(base, id, path));
+    }
+
     /** Parse an NFT ID into its issuer, its supply, and an arbitrary nonce.
      *
      * This does not imply that the NFTs exist.
@@ -95,4 +107,5 @@ abstract contract Issuance is ERC20Adapter {
         supply = /*    */ uint64((id & 0x000000000000000000000000000000000000000000000000FFFFFFFFFFFFFFFF));
         return (issuer, nonce, supply);
     }
+
 }

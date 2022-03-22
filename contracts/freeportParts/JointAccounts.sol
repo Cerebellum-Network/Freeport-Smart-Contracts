@@ -15,8 +15,8 @@ including if that owner is itself a JA.
 [An implementation that distributes to all owners at once.]
 */
 abstract contract JointAccounts is Issuance {
-    function __JointAccounts_init() internal {
-        __Issuance_init();
+    function __JointAccounts_init(string memory baseURL) internal {
+        __Issuance_init(baseURL);
     }
 
     /** The total fraction representing 100% of an account.

@@ -25,7 +25,7 @@ contract Freeport is /*
 
     /** Initialize this contract and its dependencies.
      */
-    function initialize() public initializer {
-        __SimpleExchange_init();
+    function initialize(string memory baseURL) public initializer {
+        __SimpleExchange_init(baseURL);
     }
 }
