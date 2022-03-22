@@ -742,7 +742,7 @@
         5478
       ],
       "ERC1155Upgradeable": [
-        8270
+        8268
       ],
       "ERC165Upgradeable": [
         2166
@@ -778,7 +778,7 @@
         885
       ],
       "MetaTxContext": [
-        6310
+        6308
       ],
       "StorageSlotUpgradeable": [
         1624
@@ -787,13 +787,13 @@
         1827
       ],
       "TransferOperator": [
-        7169
+        7167
       ],
       "UUPSUpgradeable": [
         959
       ],
       "Upgradeable": [
-        7210
+        7208
       ]
     },
     "id": 5584,
@@ -817,7 +817,7 @@
         "nameLocation": "-1:-1:-1",
         "nodeType": "ImportDirective",
         "scope": 5584,
-        "sourceUnit": 7170,
+        "sourceUnit": 7168,
         "src": "25:32:40",
         "symbolAliases": [],
         "unitAlias": ""
@@ -842,7 +842,7 @@
               "id": 5483,
               "name": "TransferOperator",
               "nodeType": "IdentifierPath",
-              "referencedDeclaration": 7169,
+              "referencedDeclaration": 7167,
               "src": "158:16:40"
             },
             "id": 5484,
@@ -856,13 +856,13 @@
         "id": 5583,
         "linearizedBaseContracts": [
           5583,
-          7169,
+          7167,
           5478,
           5404,
-          6310,
-          7210,
+          6308,
+          7208,
           395,
-          8270,
+          8268,
           1137,
           1122,
           2166,
@@ -892,7 +892,7 @@
                       "name": "__TransferOperator_init",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
-                      "referencedDeclaration": 7138,
+                      "referencedDeclaration": 7136,
                       "src": "231:23:40",
                       "typeDescriptions": {
                         "typeIdentifier": "t_function_internal_nonpayable$__$returns$__$",
@@ -1731,7 +1731,7 @@
                       "name": "_mint",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
-                      "referencedDeclaration": 7799,
+                      "referencedDeclaration": 7797,
                       "src": "1026:5:40",
                       "typeDescriptions": {
                         "typeIdentifier": "t_function_internal_nonpayable$_t_address_$_t_uint256_$_t_uint256_$_t_bytes_memory_ptr_$returns$__$",
@@ -1954,7 +1954,7 @@
                       "name": "_burn",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
-                      "referencedDeclaration": 7976,
+                      "referencedDeclaration": 7974,
                       "src": "1225:5:40",
                       "typeDescriptions": {
                         "typeIdentifier": "t_function_internal_nonpayable$_t_address_$_t_uint256_$_t_uint256_$returns$__$",
@@ -2153,7 +2153,7 @@
         5478
       ],
       "ERC1155Upgradeable": [
-        8270
+        8268
       ],
       "ERC165Upgradeable": [
         2166
@@ -2189,7 +2189,7 @@
         885
       ],
       "MetaTxContext": [
-        6310
+        6308
       ],
       "StorageSlotUpgradeable": [
         1624
@@ -2198,13 +2198,13 @@
         1827
       ],
       "TransferOperator": [
-        7169
+        7167
       ],
       "UUPSUpgradeable": [
         959
       ],
       "Upgradeable": [
-        7210
+        7208
       ]
     },
     "id": 5584,
@@ -2228,7 +2228,7 @@
         "nameLocation": "-1:-1:-1",
         "nodeType": "ImportDirective",
         "scope": 5584,
-        "sourceUnit": 7170,
+        "sourceUnit": 7168,
         "src": "25:32:40",
         "symbolAliases": [],
         "unitAlias": ""
@@ -2253,7 +2253,7 @@
               "id": 5483,
               "name": "TransferOperator",
               "nodeType": "IdentifierPath",
-              "referencedDeclaration": 7169,
+              "referencedDeclaration": 7167,
               "src": "158:16:40"
             },
             "id": 5484,
@@ -2267,13 +2267,13 @@
         "id": 5583,
         "linearizedBaseContracts": [
           5583,
-          7169,
+          7167,
           5478,
           5404,
-          6310,
-          7210,
+          6308,
+          7208,
           395,
-          8270,
+          8268,
           1137,
           1122,
           2166,
@@ -2303,7 +2303,7 @@
                       "name": "__TransferOperator_init",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
-                      "referencedDeclaration": 7138,
+                      "referencedDeclaration": 7136,
                       "src": "231:23:40",
                       "typeDescriptions": {
                         "typeIdentifier": "t_function_internal_nonpayable$__$returns$__$",
@@ -3142,7 +3142,7 @@
                       "name": "_mint",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
-                      "referencedDeclaration": 7799,
+                      "referencedDeclaration": 7797,
                       "src": "1026:5:40",
                       "typeDescriptions": {
                         "typeIdentifier": "t_function_internal_nonpayable$_t_address_$_t_uint256_$_t_uint256_$_t_bytes_memory_ptr_$returns$__$",
@@ -3365,7 +3365,7 @@
                       "name": "_burn",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
-                      "referencedDeclaration": 7976,
+                      "referencedDeclaration": 7974,
                       "src": "1225:5:40",
                       "typeDescriptions": {
                         "typeIdentifier": "t_function_internal_nonpayable$_t_address_$_t_uint256_$_t_uint256_$returns$__$",
@@ -3551,7 +3551,7 @@
   },
   "networks": {},
   "schemaVersion": "3.4.4",
-  "updatedAt": "2022-03-22T12:51:50.388Z",
+  "updatedAt": "2022-03-22T13:20:05.065Z",
   "devdoc": {
     "kind": "dev",
     "methods": {

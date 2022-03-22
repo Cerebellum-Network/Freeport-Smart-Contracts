@@ -6,7 +6,8 @@ const log = console.log;
 const {deployProxy} = require('@openzeppelin/truffle-upgrades');
 const {expectEvent, expectRevert, constants} = require('@openzeppelin/test-helpers');
 const BN = require('bn.js');
-const url = process.env.METADATA_BASE_URL;
+const URL = process.env.METADATA_BASE_URL;
+const POSTFIX = "/metadata"
 
 contract("Freeport", accounts => {
     const deployer = accounts[0];
@@ -27,7 +28,7 @@ contract("Freeport", accounts => {
             let erc20address = await freeport.currencyContract.call();
             erc20 = await TestERC20.at(erc20address);
         } else {
-            freeport = await deployProxy(Freeport, [url], {kind: "uups"});
+            freeport = await deployProxy(Freeport, [URL], {kind: "uups"});
             erc20 = await TestERC20.new();
             await freeport.setERC20(erc20.address);
         }
@@ -64,7 +65,7 @@ contract("Freeport", accounts => {
 
 
     it("issues unique NFT IDs.", async () => {
-        const expectedULR = (nftId) => `${url}${nftId}/metadata`
+        const expectedULR = (nftId, postfix) => `${URL}${nftId}${postfix}`
         let issuerLow = issuer.toLowerCase();
         const expectedIds = [
             [5, issuerLow + "000000000000000000000005"],
@@ -80,11 +81,11 @@ contract("Freeport", accounts => {
             let nftId2 = await freeport.issue.call(supply, "0x", {from: issuer});
             assert.equal("0x" + nftId.toString(16), expectedId);
             assert.equal("0x" + nftId2.toString(16), expectedId);
-            let url = await freeport.metadataURL.call(nftId);
+            let url = await freeport.metadataURL.call(nftId, POSTFIX);
             // Balance should be 0.
             let balance = await freeport.balanceOf(issuer, expectedId);
             assert.equal(balance, 0);
-            assert.equal(expectedULR(nftId), url);
+            assert.equal(expectedULR(nftId2, POSTFIX), url);
             // Issue.
             await freeport.issue(supply, "0x", {from: issuer});
 
@@ -485,7 +486,7 @@ contract("Freeport", accounts => {
     });
 
     it("rejects deposits when ERC20 adapter is not configured", async () => {
-        let freeport = await deployProxy(Freeport, [url], {kind: "uups"});
+        let freeport = await deployProxy(Freeport, [URL], {kind: "uups"});
 
         await expectRevert(
             freeport.deposit(100),

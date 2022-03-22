@@ -88,12 +88,11 @@ abstract contract Issuance is ERC20Adapter {
         return id;
     }
 
-    function metadataURL(uint nftId) public view returns (string memory) {
+    function metadataURL(uint nftId, string calldata postfix) public view returns (string memory) {
         string memory base = metadataBaseURL;
         string memory id = Strings.toString(nftId);
-        string memory path = "/metadata";
-    
-        return string(abi.encodePacked(base, id, path));
+        
+        return string(abi.encodePacked(base, id, postfix));
     }
 
     /** Parse an NFT ID into its issuer, its supply, and an arbitrary nonce.

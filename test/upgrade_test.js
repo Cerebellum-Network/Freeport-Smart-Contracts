@@ -9,7 +9,8 @@ const log = console.log;
 const {deployProxy, upgradeProxy} = require('@openzeppelin/truffle-upgrades');
 const {expectEvent, expectRevert, constants, time} = require('@openzeppelin/test-helpers');
 const BN = require('bn.js');
-const url = process.env.METADATA_BASE_URL;
+const URL = process.env.METADATA_BASE_URL;
+const POSTFIX = "/metadata"
 
 contract("Upgrades", accounts => {
     const [deployer, bob] = accounts;
@@ -48,7 +49,7 @@ contract("Upgrades", accounts => {
 
     it("cannot be initialized again", async () => {
         await expectRevert(
-            freeport.initialize(url),
+            freeport.initialize(URL),
             "Initializable: contract is already initialized");
         await expectRevert(
             gateway.initialize(freeport.address),
