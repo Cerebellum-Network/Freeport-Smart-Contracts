@@ -26784,16 +26784,16 @@
         1519
       ],
       "BaseNFT": [
-        5404
+        5461
       ],
       "ContextUpgradeable": [
         1564
       ],
       "Currency": [
-        5478
+        5535
       ],
       "ERC1155Upgradeable": [
-        8268
+        8325
       ],
       "ERC165Upgradeable": [
         2166
@@ -26802,7 +26802,7 @@
         829
       ],
       "ERC20Adapter": [
-        5583
+        5640
       ],
       "Freeport": [
         4090
@@ -26832,16 +26832,16 @@
         885
       ],
       "Issuance": [
-        5884
+        5941
       ],
       "JointAccounts": [
-        6231
+        6288
       ],
       "MetaTxContext": [
-        6308
+        6365
       ],
       "SimpleExchange": [
-        6504
+        6561
       ],
       "StorageSlotUpgradeable": [
         1624
@@ -26853,26 +26853,26 @@
         1827
       ],
       "TestFreeport2": [
-        5232
+        5289
       ],
       "TransferFees": [
-        7123
+        7180
       ],
       "TransferOperator": [
-        7167
+        7224
       ],
       "UUPSUpgradeable": [
         959
       ],
       "Upgradeable": [
-        7208
+        7265
       ]
     },
-    "id": 5233,
+    "id": 5290,
     "nodeType": "SourceUnit",
     "nodes": [
       {
-        "id": 5216,
+        "id": 5273,
         "literals": [
           "solidity",
           "^",
@@ -26885,10 +26885,10 @@
       {
         "absolutePath": "project:/contracts/Freeport.sol",
         "file": "./Freeport.sol",
-        "id": 5217,
+        "id": 5274,
         "nameLocation": "-1:-1:-1",
         "nodeType": "ImportDirective",
-        "scope": 5233,
+        "scope": 5290,
         "sourceUnit": 4091,
         "src": "25:24:37",
         "symbolAliases": [],
@@ -26899,13 +26899,13 @@
         "baseContracts": [
           {
             "baseName": {
-              "id": 5219,
+              "id": 5276,
               "name": "Freeport",
               "nodeType": "IdentifierPath",
               "referencedDeclaration": 4090,
               "src": "123:8:37"
             },
-            "id": 5220,
+            "id": 5277,
             "nodeType": "InheritanceSpecifier",
             "src": "123:8:37"
           }
@@ -26913,28 +26913,28 @@
         "contractDependencies": [],
         "contractKind": "contract",
         "documentation": {
-          "id": 5218,
+          "id": 5275,
           "nodeType": "StructuredDocumentation",
           "src": "51:45:37",
           "text": "A test contract to test upgradeability"
         },
         "fullyImplemented": true,
-        "id": 5232,
+        "id": 5289,
         "linearizedBaseContracts": [
-          5232,
+          5289,
           4090,
-          6504,
-          7123,
-          6231,
-          5884,
-          5583,
-          7167,
-          5478,
-          5404,
-          6308,
-          7208,
+          6561,
+          7180,
+          6288,
+          5941,
+          5640,
+          7224,
+          5535,
+          5461,
+          6365,
+          7265,
           395,
-          8268,
+          8325,
           1137,
           1122,
           2166,
@@ -26951,7 +26951,7 @@
         "nodes": [
           {
             "body": {
-              "id": 5230,
+              "id": 5287,
               "nodeType": "Block",
               "src": "184:36:37",
               "statements": [
@@ -26960,7 +26960,7 @@
                     "arguments": [
                       {
                         "hexValue": "31",
-                        "id": 5226,
+                        "id": 5283,
                         "isConstant": false,
                         "isLValue": false,
                         "isPure": true,
@@ -26976,7 +26976,7 @@
                       },
                       {
                         "hexValue": "",
-                        "id": 5227,
+                        "id": 5284,
                         "isConstant": false,
                         "isLValue": false,
                         "isPure": true,
@@ -27002,18 +27002,18 @@
                           "typeString": "literal_string \"\""
                         }
                       ],
-                      "id": 5225,
+                      "id": 5282,
                       "name": "issue",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
-                      "referencedDeclaration": 5628,
+                      "referencedDeclaration": 5685,
                       "src": "201:5:37",
                       "typeDescriptions": {
                         "typeIdentifier": "t_function_internal_nonpayable$_t_uint64_$_t_bytes_memory_ptr_$returns$_t_uint256_$",
                         "typeString": "function (uint64,bytes memory) returns (uint256)"
                       }
                     },
-                    "id": 5228,
+                    "id": 5285,
                     "isConstant": false,
                     "isLValue": false,
                     "isPure": false,
@@ -27028,15 +27028,15 @@
                       "typeString": "uint256"
                     }
                   },
-                  "functionReturnParameters": 5224,
-                  "id": 5229,
+                  "functionReturnParameters": 5281,
+                  "id": 5286,
                   "nodeType": "Return",
                   "src": "194:19:37"
                 }
               ]
             },
             "functionSelector": "e9ddd433",
-            "id": 5231,
+            "id": 5288,
             "implemented": true,
             "kind": "function",
             "modifiers": [],
@@ -27044,23 +27044,23 @@
             "nameLocation": "147:9:37",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 5221,
+              "id": 5278,
               "nodeType": "ParameterList",
               "parameters": [],
               "src": "156:2:37"
             },
             "returnParameters": {
-              "id": 5224,
+              "id": 5281,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 5223,
+                  "id": 5280,
                   "mutability": "mutable",
                   "name": "",
                   "nameLocation": "-1:-1:-1",
                   "nodeType": "VariableDeclaration",
-                  "scope": 5231,
+                  "scope": 5288,
                   "src": "175:7:37",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -27069,7 +27069,7 @@
                     "typeString": "uint256"
                   },
                   "typeName": {
-                    "id": 5222,
+                    "id": 5279,
                     "name": "uint256",
                     "nodeType": "ElementaryTypeName",
                     "src": "175:7:37",
@@ -27083,14 +27083,14 @@
               ],
               "src": "174:9:37"
             },
-            "scope": 5232,
+            "scope": 5289,
             "src": "138:82:37",
             "stateMutability": "nonpayable",
             "virtual": false,
             "visibility": "public"
           }
         ],
-        "scope": 5233,
+        "scope": 5290,
         "src": "97:125:37",
         "usedErrors": []
       }
@@ -27107,16 +27107,16 @@
         1519
       ],
       "BaseNFT": [
-        5404
+        5461
       ],
       "ContextUpgradeable": [
         1564
       ],
       "Currency": [
-        5478
+        5535
       ],
       "ERC1155Upgradeable": [
-        8268
+        8325
       ],
       "ERC165Upgradeable": [
         2166
@@ -27125,7 +27125,7 @@
         829
       ],
       "ERC20Adapter": [
-        5583
+        5640
       ],
       "Freeport": [
         4090
@@ -27155,16 +27155,16 @@
         885
       ],
       "Issuance": [
-        5884
+        5941
       ],
       "JointAccounts": [
-        6231
+        6288
       ],
       "MetaTxContext": [
-        6308
+        6365
       ],
       "SimpleExchange": [
-        6504
+        6561
       ],
       "StorageSlotUpgradeable": [
         1624
@@ -27176,26 +27176,26 @@
         1827
       ],
       "TestFreeport2": [
-        5232
+        5289
       ],
       "TransferFees": [
-        7123
+        7180
       ],
       "TransferOperator": [
-        7167
+        7224
       ],
       "UUPSUpgradeable": [
         959
       ],
       "Upgradeable": [
-        7208
+        7265
       ]
     },
-    "id": 5233,
+    "id": 5290,
     "nodeType": "SourceUnit",
     "nodes": [
       {
-        "id": 5216,
+        "id": 5273,
         "literals": [
           "solidity",
           "^",
@@ -27208,10 +27208,10 @@
       {
         "absolutePath": "project:/contracts/Freeport.sol",
         "file": "./Freeport.sol",
-        "id": 5217,
+        "id": 5274,
         "nameLocation": "-1:-1:-1",
         "nodeType": "ImportDirective",
-        "scope": 5233,
+        "scope": 5290,
         "sourceUnit": 4091,
         "src": "25:24:37",
         "symbolAliases": [],
@@ -27222,13 +27222,13 @@
         "baseContracts": [
           {
             "baseName": {
-              "id": 5219,
+              "id": 5276,
               "name": "Freeport",
               "nodeType": "IdentifierPath",
               "referencedDeclaration": 4090,
               "src": "123:8:37"
             },
-            "id": 5220,
+            "id": 5277,
             "nodeType": "InheritanceSpecifier",
             "src": "123:8:37"
           }
@@ -27236,28 +27236,28 @@
         "contractDependencies": [],
         "contractKind": "contract",
         "documentation": {
-          "id": 5218,
+          "id": 5275,
           "nodeType": "StructuredDocumentation",
           "src": "51:45:37",
           "text": "A test contract to test upgradeability"
         },
         "fullyImplemented": true,
-        "id": 5232,
+        "id": 5289,
         "linearizedBaseContracts": [
-          5232,
+          5289,
           4090,
-          6504,
-          7123,
-          6231,
-          5884,
-          5583,
-          7167,
-          5478,
-          5404,
-          6308,
-          7208,
+          6561,
+          7180,
+          6288,
+          5941,
+          5640,
+          7224,
+          5535,
+          5461,
+          6365,
+          7265,
           395,
-          8268,
+          8325,
           1137,
           1122,
           2166,
@@ -27274,7 +27274,7 @@
         "nodes": [
           {
             "body": {
-              "id": 5230,
+              "id": 5287,
               "nodeType": "Block",
               "src": "184:36:37",
               "statements": [
@@ -27283,7 +27283,7 @@
                     "arguments": [
                       {
                         "hexValue": "31",
-                        "id": 5226,
+                        "id": 5283,
                         "isConstant": false,
                         "isLValue": false,
                         "isPure": true,
@@ -27299,7 +27299,7 @@
                       },
                       {
                         "hexValue": "",
-                        "id": 5227,
+                        "id": 5284,
                         "isConstant": false,
                         "isLValue": false,
                         "isPure": true,
@@ -27325,18 +27325,18 @@
                           "typeString": "literal_string \"\""
                         }
                       ],
-                      "id": 5225,
+                      "id": 5282,
                       "name": "issue",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
-                      "referencedDeclaration": 5628,
+                      "referencedDeclaration": 5685,
                       "src": "201:5:37",
                       "typeDescriptions": {
                         "typeIdentifier": "t_function_internal_nonpayable$_t_uint64_$_t_bytes_memory_ptr_$returns$_t_uint256_$",
                         "typeString": "function (uint64,bytes memory) returns (uint256)"
                       }
                     },
-                    "id": 5228,
+                    "id": 5285,
                     "isConstant": false,
                     "isLValue": false,
                     "isPure": false,
@@ -27351,15 +27351,15 @@
                       "typeString": "uint256"
                     }
                   },
-                  "functionReturnParameters": 5224,
-                  "id": 5229,
+                  "functionReturnParameters": 5281,
+                  "id": 5286,
                   "nodeType": "Return",
                   "src": "194:19:37"
                 }
               ]
             },
             "functionSelector": "e9ddd433",
-            "id": 5231,
+            "id": 5288,
             "implemented": true,
             "kind": "function",
             "modifiers": [],
@@ -27367,23 +27367,23 @@
             "nameLocation": "147:9:37",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 5221,
+              "id": 5278,
               "nodeType": "ParameterList",
               "parameters": [],
               "src": "156:2:37"
             },
             "returnParameters": {
-              "id": 5224,
+              "id": 5281,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 5223,
+                  "id": 5280,
                   "mutability": "mutable",
                   "name": "",
                   "nameLocation": "-1:-1:-1",
                   "nodeType": "VariableDeclaration",
-                  "scope": 5231,
+                  "scope": 5288,
                   "src": "175:7:37",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -27392,7 +27392,7 @@
                     "typeString": "uint256"
                   },
                   "typeName": {
-                    "id": 5222,
+                    "id": 5279,
                     "name": "uint256",
                     "nodeType": "ElementaryTypeName",
                     "src": "175:7:37",
@@ -27406,14 +27406,14 @@
               ],
               "src": "174:9:37"
             },
-            "scope": 5232,
+            "scope": 5289,
             "src": "138:82:37",
             "stateMutability": "nonpayable",
             "virtual": false,
             "visibility": "public"
           }
         ],
-        "scope": 5233,
+        "scope": 5290,
         "src": "97:125:37",
         "usedErrors": []
       }
@@ -27426,7 +27426,7 @@
   },
   "networks": {},
   "schemaVersion": "3.4.4",
-  "updatedAt": "2022-03-22T13:20:05.046Z",
+  "updatedAt": "2022-03-23T11:54:15.676Z",
   "devdoc": {
     "kind": "dev",
     "methods": {

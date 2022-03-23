@@ -1,6 +1,11 @@
 ### Next release
 
+<<<<<<< HEAD
 - Metadata URL for minted NFT
+=======
+- (Un)secured auction support
+- Added withdrawal of share from joint account in USDC
+>>>>>>> master
 
 ### v2.0.0
 
