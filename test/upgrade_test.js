@@ -10,7 +10,6 @@ const {deployProxy, upgradeProxy} = require('@openzeppelin/truffle-upgrades');
 const {expectEvent, expectRevert, constants, time} = require('@openzeppelin/test-helpers');
 const BN = require('bn.js');
 const URL = process.env.METADATA_BASE_URL;
-const POSTFIX = "/metadata"
 
 contract("Upgrades", accounts => {
     const [deployer, bob] = accounts;

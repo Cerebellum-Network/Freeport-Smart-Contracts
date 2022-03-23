@@ -1,5 +1,7 @@
 ### Next release
 
+- Metadata URL for minted NFT
+
 ### v2.0.0
 
 - Make SimpleAuction, SimpleExchange, and FiatGateway work with ERC20 directly.
