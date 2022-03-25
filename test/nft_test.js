@@ -65,6 +65,26 @@ contract("Freeport", accounts => {
     });
 
 
+    it("can change metadata URI", async () => {
+        let currentURI = await freeport.uri(0);
+        assert(currentURI.includes("{id}"), "there must be a default URI");
+
+        const newURI = "https://some.site/{id}/metadata";
+        await freeport.setURI(newURI);
+
+        currentURI = await freeport.uri(0);
+        assert.equal(currentURI, newURI, "the URI must be changed");
+
+        await expectRevert(
+            freeport.setURI(newURI, {from: accounts[1]}),
+            "only admin");
+
+        let ERC1155Metadata_URI = "0x0e89341c";
+        let supportsURI = await freeport.supportsInterface(ERC1155Metadata_URI);
+        assert(supportsURI, "must support ERC1155Metadata_URI interface");
+    });
+
+
     it("issues unique NFT IDs.", async () => {
         let issuerLow = issuer.toLowerCase();
         const expectedIds = [
@@ -187,7 +207,7 @@ contract("Freeport", accounts => {
             assert.equal(royaltyEarned, totalEarnings * 1 / 10);
         }
         log();
-        
+
         const partner1BalanceBeforeDistr = await erc20.balanceOf(issuer);
         const partner2BalanceBeforeDistr = await erc20.balanceOf(partner);
 
@@ -197,7 +217,7 @@ contract("Freeport", accounts => {
         const partner2BalanceAfterDistr = await erc20.balanceOf(partner);
         assert(partner1BalanceBeforeDistr < partner1BalanceAfterDistr, "Balance must be increased after distribution");
         assert(partner2BalanceBeforeDistr < partner2BalanceAfterDistr, "Balance must be increased after distribution");
-        
+
         log("Withdraw the funds from the Joint Account to ’Issuer’ and to ’Partner’");
         log();
     });
