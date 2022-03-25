@@ -235,3 +235,33 @@ Sent 1M of currency to 0x6108E8aFFe0c51D4e2515A773aeF16b19ED6feB9
 Sent 1M of currency to 0x6d2b28389d3153689c57909829dFCf6241d36388
 Sent 1M of currency to 0x1Bf6FCa28253A1257e4B5B3440F7fbE0c59D1546
 Sent 1M of currency to 0x51c5590504251A5993Ba6A46246f87Fa0eaE5897
+
+
+#### Upgrade to v2.2.0 on the 2022-03-25 ####
+
+8_upgrade_freeport.js
+=====================
+Operating on Freeport contract 0x702BA959B5542B2Bf88a1C5924F73Ed97482c64B
+
+   Replacing 'Freeport'
+   --------------------
+   > transaction hash:    0xead92c11facefc8b6e9ad041ce9b9f3ef9cbcc5d3fe3091e8f415d308d52e8ba
+   > Blocks: 0            Seconds: 0
+   > contract address:    0xc8aC0bb495120ADe4B2c49651B9Bd3dB9CA9B6aB
+   > block number:        25662949
+   > block timestamp:     1648224938
+   > account:             0x63846e2D234e4F854F43423014430b4e131f697b
+   > balance:             2.493166560003310484
+   > gas used:            3872398 (0x3b168e)
+   > gas price:           4 gwei
+   > value sent:          0 ETH
+   > total cost:          0.015489592 ETH
+
+   Pausing for 1 confirmations...
+   ------------------------------
+   > confirmation number: 3 (block: 25662952)
+Upgraded 0x702BA959B5542B2Bf88a1C5924F73Ed97482c64B
+
+   > Saving artifacts
+   -------------------------------------
+   > Total cost:         0.015489592 ETH
