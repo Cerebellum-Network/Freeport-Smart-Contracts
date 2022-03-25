@@ -32,6 +32,11 @@ abstract contract BaseNFT is ERC1155Upgradeable, MetaTxContext {
         || AccessControlUpgradeable.supportsInterface(interfaceId);
     }
 
+    function setURI(string memory newuri) public {
+        require(hasRole(DEFAULT_ADMIN_ROLE, _msgSender()), "only admin");
+        _setURI(newuri);
+    }
+
     /** transferFrom performs a simple transfer, without calling the hooks
      *  (no _beforeTokenTransfer and no onERC1155Received).
      */
