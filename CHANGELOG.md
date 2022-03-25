@@ -1,7 +1,9 @@
 ### Next release
 
-- (Un)secured auction support
-- Added withdrawal of share from joint account in USDC
+### v2.2.0
+
+- Support for private auctions. Bidders of a private auction must obtain an authorization from a central service.
+- Distribute the shares of joint accounts directly in USDC.
 
 ### v2.0.0
 
