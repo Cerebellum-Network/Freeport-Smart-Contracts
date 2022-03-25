@@ -75,11 +75,11 @@ Review all code changes since the last deployed release. Understand how upgradea
 
 Bump the version, maintain [CHANGELOG.md](CHANGELOG.md), and create a release in github.
 
-Choose a [migration script](migrations/) depending on which contract to upgrade (e.g.: N=8), then run:
+Choose a [migration script](migrations/) depending on which contract to upgrade (e.g.: N=8). For the DEV environment, you need to edit the addresses in `build/*.json`. Then run:
 
     npm run test
     export MNEMONIC="  …mnemonic of a wallet that is admin…  "
-    npm run migrate --network=polygon_testnet -f N --to N
+    truffle migrate --compile-all --network=polygon_testnet -f N --to N
 
 Release the JS SDK (see [instructions](https://github.com/Cerebellum-Network/Freeport-Smart-Contracts-SDK#publishing-to-npm)).
 
