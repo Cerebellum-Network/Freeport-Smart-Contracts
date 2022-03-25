@@ -8,7 +8,7 @@ env:
   ECR_REPOSITORY: crb-davinci-nft-test
 jobs:
   build-image:
-    runs-on: ubuntu-18.04
+    runs-on: [self-hosted, cere-network-large-workers]
     steps:
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v1
