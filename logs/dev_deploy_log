@@ -237,7 +237,7 @@ Sent 1M of currency to 0x1Bf6FCa28253A1257e4B5B3440F7fbE0c59D1546
 Sent 1M of currency to 0x51c5590504251A5993Ba6A46246f87Fa0eaE5897
 
 
-#### Upgrade to v2.2.0 on the 2022-03-25 ####
+#### Upgrade Freeport to v2.2.0 on the 2022-03-25 ####
 
 8_upgrade_freeport.js
 =====================
@@ -265,3 +265,38 @@ Upgraded 0x702BA959B5542B2Bf88a1C5924F73Ed97482c64B
    > Saving artifacts
    -------------------------------------
    > Total cost:         0.015489592 ETH
+
+
+#### Upgrade SimpleAuction to v2.2.0 on the 2022-03-29 ####
+
+9_upgrade_auction.js
+====================
+Operating on SimpleAuction contract 0xCEAc6c102bEcE4ed2E5ede9df096F7175BB8CbaD
+
+   Replacing 'SimpleAuction'
+   -------------------------
+   > transaction hash:    0x9fe8e223c2f1ee0f2a34e6ac5d2808be30b8e1385c9ecac5dd268dc61ada9742
+   ⠏ Blocks: 0            Seconds: 0
+   > Blocks: 0            Seconds: 0
+   > contract address:    0x7f6Aea1269c3a96AfEDD4B73DFb4443E8067f9A8
+   > block number:        25716489
+   > block timestamp:     1648560485
+   > account:             0x63846e2D234e4F854F43423014430b4e131f697b
+   > balance:             2.483599336003310484
+   > gas used:            2235070 (0x221abe)
+   > gas price:           4 gwei
+   > value sent:          0 ETH
+   > total cost:          0.00894028 ETH
+
+   Pausing for 1 confirmations...
+   ------------------------------
+
+
+   > confirmation number: 6 (block: 25716495)
+
+Upgraded 0xCEAc6c102bEcE4ed2E5ede9df096F7175BB8CbaD
+Done initialize_v2_0_0
+
+   > Saving artifacts
+   -------------------------------------
+   > Total cost:          0.00894028 ETH

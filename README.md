@@ -37,7 +37,7 @@ Accounts:
 see [stage_setup](scripts/stage_setup.js)). Biconomy enabled.
 [Admin](https://mumbai.polygonscan.com/address/0x63846e2D234e4F854F43423014430b4e131f697b).
 
-#### v2.0.0 on Polygon Mumbai testnet (Dev)
+#### v2.2.0 on Polygon Mumbai testnet (Dev)
 
 Contracts: [Freeport](https://mumbai.polygonscan.com/address/0x702BA959B5542B2Bf88a1C5924F73Ed97482c64B) and
 [Fiat Gateway](https://mumbai.polygonscan.com/address/0x106Bf3D61952faE9279B08bdcB2e548316E0C1Ae)
