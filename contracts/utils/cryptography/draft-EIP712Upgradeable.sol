@@ -1,9 +1,14 @@
+// @openzeppelin/contracts-upgradeable @ 4.1.0
+// Changes:
+//   - Make _HASHED_NAME and _HASHED_VERSION constants.
+//   - Remove init functions.
+//
 // SPDX-License-Identifier: MIT
 
 pragma solidity ^0.8.0;
 
-import "./ECDSAUpgradeable.sol";
-import "../../proxy/utils/Initializable.sol";
+import "@openzeppelin/contracts-upgradeable/utils/cryptography/ECDSAUpgradeable.sol";
+import "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol";
 
 /**
  * @dev https://eips.ethereum.org/EIPS/eip-712[EIP 712] is a standard for hashing and signing of typed structured data.
@@ -26,33 +31,10 @@ import "../../proxy/utils/Initializable.sol";
  */
 abstract contract EIP712Upgradeable is Initializable {
     /* solhint-disable var-name-mixedcase */
-    bytes32 private _HASHED_NAME;
-    bytes32 private _HASHED_VERSION;
+    bytes32 private constant _HASHED_NAME = keccak256(bytes("Freeport"));
+    bytes32 private constant _HASHED_VERSION = keccak256(bytes("2"));
     bytes32 private constant _TYPE_HASH = keccak256("EIP712Domain(string name,string version,uint256 chainId,address verifyingContract)");
     /* solhint-enable var-name-mixedcase */
-
-    /**
-     * @dev Initializes the domain separator and parameter caches.
-     *
-     * The meaning of `name` and `version` is specified in
-     * https://eips.ethereum.org/EIPS/eip-712#definition-of-domainseparator[EIP 712]:
-     *
-     * - `name`: the user readable name of the signing domain, i.e. the name of the DApp or the protocol.
-     * - `version`: the current major version of the signing domain.
-     *
-     * NOTE: These parameters cannot be changed except through a xref:learn::upgrading-smart-contracts.adoc[smart
-     * contract upgrade].
-     */
-    function __EIP712_init(string memory name, string memory version) internal initializer {
-        __EIP712_init_unchained(name, version);
-    }
-
-    function __EIP712_init_unchained(string memory name, string memory version) internal initializer {
-        bytes32 hashedName = keccak256(bytes(name));
-        bytes32 hashedVersion = keccak256(bytes(version));
-        _HASHED_NAME = hashedName;
-        _HASHED_VERSION = hashedVersion;
-    }
 
     /**
      * @dev Returns the domain separator for the current chain.
