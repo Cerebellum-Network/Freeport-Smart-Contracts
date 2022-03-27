@@ -8,7 +8,7 @@ const log = console.log;
 module.exports = async function (done) {
 
     // A fixed account for tests.
-    let serviceAccount = "0xD2B94CBF0fFAA9bc07126ab53f980Cd95a5Ed243";
+    let serviceAccount = "0x0EA2A95dE281826d5B30587C2bA2218d97476008";
 
     const CURRENCY = 0;
     let tenM = "10" + "000" + "000" + "000000"; // 10M with 6 decimals;
