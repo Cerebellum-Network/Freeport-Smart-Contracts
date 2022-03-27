@@ -2,13 +2,14 @@
 // Changes:
 //   - Make _HASHED_NAME and _HASHED_VERSION constants.
 //   - Remove init functions.
+//   - Remove __gap.
+//   - Remove dependency on Initializable.
 //
 // SPDX-License-Identifier: MIT
 
 pragma solidity ^0.8.0;
 
 import "@openzeppelin/contracts-upgradeable/utils/cryptography/ECDSAUpgradeable.sol";
-import "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol";
 
 /**
  * @dev https://eips.ethereum.org/EIPS/eip-712[EIP 712] is a standard for hashing and signing of typed structured data.
@@ -29,7 +30,7 @@ import "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol";
  *
  * _Available since v3.4._
  */
-abstract contract EIP712Upgradeable is Initializable {
+abstract contract EIP712Upgradeable {
     /* solhint-disable var-name-mixedcase */
     bytes32 private constant _HASHED_NAME = keccak256(bytes("Freeport"));
     bytes32 private constant _HASHED_VERSION = keccak256(bytes("2"));
@@ -93,5 +94,4 @@ abstract contract EIP712Upgradeable is Initializable {
     function _EIP712VersionHash() internal virtual view returns (bytes32) {
         return _HASHED_VERSION;
     }
-    uint256[50] private __gap;
 }
