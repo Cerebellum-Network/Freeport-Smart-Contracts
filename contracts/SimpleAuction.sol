@@ -2,7 +2,7 @@ pragma solidity ^0.8.0;
 
 import "./freeportParts/MetaTxContext.sol";
 import "./Freeport.sol";
-import "./SignatureVerifier.sol";
+import "./freeportParts/SignatureVerifier.sol";
 import "@openzeppelin/contracts-upgradeable/token/ERC1155/utils/ERC1155HolderUpgradeable.sol";
 import "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol";
 
