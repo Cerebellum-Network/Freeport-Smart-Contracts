@@ -1,6 +1,16 @@
 const { createProvider, createProviderSigner } = require("@cere/freeport-sdk");
 const { Wallet, utils } = require("ethers");
 
+async function getRPCSigner() {
+  const {provider, signer} = await createProviderSigner({
+    rpcUrl: process.env.HTTP_PROVIDER_URL,
+    mnemonic: process.env.MNEMONIC,
+    biconomyApiKey: null,
+    biconomyDebug: null,
+  });
+  return provider.getSigner();
+}
+
 async function getSigner() {
   const mnemonic = Wallet.fromMnemonic(process.env.MNEMONIC);
   const provider = await createProvider(process.env.HTTP_PROVIDER_URL);
@@ -28,5 +38,6 @@ function typedData(addr, nftId) {
 
 module.exports = {
   getSigner,
+  getRPCSigner,
   typedData
 }
