@@ -40,6 +40,26 @@
       "address": "0x84766787c6b9131927A76634F7DDCfcf3ff2e9d1",
       "txHash": "0xd0873e97daca7c8b0c39d0963bd9401eb376cd269673bef9f1661ad10e90599f",
       "kind": "uups"
+    },
+    {
+      "address": "0xf6982632Ca45010AE55a4D827D70F176E0a7cf61",
+      "txHash": "0xf8e3bc3f6a03a89c0f5cec345ec49b649c9cbcad7e49da2fb3da4453e9384c40",
+      "kind": "uups"
+    },
+    {
+      "address": "0xb6B3FC33590907484067cb5D7D5691b48DA70773",
+      "txHash": "0x8682c6688e3aaff294659b6549cb267ac709de27211d65e87d34d0c55890a1e1",
+      "kind": "uups"
+    },
+    {
+      "address": "0x9516B2486f196807aFa7c6C0625336F6A7AF98e6",
+      "txHash": "0x792ea81de065e783ef0eee7a284fdb4a1b4a55349fabb731e1c7941f7332cc9f",
+      "kind": "uups"
+    },
+    {
+      "address": "0x891e1e06Ec421b193CdC9bC53b038AD5e053bED9",
+      "txHash": "0xc145d4741e83bb02267507169a5414bcf1618e552090b67c7641a067bb24886d",
+      "kind": "uups"
     }
   ],
   "impls": {
@@ -1471,7 +1491,7 @@
           {
             "contract": "AccessControlUpgradeable",
             "label": "_roles",
-            "type": "t_mapping(t_bytes32,t_struct(RoleData)4507_storage)",
+            "type": "t_mapping(t_bytes32,t_struct(RoleData)4784_storage)",
             "src": "../@openzeppelin/contracts-upgradeable/access/AccessControlUpgradeable.sol:73"
           },
           {
@@ -1527,13 +1547,13 @@
           "t_array(t_uint256)50_storage": {
             "label": "uint256[50]"
           },
-          "t_mapping(t_bytes32,t_struct(RoleData)4507_storage)": {
+          "t_mapping(t_bytes32,t_struct(RoleData)4784_storage)": {
             "label": "mapping(bytes32 => struct AccessControlUpgradeable.RoleData)"
           },
           "t_bytes32": {
             "label": "bytes32"
           },
-          "t_struct(RoleData)4507_storage": {
+          "t_struct(RoleData)4784_storage": {
             "label": "struct AccessControlUpgradeable.RoleData",
             "members": [
               {
@@ -1629,7 +1649,7 @@
           {
             "contract": "AccessControlUpgradeable",
             "label": "_roles",
-            "type": "t_mapping(t_bytes32,t_struct(RoleData)4712_storage)",
+            "type": "t_mapping(t_bytes32,t_struct(RoleData)4784_storage)",
             "src": "../@openzeppelin/contracts-upgradeable/access/AccessControlUpgradeable.sol:73"
           },
           {
@@ -1641,7 +1661,7 @@
           {
             "contract": "ERC20Adapter",
             "label": "currencyContract",
-            "type": "t_contract(IERC20)7762",
+            "type": "t_contract(IERC20)7685",
             "src": "freeportParts/ERC20Adapter.sol:16"
           },
           {
@@ -1653,7 +1673,7 @@
           {
             "contract": "JointAccounts",
             "label": "jointAccounts",
-            "type": "t_mapping(t_address,t_array(t_struct(JointAccountShare)2282_storage)dyn_storage)",
+            "type": "t_mapping(t_address,t_array(t_struct(JointAccountShare)2197_storage)dyn_storage)",
             "src": "freeportParts/JointAccounts.sol:33"
           },
           {
@@ -1721,13 +1741,13 @@
           "t_mapping(t_uint256,t_address)": {
             "label": "mapping(uint256 => address)"
           },
-          "t_mapping(t_address,t_array(t_struct(JointAccountShare)2282_storage)dyn_storage)": {
+          "t_mapping(t_address,t_array(t_struct(JointAccountShare)2197_storage)dyn_storage)": {
             "label": "mapping(address => struct JointAccounts.JointAccountShare[])"
           },
-          "t_array(t_struct(JointAccountShare)2282_storage)dyn_storage": {
+          "t_array(t_struct(JointAccountShare)2197_storage)dyn_storage": {
             "label": "struct JointAccounts.JointAccountShare[]"
           },
-          "t_struct(JointAccountShare)2282_storage": {
+          "t_struct(JointAccountShare)2197_storage": {
             "label": "struct JointAccounts.JointAccountShare",
             "members": [
               {
@@ -1746,16 +1766,16 @@
           "t_uint32": {
             "label": "uint32"
           },
-          "t_contract(IERC20)7762": {
+          "t_contract(IERC20)7685": {
             "label": "contract IERC20"
           },
-          "t_mapping(t_bytes32,t_struct(RoleData)4712_storage)": {
+          "t_mapping(t_bytes32,t_struct(RoleData)4784_storage)": {
             "label": "mapping(bytes32 => struct AccessControlUpgradeable.RoleData)"
           },
           "t_bytes32": {
             "label": "bytes32"
           },
-          "t_struct(RoleData)4712_storage": {
+          "t_struct(RoleData)4784_storage": {
             "label": "struct AccessControlUpgradeable.RoleData",
             "members": [
               {

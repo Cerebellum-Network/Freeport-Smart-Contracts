@@ -4,6 +4,9 @@ const Bypasser = artifacts.require("BypassForwarder");
 const log = console.log;
 
 module.exports = async function (deployer) {
+    log("Not deploying unnecessary MinimalForwarder and BypassForwarder");
+    return;
+
     await deployer.deploy(Forwarder);
     await deployer.deploy(Bypasser);
 

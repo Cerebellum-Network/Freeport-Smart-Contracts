@@ -3,13 +3,12 @@ const TestERC20 = artifacts.require("TestERC20");
 const log = console.log;
 
 module.exports = async function (deployer, network, accounts) {
-    let isDev = (network === "development") || network.includes("testnet");
-    if (!isDev) {
-        log("Not deploying test ERC20 on mainnet.");
-        return;
+    let isDev = (network === "development");
+    if (isDev) {
+        log("Deploying a test ERC20 on a development chain.");
+        await deployer.deploy(TestERC20);
     }
-
-    await deployer.deploy(TestERC20);
+    // Else, use the already deployed ERC20 for any new Freeport instance.
 
     let freeport = await Freeport.deployed();
     let erc20 = await TestERC20.deployed();
