@@ -35,11 +35,8 @@
     "@biconomy/mexa": "^2.0.25",
     "@cere/freeport-sdk": "7.0.0",
     "@maticnetwork/maticjs": "^2.0.40",
-    "@nomiclabs/hardhat-ethers": "^2.0.5",
     "@openzeppelin/contracts": "4.1.0",
     "@openzeppelin/contracts-upgradeable": "4.1.0",
-    "@openzeppelin/hardhat-defender": "^1.6.0",
-    "@openzeppelin/hardhat-upgrades": "^1.17.0",
     "@openzeppelin/test-helpers": "^0.5.12",
     "@openzeppelin/truffle-upgrades": "^1.12.0",
     "@poanet/solidity-flattener": "^3.0.6",
@@ -49,5 +46,8 @@
     "solc-0.8": "npm:solc@0.8.4",
     "solidity-docgen": "^0.5.13",
     "truffle": "^5.3.10"
+  },
+  "dependencies": {
+    "defender-admin-client": "^1.18.0"
   }
 }
