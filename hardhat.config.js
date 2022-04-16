@@ -1,15 +1,15 @@
 require('dotenv').config();
 require('@nomiclabs/hardhat-ethers');
 require('@openzeppelin/hardhat-upgrades');
-require("@nomiclabs/hardhat-truffle5");
+require('@openzeppelin/hardhat-defender');
 
 /**
  * @type import('hardhat/config').HardhatUserConfig
  */
 module.exports = {
   defender: {
-    apiKey: process.env.API_KEY,
-    apiSecret: process.env.API_SECRET,
+    apiKey: process.env.DEFENDER_TEAM_API_KEY,
+    apiSecret: process.env.DEFENDER_TEAM_API_SECRET_KEY,
   },
   networks: {
     polygon_testnet: {
