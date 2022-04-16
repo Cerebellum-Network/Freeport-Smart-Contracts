@@ -1,4 +1,5 @@
 const SimpleAuction = artifacts.require("SimpleAuction");
+const {prepareUpgrade} = require("@openzeppelin/truffle-upgrades");
 const {AdminClient} = require('defender-admin-client');
 const API_KEY = process.env.DEFENDER_API_KEY;
 const API_SECRET = process.env.DEFENDER_SECRET_KEY;
@@ -12,11 +13,12 @@ module.exports = async function (deployer, network, accounts) {
 
     try {
         const newImplementation = auction.address;
-        const contract = { network, address: PROXY_ADDRESS }
+        const contract = { network, address: PROXY_ADDRESS };
+        await prepareUpgrade(PROXY_ADDRESS, SimpleAuction);
         await client.proposeUpgrade({ newImplementation }, contract)
         log("Done initialize_v2_0_0");
     } catch (e) {
-        log("Error", e);
+        log("Error\n", e);
         throw e;
     }
     log();
