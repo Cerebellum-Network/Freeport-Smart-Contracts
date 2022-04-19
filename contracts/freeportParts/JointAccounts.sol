@@ -73,13 +73,13 @@ abstract contract JointAccounts is Issuance {
         return account;
     }
 
-    /** Distribute all tokens available to all owners of a Joint Account.
+    /** Distribute internal currency on JA balance among share owners.
      *
      * The function createJointAccount must be called beforehand.
      *
      * Anyone can trigger the distribution.
      */
-    function distributeJointAccount(address account)
+    function distributeJointAccountCereToken(address account)
     public {
         uint accountBalance = balanceOf(account, CURRENCY);
         JointAccountShare[] storage shares = jointAccounts[account];
@@ -87,7 +87,25 @@ abstract contract JointAccounts is Issuance {
         for (uint i = 0; i < shares.length; i++) {
             JointAccountShare storage share = shares[i];
             uint256 ownerBalance = accountBalance * share.fraction / BASIS_POINTS;
-            sendShare(account, share.owner, ownerBalance);
+            _forceTransfer(account, share.owner, CURRENCY, ownerBalance);
+        }
+    }
+
+    /** Distribute ERC20 available on JA balance among all of share owners.
+     *
+     * The function createJointAccount must be called beforehand.
+     *
+     * Anyone can trigger the distribution.
+     */
+    function distributeJointAccountERC20(address account) 
+    public {
+        uint accountBalance = currencyContract.balanceOf(account);
+        JointAccountShare[] storage shares = jointAccounts[account];
+
+        for (uint i = 0; i < shares.length; i++) {
+            JointAccountShare storage share = shares[i];
+            uint256 ownerBalance = accountBalance * share.fraction / BASIS_POINTS;
+            currencyContract.transfer(share.owner, ownerBalance);
         }
     }
 

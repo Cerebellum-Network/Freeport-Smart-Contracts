@@ -1,6 +1,7 @@
 const Freeport = artifacts.require("Freeport");
 const FiatGateway = artifacts.require("FiatGateway");
-const SimpleAuction = artifacts.require("SimpleAuction");
+const Auction = artifacts.require("Auction");
+const Sale = artifacts.require("Sale");
 const NFTAttachment = artifacts.require("NFTAttachment");
 const TestERC20 = artifacts.require("TestERC20");
 const TestFreeport2 = artifacts.require("TestFreeport2");
@@ -17,14 +18,15 @@ contract("Upgrades", accounts => {
     const UNIT = 1e6;
     const aLot = 100e3 * UNIT;
 
-    let freeport, erc20, gateway, auction, attachment, ADMIN_ROLE;
+    let freeport, erc20, gateway, auction, sale, attachment, ADMIN_ROLE;
 
     before(async () => {
         freeport = await Freeport.deployed();
         let erc20Address = await freeport.currencyContract();
         erc20 = await TestERC20.at(erc20Address);
         gateway = await FiatGateway.deployed();
-        auction = await SimpleAuction.deployed();
+        sale = await Sale.deployed()
+        auction = await Auction.deployed();
         attachment = await NFTAttachment.deployed();
         ADMIN_ROLE = await freeport.DEFAULT_ADMIN_ROLE();
     });
@@ -50,7 +52,7 @@ contract("Upgrades", accounts => {
             freeport.initialize(),
             "Initializable: contract is already initialized");
         await expectRevert(
-            gateway.initialize(freeport.address),
+            gateway.initialize(freeport.address, sale.address),
             "Initializable: contract is already initialized");
         await expectRevert(
             auction.initialize(freeport.address),
@@ -65,7 +67,7 @@ contract("Upgrades", accounts => {
             freeport.upgradeTo(freeport.address, {from: bob}),
             "Only Admin");
         await expectRevert(
-            gateway.upgradeTo(freeport.address, {from: bob}),
+            gateway.upgradeTo(freeport.address, sale.address, {from: bob}),
             "Only Admin");
         await expectRevert(
             auction.upgradeTo(freeport.address, {from: bob}),

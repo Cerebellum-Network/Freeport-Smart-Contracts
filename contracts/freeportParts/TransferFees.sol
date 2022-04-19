@@ -25,7 +25,7 @@ abstract contract TransferFees is JointAccounts {
 
     /** Notify that royalties were configured on an NFT type.
      */
-    event RoyaltiesConfigured(
+    event RoyaltiesConfigured( 
         uint256 indexed nftId,
         address primaryRoyaltyAccount,
         uint256 primaryRoyaltyCut,
@@ -190,8 +190,11 @@ abstract contract TransferFees is JointAccounts {
     function captureFee(address from, uint256 nftId, uint256 price, uint256 amount)
     public returns (uint256) {
         address operator = _msgSender();
-        require(isApprovedForAll(from, operator), "the operator must be approved or a TRANSFER_OPERATOR");
-        return _captureFee(from, nftId, price, amount);
+        require(isApprovedForAll(from, operator), "The operator must be approved or a TRANSFER_OPERATOR");
+        uint totalCost = price * amount;
+        uint totalFee = _captureFee(from, nftId, price, amount);
+        require(totalFee <= totalCost, "Cannot take more fees than the price");
+        return totalFee;
     }
 
     /** Collect the royalty due on a transfer.
@@ -200,6 +203,58 @@ abstract contract TransferFees is JointAccounts {
      */
     function _captureFee(address from, uint256 nftId, uint256 price, uint256 amount)
     internal returns (uint256) {
+        if (nftId == CURRENCY) return 0;
+
+        // An account with bypass role does not pay royalties.
+        // This uses msg.sender which is supposed to be a transaction relayer,
+        // instead of _msgSender() which is the user wishing to transfer his tokens.
+        if (hasRole(BYPASS_SENDER, msg.sender)) return 0;
+
+        uint256 cut;
+        uint256 minimum;
+        address royaltyAccount;
+
+        bool isPrimary = _isPrimaryTransfer(from, nftId);
+        
+        if (isPrimary) {
+            cut = primaryRoyaltyCuts[nftId];
+            minimum = primaryRoyaltyMinimums[nftId];
+            royaltyAccount = primaryRoyaltyAccounts[nftId];
+        } else {
+            cut = secondaryRoyaltyCuts[nftId];
+            minimum = secondaryRoyaltyMinimums[nftId];
+            royaltyAccount = secondaryRoyaltyAccounts[nftId];
+        }
+
+        uint256 perTransferFee = price * cut / BASIS_POINTS;
+        if (perTransferFee < minimum) perTransferFee = minimum;
+
+        uint256 totalFee = perTransferFee * amount;
+        if (totalFee != 0) {
+            _forceTransferCurrency(from, royaltyAccount, totalFee);
+        }
+
+        return totalFee;
+    }
+
+    /** Collect the royalty due on a transfer.
+     *
+     * The royalty is calculated based on NFT configuration and the price. It is collected by an internal transfer of currency between "from" and the beneficiary. Return the amount collected.
+     *
+     * The caller must be approved by "from", or a TRANSFER_OPERATOR.
+     */
+    function captureFeeERC20(address from, uint256 nftId, uint256 price, uint256 amount)
+    public returns (uint256) {
+        address operator = _msgSender();
+        require(isApprovedForAll(from, operator), "The operator must be approved or a TRANSFER_OPERATOR");
+        uint totalCost = price * amount;
+        uint totalFee = _captureFee(from, nftId, price, amount);
+        require(totalFee <= totalCost, "Cannot take more fees than the price");
+        return totalFee;
+    }    
+
+    function _captureFeeERC20(address from, uint256 nftId, uint256 price, uint256 amount)
+    public returns (uint256) {
         if (nftId == CURRENCY) return 0;
 
         // An account with bypass role does not pay royalties.
@@ -226,7 +281,7 @@ abstract contract TransferFees is JointAccounts {
 
         uint256 totalFee = perTransferFee * amount;
         if (totalFee != 0) {
-            _forceTransferCurrency(from, royaltyAccount, totalFee);
+            currencyContract.transferFrom(from, royaltyAccount, totalFee);
         }
 
         return totalFee;

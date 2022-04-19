@@ -2,6 +2,7 @@ pragma solidity ^0.8.0;
 
 import "./freeportParts/Upgradeable.sol";
 import "./Freeport.sol";
+import "./Sale.sol";
 import "@openzeppelin/contracts-upgradeable/token/ERC1155/utils/ERC1155HolderUpgradeable.sol";
 import "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol";
 
@@ -31,6 +32,7 @@ contract FiatGateway is Upgradeable, ERC1155HolderUpgradeable {
     uint256 public constant CURRENCY = 0;
 
     Freeport public freeport;
+    Sale public sale;
 
     /** The current exchange rate of ERC20 Units (with 6 decimals) per USD cent (1 penny).
      */
@@ -51,11 +53,12 @@ contract FiatGateway is Upgradeable, ERC1155HolderUpgradeable {
     event SetExchangeRate(
         uint256 cereUnitsPerPenny);
 
-    function initialize(Freeport _freeport) public initializer {
+    function initialize(Freeport _freeport, Sale _sale) public initializer {
         __Upgradeable_init();
         __ERC1155Holder_init();
 
         freeport = _freeport;
+        sale = _sale;
     }
 
     /** Initialize this contract after version 2.0.0.
@@ -171,7 +174,7 @@ contract FiatGateway is Upgradeable, ERC1155HolderUpgradeable {
         require(boughtTokens >= expectedPriceOrZero, "Insufficient payment");
 
         uint amount = 1;
-        freeport.takeOffer(buyer, seller, nftId, expectedPriceOrZero, amount);
+        sale.takeOffer(buyer, seller, nftId, expectedPriceOrZero, amount);
     }
 
     /** Guarantee that a version of Solidity with safe math is used.

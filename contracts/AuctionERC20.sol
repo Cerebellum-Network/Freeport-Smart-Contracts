@@ -1,83 +1,26 @@
-pragma solidity ^0.8.0;
+pragma solidity ^0.8.x;
 
-import "./freeportParts/MetaTxContext.sol";
-import "./Freeport.sol";
+import "./auction/AuctionERC20Base.sol";
 import "./auction/SignatureVerifier.sol";
-import "@openzeppelin/contracts-upgradeable/token/ERC1155/utils/ERC1155HolderUpgradeable.sol";
-import "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol";
 
-/**
-An auction is characterized by a sequence of transactions and their corresponding events:
+contract AuctionERC20 is AuctionERC20Base, SignatureVerifier {
 
-- `StartAuction`: A seller offers to sell one NFT to the highest bidder, with a minimum price, and a closing time.
-
-- Any number of `BidOnAuction`: A potential buyer accepts the minimum price or a price at least 10% higher
-than that of the previous bidder.
-The closing time may be extended.
-A deposit is taken from the new bidder. The deposit of the previous bidder is returned, if any.
-Bidding is no longer possible after the closing time.
-
-- `SettleAuction`: The sale is completed between the seller and the highest bidder, or cancelled if there was no bidder.
-Some royalties may be taken from the sale price, as configured by the NFT creator (see `TransferFees.sol`).
-The settlement is only possible after the closing time.
-
-While an auction is active, it is identified by the tuple `(seller address, NFT ID)`.
-However, after the auction is settled, a new auction with the *same tuple* may start.
-
-This contract is not meant to be used from another contract; if it is,
-it will not call onERC1155Received hooks for security reasons.
-
-This contract must have the TRANSFER_OPERATOR role in the Freeport contract.
- */
-contract SimpleAuction is /* AccessControl, */ MetaTxContext, ERC1155HolderUpgradeable, SignatureVerifier {
-
-    /** Supports interfaces of AccessControl and ERC1155Receiver.
-     */
-    function supportsInterface(bytes4 interfaceId)
-    public view virtual override(AccessControlUpgradeable, ERC1155ReceiverUpgradeable) returns (bool) {
-        return AccessControlUpgradeable.supportsInterface(interfaceId)
-        || ERC1155ReceiverUpgradeable.supportsInterface(interfaceId);
+    function initialize(Freeport freeport) public initializer {
+        __AuctionERC20Base_init(freeport);
     }
 
-    Freeport public freeport;
+	struct Bid {
+    	address buyer; // 0 means no buyer yet.
+    	uint256 price; // The highest bid price. The initial value is set by the seller.
+    	uint256 closeTimeSec; // Bidding is open until the close time. After this time, the settlement becomes possible. A non-zero value also means that the auction exists.
+    	bool secured;
+	}
 
-    /** Initialize this contract and its dependencies.
-     */
-    function initialize(Freeport _freeport) public initializer {
-        __MetaTxContext_init();
-        __ERC1155Holder_init();
-        freeport = _freeport;
-    }
-
-    /** Initialize this contract after version 2.0.0.
-     *
-     * Allow deposit of USDC into Freeport.
-     */
-    function initialize_v2_0_0() public {
-        IERC20 erc20 = freeport.currencyContract();
-
-        bool init = erc20.allowance(address(this), address(freeport)) > 0;
-        if (init) return;
-
-        uint256 maxInt = 0xffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff;
-        erc20.approve(address(freeport), maxInt);
-    }
-
-    /** The token ID that represents the CERE currency for all payments in this contract. */
-    uint256 public constant CURRENCY = 0;
-
-    struct Bid {
-        address buyer; // 0 means no buyer yet.
-        uint256 price; // The highest bid price. The initial value is set by the seller.
-        uint256 closeTimeSec; // Bidding is open until the close time. After this time, the settlement becomes possible. A non-zero value also means that the auction exists.
-        bool secured;
-    }
-
-    /** Seller => NFT ID => Bid.
+	/** Seller => NFT ID => Bid.
      */
     mapping(address => mapping(uint256 => Bid)) public sellerNftBids;
 
-    /**
+	/**
      * Note: `price` is the minimum price minus 10%, because a bid must be 10% higher, resulting in the requested minimum price.
      */
     event StartAuction(
@@ -106,7 +49,7 @@ contract SimpleAuction is /* AccessControl, */ MetaTxContext, ERC1155HolderUpgra
         uint256 price,
         address buyer);
 
-    function startAuction(uint256 nftId, uint256 minPrice, uint closeTimeSec) 
+	function startAuction(uint256 nftId, uint256 minPrice, uint closeTimeSec) 
     public {
         startSecuredAuction(nftId, minPrice, closeTimeSec, false);
     }
@@ -179,7 +122,7 @@ contract SimpleAuction is /* AccessControl, */ MetaTxContext, ERC1155HolderUpgra
         address previousBuyer = bid.buyer;
         if (previousBuyer != address(0)) {
             _returnDeposit(previousBuyer, previousDeposit);
-        }
+		}
 
         // Take the new deposit from the new buyer.
         bid.buyer = buyer;
@@ -212,12 +155,12 @@ contract SimpleAuction is /* AccessControl, */ MetaTxContext, ERC1155HolderUpgra
             // In case there was a buyer,
             // transfer the payment to the seller.
             _finalizePayment(seller, price);
-
+			
             // Transfer the NFT to the buyer.
             freeport.transferFrom(address(this), buyer, nftId, 1);
 
             // Collect royalty.
-            try freeport.captureFee(seller, nftId, price, 1) {
+            try freeport.captureFeeERC20(seller, nftId, price, 1) {
             } catch {}
         } else {
             // Otherwise, there was no buyer,
@@ -228,33 +171,31 @@ contract SimpleAuction is /* AccessControl, */ MetaTxContext, ERC1155HolderUpgra
         emit SettleAuction(seller, nftId, price, buyer);
     }
 
-    /** Take USDC as deposit.
+    /** Takeы deposit in USDC from buyer.
      */
     function _takeDeposit(
         address from,
         uint amount
     ) internal {
-        freeport.currencyContract().transferFrom(from, address(this), amount);
+		freeport.currencyContract().transferFrom(from, address(this), amount);
     }
 
-    /** Return the USDC deposit.
+    /** Returns deposit by address.
      */
     function _returnDeposit(
         address to,
         uint amount
-    ) internal {
-        freeport.currencyContract().transfer(to, amount);
+    ) internal {     
+		freeport.currencyContract().transfer(to, amount);
     }
 
-    /** Convert the USDC deposit into Freeport-USDC and pay out to the seller.
-     *
-     * This supports joint accounts and royalties (captureFee).
+    /** Pays out seller for sold item in USDC.
      */
     function _finalizePayment(
         address to,
         uint amount
     ) internal {
-        freeport.deposit(amount);
-        freeport.transferFrom(address(this), to, CURRENCY, amount);
+        freeport.currencyContract().transferFrom(address(this), to, amount);
     }
+
 }
