@@ -102,7 +102,7 @@ contract Auction is AuctionBase, SignatureVerifier {
         
         if (bid.secured) {
             address verifier = recoverAddressFromSignature(buyer, nftId, signature);
-            require(hasRole(BUY_AUTHORIZER_ROLE, verifier), "Authroizer doesn't have a role");        
+            require(hasRole(BUY_AUTHORIZER_ROLE, verifier), "Authorizer doesn't have a role");        
         }
 
         // Check that the auction exists and is open.

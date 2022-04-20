@@ -1,21 +1,21 @@
-pragma solidity ^0.8.0;
+pragma solidity ^0.8.x;
 
 import "./freeportParts/Upgradeable.sol";
 import "./Freeport.sol";
-import "./Sale.sol";
+import "./SaleERC20.sol";
 import "@openzeppelin/contracts-upgradeable/token/ERC1155/utils/ERC1155HolderUpgradeable.sol";
 import "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol";
 
-/** The FiatGateway contract that supports paymnents in internal currency.
+/** The FiatGateway contract that supports ERC20 token paymnents.
   *
   * This contract connects to the Freeport contract.
-  * It must hold a balance of internal currency recognized by Freeport.
+  * It must hold a balance of CERE recognized by Freeport.
   *
-  * This contract calls takeOffer fn on Sale in order user to buy desired NFT.
+  * This contract calls takeOffer fn on SaleERC20 in order user to buy desired NFT.
   *
   * This contract is operational only when the exchange rate is set to a non-zero value.
  */
-contract FiatGateway is Upgradeable, ERC1155HolderUpgradeable {
+contract FiatGatewayERC20 is Upgradeable, ERC1155HolderUpgradeable {
 
     /** Supports interfaces of AccessControl and ERC1155Receiver.
      */
@@ -28,13 +28,10 @@ contract FiatGateway is Upgradeable, ERC1155HolderUpgradeable {
     bytes32 public constant EXCHANGE_RATE_ORACLE = keccak256("EXCHANGE_RATE_ORACLE");
     bytes32 public constant PAYMENT_SERVICE = keccak256("PAYMENT_SERVICE");
 
-    /** The token ID that represents the CERE currency for all payments in this contract. */
-    uint256 public constant CURRENCY = 0;
-
     Freeport public freeport;
-    Sale public sale;
+    SaleERC20 public sale;
 
-    /** The current exchange rate of internal currency (with 6 decimals) per USD cent (1 penny).
+    /** The current exchange rate of ERC20 Units (with 6 decimals) per USD cent (1 penny).
      */
     uint cereUnitsPerPenny;
 
@@ -48,12 +45,12 @@ contract FiatGateway is Upgradeable, ERC1155HolderUpgradeable {
 
     /** An event emitted when the exchange rate was set to a new value.
      *
-     * The rate is given as internal currency (with 6 decimals) per USD cent (1 penny).
+     * The rate is given as ERC20 Units (with 6 decimals) per USD cent (1 penny).
      */
     event SetExchangeRate(
         uint256 cereUnitsPerPenny);
 
-    function initialize(Freeport _freeport, Sale _sale) public initializer {
+    function initialize(Freeport _freeport, SaleERC20 _sale) public initializer {
         __Upgradeable_init();
         __ERC1155Holder_init();
 
@@ -75,9 +72,9 @@ contract FiatGateway is Upgradeable, ERC1155HolderUpgradeable {
         erc20.approve(address(freeport), maxInt);
     }
 
-    /** Set the exchange rate between fiat (USD) and Freeport currency (CERE).
+    /** Set the exchange rate between fiat (USD) and ERC20.
       *
-      * The rate is given as number of internal currency units (with 6 decimals) per USD cent (1 penny).
+      * The rate is given as number of ERC20 units (with 6 decimals) per USD cent (1 penny).
       *
       * Only the rate service with the EXCHANGE_RATE_ORACLE role can change the rate.
      */
@@ -89,29 +86,25 @@ contract FiatGateway is Upgradeable, ERC1155HolderUpgradeable {
         emit SetExchangeRate(_cereUnitsPerPenny);
     }
 
-    /** Get the current exchange rate in internal currency units (with 10 decimals) per USD cent (1 penny).
+    /** Get the current exchange rate in CERE Units (with 10 decimals) per USD cent (1 penny).
      */
     function getExchangeRate()
     public view returns (uint) {
         return cereUnitsPerPenny;
     }
 
-    /** Withdraw all internal currency from this contract.
+    /** Withdraw all ERC20 from this contract.
       *
       * Only accounts with DEFAULT_ADMIN_ROLE can withdraw.
      */
-    function withdrawCurrency()
+    function withdrawERC20()
     public onlyRole(DEFAULT_ADMIN_ROLE)
     returns (uint) {
         address admin = _msgSender();
-        uint amount = freeport.balanceOf(address(this), CURRENCY);
+        IERC20 erc20 = freeport.currencyContract();
+        uint amount = erc20.balanceOf(address(this));
 
-        freeport.safeTransferFrom(
-            address(this),
-            admin,
-            CURRENCY,
-            amount,
-            "");
+        erc20.transfer(admin, amount);
 
         return amount;
     }
