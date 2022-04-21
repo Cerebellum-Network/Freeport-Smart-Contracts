@@ -9,13 +9,13 @@ module.exports = async function (deployer, network, accounts) {
     log("Operating on Auction contract", auction.address);
 
     try {
-        const auction = await upgradeProxy(auction.address, SimpleAuction, {deployer, kind: "uups"});
+        const auction = await upgradeProxy(auction.address, Auction, {deployer, kind: "uups"});
         log("Upgraded", auction.address);
 
         await auction.initialize(freeport.address);
         log("Done initialize");
     } catch (e) {
-        log("Error", e);
+        log(`Error: ${e.message}\n${e}`);
         throw e;
     }
 

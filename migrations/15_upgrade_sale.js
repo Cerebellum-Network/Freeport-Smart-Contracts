@@ -9,7 +9,7 @@ module.exports = async function (deployer, network, accounts) {
     log("Operating on Sale contract", sale.address);
 
     try {
-        const sale = await upgradeProxy(sale.address, SimpleAuction, {deployer, kind: "uups"});
+        const sale = await upgradeProxy(sale.address, Sale, {deployer, kind: "uups"});
         log("Upgraded", sale.address);
 
         await sale.initialize(freeport.address);
