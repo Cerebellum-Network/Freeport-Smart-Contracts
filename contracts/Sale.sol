@@ -5,7 +5,7 @@ import "./Freeport.sol";
 
 contract Sale is SaleBase {
 
-    function initialze(Freeport freeport) public initializer {
+    function initialize(Freeport freeport) public initializer {
       __SaleBase_init(freeport);
     }
 

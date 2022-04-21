@@ -1,5 +1,6 @@
 const Freeport = artifacts.require("Freeport");
-const SimpleAuction = artifacts.require("SimpleAuction");
+const Auction = artifacts.require("Auction");
+const AuctionERC20 = artifacts.require("AuctionERC20");
 const log = console.log;
 
 module.exports = async function (deployer, network, accounts) {
@@ -20,16 +21,21 @@ module.exports = async function (deployer, network, accounts) {
 
     const freeport = await Freeport.deployed();
     log("Operating on Freeport contract", freeport.address);
-    const auction = await SimpleAuction.deployed();
-    log("Operating on SimpleAuction contract", auction.address);
-
+    const auction = await Auction.deployed();
+    log("Operating on Auction contract", auction.address);
+    const auctionERC20 = await AuctionERC20.deployed();
+    log("Operating on Auction contract", auctionERC20.address);
+    
     const META_TX_FORWARDER = await freeport.META_TX_FORWARDER.call();
 
     log("Give the permission to forward meta-transactions on Freeport to the Biconomy Forwarder");
     await freeport.grantRole(META_TX_FORWARDER, biconomyForwarder);
 
-    log("Give the permission to forward meta-transactions on SimpleAuction to the Biconomy Forwarder");
+    log("Give the permission to forward meta-transactions on Auction to the Biconomy Forwarder");
     await auction.grantRole(META_TX_FORWARDER, biconomyForwarder);
+
+    log("Give the permission to forward meta-transactions on AuctionERC20 to the Biconomy Forwarder");
+    await auctionERC20.grantRole(META_TX_FORWARDER, biconomyForwarder);
 
     log();
 };

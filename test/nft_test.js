@@ -1,4 +1,5 @@
 const Freeport = artifacts.require("Freeport");
+const Sale = artifacts.require("SaleERC20");
 const Forwarder = artifacts.require("MinimalForwarder");
 const FiatGateway = artifacts.require("FiatGateway");
 const TestERC20 = artifacts.require("TestERC20");
