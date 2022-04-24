@@ -4,13 +4,13 @@ const log = console.log;
 
 module.exports = async function (deployer, network, accounts) {
     const gateway = await FiatGateway.deployed();
-    log("Operating on FiatGateway contract", gateway.address);
+    log("Operating on FiatGatewayERC20 contract", gateway.address);
 
     try {
-        const gateway2 = await upgradeProxy(gateway.address, FiatGateway, {deployer, kind: "uups"});
-        log("Upgraded", gateway2.address);
+        const gatewayProxy = await upgradeProxy(gateway.address, FiatGateway, {deployer, kind: "uups"});
+        log("Upgraded", gatewayProxy.address);
 
-        await gateway2.initialize_v2_0_0();
+        await gatewayProxy.initialize_v2_0_0();
         log("Done initialize_v2_0_0");
     } catch (e) {
         log("Error", e);

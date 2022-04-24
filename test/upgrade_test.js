@@ -37,6 +37,7 @@ contract("Upgrades", accounts => {
         expect(await gateway.hasRole(ADMIN_ROLE, deployer)).equal(true);
         expect(await auction.hasRole(ADMIN_ROLE, deployer)).equal(true);
         expect(await attachment.hasRole(ADMIN_ROLE, deployer)).equal(true);
+        expect(await sale.hasRole(ADMIN_ROLE, deployer)).equal(true);
     });
 
     it("initialize_v2_0_0 set ERC20 allowances", async () => {

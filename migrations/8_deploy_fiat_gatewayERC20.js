@@ -12,16 +12,10 @@ module.exports = async function (deployer, network, accounts) {
     log("From admin account", admin);
 
     const gateway = await deployProxy(FiatGateway, [freeport.address, sale.address], {deployer, kind: "uups"});
-    log("Deployed FiatGateway proxy", gateway.address);
+    log("Deployed FiatGatewayERC20 proxy", gateway.address);
 
-    const TRANSFER_OPERATOR = await freeport.TRANSFER_OPERATOR.call();
     const EXCHANGE_RATE_ORACLE = await gateway.EXCHANGE_RATE_ORACLE.call();
-    const PAYMENT_SERVICE = await gateway.PAYMENT_SERVICE.call();
-
-    // No longer necessary after v2.0.0
-    //log("Give the permission to make transfers to FiatGateway.")
-    //await freeport.grantRole(TRANSFER_OPERATOR, gateway.address);
-
+    
     log("Operating on Admin account", admin);
     log("Give the permission to withdraw funds to Admin."); // In constructor.
 

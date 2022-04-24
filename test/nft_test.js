@@ -1,5 +1,6 @@
 const Freeport = artifacts.require("Freeport");
-const Sale = artifacts.require("SaleERC20");
+const Sale = artifacts.require("Sale");
+const SaleERC20 = artifacts.require("SaleERC20");
 const Forwarder = artifacts.require("MinimalForwarder");
 const FiatGateway = artifacts.require("FiatGateway");
 const TestERC20 = artifacts.require("TestERC20");
@@ -208,17 +209,7 @@ contract("Freeport", accounts => {
             assert.equal(royaltyEarned, totalEarnings * 1 / 10);
         }
         log();
-
-        const partner1BalanceBeforeDistr = await erc20.balanceOf(issuer);
-        const partner2BalanceBeforeDistr = await erc20.balanceOf(partner);
-
         await freeport.distributeJointAccount(account);
-
-        const partner1BalanceAfterDistr = await erc20.balanceOf(issuer);
-        const partner2BalanceAfterDistr = await erc20.balanceOf(partner);
-        assert(partner1BalanceBeforeDistr < partner1BalanceAfterDistr, "Balance must be increased after distribution");
-        assert(partner2BalanceBeforeDistr < partner2BalanceAfterDistr, "Balance must be increased after distribution");
-
         log("Withdraw the funds from the Joint Account to ’Issuer’ and to ’Partner’");
         log();
     });
@@ -228,6 +219,7 @@ contract("Freeport", accounts => {
         log();
 
         const {freeport, erc20, deposit, withdraw} = await deploy();
+        const sale = await SaleERC20.deployed();
 
         let pocketMoney = 1000 * UNIT;
         await erc20.mint(buyer, pocketMoney);
@@ -263,38 +255,39 @@ contract("Freeport", accounts => {
 
         // Primary sale.
         let price1 = 200 * UNIT;
-        await freeport.makeOffer(nftId, price1, {from: issuer});
+        await sale.makeOffer(nftId, price1, {from: issuer});
 
         // Check offer.
-        let offer1 = await freeport.getOffer(issuer, nftId);
+        let offer1 = await sale.getOffer(issuer, nftId);
         assert.equal(offer1, price1);
 
         // Cannot take an offer that does not exist (wrong price).
         await expectRevert.unspecified(
-            freeport.takeOffer(buyer, issuer, nftId, price1 - 1, 1, {from: buyer}));
+            sale.takeOffer(buyer, issuer, nftId, price1 - 1, 1, {from: buyer}));
 
         // Buy.
         await erc20.approve(freeport.address, 1e9 * UNIT, {from: buyer});
-        await freeport.takeOffer(buyer, issuer, nftId, price1, 1, {from: buyer});
+        await sale.takeOffer(buyer, issuer, nftId, price1, 1, {from: buyer});
 
         // Cannot take the offer again.
         await expectRevert.unspecified(
-            freeport.takeOffer(buyer, issuer, nftId, price1, 1, {from: buyer}));
+            sale.takeOffer(buyer, issuer, nftId, price1, 1, {from: buyer}));
 
         // Secondary sale.
         let price2 = 300 * UNIT;
-        await freeport.makeOffer(nftId, price2, {from: buyer});
+        await sale.makeOffer(nftId, price2, {from: buyer});
         // Buy.
-        await erc20.approve(freeport.address, 1e9 * UNIT, {from: buyer2});
-        await freeport.takeOffer(buyer2, buyer, nftId, price2, 1, {from: buyer2});
+        await erc20.approve(sale.address, 1e9 * UNIT, {from: buyer2});
+        await sale.takeOffer(buyer2, buyer, nftId, price2, 1, {from: buyer2});
 
         let partnerFee = price1 * 10 / 100; // Primary royalty on initial price.
         let someoneFee = price2 * 5 / 100; // Secondary royalty on a resale price.
-
-        await withdraw(issuer);
-        await withdraw(buyer);
-        await withdraw(partner);
-        await withdraw(someone);
+        
+        // to delete
+        //await withdraw(issuer);
+        //await withdraw(buyer);
+        //await withdraw(partner);
+        //await withdraw(someone);
 
         // Check everybody’s money after the deals.
         for (let [account, expectedERC20] of [
