@@ -1,6 +1,6 @@
 const Freeport = artifacts.require("Freeport");
-const FiatGateway = artifacts.require("FiatGateway");
-const SimpleAuction = artifacts.require("SimpleAuction");
+const FiatGatewayERC20 = artifacts.require("FiatGatewayERC20");
+const Auction = artifacts.require("AuctionERC20");
 const {getSigner} = require("../test/utils");
 const log = console.log;
 
@@ -15,7 +15,7 @@ module.exports = async function (done) {
     let accounts = await web3.eth.getAccounts();
     let admin = accounts[0];
     let freeport = await Freeport.at("0xf9AC6022F786f6f64Fd8abf661190b8517D92396");
-    let gateway = await FiatGateway.at("0x4478e3B0B71531DAc9d0ECe9357eBB0043669804");
+    let gateway = await FiatGatewayERC20.at("0x4478e3B0B71531DAc9d0ECe9357eBB0043669804");
     log("Operating on Freeport contract", freeport.address);
     log("Operating on FiatGateway contract", gateway.address);
     log("From admin account", admin);

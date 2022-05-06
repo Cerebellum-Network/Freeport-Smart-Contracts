@@ -1,20 +1,20 @@
 pragma solidity ^0.8.0;
 
-import "./auction/AuctionBase.sol";
 import "./auction/SignatureVerifier.sol";
+import "./auction/AuctionBase.sol";
 
 contract Auction is AuctionBase, SignatureVerifier {
-    
-    function initialize(Freeport freeport) public initializer {
-        __AuctionBase_init(freeport);
+
+    function initialize(Freeport freeport, address token) public initializer {
+        __AuctionBase_init(freeport, token);
     }
 
-    struct Bid {
-        address buyer; // 0 means no buyer yet.
-        uint256 price; // The highest bid price. The initial value is set by the seller.
-        uint256 closeTimeSec; // Bidding is open until the close time. After this time, the settlement becomes possible. A non-zero value also means that the auction exists.
-        bool secured;
-    }
+	struct Bid {
+    	address buyer; // 0 means no buyer yet.
+    	uint256 price; // The highest bid price. The initial value is set by the seller.
+    	uint256 closeTimeSec; // Bidding is open until the close time. After this time, the settlement becomes possible. A non-zero value also means that the auction exists.
+    	bool secured;
+	}
 
 	/** Seller => NFT ID => Bid.
      */
@@ -102,7 +102,7 @@ contract Auction is AuctionBase, SignatureVerifier {
         
         if (bid.secured) {
             address verifier = recoverAddressFromSignature(buyer, nftId, signature);
-            require(hasRole(BUY_AUTHORIZER_ROLE, verifier), "Authorizer doesn't have a role");        
+            require(hasRole(BUY_AUTHORIZER_ROLE, verifier), "Signature issuer hasn't specific role");        
         }
 
         // Check that the auction exists and is open.
@@ -158,9 +158,9 @@ contract Auction is AuctionBase, SignatureVerifier {
 			
             // Transfer the NFT to the buyer.
             freeport.transferFrom(address(this), buyer, nftId, 1);
-
+            (uint256 totalFee, address royaltyAccount) = freeport.calculateTotalRoyalties(seller, nftId, price, 1);
             // Collect royalty.
-            try freeport.captureFee(seller, nftId, price, 1) {
+            try token.transferFrom(seller, royaltyAccount, totalFee) {
             } catch {}
         } else {
             // Otherwise, there was no buyer,
@@ -171,32 +171,31 @@ contract Auction is AuctionBase, SignatureVerifier {
         emit SettleAuction(seller, nftId, price, buyer);
     }
 
-	
-
-    /** Take deposit in internal currency.
+    /** Takes deposit in ERC20 from buyer.
      */
     function _takeDeposit(
         address from,
         uint amount
     ) internal {
-		freeport.transferFrom(from, address(this), CURRENCY, amount);
+		token.transferFrom(from, address(this), amount);
     }
 
-    /** Return deposit to previous bidder.
+    /** Returns deposit by address.
      */
     function _returnDeposit(
         address to,
         uint amount
     ) internal {     
-		freeport.transferFrom(address(this), to, CURRENCY, amount);
+		token.transfer(to, amount);
     }
 
-    /** Pay out seller after auctioned auction settled.
+    /** Pays out seller for sold item in ERC20.
      */
     function _finalizePayment(
         address to,
         uint amount
     ) internal {
-        freeport.transferFrom(address(this), to, CURRENCY, amount);
+        token.transferFrom(address(this), to, amount);
     }
+
 }

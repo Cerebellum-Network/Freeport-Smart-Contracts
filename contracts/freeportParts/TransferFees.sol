@@ -25,7 +25,7 @@ abstract contract TransferFees is JointAccounts {
 
     /** Notify that royalties were configured on an NFT type.
      */
-    event RoyaltiesConfigured( 
+    event RoyaltiesConfigured(
         uint256 indexed nftId,
         address primaryRoyaltyAccount,
         uint256 primaryRoyaltyCut,
@@ -181,34 +181,8 @@ abstract contract TransferFees is JointAccounts {
         }
     }
 
-    /** Collect the royalty due on a transfer.
-     *
-     * The royalty is calculated based on NFT configuration and the price. It is collected by an internal transfer of currency between "from" and the beneficiary. Return the amount collected.
-     *
-     * The caller must be approved by "from", or a TRANSFER_OPERATOR.
-     */
-    function captureFee(address from, uint256 nftId, uint256 price, uint256 amount)
-    public returns (uint256) {
-        address operator = _msgSender();
-        require(isApprovedForAll(from, operator), "The operator must be approved or a TRANSFER_OPERATOR");
-        uint totalCost = price * amount;
-        uint totalFee = _captureFee(from, nftId, price, amount);
-        require(totalFee <= totalCost, "Cannot take more fees than the price");
-        return totalFee;
-    }
-
-    /** Collect the royalty due on a transfer.
-     *
-     * The royalty is calculated based on NFT configuration and the price. It is collected by an internal transfer of currency between "from" and the beneficiary. Return the amount collected.
-     */
-    function _captureFee(address from, uint256 nftId, uint256 price, uint256 amount)
-    internal returns (uint256) {
-        if (nftId == CURRENCY) return 0;
-
-        // An account with bypass role does not pay royalties.
-        // This uses msg.sender which is supposed to be a transaction relayer,
-        // instead of _msgSender() which is the user wishing to transfer his tokens.
-        if (hasRole(BYPASS_SENDER, msg.sender)) return 0;
+    function calculateTotalRoyalties(address from, uint256 nftId, uint256 price, uint256 amount) public view returns(uint256, address) {
+        if (nftId == CURRENCY) return (0, address(0));
 
         uint256 cut;
         uint256 minimum;
@@ -230,11 +204,7 @@ abstract contract TransferFees is JointAccounts {
         if (perTransferFee < minimum) perTransferFee = minimum;
 
         uint256 totalFee = perTransferFee * amount;
-        if (totalFee != 0) {
-            _forceTransferCurrency(from, royaltyAccount, totalFee);
-        }
-
-        return totalFee;
+        return (totalFee, royaltyAccount);
     }
 
     /** Collect the royalty due on a transfer.
@@ -243,18 +213,19 @@ abstract contract TransferFees is JointAccounts {
      *
      * The caller must be approved by "from", or a TRANSFER_OPERATOR.
      */
-    function captureFeeERC20(address from, uint256 nftId, uint256 price, uint256 amount)
+    function captureFee(address from, uint256 nftId, uint256 price, uint256 amount)
     public returns (uint256) {
         address operator = _msgSender();
-        require(isApprovedForAll(from, operator), "The operator must be approved or a TRANSFER_OPERATOR");
-        uint totalCost = price * amount;
-        uint totalFee = _captureFee(from, nftId, price, amount);
-        require(totalFee <= totalCost, "Cannot take more fees than the price");
-        return totalFee;
-    }    
+        require(isApprovedForAll(from, operator), "the operator must be approved or a TRANSFER_OPERATOR");
+        return _captureFee(from, nftId, price, amount);
+    }
 
-    function _captureFeeERC20(address from, uint256 nftId, uint256 price, uint256 amount)
-    public returns (uint256) {
+    /** Collect the royalty due on a transfer.
+     *
+     * The royalty is calculated based on NFT configuration and the price. It is collected by an internal transfer of currency between "from" and the beneficiary. Return the amount collected.
+     */
+    function _captureFee(address from, uint256 nftId, uint256 price, uint256 amount)
+    internal returns (uint256) {
         if (nftId == CURRENCY) return 0;
 
         // An account with bypass role does not pay royalties.
@@ -281,7 +252,7 @@ abstract contract TransferFees is JointAccounts {
 
         uint256 totalFee = perTransferFee * amount;
         if (totalFee != 0) {
-            currencyContract.transferFrom(from, royaltyAccount, totalFee);
+            _forceTransferCurrency(from, royaltyAccount, totalFee);
         }
 
         return totalFee;

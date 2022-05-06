@@ -1,4 +1,5 @@
-const Freeport = artifacts.require("Freeport");
+const Freeport = artifacts.require("Freeport")
+const Sale = artifacts.require("Sale");
 const FiatGateway = artifacts.require("FiatGateway");
 const log = console.log;
 
@@ -9,10 +10,9 @@ module.exports = async function (done) {
     let issuer = admin;
     let buyer = accounts[1];
     let freeport = await Freeport.deployed();
+    let sale = await Sale.deployed();
     let gateway = await FiatGateway.deployed();
-    const CURRENCY = 0;
-    const UNIT = 1e10;
-    log("Operating on Freeport contract", freeport.address);
+    log("Operating on Sale contract", sale.address);
     log("Operating on FiatGateway contract", gateway.address);
     log("From Admin account", admin);
     log("With Issuer account", issuer);
@@ -38,7 +38,7 @@ module.exports = async function (done) {
     let priceCere = pricePennies * cerePerPenny;
 
     log("Issuer offers to sell for", +pricePennies, "pennies, or", +priceCere, "CERE units.");
-    await freeport.makeOffer(nftId, priceCere, {from: issuer});
+    await sale.makeOffer(nftId, priceCere, {from: issuer});
 
     log("Buy the NFT after a fiat payment for Buyer", buyer);
     await gateway.buyNftFromUsd(

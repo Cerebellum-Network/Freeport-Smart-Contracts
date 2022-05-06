@@ -1,5 +1,5 @@
 const Freeport = artifacts.require("Freeport");
-const SimpleAuction = artifacts.require("SimpleAuction");
+const Auction = artifacts.require("Auction");
 const log = console.log;
 
 module.exports = async function (done) {
@@ -9,11 +9,10 @@ module.exports = async function (done) {
     let seller = admin;
     let buyer = accounts[1];
     let freeport = await Freeport.deployed();
-    let auction = await SimpleAuction.deployed();
-    const CURRENCY = 0;
+    let auction = await Auction.deployed();
     const UNIT = 1e10;
     log("Operating on Freeport contract", freeport.address);
-    log("Operating on SimpleAuction contract", auction.address);
+    log("Operating on Auction contract", auction.address);
     log("With Seller account", seller);
     log("With Buyer account", buyer);
     

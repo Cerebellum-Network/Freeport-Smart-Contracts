@@ -1,63 +1,73 @@
-pragma solidity ^0.8.x;
+pragma solidity ^0.8.0;
 
 import "./sale/SaleBase.sol";
 import "./Freeport.sol";
 
 contract Sale is SaleBase {
 
-    function initialize(Freeport freeport) public initializer {
-      __SaleBase_init(freeport);
-    }
+  	function initialize(Freeport freeport, address stablecoin) public initializer {
+  	  __SaleBase_init(freeport, stablecoin);
+  	}
 
     /**
-      Mapping represents relation such as | seller address => (nft id => price) | 
+     * Stores nft id and its quantity for sale. 
      */
-    mapping(address => mapping(uint256 => uint256)) nftPrice;
+    struct Nft {
+        uint256 price;
+        uint256 quantity;
+    }
 
-    /** An event emitted when an account `seller` has offered to sell a type of NFT
-     * at a given price.
-     *
-     * This replaces previous offers by the same seller on the same NFT ID, if any.
-     * A price of 0 means "no offer" and the previous offer is cancelled.
-     *
-     * An offer does not imply that the seller owns any amount of this NFT.
-     * An offer remains valid until cancelled, for the entire balance at a given time,
-     * regardless of incoming and outgoing transfers on the seller account.
-     */
-    event MakeOffer(
-        address indexed seller,
-        uint256 indexed nftId,
-        uint256 price);
+  	/**
+  	 * Mapping represents relation such as 
+     * seller address => (nft ID => structure containing price, quantity) 
+  	 */
+  	mapping(address => mapping(uint => Nft)) nftPrice;
 
-    /** An offer of `seller` was taken by `buyer`.
-     * The transfers of `amount` NFTs of type `nftId`
-     * against `amount * price` of CERE Units were executed.
-     */
-    event TakeOffer(
-        address indexed buyer,
-        address indexed seller,
-        uint256 indexed nftId,
-        uint256 price,
-        uint256 amount);
+		/** An event emitted when an account `seller` has offered to sell a type of NFT
+  	 * at a given price.
+  	 *
+  	 * This replaces previous offers by the same seller on the same NFT ID, if any.
+  	 * A price of 0 means "no offer" and the previous offer is cancelled.
+  	 *
+  	 * An offer does not imply that the seller owns any amount of this NFT.
+  	 * An offer remains valid until cancelled, for the entire balance at a given time,
+  	 * regardless of incoming and outgoing transfers on the seller account.
+  	 */
+  	event MakeOffer(
+  	    address indexed seller,
+  	    uint256 indexed nftId,
+  	    uint256 price,
+        uint256 quantity);
+  
+		/** An offer of `seller` was taken by `buyer`.
+  	 * The transfers of `amount` NFTs of type `nftId`
+  	 * against `amount * price` of CERE Units were executed.
+  	 */
+  	event TakeOffer(
+  	    address indexed buyer,
+  	    address indexed seller,
+  	    uint256 indexed nftId,
+  	    uint256 price,
+  	    uint256 quantity);
 
-    /** Create an offer to sell a type of NFTs for a price per unit.
+		/** Create an offer to sell a type of NFTs for a price per unit.
      * All the NFTs of this type owned by the caller will be for sale.
      *
-     * To cancel, call again with a price of 0.
+     * To cancel, call again with a price and quantity params 0.
      */
-    function makeOffer(uint256 nftId, uint256 price)
+    function makeOffer(uint256 _nftId, uint256 _price, uint256 _quantity)
     public {
         address seller = _msgSender();
-        nftPrice[seller][nftId] = price;
-        emit MakeOffer(seller, nftId, price);
+        nftPrice[seller][_nftId] = Nft({price: _price, quantity: _quantity});
+        emit MakeOffer(seller, _nftId, _price, _quantity);
     }
 
     /** Return the price offered by the given seller for the given NFT type.
      */
     function getOffer(address seller, uint256 nftId)
-    public view returns (uint256) {
-        uint price = nftPrice[seller][nftId];
-        return price;
+    public view returns (uint256, uint256) {
+        Nft storage nft = nftPrice[seller][nftId];
+        return (nft.price, nft.quantity);
     }
 
     /** Accept an offer, paying the price per unit for an amount of NFTs.
@@ -75,20 +85,22 @@ contract Sale is SaleBase {
      */
     function takeOffer(address buyer, address seller, uint256 nftId, uint256 expectedPriceOrZero, uint256 amount)
     public {
+        Nft storage nft = nftPrice[seller][nftId];
+        uint256 price = nft.price;
         address payer = _msgSender();
-
-        // Check and update the amount offered.
-        uint256 price = nftPrice[seller][nftId];
         require(price != 0, "Not for sale");
         require(expectedPriceOrZero == 0 || expectedPriceOrZero == price, "Unexpected price");
+        require(nft.quantity - amount >= 0, "Remaining quantity exceeded");
 
         uint totalCost = price * amount;
-        safeTransferFrom(payer, seller, CURRENCY, totalCost, "");
-
-        freeport.captureFee(seller, nftId, price, amount);
+        nft.quantity = nft.quantity - amount;
+        token.transferFrom(payer, seller, totalCost);
+        _forceTransfer(seller, buyer, nftId, amount);
         
-        _forceTransfer(address(this), buyer, nftId, amount);
-
+        (uint256 totalFee, address royaltyAccount) = freeport.calculateTotalRoyalties(seller, nftId, price, amount);
+        require(totalFee > 0, "Zero fees");
+        token.transferFrom(seller, royaltyAccount, totalFee);
+        
         emit TakeOffer(buyer, seller, nftId, price, amount);
     }
 

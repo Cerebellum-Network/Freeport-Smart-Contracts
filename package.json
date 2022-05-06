@@ -45,5 +45,8 @@
     "solc-0.8": "npm:solc@0.8.4",
     "solidity-docgen": "^0.5.13",
     "truffle": "^5.3.10"
+  },
+  "dependencies": {
+    "solc": "^0.8.13"
   }
 }

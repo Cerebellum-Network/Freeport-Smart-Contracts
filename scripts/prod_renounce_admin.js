@@ -1,6 +1,6 @@
 const Freeport = artifacts.require("Freeport");
 const FiatGateway = artifacts.require("FiatGateway");
-const SimpleAuction = artifacts.require("SimpleAuction");
+const Auction = artifacts.require("Auction");
 const log = console.log;
 const assert = require('assert').strict;
 
@@ -13,9 +13,8 @@ module.exports = async function (done) {
     log("From admin account", adminToRevoke);
     let freeport = await Freeport.deployed();
     let gateway = await FiatGateway.deployed();
-    let auction = await SimpleAuction.deployed();
+    let auction = await Auction.deployed();
     log("Operating on Freeport contract", freeport.address);
-    log("Operating on TestERC20 contract", erc20.address);
     log("Operating on FiatGateway contract", gateway.address);
     log("Operating on SimpleAuction contract", auction.address);
     const DEFAULT_ADMIN_ROLE = await freeport.DEFAULT_ADMIN_ROLE.call();

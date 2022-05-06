@@ -1,6 +1,5 @@
 const Freeport = artifacts.require("./Freeport.sol");
 const Auction = artifacts.require("./Auction.sol");
-const AuctionERC20 = artifacts.require("./AuctionERC20.sol");
 const TestERC20 = artifacts.require("TestERC20");
 const log = console.log;
 const {deployProxy} = require('@openzeppelin/truffle-upgrades');
