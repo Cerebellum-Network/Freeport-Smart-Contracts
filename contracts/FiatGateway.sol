@@ -33,6 +33,7 @@ contract FiatGateway is Upgradeable, ERC1155HolderUpgradeable {
 
     Freeport public freeport;
     Sale public sale;
+    IERC20 token;
 
     /** The current exchange rate of internal currency (with 6 decimals) per USD cent (1 penny).
      */
@@ -53,26 +54,19 @@ contract FiatGateway is Upgradeable, ERC1155HolderUpgradeable {
     event SetExchangeRate(
         uint256 cereUnitsPerPenny);
 
-    function initialize(Freeport _freeport, Sale _sale) public initializer {
+    function initialize(Freeport _freeport, Sale _sale, address _token) public initializer {
         __Upgradeable_init();
         __ERC1155Holder_init();
 
         freeport = _freeport;
         sale = _sale;
-    }
+        token = IERC20(_token);
 
-    /** Initialize this contract after version 2.0.0.
-     *
-     * Allow deposit of USDC into Freeport.
-     */
-    function initialize_v2_0_0() public {
-        IERC20 erc20 = freeport.currencyContract();
-
-        bool init = erc20.allowance(address(this), address(freeport)) > 0;
+        bool init = token.allowance(address(this), address(freeport)) > 0;
         if (init) return;
 
         uint256 maxInt = 0xffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff;
-        erc20.approve(address(freeport), maxInt);
+        token.approve(address(freeport), maxInt);
     }
 
     /** Set the exchange rate between fiat (USD) and Freeport currency (CERE).

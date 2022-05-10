@@ -55,25 +55,25 @@ contract("Auction", accounts => {
     });
 
 
-    it("sells an NFT by auction", async () => {
+    it("Sells an NFT at auction. ERC20 payments accepted", async () => {
 
         const auction = await Auction.deployed();
         const PERCENT = 100; // 1% in basis points.
         
         // Give some initial tokens to the buyers.
         let someMoney = 1000;
-        await deposit(buyerBob, someMoney * UNIT);
-        await deposit(buyerBill, someMoney * UNIT);
-
+        await erc20.mint(buyerBob, someMoney * UNIT);
+        await erc20.mint(buyerBill, someMoney * UNIT);
+        
         let nftSupply = 10;
         let nftId = await freeport.issue.call(nftSupply, "0x", { from: issuer });
         let closeTime = (await time.latest()).toNumber() + 1000;
         
         let checkBalances = async expected => {
-            for (let [account, expectedCurrency, expectedNFTs] of expected) {
-                let currency = await freeport.balanceOf.call(account, CURRENCY);
+            for (let [account, expectedERC20Balance, expectedNFTs] of expected) {
+                let erc20Balance = await erc20.balanceOf.call(account);
                 let nfts = await freeport.balanceOf.call(account, nftId);
-                assert.equal(currency, expectedCurrency);
+                assert.equal(erc20Balance, expectedERC20Balance);
                 assert.equal(nfts, expectedNFTs);
             }
         };
@@ -106,7 +106,7 @@ contract("Auction", accounts => {
             [auction.address, 0, 1], // The contract took 1 NFT as deposit.
         ]);
 
-        //await erc20.approve(auction.address, 1e9 * UNIT, {from: buyerBob});
+        await erc20.approve(auction.address, 1e9 * UNIT, {from: buyerBob});
         await auction.bidOnAuction(issuer, nftId, 100 * UNIT, {from: buyerBob});
 
         await checkBalances([
@@ -147,10 +147,6 @@ contract("Auction", accounts => {
         // Settle the sale to buyer2 at 110 tokens.
         await auction.settleAuction(issuer, nftId);
 
-        // Issuer and beneficiaries withdraw their earnings in internal currency.
-        await withdraw(issuer);
-        await withdraw(beneficiary);
-
         // Check every balance after settlement.
         await checkBalances([
             [issuer, 110 - 11, 9], // Earned 110 money, spent 11 in royalties, spent 1 of 10 NFTs.
@@ -184,13 +180,8 @@ contract("Auction", accounts => {
         const checkBalances = async expected => {
             for (let [account, expectedERC20, expectedNFTs] of expected) {
                 let ercBalance = await erc20.balanceOf(account);
-                let currency = await freeport.balanceOf.call(account, CURRENCY);
                 let nfts = await freeport.balanceOf.call(account, nftId);
-                console.log("ercBalance >>>> ", +ercBalance)
-                console.log("currency >>>> ", +currency)
-                console.log("nfts >>>> ", +nfts)
                 assert.equal(ercBalance, expectedERC20 * UNIT);
-                assert.equal(currency, 0);
                 assert.equal(nfts, expectedNFTs);
             }
         };
@@ -227,7 +218,7 @@ contract("Auction", accounts => {
         let signature = await signer._signTypedData(domain, types, value);
 
         await erc20.approve(auction.address, 1e9 * UNIT, {from: buyerChris});
-        await auction.bidOnSecuredAuction(issuer2, nftId, 100 * UNIT, signature, {from: buyerBob});
+        await auction.bidOnSecuredAuction(issuer2, nftId, 100 * UNIT, signature, {from: buyerChris});
 
         await checkBalances([
             [buyerChris, someMoney - 100, 0], // BuyerBob put 100 money as deposit.
@@ -269,15 +260,11 @@ contract("Auction", accounts => {
         // Settle the sale to buyer2 at 110 tokens.
         await auction.settleAuction(issuer2, nftId);
 
-        // Issuer and benificiaries withdraw their earnings to ERC20.
-        await withdraw(issuer2);
-        await withdraw(beneficiary);
-
         // Check every balance after settlement.
         await checkBalances([
             [issuer2, 110 - 11, 9], // Earned 110 money, spent 11 in royalties, spent 1 of 10 NFTs.
             [buyerChris, someMoney - 110, 1], // Spent 110 money, earned the NFT.
-            [buyerKen, someMoney, 0], // No change, BuyerBob got his refund.
+            [buyerKen, someMoney, 0], // Bid returned.
             [auction.address, 0, 0], // No change, the contract gave back all deposits.
             [beneficiary, 11, 0], // The beneficiary earned 10% of 110.
         ]);
