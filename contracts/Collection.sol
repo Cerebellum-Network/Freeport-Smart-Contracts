@@ -1,31 +1,59 @@
 pragma solidity ^0.8.0;
 
 import "./freeportParts/BaseNFT.sol";
+import "./Freeport.sol";
 
 /** This this contract describes the collection of NFTs associated with a particular user.
  *
  */
 contract Collection is BaseNFT {
+    function initialize() public initializer {
+        __BaseNFT_init();
+        _setupRole(DEFAULT_ADMIN_ROLE, _msgSender());
+        owner = _msgSender();
+    }
 
     // Name of the collection for open sea.
     string public name;
-
+    // Owner contract address.
+    address public owner;
+    // Royalty manager role.
+    bytes32 public constant ROYALTY_MANAGER_ROLE = keccak256("ROYALTY_MANAGER_ROLE");
+    // The address of Freeport contract.
+    Freeport public freeport;
     /** A counter of NFT types issued.
      * This is used to generate unique NFT IDs.
      */
     uint32 public idCounter;
-
-    function initialize() public initializer {
-        __BaseNFT_init();
-        _setupRole(DEFAULT_ADMIN_ROLE, _msgSender());
-    }
 
     function setName(string memory newName) public {
         require(hasRole(DEFAULT_ADMIN_ROLE, _msgSender()), "only admin");
         name = newName;
     }
 
-    /// From Issuance contract
+    function setRoyaltyManager(address royaltyManager) public {
+        require(hasRole(DEFAULT_ADMIN_ROLE, _msgSender()), "only admin");
+        _setupRole(ROYALTY_MANAGER_ROLE, royaltyManager);
+    }
+
+    /** Sets Freeport contract address.
+     */
+    function setFreeport(address _freeportContract) public {
+        require(freeport == Freeport(address(0)));
+        require(hasRole(DEFAULT_ADMIN_ROLE, _msgSender()));
+
+        freeport = Freeport(_freeportContract);
+    }
+
+    /**
+     * @dev See {IERC165-supportsInterface}.
+     */
+    function supportsInterface(bytes4 interfaceId)
+    public view virtual override(BaseNFT) returns (bool) {
+        return super.supportsInterface(interfaceId);
+    }
+
+    /// Issuer interface
     /** Issue a supply of NFTs of a new type, and return its ID.
      *
      * No more NFT of this type can be issued again.
@@ -41,50 +69,55 @@ contract Collection is BaseNFT {
     /** Internal implementation of the function issue.
      */
     function _issueAs(address issuer, uint64 supply, bytes memory data)
-    internal returns (uint256) {
+    internal returns (uint32) {
         idCounter = idCounter + 1;
 
-        uint256 nftId = getNftId(issuer, idCounter, supply);
-
         require(supply > 0);
-        _mint(issuer, nftId, supply, data);
+        _mint(issuer, idCounter, supply, data);
 
-        return nftId;
+        return idCounter;
     }
+    /// Issuer interface
 
-    /** Return whether an address is the issuer of an NFT type.
-     *
-     * This does not imply that the NFTs exist.
+    /// Royalty management interface
+    /** Configure the amounts and beneficiaries of royalties on primary and secondary transfers of this NFT.
+     *  Delegating to Freeport implementation.
      */
-    function _isIssuer(address addr, uint256 nftId)
-    internal pure returns (bool) {
-        (address issuer, uint32 innerID, uint64 supply) = _parseNftId(nftId);
-        return addr == issuer;
+    function setupRoyaltyConfiguration(
+        uint32 innerNftId,
+        uint64 supply,
+        address primaryRoyaltyAccount,
+        uint256 primaryRoyaltyCut,
+        uint256 primaryRoyaltyMinimum,
+        address secondaryRoyaltyAccount,
+        uint256 secondaryRoyaltyCut,
+        uint256 secondaryRoyaltyMinimum)
+    public {
+        require(hasRole(DEFAULT_ADMIN_ROLE, _msgSender())
+            || hasRole(ROYALTY_MANAGER_ROLE, _msgSender()), "only admin or royalty manager");
+
+        freeport.configureRoyalties(
+            getGlobalNftId(innerNftId, supply),
+            primaryRoyaltyAccount,
+            primaryRoyaltyCut,
+            primaryRoyaltyMinimum,
+            secondaryRoyaltyAccount,
+            secondaryRoyaltyCut,
+            secondaryRoyaltyMinimum
+        );
     }
+    /// Royalty management interface
 
-    /** Calculate the ID of an NFT type, identifying its issuer, its supply, and an inner ID.
+    /// NFT ID utilities
+    /** Calculate the global ID of an NFT type, identifying its inner nft id and supply.
      */
-    function getNftId(address issuer, uint32 innerID, uint64 supply)
-    public pure returns (uint256) {
-        // issuer || innerID || supply: 160 + 32 + 64 = 256 bits
-        uint256 id = (uint256(uint160(issuer)) << (32 + 64))
-        | (uint256(innerID) << 64)
+    function getGlobalNftId(uint32 innerNftId, uint64 supply)
+    public view returns (uint256) {
+        // issuer || innerNftId || supply: 160 + 32 + 64 = 256 bits
+        uint256 id = (uint256(uint160(address(this))) << (32 + 64))
+        | (uint256(innerNftId) << 64)
         | uint256(supply);
         return id;
     }
-
-    /** Parse an NFT ID into its issuer, its supply, and an inner ID.
-     *
-     * This does not imply that the NFTs exist.
-     */
-    function _parseNftId(uint256 id)
-    internal pure returns (address issuer, uint32 innerID, uint64 supply) {
-        issuer = address(uint160((id & 0xFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF000000000000000000000000) >> (32 + 64)));
-        innerID = /*   */ uint32((id & 0x0000000000000000000000000000000000000000FFFFFFFF0000000000000000) >> 64);
-        supply = /*    */ uint64((id & 0x000000000000000000000000000000000000000000000000FFFFFFFFFFFFFFFF));
-        return (issuer, innerID, supply);
-    }
-    /// From Issuance contract
-
-    /// From TransferFees contract
+    /// NFT ID utilities
 }
