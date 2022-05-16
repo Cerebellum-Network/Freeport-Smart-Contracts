@@ -31,11 +31,9 @@ contract Freeport is /*
      */
     function initialize() public initializer {
         __SimpleExchange_init();
-        name = "DaVinci";
     }
 
-    function setName(string memory newName) public {
-        require(hasRole(DEFAULT_ADMIN_ROLE, _msgSender()), "only admin");
+    function setName(string memory newName) public onlyRole(DEFAULT_ADMIN_ROLE) {
         name = newName;
     }
 }
