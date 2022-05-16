@@ -6,7 +6,7 @@ import "./Collection.sol";
 /** This is a contract for creating standalone contracts (collections) for users.
  *
  */
-contract CollectionFoundation is MetaTxContext  {
+contract CollectionFactory is MetaTxContext  {
     function __CollectionIssuer_init() internal {
         __MetaTxContext_init();
     }
@@ -17,7 +17,17 @@ contract CollectionFoundation is MetaTxContext  {
     // The address of Freeport contract.
     Freeport public freeport;
 
-    // Deploying a new user collection.
+
+    /** An event emitted when new collection is created.
+     *
+     * Contains unique name of collection and its address.
+     */
+    event CollectionCreated(string indexed name, address indexed addr);
+
+    /** Deploying a new user collection.
+     *
+     *  Emits a {CollectionCreated} event.
+     */
     function createCollection(string memory name) public returns (address) {
         require(hasRole(DEFAULT_ADMIN_ROLE, _msgSender()), "only admin");
         require(nameToCollection[name] == address(0), "already deployed");
@@ -27,6 +37,8 @@ contract CollectionFoundation is MetaTxContext  {
         collection.setName(name);
         collection.setFreeport(address(freeport));
         nameToCollection[name] = address(collection);
+
+        emit CollectionCreated(name, address(collection));
         return address(collection);
     }
 

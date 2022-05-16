@@ -17,7 +17,9 @@ contract Collection is BaseNFT {
     string public name;
     // Owner contract address.
     address public owner;
-    // Royalty manager role.
+    /** Royalty manager role.
+     *  Used for configuring the amounts and beneficiaries of royalties on primary and secondary transfers of this NFT.
+     */
     bytes32 public constant ROYALTY_MANAGER_ROLE = keccak256("ROYALTY_MANAGER_ROLE");
     // The address of Freeport contract.
     Freeport public freeport;
@@ -29,11 +31,6 @@ contract Collection is BaseNFT {
     function setName(string memory newName) public {
         require(hasRole(DEFAULT_ADMIN_ROLE, _msgSender()), "only admin");
         name = newName;
-    }
-
-    function setRoyaltyManager(address royaltyManager) public {
-        require(hasRole(DEFAULT_ADMIN_ROLE, _msgSender()), "only admin");
-        _setupRole(ROYALTY_MANAGER_ROLE, royaltyManager);
     }
 
     /** Sets Freeport contract address.
@@ -54,26 +51,25 @@ contract Collection is BaseNFT {
     }
 
     /// Issuer interface
-    /** Issue a supply of NFTs of a new type, and return its ID.
+    /** Issue NFT of a new type, and return its ID.
      *
      * No more NFT of this type can be issued again.
      *
-     * The caller will be recorded as the issuer and it will initially own the entire supply.
+     * The caller will be recorded as the issuer and it will initially own the NFT.
      */
-    function issue(uint64 supply, bytes memory data)
+    function issueNft(bytes memory data)
     public returns (uint256) {
         require(hasRole(DEFAULT_ADMIN_ROLE, _msgSender()), "only admin");
-        return _issueAs(_msgSender(), supply, data);
+        return _issueAs(_msgSender(), data);
     }
 
     /** Internal implementation of the function issue.
      */
-    function _issueAs(address issuer, uint64 supply, bytes memory data)
+    function _issueAs(address issuer, bytes memory data)
     internal returns (uint32) {
         idCounter = idCounter + 1;
 
-        require(supply > 0);
-        _mint(issuer, idCounter, supply, data);
+        _mint(issuer, idCounter, 1, data);
 
         return idCounter;
     }
@@ -84,8 +80,6 @@ contract Collection is BaseNFT {
      *  Delegating to Freeport implementation.
      */
     function setupRoyaltyConfiguration(
-        uint32 innerNftId,
-        uint64 supply,
         address primaryRoyaltyAccount,
         uint256 primaryRoyaltyCut,
         uint256 primaryRoyaltyMinimum,
@@ -96,27 +90,29 @@ contract Collection is BaseNFT {
         require(hasRole(DEFAULT_ADMIN_ROLE, _msgSender())
             || hasRole(ROYALTY_MANAGER_ROLE, _msgSender()), "only admin or royalty manager");
 
-        freeport.configureRoyalties(
-            getGlobalNftId(innerNftId, supply),
-            primaryRoyaltyAccount,
-            primaryRoyaltyCut,
-            primaryRoyaltyMinimum,
-            secondaryRoyaltyAccount,
-            secondaryRoyaltyCut,
-            secondaryRoyaltyMinimum
-        );
+        for (uint32 i = 1; i <= idCounter; i++) {
+            freeport.configureRoyalties(
+                getGlobalNftId(i),
+                primaryRoyaltyAccount,
+                primaryRoyaltyCut,
+                primaryRoyaltyMinimum,
+                secondaryRoyaltyAccount,
+                secondaryRoyaltyCut,
+                secondaryRoyaltyMinimum
+            );
+        }
     }
     /// Royalty management interface
 
     /// NFT ID utilities
-    /** Calculate the global ID of an NFT type, identifying its inner nft id and supply.
+    /** Calculate the global ID of an NFT type, identifying its inner nft id.
      */
-    function getGlobalNftId(uint32 innerNftId, uint64 supply)
+    function getGlobalNftId(uint32 innerNftId)
     public view returns (uint256) {
-        // issuer || innerNftId || supply: 160 + 32 + 64 = 256 bits
+        // issuer || innerNftId || supply (always equals to 1): 160 + 32 + 64 = 256 bits
         uint256 id = (uint256(uint160(address(this))) << (32 + 64))
         | (uint256(innerNftId) << 64)
-        | uint256(supply);
+        | uint256(1);
         return id;
     }
     /// NFT ID utilities
