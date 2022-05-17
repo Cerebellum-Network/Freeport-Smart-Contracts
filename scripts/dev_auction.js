@@ -1,4 +1,5 @@
 const Freeport = artifacts.require("Freeport");
+const ERC20 = artifacts.require("TestERC20");
 const Auction = artifacts.require("Auction");
 const log = console.log;
 
@@ -8,18 +9,20 @@ module.exports = async function (done) {
     let admin = accounts[0];
     let seller = admin;
     let buyer = accounts[1];
-    let freeport = await Freeport.deployed();
-    let auction = await Auction.deployed();
+    const freeport = await Freeport.deployed();
+    const auction = await Auction.deployed();
+    const erc20 = await ERC20.deployed();
     const UNIT = 1e10;
     log("Operating on Freeport contract", freeport.address);
     log("Operating on Auction contract", auction.address);
+    log("Operating on ERC20 contract", erc20.address);
     log("With Seller account", seller);
     log("With Buyer account", buyer);
     
     let amount = 1000;
-    log("Sending", amount, "CERE to", buyer);
+    log("Sending", amount, "ERC20 to", buyer);
     let encodedAmount = web3.eth.abi.encodeParameter('uint256', amount * UNIT);
-    await freeport.deposit(buyer, encodedAmount, {from: admin});
+    await erc20.mint(buyer, encodedAmount, {from: admin});
 
     let nftId = await freeport.issue.call(10, "0x", {from: seller});
     log("Seller mints an NFT", nftId.toString());

@@ -1,7 +1,7 @@
 const Freeport = artifacts.require("Freeport");
 const TestERC20 = artifacts.require("TestERC20");
-const FiatGatewayERC20 = artifacts.require("FiatGatewayERC20");
-const AuctionERC20 = artifacts.require("Auction");
+const FiatGateway = artifacts.require("FiatGateway");
+const Auction = artifacts.require("Auction");
 const {getSigner} = require("../test/utils");
 const log = console.log;
 
@@ -10,7 +10,6 @@ module.exports = async function (done) {
     // A fixed account for tests.
     let serviceAccount = "0x0EA2A95dE281826d5B30587C2bA2218d97476008";
 
-    const CURRENCY = 0;
     let tenM = "10" + "000" + "000" + "000000"; // 10M with 6 decimals;
     let oneM = "1" + "000" + "000" + "000000"; // 1M with 6 decimals;
     
@@ -20,12 +19,12 @@ module.exports = async function (done) {
     let admin = accounts[0];
     let freeport = await Freeport.at("0x702BA959B5542B2Bf88a1C5924F73Ed97482c64B");
     let erc20 = await TestERC20.at("0x4e5a86E128f8Fb652169f6652e2Cd17aAe409e96");
-    let gateway = await FiatGatewayERC20.at("0x106Bf3D61952faE9279B08bdcB2e548316E0C1Ae");
-    let auction = await AuctionERC20.at("0x7e4FCB28B5794dBf729E860f0abe97C3412E62e4");
+    let gateway = await FiatGateway.at("0x106Bf3D61952faE9279B08bdcB2e548316E0C1Ae");
+    let auction = await Auction.at("0x7e4FCB28B5794dBf729E860f0abe97C3412E62e4");
     log("Operating on Freeport contract", freeport.address);
     log("Operating on TestERC20 contract", erc20.address);
-    log("Operating on FiatGatewayERC20 contract", gateway.address);
-    log("Operating on AuctionERC20 contract", auction.address);
+    log("Operating on FiatGateway contract", gateway.address);
+    log("Operating on Auction contract", auction.address);
     log("From admin account", admin);
     log("With Authorizer account", authorizer.address);
     

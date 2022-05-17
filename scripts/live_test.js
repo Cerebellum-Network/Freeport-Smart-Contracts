@@ -1,8 +1,8 @@
 const Freeport = artifacts.require("Freeport");
-const SaleERC20 = artifacts.require("SaleERC20");
+const Sale = artifacts.require("Sale");
 const TestERC20 = artifacts.require("TestERC20");
-const FiatGatewayERC20 = artifacts.require("FiatGatewayERC20");
-const AuctionERC20 = artifacts.require("AuctionERC20");
+const FiatGateway = artifacts.require("FiatGateway");
+const Auction = artifacts.require("Auction");
 const {time} = require('@openzeppelin/test-helpers');
 const log = console.log;
 const isDev = (config.network === 'development');
@@ -21,15 +21,15 @@ module.exports = async function (done) {
         log("From seller account", seller);
         log("From buyer account", buyer);
         let freeport = await Freeport.deployed();
-        let sale = await SaleERC20.deployed();
+        let sale = await Sale.deployed();
         let erc20 = await TestERC20.deployed();
-        let gateway = await FiatGatewayERC20.deployed();
-        let auction = await AuctionERC20.deployed();
+        let gateway = await FiatGateway.deployed();
+        let auction = await Auction.deployed();
         log("Operating on Freeport contract", freeport.address);
-        log("Operating on SaleERC20 contract", sale.address);
+        log("Operating on Sale contract", sale.address);
         log("Operating on TestERC20 contract", erc20.address);
-        log("Operating on FiatGatewayERC20 contract", gateway.address);
-        log("Operating on AuctionERC20 contract", auction.address);
+        log("Operating on FiatGateway contract", gateway.address);
+        log("Operating on Auction contract", auction.address);
         
         // Issue an NFT.
         let nftId = await freeport.issue.call(10, "0x", {from: seller});
@@ -38,7 +38,7 @@ module.exports = async function (done) {
 
         // Offer to sell.
         let price = 100 * UNIT;
-        await saleERC20.makeOffer(nftId, price, {from: seller});
+        await sale.makeOffer(nftId, price, {from: seller});
         log("makeOffer ok");
 
         // Get money ready.
@@ -51,7 +51,7 @@ module.exports = async function (done) {
         let balanceBuyer0 = await erc20.balanceOf(buyer);
 
         // Buy.
-        await saleERC20.takeOffer(buyer, seller, nftId, price, 1, {from: buyer});
+        await sale.takeOffer(buyer, seller, nftId, price, 1, {from: buyer});
         log("takeOffer ok");
 
         // Withdraw revenues.

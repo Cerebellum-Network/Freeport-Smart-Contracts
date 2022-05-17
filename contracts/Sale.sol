@@ -10,9 +10,9 @@ contract Sale is SaleBase {
   	}
 
     /**
-     * Stores nft id and its quantity for sale. 
+     * Stores nft id and its quantity of offered nft. 
      */
-    struct Nft {
+    struct Offer {
         uint256 price;
         uint256 quantity;
     }
@@ -21,7 +21,7 @@ contract Sale is SaleBase {
   	 * Mapping represents relation such as 
      * seller address => (nft ID => structure containing price, quantity) 
   	 */
-  	mapping(address => mapping(uint => Nft)) nftPrice;
+  	mapping(address => mapping(uint256 => Offer)) nftOffer;
 
 		/** An event emitted when an account `seller` has offered to sell a type of NFT
   	 * at a given price.
@@ -39,7 +39,7 @@ contract Sale is SaleBase {
   	    uint256 price,
         uint256 quantity);
   
-		/** An offer of `seller` was taken by `buyer`.
+	/** An offer of `seller` was taken by `buyer`.
   	 * The transfers of `amount` NFTs of type `nftId`
   	 * against `amount * price` of CERE Units were executed.
   	 */
@@ -58,7 +58,7 @@ contract Sale is SaleBase {
     function makeOffer(uint256 _nftId, uint256 _price, uint256 _quantity)
     public {
         address seller = _msgSender();
-        nftPrice[seller][_nftId] = Nft({price: _price, quantity: _quantity});
+        nftOffer[seller][_nftId] = Offer({price: _price, quantity: _quantity});
         emit MakeOffer(seller, _nftId, _price, _quantity);
     }
 
@@ -66,7 +66,7 @@ contract Sale is SaleBase {
      */
     function getOffer(address seller, uint256 nftId)
     public view returns (uint256, uint256) {
-        Nft storage nft = nftPrice[seller][nftId];
+        Offer storage nft = nftOffer[seller][nftId];
         return (nft.price, nft.quantity);
     }
 
@@ -85,7 +85,7 @@ contract Sale is SaleBase {
      */
     function takeOffer(address buyer, address seller, uint256 nftId, uint256 expectedPriceOrZero, uint256 amount)
     public {
-        Nft storage nft = nftPrice[seller][nftId];
+        Offer storage nft = nftOffer[seller][nftId];
         uint256 price = nft.price;
         address payer = _msgSender();
         require(price != 0, "Not for sale");

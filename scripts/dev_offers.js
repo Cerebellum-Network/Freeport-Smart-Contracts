@@ -14,6 +14,7 @@ module.exports = async function (done) {
     let gateway = await FiatGateway.deployed();
     log("Operating on Sale contract", sale.address);
     log("Operating on FiatGateway contract", gateway.address);
+    log("Operating on Freeport contract", freeport.address);
     log("From Admin account", admin);
     log("With Issuer account", issuer);
 
@@ -38,7 +39,7 @@ module.exports = async function (done) {
     let priceCere = pricePennies * cerePerPenny;
 
     log("Issuer offers to sell for", +pricePennies, "pennies, or", +priceCere, "CERE units.");
-    await sale.makeOffer(nftId, priceCere, {from: issuer});
+    await sale.makeOffer(nftId, priceCere, 5, {from: issuer});
 
     log("Buy the NFT after a fiat payment for Buyer", buyer);
     await gateway.buyNftFromUsd(
