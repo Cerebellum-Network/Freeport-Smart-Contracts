@@ -8,7 +8,6 @@ const {deployProxy} = require('@openzeppelin/truffle-upgrades');
 const {expectEvent, expectRevert} = require('@openzeppelin/test-helpers');
 const BN = require('bn.js');
 
-
 contract("Freeport", accounts => {
     const deployer = accounts[0];
     const issuer = accounts[1];

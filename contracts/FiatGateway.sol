@@ -2,16 +2,15 @@ pragma solidity ^0.8.0;
 
 import "./freeportParts/Upgradeable.sol";
 import "./Freeport.sol";
-import "./Sale.sol";
 import "@openzeppelin/contracts-upgradeable/token/ERC1155/utils/ERC1155HolderUpgradeable.sol";
 import "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol";
 
-/** The FiatGateway contract that supports paymnents in internal currency.
+/** The FiatGateway contract allows buying NFTs from an external fiat payment.
   *
   * This contract connects to the Freeport contract.
-  * It must hold a balance of internal currency recognized by Freeport.
+  * It must hold a balance of CERE recognized by Freeport.
   *
-  * This contract calls takeOffer fn on Sale in order user to buy desired NFT.
+  * This contract uses the SimpleExchange API to buy NFTs.
   *
   * This contract is operational only when the exchange rate is set to a non-zero value.
  */
@@ -32,10 +31,8 @@ contract FiatGateway is Upgradeable, ERC1155HolderUpgradeable {
     uint256 public constant CURRENCY = 0;
 
     Freeport public freeport;
-    Sale public sale;
-    IERC20 token;
 
-    /** The current exchange rate of internal currency (with 6 decimals) per USD cent (1 penny).
+    /** The current exchange rate of ERC20 Units (with 6 decimals) per USD cent (1 penny).
      */
     uint cereUnitsPerPenny;
 
@@ -49,29 +46,35 @@ contract FiatGateway is Upgradeable, ERC1155HolderUpgradeable {
 
     /** An event emitted when the exchange rate was set to a new value.
      *
-     * The rate is given as internal currency (with 6 decimals) per USD cent (1 penny).
+     * The rate is given as ERC20 Units (with 6 decimals) per USD cent (1 penny).
      */
     event SetExchangeRate(
         uint256 cereUnitsPerPenny);
 
-    function initialize(Freeport _freeport, Sale _sale, address _token) public initializer {
+    function initialize(Freeport _freeport) public initializer {
         __Upgradeable_init();
         __ERC1155Holder_init();
 
         freeport = _freeport;
-        sale = _sale;
-        token = IERC20(_token);
+    }
 
-        bool init = token.allowance(address(this), address(freeport)) > 0;
+    /** Initialize this contract after version 2.0.0.
+     *
+     * Allow deposit of USDC into Freeport.
+     */
+    function initialize_v2_0_0() public {
+        IERC20 erc20 = freeport.currencyContract();
+
+        bool init = erc20.allowance(address(this), address(freeport)) > 0;
         if (init) return;
 
         uint256 maxInt = 0xffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff;
-        token.approve(address(freeport), maxInt);
+        erc20.approve(address(freeport), maxInt);
     }
 
     /** Set the exchange rate between fiat (USD) and Freeport currency (CERE).
       *
-      * The rate is given as number of internal currency units (with 6 decimals) per USD cent (1 penny).
+      * The rate is given as number of ERC20 Units (with 6 decimals) per USD cent (1 penny).
       *
       * Only the rate service with the EXCHANGE_RATE_ORACLE role can change the rate.
      */
@@ -83,14 +86,32 @@ contract FiatGateway is Upgradeable, ERC1155HolderUpgradeable {
         emit SetExchangeRate(_cereUnitsPerPenny);
     }
 
-    /** Get the current exchange rate in internal currency units (with 10 decimals) per USD cent (1 penny).
+    /** Get the current exchange rate in CERE Units (with 10 decimals) per USD cent (1 penny).
      */
     function getExchangeRate()
     public view returns (uint) {
         return cereUnitsPerPenny;
     }
 
-    /** Withdraw all internal currency from this contract.
+    /** Withdraw all ERC20 from this contract.
+      *
+      * Only accounts with DEFAULT_ADMIN_ROLE can withdraw.
+     */
+    function withdrawERC20()
+    public onlyRole(DEFAULT_ADMIN_ROLE)
+    returns (uint) {
+        address admin = _msgSender();
+        IERC20 erc20 = freeport.currencyContract();
+        uint amount = erc20.balanceOf(address(this));
+
+        erc20.transfer(admin, amount);
+
+        return amount;
+    }
+
+    /** Deprecated. Only ERC20 is relevant.
+      *
+      * Withdraw all internal currency from this contract.
       *
       * Only accounts with DEFAULT_ADMIN_ROLE can withdraw.
      */
@@ -150,7 +171,7 @@ contract FiatGateway is Upgradeable, ERC1155HolderUpgradeable {
         require(boughtTokens >= expectedPriceOrZero, "Insufficient payment");
 
         uint amount = 1;
-        sale.takeOffer(buyer, seller, nftId, expectedPriceOrZero, amount);
+        freeport.takeOffer(buyer, seller, nftId, expectedPriceOrZero, amount);
     }
 
     /** Guarantee that a version of Solidity with safe math is used.

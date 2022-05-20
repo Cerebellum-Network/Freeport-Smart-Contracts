@@ -1,8 +1,7 @@
 const Freeport = artifacts.require("Freeport");
-const Sale = artifacts.require("Sale");
 const TestERC20 = artifacts.require("TestERC20");
 const FiatGateway = artifacts.require("FiatGateway");
-const Auction = artifacts.require("Auction");
+const SimpleAuction = artifacts.require("SimpleAuction");
 const {time} = require('@openzeppelin/test-helpers');
 const log = console.log;
 const isDev = (config.network === 'development');
@@ -21,16 +20,15 @@ module.exports = async function (done) {
         log("From seller account", seller);
         log("From buyer account", buyer);
         let freeport = await Freeport.deployed();
-        let sale = await Sale.deployed();
         let erc20 = await TestERC20.deployed();
         let gateway = await FiatGateway.deployed();
-        let auction = await Auction.deployed();
+        let auction = await SimpleAuction.deployed();
         log("Operating on Freeport contract", freeport.address);
-        log("Operating on Sale contract", sale.address);
         log("Operating on TestERC20 contract", erc20.address);
         log("Operating on FiatGateway contract", gateway.address);
-        log("Operating on Auction contract", auction.address);
-        
+        log("Operating on SimpleAuction contract", auction.address);
+
+
         // Issue an NFT.
         let nftId = await freeport.issue.call(10, "0x", {from: seller});
         await freeport.issue(10, "0x", {from: seller});
@@ -38,7 +36,7 @@ module.exports = async function (done) {
 
         // Offer to sell.
         let price = 100 * UNIT;
-        await sale.makeOffer(nftId, price, {from: seller});
+        await freeport.makeOffer(nftId, price, {from: seller});
         log("makeOffer ok");
 
         // Get money ready.
@@ -51,7 +49,7 @@ module.exports = async function (done) {
         let balanceBuyer0 = await erc20.balanceOf(buyer);
 
         // Buy.
-        await sale.takeOffer(buyer, seller, nftId, price, 1, {from: buyer});
+        await freeport.takeOffer(buyer, seller, nftId, price, 1, {from: buyer});
         log("takeOffer ok");
 
         // Withdraw revenues.

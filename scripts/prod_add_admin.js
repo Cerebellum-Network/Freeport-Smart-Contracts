@@ -1,8 +1,6 @@
 const Freeport = artifacts.require("Freeport");
 const FiatGateway = artifacts.require("FiatGateway");
-const FiatGatewayERC20 = artifacts.require("FiatGatewayERC20");
-const Auction = artifacts.require("Auction");
-const AuctionERC20 = artifacts.require("AuctionERC20")
+const SimpleAuction = artifacts.require("SimpleAuction");
 const NFTAttachment = artifacts.require("NFTAttachment");
 const log = console.log;
 
@@ -15,18 +13,14 @@ module.exports = async function (done) {
     log("From admin account", admin);
     let freeport = await Freeport.deployed();
     let gateway = await FiatGateway.deployed();
-    let gatewayERC20 = await FiatGatewayERC20.deployed();
-    let auction = await Auction.deployed();
-    let auctionERC20 = await AuctionERC20.deployed();
+    let auction = await SimpleAuction.deployed();
     let attachment = await NFTAttachment.deployed();
     const DEFAULT_ADMIN_ROLE = await freeport.DEFAULT_ADMIN_ROLE.call();
 
     const contracts = [
         ["Freeport", freeport],
         ["FiatGateway", gateway],
-        ["FiatGatewayERC20", gatewayERC20]
-        ["Auction", auction],
-        ["AuctionERC20", auctionERC20]
+        ["SimpleAuction", auction],
         ["NFTAttachment", attachment],
     ];
 
