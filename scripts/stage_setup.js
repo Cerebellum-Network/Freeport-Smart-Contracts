@@ -7,8 +7,8 @@ const log = console.log;
 
 module.exports = async function (done) {
 
-    // A fixed account for tests.
-    let serviceAccount = "0x53B53189e668dC2ee3bA7A44Bb033E60F400d395";
+    // The service account of the fiat gateway.
+    let serviceAccount = "0xc2fA210a9f518EDAAceD047D7a527C8F7FcadE28";
 
     const CURRENCY = 0;
     let tenM = "10" + "000" + "000" + "000000"; // 10M with 6 decimals;
@@ -16,9 +16,9 @@ module.exports = async function (done) {
 
     let accounts = await web3.eth.getAccounts();
     let admin = accounts[0];
-    let freeport = await Freeport.at("0xacd8105cBA046307d2228794ba2F81aA15e82E0D");
-    let erc20 = await TestERC20.at("0x93E73E25F290f8A50281A801109f75CB4E8e3233");
-    let gateway = await FiatGateway.at("0xe25b31Aa454E28110E28C694ded69cD241A27Db1");
+    let freeport = await Freeport.deployed();
+    let erc20 = await TestERC20.deployed();
+    let gateway = await FiatGateway.deployed();
     log("Operating on Freeport contract", freeport.address);
     log("Operating on TestERC20 contract", erc20.address);
     log("Operating on FiatGateway contract", gateway.address);
@@ -30,6 +30,8 @@ module.exports = async function (done) {
     log("Give the permission to execute payments to the service account", serviceAccount);
     const PAYMENT_SERVICE = await gateway.PAYMENT_SERVICE.call();
     await gateway.grantRole(PAYMENT_SERVICE, serviceAccount);
+
+    // In staging, mint some TEST-USDC to dev accounts.
 
     await erc20.mint(gateway.address, tenM);
     log("Sent 10M of currency to FiatGateway");
