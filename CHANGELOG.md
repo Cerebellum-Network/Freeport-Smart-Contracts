@@ -1,9 +1,9 @@
 ### Next release
 
 - Sale SC created based on SimpleExchange. Its purpose is to run nft sale at fix price.
-- Added ERC20 to Sale and Auction SC instead of internal currency for payments.
+- Added ERC20 to Sale instead of internal currency for payments.
 - Fees calculation implemented in Freeport.
-- Fees capture is delegated to Sale/Auction.
+- Fees capture is delegated to Sale.
 - Added quantity param to makeOffer.
 
 ### v2.2.0
