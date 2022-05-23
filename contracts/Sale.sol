@@ -5,8 +5,8 @@ import "./Freeport.sol";
 
 contract Sale is SaleBase {
 
-  	function initialize(Freeport freeport, address stablecoin) public initializer {
-  	  __SaleBase_init(freeport, stablecoin);
+  	function initialize(Freeport freeport, address token) public initializer {
+  	  __SaleBase_init(freeport, token);
   	}
 
     /**
