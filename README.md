@@ -101,6 +101,11 @@ For **staging** on Polygon testnet, setup test accounts:
 
     truffle exec scripts/stage_setup.js --network=polygon_testnet
 
+For **prod** on Polygon mainnet, setup production accounts (edit the scripts to change accounts):
+
+    truffle exec scripts/prod_setup.js --network=polygon_mainnet
+    truffle exec scripts/prod_add_admin.js --network polygon_mainnet
+
 The script will print the address of the different accounts, including the fiat-to-nft service account.
 
 Verify on Polyscan using the information in Freeport.json and the flattened code:

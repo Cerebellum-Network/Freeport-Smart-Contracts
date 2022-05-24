@@ -316,7 +316,7 @@ contract("Freeport", accounts => {
     });
 
 
-    it("accepts meta-transactions from the forwarder contract", async () => {
+    it.skip("accepts meta-transactions from the forwarder contract", async () => {
         const forwarder = await Forwarder.deployed();
 
         const META_TX_FORWARDER = await freeport.META_TX_FORWARDER.call();
