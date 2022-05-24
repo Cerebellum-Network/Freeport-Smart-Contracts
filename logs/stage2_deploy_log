@@ -1,3 +1,12 @@
+Deployed Freeport proxy 0x918E6Ce38Fd2ea97007A6b6F2a4Eaf2A73c9c3De
+Deployed FiatGateway proxy 0x99005372cF2699D0722A380C779Da6D1F2e5BADC
+Deployed SimpleAuction proxy 0x0D1F3d565b5bA3aBB9334C0e96b5547138b3fAc0
+Deployed NFTAttachment proxy 0xb2100D89474b584C910431900601a4095c325b8E
+Operating on TestERC20 contract 0x93E73E25F290f8A50281A801109f75CB4E8e3233
+Give the permission to execute payments to the service account 0xc2fA210a9f518EDAAceD047D7a527C8F7FcadE28
+
+----------------------------------------------------------------------------------------------------
+
 # npm run migrate --network=polygon_testnet
 
 > Compiled successfully using:
