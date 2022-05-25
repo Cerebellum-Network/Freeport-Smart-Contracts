@@ -23,9 +23,17 @@ contract Freeport is /*
     TransferFees,
     */ SimpleExchange {
 
+    /** Name of the collection for open sea.
+     */
+    string public name;
+
     /** Initialize this contract and its dependencies.
      */
     function initialize() public initializer {
         __SimpleExchange_init();
+    }
+
+    function setName(string memory newName) public onlyRole(DEFAULT_ADMIN_ROLE) {
+        name = newName;
     }
 }
