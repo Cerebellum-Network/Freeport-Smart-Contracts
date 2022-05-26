@@ -181,6 +181,32 @@ abstract contract TransferFees is JointAccounts {
         }
     }
 
+    function calculateTotalRoyalties(address from, uint256 nftId, uint256 price, uint256 amount) public view returns(uint256, address) {
+        if (nftId == CURRENCY) return (0, address(0));
+
+        uint256 cut;
+        uint256 minimum;
+        address royaltyAccount;
+
+        bool isPrimary = _isPrimaryTransfer(from, nftId);
+        
+        if (isPrimary) {
+            cut = primaryRoyaltyCuts[nftId];
+            minimum = primaryRoyaltyMinimums[nftId];
+            royaltyAccount = primaryRoyaltyAccounts[nftId];
+        } else {
+            cut = secondaryRoyaltyCuts[nftId];
+            minimum = secondaryRoyaltyMinimums[nftId];
+            royaltyAccount = secondaryRoyaltyAccounts[nftId];
+        }
+
+        uint256 perTransferFee = price * cut / BASIS_POINTS;
+        if (perTransferFee < minimum) perTransferFee = minimum;
+
+        uint256 totalFee = perTransferFee * amount;
+        return (totalFee, royaltyAccount);
+    }
+
     /** Collect the royalty due on a transfer.
      *
      * The royalty is calculated based on NFT configuration and the price. It is collected by an internal transfer of currency between "from" and the beneficiary. Return the amount collected.

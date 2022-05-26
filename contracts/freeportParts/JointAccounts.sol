@@ -4,14 +4,11 @@ import "./Issuance.sol";
 
 /**
 A Joint Account (JA) is an account such that multiple owners have a claim on their respective share of the funds.
-
 Joint Accounts support the contract currency only. They cannot be used for NFTs.
-
 An owner may be another Joint Account, or a smart contract.
 It is possible to withdraw funds through nested JAs,
 because anyone can trigger a withdrawal from a JA to its owners,
 including if that owner is itself a JA.
-
 [An implementation that distributes to all owners at once.]
 */
 abstract contract JointAccounts is Issuance {

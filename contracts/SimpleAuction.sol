@@ -2,7 +2,7 @@ pragma solidity ^0.8.0;
 
 import "./freeportParts/MetaTxContext.sol";
 import "./Freeport.sol";
-import "./freeportParts/SignatureVerifier.sol";
+import "./auction/SignatureVerifier.sol";
 import "@openzeppelin/contracts-upgradeable/token/ERC1155/utils/ERC1155HolderUpgradeable.sol";
 import "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol";
 
@@ -111,7 +111,7 @@ contract SimpleAuction is /* AccessControl, */ MetaTxContext, ERC1155HolderUpgra
         startSecuredAuction(nftId, minPrice, closeTimeSec, false);
     }
 
-    /**
+    /** Starts auction that requires authorizing signature.
      */
     function startSecuredAuction(uint256 nftId, uint256 minPrice, uint closeTimeSec, bool secured)
     public {
@@ -150,7 +150,7 @@ contract SimpleAuction is /* AccessControl, */ MetaTxContext, ERC1155HolderUpgra
         bidOnSecuredAuction(seller, nftId, price, "");
     }
 
-    /**
+    /** Accepts auction's participants bids 
      */
     function bidOnSecuredAuction(address seller, uint256 nftId, uint256 price, bytes memory signature)
     public {
@@ -159,7 +159,7 @@ contract SimpleAuction is /* AccessControl, */ MetaTxContext, ERC1155HolderUpgra
         
         if (bid.secured) {
             address verifier = recoverAddressFromSignature(buyer, nftId, signature);
-            require(hasRole(BUY_AUTHORIZER_ROLE, verifier), "Authroizer doesn't have a role");        
+            require(hasRole(BUY_AUTHORIZER_ROLE, verifier), "Authorizer doesn't have a role");        
         }
 
         // Check that the auction exists and is open.

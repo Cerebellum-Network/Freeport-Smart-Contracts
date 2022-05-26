@@ -103,5 +103,4 @@ contract("Upgrades", accounts => {
         balance = await freeport.balanceOf.call(deployer, nftId);
         expect(+balance).equal(1); // after auction.
     });
-
 });

@@ -1,6 +1,6 @@
 pragma solidity ^0.8.0;
 
-import "./freeportParts/SimpleExchange.sol";
+import "./freeportParts/TransferFees.sol";
 
 /** Main contract, including all components.
 
@@ -21,11 +21,11 @@ contract Freeport is /*
     Issuance,
     JointAccounts,
     TransferFees,
-    */ SimpleExchange {
+    */ TransferFees {
 
     /** Initialize this contract and its dependencies.
      */
     function initialize() public initializer {
-        __SimpleExchange_init();
+        __TransferFees_init();
     }
 }
