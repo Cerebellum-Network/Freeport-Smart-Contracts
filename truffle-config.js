@@ -48,7 +48,7 @@ module.exports = {
       gasPrice: 1e9,
     },
     //polygon testnet
-    polygon_testnet: {
+    mumbai: {
       provider: () => new HDWalletProvider({
         mnemonic: {
           phrase: mnemonic
@@ -70,7 +70,7 @@ module.exports = {
       gasPrice: 4e9,
     },
     //polygon mainnet
-    polygon_mainnet: {
+    matic: {
       provider: () => new HDWalletProvider({
         mnemonic: {
           phrase: mnemonic

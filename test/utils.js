@@ -20,7 +20,7 @@ function typedData(addr, nftId) {
       ]
     },
     value: {
-      buyer: `'${addr}'`,
+      buyer: `${addr}`,
       nftId: nftId    
     }
   }
