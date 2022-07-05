@@ -6,7 +6,7 @@
 
 // File: @openzeppelin/contracts/GSN/Context.sol
 
-pragma solidity ^0.6.0;
+pragma solidity ^0.8.0;
 
 /*
  * @dev Provides information about the current execution context, including the
@@ -18,9 +18,9 @@ pragma solidity ^0.6.0;
  *
  * This contract is only required for intermediate, library-like contracts.
  */
-abstract contract Context {
+abstract contract XContext {
     function _msgSender() internal virtual view returns (address payable) {
-        return msg.sender;
+        return payable(msg.sender);
     }
 
     function _msgData() internal virtual view returns (bytes memory) {
@@ -31,12 +31,12 @@ abstract contract Context {
 
 // File: @openzeppelin/contracts/token/ERC20/IERC20.sol
 
-pragma solidity ^0.6.0;
+pragma solidity ^0.8.0;
 
 /**
  * @dev Interface of the ERC20 standard as defined in the EIP.
  */
-interface IERC20 {
+interface XIERC20 {
     /**
      * @dev Returns the amount of tokens in existence.
      */
@@ -122,7 +122,7 @@ interface IERC20 {
 
 // File: @openzeppelin/contracts/math/SafeMath.sol
 
-pragma solidity ^0.6.0;
+pragma solidity ^0.8.0;
 
 /**
  * @dev Wrappers over Solidity's arithmetic operations with added overflow
@@ -294,7 +294,7 @@ library SafeMath {
 
 // File: @openzeppelin/contracts/utils/Address.sol
 
-pragma solidity ^0.6.2;
+pragma solidity ^0.8.0;
 
 /**
  * @dev Collection of functions related to the address type
@@ -476,7 +476,7 @@ library Address {
 
 // File: contracts/lib/IERC20Internal.sol
 
-pragma solidity 0.6.12;
+pragma solidity ^0.8.0;
 
 abstract contract IERC20Internal {
     function _transfer(
@@ -539,7 +539,7 @@ abstract contract IERC20Internal {
  * SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-pragma solidity 0.6.12;
+pragma solidity ^0.8.0;
 
 /**
  * @dev openzeppelin Implementation of the {IERC20} interface.
@@ -574,7 +574,7 @@ pragma solidity 0.6.12;
  * - Conform to IERC20Internal interface
  * - Changed visibility of public functions to external
  */
-contract ERC20 is Context, IERC20, IERC20Internal {
+contract XERC20 is XContext, XIERC20, IERC20Internal {
     using SafeMath for uint256;
     using Address for address;
 
@@ -952,7 +952,7 @@ contract ERC20 is Context, IERC20, IERC20Internal {
 
 // File: @openzeppelin/contracts/utils/EnumerableSet.sol
 
-pragma solidity ^0.6.0;
+pragma solidity ^0.8.0;
 
 /**
  * @dev Library for managing
@@ -1111,7 +1111,7 @@ library EnumerableSet {
     internal
     returns (bool)
     {
-        return _add(set._inner, bytes32(uint256(value)));
+        return _add(set._inner, bytes32(uint256(uint160(value))));
     }
 
     /**
@@ -1124,7 +1124,7 @@ library EnumerableSet {
     internal
     returns (bool)
     {
-        return _remove(set._inner, bytes32(uint256(value)));
+        return _remove(set._inner, bytes32(uint256(uint160(value))));
     }
 
     /**
@@ -1135,7 +1135,7 @@ library EnumerableSet {
     view
     returns (bool)
     {
-        return _contains(set._inner, bytes32(uint256(value)));
+        return _contains(set._inner, bytes32(uint256(uint160(value))));
     }
 
     /**
@@ -1160,7 +1160,7 @@ library EnumerableSet {
     view
     returns (address)
     {
-        return address(uint256(_at(set._inner, index)));
+        return address(uint160(uint256(_at(set._inner, index))));
     }
 
     // UintSet
@@ -1231,7 +1231,7 @@ library EnumerableSet {
 
 // File: @openzeppelin/contracts/access/AccessControl.sol
 
-pragma solidity ^0.6.0;
+pragma solidity ^0.8.0;
 
 /**
  * @dev Contract module that allows children to implement role-based access
@@ -1268,7 +1268,7 @@ pragma solidity ^0.6.0;
  * grant and revoke this role. Extra precautions should be taken to secure
  * accounts that have been granted it.
  */
-abstract contract AccessControl is Context {
+abstract contract XAccessControl is XContext {
     using EnumerableSet for EnumerableSet.AddressSet;
     using Address for address;
 
@@ -1470,9 +1470,9 @@ abstract contract AccessControl is Context {
 
 // File: contracts/lib/AccessControlMixin.sol
 
-pragma solidity 0.6.12;
+pragma solidity ^0.8.0;
 
-contract AccessControlMixin is AccessControl {
+contract AccessControlMixin is XAccessControl {
     string private _revertMsg;
 
     function _setupContractId(string memory contractId) internal {
@@ -1489,7 +1489,7 @@ contract AccessControlMixin is AccessControl {
 
 // File: contracts/lib/IChildToken.sol
 
-pragma solidity 0.6.12;
+pragma solidity ^0.8.0;
 
 interface IChildToken {
     function deposit(address user, bytes calldata depositData) external;
@@ -1497,9 +1497,9 @@ interface IChildToken {
 
 // File: contracts/lib/Initializable.sol
 
-pragma solidity 0.6.12;
+pragma solidity ^0.8.0;
 
-contract Initializable {
+contract XInitializable {
     bool private _initialized = false;
 
     modifier initializer() {
@@ -1539,7 +1539,7 @@ contract Initializable {
  * SOFTWARE.
  */
 
-pragma solidity 0.6.12;
+pragma solidity ^0.8.0;
 
 /**
  * @title ECRecover
@@ -1614,13 +1614,13 @@ library ECRecover {
  * SOFTWARE.
  */
 
-pragma solidity 0.6.12;
+pragma solidity ^0.8.0;
 
 /**
  * @title EIP712
  * @notice A library that provides EIP712 helper functions
  */
-library EIP712 {
+library XEIP712 {
     // keccak256("EIP712Domain(string name,string version,address verifyingContract,bytes32 salt)")
     bytes32
     public constant EIP712_DOMAIN_TYPEHASH = 0x36c25de3e541d5d970f66e4210d728721220fff5c077cc6cd008b3a0c62adab7;
@@ -1682,7 +1682,7 @@ library EIP712 {
 
 // File: contracts/lib/EIP712Domain.sol
 
-pragma solidity 0.6.12;
+pragma solidity ^0.8.0;
 
 abstract contract EIP712Domain {
     bytes32 public DOMAIN_SEPARATOR;
@@ -1690,13 +1690,13 @@ abstract contract EIP712Domain {
     function _setDomainSeparator(string memory name, string memory version)
     internal
     {
-        DOMAIN_SEPARATOR = EIP712.makeDomainSeparator(name, version);
+        DOMAIN_SEPARATOR = XEIP712.makeDomainSeparator(name, version);
     }
 }
 
 // File: contracts/lib/Nonces.sol
 
-pragma solidity 0.6.12;
+pragma solidity ^0.8.0;
 
 abstract contract Nonces {
     mapping(address => uint256) internal _nonces;
@@ -1713,7 +1713,7 @@ abstract contract Nonces {
 
 // File: contracts/lib/NativeMetaTransaction.sol
 
-pragma solidity 0.6.12;
+pragma solidity ^0.8.0;
 
 abstract contract NativeMetaTransaction is EIP712Domain, Nonces {
     // keccak256("MetaTransaction(uint256 nonce,address from,bytes functionSignature)")
@@ -1757,7 +1757,7 @@ abstract contract NativeMetaTransaction is EIP712Domain, Nonces {
 
         emit MetaTransactionExecuted(
             userAddress,
-            msg.sender,
+            payable(msg.sender),
             functionSignature
         );
 
@@ -1788,13 +1788,13 @@ abstract contract NativeMetaTransaction is EIP712Domain, Nonces {
         );
 
         return
-        EIP712.recover(DOMAIN_SEPARATOR, sigV, sigR, sigS, data) == signer;
+        XEIP712.recover(DOMAIN_SEPARATOR, sigV, sigR, sigS, data) == signer;
     }
 }
 
 // File: contracts/lib/ContextMixin.sol
 
-pragma solidity 0.6.12;
+pragma solidity ^0.8.0;
 
 abstract contract ContextMixin {
     function msgSender() internal view returns (address payable sender) {
@@ -1809,7 +1809,7 @@ abstract contract ContextMixin {
                 )
             }
         } else {
-            sender = msg.sender;
+            sender = payable(msg.sender);
         }
         return sender;
     }
@@ -1839,7 +1839,7 @@ abstract contract ContextMixin {
  * SOFTWARE.
  */
 
-pragma solidity 0.6.12;
+pragma solidity ^0.8.0;
 
 abstract contract Permit is IERC20Internal, EIP712Domain, Nonces {
     // = keccak256("Permit(address owner,address spender,uint256 value,uint256 nonce,uint256 deadline)")
@@ -1866,7 +1866,7 @@ abstract contract Permit is IERC20Internal, EIP712Domain, Nonces {
         bytes32 s
     ) internal {
         require(msg.sender != address(this), "Caller is this contract");
-        require(deadline >= now, "Permit: permit is expired");
+        require(deadline >= block.timestamp, "Permit: permit is expired");
 
         bytes memory data = abi.encode(
             PERMIT_TYPEHASH,
@@ -1877,7 +1877,7 @@ abstract contract Permit is IERC20Internal, EIP712Domain, Nonces {
             deadline
         );
         require(
-            EIP712.recover(DOMAIN_SEPARATOR, v, r, s, data) == owner,
+            XEIP712.recover(DOMAIN_SEPARATOR, v, r, s, data) == owner,
             "Permit: invalid signature"
         );
 
@@ -1909,7 +1909,7 @@ abstract contract Permit is IERC20Internal, EIP712Domain, Nonces {
  * SOFTWARE.
  */
 
-pragma solidity 0.6.12;
+pragma solidity ^0.8.0;
 
 /**
  * @title Gas Abstraction
@@ -1998,7 +1998,7 @@ abstract contract GasAbstraction is IERC20Internal, EIP712Domain {
             nonce
         );
         require(
-            EIP712.recover(DOMAIN_SEPARATOR, v, r, s, data) == from,
+            XEIP712.recover(DOMAIN_SEPARATOR, v, r, s, data) == from,
             "GasAbstraction: invalid signature"
         );
 
@@ -2042,7 +2042,7 @@ abstract contract GasAbstraction is IERC20Internal, EIP712Domain {
             nonce
         );
         require(
-            EIP712.recover(DOMAIN_SEPARATOR, v, r, s, data) == owner,
+            XEIP712.recover(DOMAIN_SEPARATOR, v, r, s, data) == owner,
             "GasAbstraction: invalid signature"
         );
 
@@ -2086,7 +2086,7 @@ abstract contract GasAbstraction is IERC20Internal, EIP712Domain {
             nonce
         );
         require(
-            EIP712.recover(DOMAIN_SEPARATOR, v, r, s, data) == owner,
+            XEIP712.recover(DOMAIN_SEPARATOR, v, r, s, data) == owner,
             "GasAbstraction: invalid signature"
         );
 
@@ -2129,7 +2129,7 @@ abstract contract GasAbstraction is IERC20Internal, EIP712Domain {
             nonce
         );
         require(
-            EIP712.recover(DOMAIN_SEPARATOR, v, r, s, data) == owner,
+            XEIP712.recover(DOMAIN_SEPARATOR, v, r, s, data) == owner,
             "GasAbstraction: invalid signature"
         );
 
@@ -2160,7 +2160,7 @@ abstract contract GasAbstraction is IERC20Internal, EIP712Domain {
             nonce
         );
         require(
-            EIP712.recover(DOMAIN_SEPARATOR, v, r, s, data) == authorizer,
+            XEIP712.recover(DOMAIN_SEPARATOR, v, r, s, data) == authorizer,
             "GasAbstraction: invalid signature"
         );
 
@@ -2198,10 +2198,10 @@ abstract contract GasAbstraction is IERC20Internal, EIP712Domain {
         uint256 validBefore
     ) internal view {
         require(
-            now > validAfter,
+            block.timestamp > validAfter,
             "GasAbstraction: authorization is not yet valid"
         );
-        require(now < validBefore, "GasAbstraction: authorization is expired");
+        require(block.timestamp < validBefore, "GasAbstraction: authorization is expired");
         _requireUnusedAuthorization(authorizer, nonce);
     }
 
@@ -2220,7 +2220,7 @@ abstract contract GasAbstraction is IERC20Internal, EIP712Domain {
 
 // File: contracts/lib/MaticGasAbstraction.sol
 
-pragma solidity 0.6.12;
+pragma solidity ^0.8.0;
 
 abstract contract MaticGasAbstraction is GasAbstraction {
     // keccak256("WithdrawWithAuthorization(address owner,uint256 value,uint256 validAfter,uint256 validBefore,bytes32 nonce)")
@@ -2248,7 +2248,7 @@ abstract contract MaticGasAbstraction is GasAbstraction {
             nonce
         );
         require(
-            EIP712.recover(DOMAIN_SEPARATOR, v, r, s, data) == owner,
+            XEIP712.recover(DOMAIN_SEPARATOR, v, r, s, data) == owner,
             "GasAbstraction: invalid signature"
         );
 
@@ -2259,13 +2259,13 @@ abstract contract MaticGasAbstraction is GasAbstraction {
 
 // File: contracts/UChildERC20.sol
 
-pragma solidity 0.6.12;
+pragma solidity ^0.8.0;
 
-contract UChildERC20 is
-ERC20,
+contract TestUSDC is
+XERC20,
 IChildToken,
 AccessControlMixin,
-Initializable,
+XInitializable,
 NativeMetaTransaction,
 ContextMixin,
 Permit,
@@ -2274,7 +2274,7 @@ MaticGasAbstraction
     bytes32 public constant DEPOSITOR_ROLE = keccak256("DEPOSITOR_ROLE");
     string public constant EIP712_VERSION = "1";
 
-    constructor() public ERC20("", "") {}
+    constructor() public XERC20("", "") {}
 
     /**
      * @notice Initialize the contract after it has been proxified
@@ -2564,7 +2564,7 @@ MaticGasAbstraction
 
 // File: contracts/lib/Administrable/Blacklistable.sol
 
-pragma solidity 0.6.12;
+pragma solidity ^0.8.0;
 
 abstract contract Blacklistable is AccessControlMixin {
     bytes32 public constant BLACKLISTER_ROLE = keccak256("BLACKLISTER_ROLE");
@@ -2630,7 +2630,7 @@ abstract contract Blacklistable is AccessControlMixin {
 
 // File: contracts/lib/Administrable/Pausable.sol
 
-pragma solidity 0.6.12;
+pragma solidity ^0.8.0;
 
 abstract contract Pausable is AccessControlMixin {
     bytes32 public constant PAUSER_ROLE = keccak256("PAUSER_ROLE");
@@ -2690,7 +2690,7 @@ abstract contract Pausable is AccessControlMixin {
 
 // File: @openzeppelin/contracts/token/ERC20/SafeERC20.sol
 
-pragma solidity ^0.6.0;
+pragma solidity ^0.8.0;
 
 /**
  * @title SafeERC20
@@ -2706,7 +2706,7 @@ library SafeERC20 {
     using Address for address;
 
     function safeTransfer(
-        IERC20 token,
+        XIERC20 token,
         address to,
         uint256 value
     ) internal {
@@ -2717,7 +2717,7 @@ library SafeERC20 {
     }
 
     function safeTransferFrom(
-        IERC20 token,
+        XIERC20 token,
         address from,
         address to,
         uint256 value
@@ -2736,7 +2736,7 @@ library SafeERC20 {
      * {safeDecreaseAllowance} instead.
      */
     function safeApprove(
-        IERC20 token,
+        XIERC20 token,
         address spender,
         uint256 value
     ) internal {
@@ -2755,7 +2755,7 @@ library SafeERC20 {
     }
 
     function safeIncreaseAllowance(
-        IERC20 token,
+        XIERC20 token,
         address spender,
         uint256 value
     ) internal {
@@ -2773,7 +2773,7 @@ library SafeERC20 {
     }
 
     function safeDecreaseAllowance(
-        IERC20 token,
+        XIERC20 token,
         address spender,
         uint256 value
     ) internal {
@@ -2797,7 +2797,7 @@ library SafeERC20 {
      * @param token The token targeted by the call.
      * @param data The call data (encoded using abi.encode or one of its variants).
      */
-    function _callOptionalReturn(IERC20 token, bytes memory data) private {
+    function _callOptionalReturn(XIERC20 token, bytes memory data) private {
         // We need to perform a low level call here, to bypass Solidity's return data size checking mechanism, since
         // we're implementing it ourselves. We use {Address.functionCall} to perform this call, which verifies that
         // the target address contains contract code and also asserts for success in the low-level call.
@@ -2819,10 +2819,10 @@ library SafeERC20 {
 
 // File: contracts/lib/Administrable/Rescuable.sol
 
-pragma solidity 0.6.12;
+pragma solidity ^0.8.0;
 
 abstract contract Rescuable is AccessControlMixin {
-    using SafeERC20 for IERC20;
+    using SafeERC20 for XIERC20;
 
     bytes32 public constant RESCUER_ROLE = keccak256("RESCUER_ROLE");
 
@@ -2850,7 +2850,7 @@ abstract contract Rescuable is AccessControlMixin {
      * @param amount    Amount to withdraw
      */
     function rescueERC20(
-        IERC20 tokenContract,
+        XIERC20 tokenContract,
         address to,
         uint256 amount
     ) external only(RESCUER_ROLE) {
@@ -2860,17 +2860,17 @@ abstract contract Rescuable is AccessControlMixin {
 
 // File: contracts/UChildAdministrableERC20.sol
 
-pragma solidity 0.6.12;
+pragma solidity ^0.8.0;
 
 contract UChildAdministrableERC20 is
-UChildERC20,
+TestUSDC,
 Blacklistable,
 Pausable,
 Rescuable
 {
     function _msgSender()
     internal
-    override(Context, UChildERC20)
+    override(XContext, TestUSDC)
     view
     returns (address payable sender)
     {
