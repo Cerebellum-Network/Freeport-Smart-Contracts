@@ -8,18 +8,22 @@ import "./NFTAttachment.sol";
  *
  */
 contract Collection is BaseNFT {
-    function initialize(address admin, address minter, string memory _name, Freeport _freeport, NFTAttachment _nftAttachment) public initializer {
+    function initialize(address admin, address minter, string memory _name, string memory _uri, string memory __contractURI, Freeport _freeport, NFTAttachment _nftAttachment) public initializer {
         __BaseNFT_init();
+        _setURI(_uri);
         _setupRole(DEFAULT_ADMIN_ROLE, admin);
         _setupRole(COLLECTION_MANAGER_ROLE, minter);
 
         name = _name;
+        _contractURI = __contractURI;
         freeport = Freeport(_freeport);
         nftAttachment = NFTAttachment(_nftAttachment);
     }
 
     // Name of the collection for open sea.
     string public name;
+    // Contract metadata URI of the collection.
+    string private _contractURI;
     /** Collection manager role.
      *  Used for configuring the amounts and beneficiaries of royalties on primary and secondary transfers of this NFT.
      */
@@ -32,6 +36,10 @@ contract Collection is BaseNFT {
      * This is used to generate unique NFT IDs.
      */
     uint32 public idCounter;
+
+    function contractURI() public view returns (string memory) {
+        return _contractURI;
+    }
 
     /// Issuer interface
     /** Issue NFT of a new type, and return its ID.
@@ -116,16 +124,8 @@ contract Collection is BaseNFT {
      */
     function minterAttachToNFT(uint32 innerNftId, bytes calldata attachment)
     public {
+        require(hasRole(COLLECTION_MANAGER_ROLE, _msgSender()), "only manager");
         nftAttachment.minterAttachToNFT(getGlobalNftId(innerNftId), attachment);
-    }
-
-    /** Attach data `attachment` to the collection NFT with specific inner NFT id, as a current owner of an NFT of this type.
-     *
-     * This works for NFTs in the ERC-1155 or Freeport standards.
-     */
-    function ownerAttachToNFT(uint32 innerNftId, bytes calldata attachment)
-    public {
-        nftAttachment.ownerAttachToNFT(getGlobalNftId(innerNftId), attachment);
     }
 
     /** Attach data `attachment` to the collection NFT with specific inner NFT id.

@@ -5,11 +5,9 @@ const log = console.log;
 
 module.exports = async function (done) {
 
-    // A fixed account for tests.
-    let serviceAccount = "0xc0DAe4aE8d21250a830B2A79314c9D43cAeab145";
-
     const signer = await getSigner();
     let accounts = await web3.eth.getAccounts();
+    log(`Prerequisites: \n  Some matic on ${accounts[0]}, ${accounts[2]}`);
     let admin = accounts[0];
     let collectionFactory = await CollectionFactory.deployed();
     log("Operating on CollectionFactory contract", collectionFactory.address);
@@ -23,15 +21,20 @@ module.exports = async function (done) {
     log(`Role COLLECTION_CREATOR_ROLE is granted to ${collectionCreator} address`);
 
     const collectionManager = accounts[2]
-    await collectionFactory.createCollection(collectionManager, "test collection5", {from: collectionCreator});
+    await collectionFactory.createCollection(collectionManager,
+        "Freeport collection sample",
+        "http://freeport.anton.s3-website.eu-central-1.amazonaws.com/{id}.json",
+        "https://s3.eu-central-1.amazonaws.com/freeport.anton/metadata.json",
+        {from: collectionCreator});
     const newCollectionAddr = await collectionFactory.getPastEvents('CollectionCreated').then(events => events.pop().returnValues.addr)
-    log(`New collection has been created at ${newCollectionAddr} address`);
+    log(`New collection has been created at ${newCollectionAddr} address with Collection Manager at ${collectionManager}`);
 
-    const collection = await Collection.attach(newCollectionAddr)
-    log(`Minting NFT on ${collection} collection...`);
-    const oneNftId = await collection.issueNft.call(3, "", {from: collectionManager})
-    await collection.issueNft(3, "", {from: collectionManager})
-    log(`Minted NFT with global nft id = ${oneNftId}`);
+    const collection = await Collection.at(newCollectionAddr)
+    log(`Minting NFT on ${collection.address} collection...`);
+    const oneNftId = await collection.issueNft.call(3, "0x", {from: collectionManager})
+    await collection.issueNft(3, "0x", {from: collectionManager})
+    log(`Minted NFT with global nft id = ${web3.utils.toHex(oneNftId)}`);
+
 
     done();
 };

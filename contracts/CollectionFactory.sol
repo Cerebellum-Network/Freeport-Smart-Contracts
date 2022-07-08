@@ -41,13 +41,13 @@ contract CollectionFactory is MetaTxContext  {
      *
      *  Emits a {CollectionCreated} event.
      */
-    function createCollection(address creator, string memory name) public returns (address) {
+    function createCollection(address creator, string memory name, string memory uriTpl, string memory contractURI) public returns (address) {
         require(hasRole(COLLECTION_CREATOR_ROLE, _msgSender()), "only collection creator");
         require(creator != address(0), "zero address creator");
         require(nameToCollection[name] == address(0), "collection name already exists");
 
         Collection collection = new Collection();
-        collection.initialize(address(this), creator, name, freeport, nftAttachment);
+        collection.initialize(address(this), creator, name, uriTpl, contractURI, freeport, nftAttachment);
 
         addressProxies[collectionCounter] = address(collection);
         collectionCounter = collectionCounter + 1;
