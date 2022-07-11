@@ -10,7 +10,7 @@ import "./NFTAttachment.sol";
 contract Collection is BaseNFT {
     function initialize(address admin, address minter, string memory _name, string memory _uri, string memory __contractURI, Freeport _freeport, NFTAttachment _nftAttachment) public initializer {
         __BaseNFT_init();
-        _setURI(_uri);
+        if (bytes(_uri).length == 0) _setURI(_uri);
         _setupRole(DEFAULT_ADMIN_ROLE, admin);
         _setupRole(COLLECTION_MANAGER_ROLE, minter);
 
@@ -122,17 +122,17 @@ contract Collection is BaseNFT {
      *
      * This only works for NFT IDs in the Freeport format.
      */
-    function minterAttachToNFT(uint32 innerNftId, bytes calldata attachment)
+    function minterAttachToNFT(uint256 nftId, bytes calldata attachment)
     public {
         require(hasRole(COLLECTION_MANAGER_ROLE, _msgSender()), "only manager");
-        nftAttachment.minterAttachToNFT(getGlobalNftId(innerNftId), attachment);
+        nftAttachment.minterAttachToNFT(nftId, attachment);
     }
 
     /** Attach data `attachment` to the collection NFT with specific inner NFT id.
      */
-    function anonymAttachToNFT(uint32 innerNftId, bytes calldata attachment)
+    function anonymAttachToNFT(uint256 nftId, bytes calldata attachment)
     public {
-        nftAttachment.anonymAttachToNFT(getGlobalNftId(innerNftId), attachment);
+        nftAttachment.anonymAttachToNFT(nftId, attachment);
     }
     /// NFT attachment interface
 
