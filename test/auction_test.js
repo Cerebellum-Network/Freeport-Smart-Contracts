@@ -1,6 +1,6 @@
 const Freeport = artifacts.require("./Freeport.sol");
 const SimpleAuction = artifacts.require("SimpleAuction");
-const TestERC20 = artifacts.require("TestERC20");
+const USDC = artifacts.require("USDC");
 const log = console.log;
 const {deployProxy} = require('@openzeppelin/truffle-upgrades');
 const {expectRevert, time} = require('@openzeppelin/test-helpers');
@@ -17,14 +17,19 @@ contract("SimpleAuction", accounts => {
         let erc20;
         if (freeport) {
             let erc20address = await freeport.currencyContract.call();
-            erc20 = await TestERC20.at(erc20address);
+            erc20 = await USDC.at(erc20address);
         } else {
             freeport = await deployProxy(Freeport, [], { kind: "uups" });
-            erc20 = await TestERC20.new();
+            erc20 = await USDC.new();
             await freeport.setERC20(erc20.address);
         }
+
+        let mintUSDC = async (account, amount) => {
+            let amountEncoded = web3.eth.abi.encodeParameter("uint256", amount);
+            await erc20.deposit(account, amountEncoded);
+        };
         
-        await erc20.mint(deployer, aLot);
+        await mintUSDC(deployer, aLot);
         await erc20.approve(freeport.address, aLot);
         await freeport.deposit(aLot);
 
@@ -37,13 +42,14 @@ contract("SimpleAuction", accounts => {
             await freeport.withdraw(balance, {from: account});
         };
 
-        return {freeport, erc20, deposit, withdraw};
+        return {freeport, erc20, deposit, withdraw, mintUSDC};
     };
 
     let freeport;
     let erc20;
     let deposit;
     let withdraw;
+    let mintUSDC;
 
     before(async () => {
         let freeportOfMigrations = await Freeport.deployed();
@@ -52,6 +58,7 @@ contract("SimpleAuction", accounts => {
         erc20 = x.erc20;
         deposit = x.deposit;
         withdraw = x.withdraw;
+        mintUSDC = x.mintUSDC;
     });
 
 
@@ -62,8 +69,8 @@ contract("SimpleAuction", accounts => {
         
         // Give some initial tokens to the buyers.
         let someMoney = 1000;
-        await erc20.mint(buyerBob, someMoney * UNIT);
-        await erc20.mint(buyerBill, someMoney * UNIT);
+        await mintUSDC(buyerBob, someMoney * UNIT);
+        await mintUSDC(buyerBill, someMoney * UNIT);
 
         let nftSupply = 10;
         let nftId = await freeport.issue.call(nftSupply, "0x", { from: issuer });

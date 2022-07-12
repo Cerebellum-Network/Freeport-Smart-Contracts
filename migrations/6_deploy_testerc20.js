@@ -11,8 +11,8 @@ module.exports = async function (deployer, network, accounts) {
         await deployer.deploy(USDC);
         let usdc = await USDC.deployed();
         await usdc.initialize("USD Coin (PoS)", "F_T_USDC", 6, admin);
-        let amountEncoded = web3.eth.abi.encodeParameter("uint256", 1e6 * 1e6);
-        await usdc.deposit(admin, amountEncoded);
+        //let amountEncoded = web3.eth.abi.encodeParameter("uint256", 1e6 * 1e6);
+        //await usdc.deposit(admin, amountEncoded);
         log("Deployed a test USDC contract", usdc.address);
     }
 

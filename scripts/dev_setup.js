@@ -1,5 +1,5 @@
 const Freeport = artifacts.require("Freeport");
-const TestERC20 = artifacts.require("TestERC20");
+const USDC = artifacts.require("USDC");
 const FiatGateway = artifacts.require("FiatGateway");
 const SimpleAuction = artifacts.require("SimpleAuction");
 const {getSigner} = require("../test/utils");
@@ -19,15 +19,20 @@ module.exports = async function (done) {
     let accounts = await web3.eth.getAccounts();
     let admin = accounts[0];
     let freeport = await Freeport.at("0x702BA959B5542B2Bf88a1C5924F73Ed97482c64B");
-    let erc20 = await TestERC20.at("0x4e5a86E128f8Fb652169f6652e2Cd17aAe409e96");
+    let erc20 = await USDC.at("0x5517c3c3fe3688AEF2B5BBEc2B4D3b523B9E8144");
     let gateway = await FiatGateway.at("0x106Bf3D61952faE9279B08bdcB2e548316E0C1Ae");
     let auction = await SimpleAuction.at("0x7e4FCB28B5794dBf729E860f0abe97C3412E62e4");
     log("Operating on Freeport contract", freeport.address);
-    log("Operating on TestERC20 contract", erc20.address);
+    log("Operating on USDC contract", erc20.address);
     log("Operating on FiatGateway contract", gateway.address);
     log("Operating on SimpleAuction contract", auction.address);
     log("From admin account", admin);
     log("With Authorizer account", authorizer.address);
+
+    let mintUSDC = async (account, amount) => {
+        let amountEncoded = web3.eth.abi.encodeParameter("uint256", amount);
+        await erc20.deposit(account, amountEncoded);
+    };
     
     log("Set an exchange rate of 1:1 (0.01 with 6 decimals of ERC20 for $0.01)");
     await gateway.setExchangeRate(0.01e6);
@@ -40,7 +45,7 @@ module.exports = async function (done) {
     const BUY_AUTHORIZER_ROLE = await auction.BUY_AUTHORIZER_ROLE.call();
     await auction.grantRole(BUY_AUTHORIZER_ROLE, authorizer);
 
-    await erc20.mint(gateway.address, tenM);
+    await mintUSDC(gateway.address, tenM);
     log("Sent 10M of currency to FiatGateway");
 
     let devAccounts = [
@@ -52,7 +57,7 @@ module.exports = async function (done) {
     ];
 
     for (let devAccount of devAccounts) {
-        await erc20.mint(devAccount, oneM);
+        await mintUSDC(devAccount, oneM);
         log("Sent 1M of currency to", devAccount);
     }
 

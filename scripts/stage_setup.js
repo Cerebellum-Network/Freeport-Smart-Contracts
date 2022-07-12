@@ -1,5 +1,5 @@
 const Freeport = artifacts.require("Freeport");
-const TestERC20 = artifacts.require("TestERC20");
+const USDC = artifacts.require("USDC");
 const FiatGateway = artifacts.require("FiatGateway");
 const SimpleAuction = artifacts.require("SimpleAuction");
 const {getSigner} = require("../test/utils");
@@ -17,12 +17,17 @@ module.exports = async function (done) {
     let accounts = await web3.eth.getAccounts();
     let admin = accounts[0];
     let freeport = await Freeport.deployed();
-    let erc20 = await TestERC20.deployed();
+    let erc20 = await USDC.deployed();
     let gateway = await FiatGateway.deployed();
     log("Operating on Freeport contract", freeport.address);
-    log("Operating on TestERC20 contract", erc20.address);
+    log("Operating on USDC contract", erc20.address);
     log("Operating on FiatGateway contract", gateway.address);
     log("From admin account", admin);
+
+    let mintUSDC = async (account, amount) => {
+        let amountEncoded = web3.eth.abi.encodeParameter("uint256", amount);
+        await erc20.deposit(account, amountEncoded);
+    };
 
     log("Set an exchange rate of 1:1 (0.01 with 6 decimals of ERC20 for $0.01)");
     await gateway.setExchangeRate(0.01e6);
@@ -33,7 +38,7 @@ module.exports = async function (done) {
 
     // In staging, mint some TEST-USDC to dev accounts.
 
-    await erc20.mint(gateway.address, tenM);
+    await mintUSDC(gateway.address, tenM);
     log("Sent 10M of currency to FiatGateway");
 
     let devAccounts = [
@@ -45,7 +50,7 @@ module.exports = async function (done) {
     ];
 
     for (let devAccount of devAccounts) {
-        await erc20.mint(devAccount, oneM);
+        await mintUSDC(devAccount, oneM);
         log("Sent 1M of currency to", devAccount);
     }
 
