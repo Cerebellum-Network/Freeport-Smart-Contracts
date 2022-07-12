@@ -2261,7 +2261,7 @@ abstract contract MaticGasAbstraction is GasAbstraction {
 
 pragma solidity ^0.8.0;
 
-contract TestUSDC is
+contract USDC is
 XERC20,
 IChildToken,
 AccessControlMixin,
@@ -2863,14 +2863,14 @@ abstract contract Rescuable is AccessControlMixin {
 pragma solidity ^0.8.0;
 
 contract UChildAdministrableERC20 is
-TestUSDC,
+USDC,
 Blacklistable,
 Pausable,
 Rescuable
 {
     function _msgSender()
     internal
-    override(XContext, TestUSDC)
+    override(XContext, USDC)
     view
     returns (address payable sender)
     {
