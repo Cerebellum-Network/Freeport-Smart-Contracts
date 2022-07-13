@@ -41,6 +41,10 @@ contract CollectionFactory is MetaTxContext  {
      */
     event CollectionCreated(string name, address indexed addr);
 
+    /** An event emitted when NFT is minted on behalf of factory.
+     */
+    event MintOnBehalf(address _operator, address _collection, address _holder, uint256 _id, uint64 _amount);
+
     /** Deploying a new user collection.
      *
      *  Emits a {CollectionCreated} event.
@@ -70,9 +74,11 @@ contract CollectionFactory is MetaTxContext  {
         mintAllowance[collection][minter] = true;
     }
 
-    function mintOnBehalf(address collection, uint64 supply, bytes memory data) external {
+    function mintOnBehalf(address collection, address holder, uint64 supply, bytes memory data) external {
         require(hasRole(COLLECTION_CREATOR_ROLE, _msgSender()), "only collection creator");
         address operator = _msgSender();
-        Collection(collection).issueOnBehalfOf(operator, supply, data);
+        uint256 nftID = Collection(collection).issueOnBehalfOf(holder, supply, data);
+
+        emit MintOnBehalf(operator, collection, holder, nftID, supply);
     }
 }
