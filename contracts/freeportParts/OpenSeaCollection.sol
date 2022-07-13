@@ -3,7 +3,7 @@ pragma solidity ^0.8.0;
 /** Open sea compatible NFT collection.
  */
 abstract contract OpenSeaCollection {
-    function __OpenSeaCollection_init(string _name, string __contractURI) internal initializer {
+    function __OpenSeaCollection_init(string memory _name, string memory __contractURI) internal {
         name = _name;
         _contractURI = __contractURI;
     }

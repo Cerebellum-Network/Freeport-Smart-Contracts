@@ -5,7 +5,7 @@ import "../../NFTAttachment.sol";
 /** Simply delegates calls to NFTAttachment SC.
 */
 abstract contract NFTAttachmentDelegator {
-    function __NFTAttachmentDelegator_init(address _nftAttachment) internal {
+    function __NFTAttachmentDelegator_init(NFTAttachment _nftAttachment) internal {
         nftAttachment = _nftAttachment;
     }
 

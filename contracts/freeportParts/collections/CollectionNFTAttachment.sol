@@ -6,7 +6,7 @@ import "../access_control/WithCollectionManager.sol";
 /** NFT attachment for Collection.
 */
 abstract contract CollectionNFTAttachment is NFTAttachmentDelegator, WithCollectionManager {
-    function __CollectionNFTAttachment_init(address _nftAttachment) internal initializer {
+    function __CollectionNFTAttachment_init(NFTAttachment _nftAttachment) internal initializer {
         __NFTAttachmentDelegator_init(_nftAttachment);
     }
 

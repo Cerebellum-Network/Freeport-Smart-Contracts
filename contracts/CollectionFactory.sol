@@ -31,6 +31,10 @@ contract CollectionFactory is MetaTxContext  {
      */
     bytes32 public constant COLLECTION_CREATOR_ROLE = keccak256("COLLECTION_CREATOR_ROLE");
 
+    /** Allowance mapping for mint on behalf for each Collection.
+     */
+    mapping (address => mapping(address => bool)) mintAllowance;
+
     /** An event emitted when new collection is created.
      *
      * Contains unique name of collection and its address.
@@ -41,13 +45,16 @@ contract CollectionFactory is MetaTxContext  {
      *
      *  Emits a {CollectionCreated} event.
      */
-    function createCollection(address creator, string memory name, string memory uriTpl, string memory contractURI) public returns (address) {
+    function createCollection(address collectionManager, string memory name, string memory uriTpl, string memory contractURI) external returns (address) {
         require(hasRole(COLLECTION_CREATOR_ROLE, _msgSender()), "only collection creator");
-        require(creator != address(0), "zero address creator");
+        require(collectionManager != address(0), "zero address collection manager");
         require(nameToCollection[name] == address(0), "collection name already exists");
 
         Collection collection = new Collection();
-        collection.initialize(address(this), creator, name, uriTpl, contractURI, freeport, nftAttachment);
+        collection.initialize(address(this), collectionManager, name, uriTpl, contractURI, freeport, nftAttachment);
+
+        address collAddr = address(collection);
+        mintAllowance[collAddr][collectionManager] = true;
 
         addressProxies[collectionCounter] = address(collection);
         collectionCounter = collectionCounter + 1;
@@ -56,5 +63,16 @@ contract CollectionFactory is MetaTxContext  {
 
         emit CollectionCreated(name, address(collection));
         return address(collection);
+    }
+
+    function setMintAllowance(address collection, address minter) external {
+        require(hasRole(COLLECTION_CREATOR_ROLE, _msgSender()), "only collection creator");
+        mintAllowance[collection][minter] = true;
+    }
+
+    function mintOnBehalf(address collection, uint64 supply, bytes memory data) external {
+        require(hasRole(COLLECTION_CREATOR_ROLE, _msgSender()), "only collection creator");
+        address operator = _msgSender();
+        Collection(collection).issueOnBehalfOf(operator, supply, data);
     }
 }

@@ -5,7 +5,7 @@ import "../../Freeport.sol";
 /** Simply delegates calls to Freeport SC.
 */
 abstract contract FreeportDelegator {
-    function __FreeportDelegator_init(address _freeport) internal {
+    function __FreeportDelegator_init(Freeport _freeport) internal {
         freeport = _freeport;
     }
 

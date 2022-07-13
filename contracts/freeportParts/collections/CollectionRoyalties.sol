@@ -2,11 +2,13 @@ pragma solidity ^0.8.0;
 
 import "../delegators/FreeportDelegator.sol";
 import "../access_control/WithCollectionManager.sol";
+import "../HasGlobalNftId.sol";
+import "./CollectionIdCounter.sol";
 
 /** Royalties for Collection.
 */
-abstract contract CollectionRoyalties is FreeportDelegator, WithCollectionManager {
-    function __CollectionRoyalties_init(address _freeport) internal initializer {
+abstract contract CollectionRoyalties is FreeportDelegator, WithCollectionManager, CollectionIdCounter, HasGlobalNftId {
+    function __CollectionRoyalties_init(Freeport _freeport) internal initializer {
         __FreeportDelegator_init(_freeport);
     }
 
