@@ -1,5 +1,5 @@
 const Freeport = artifacts.require("Freeport");
-const TestERC20 = artifacts.require("TestERC20");
+const USDC = artifacts.require("USDC");
 const FiatGateway = artifacts.require("FiatGateway");
 const SimpleAuction = artifacts.require("SimpleAuction");
 const {getSigner} = require("../test/utils");
@@ -19,16 +19,21 @@ module.exports = async function (done) {
     let admin = accounts[0];
     let authorizer = signer.address;
     let freeport = await Freeport.deployed();
-    let erc20 = await TestERC20.deployed();
+    let erc20 = await USDC.deployed();
     let gateway = await FiatGateway.deployed();
     let auction = await SimpleAuction.deployed();
     log("Operating on Freeport contract", freeport.address);
-    log("Operating on TestERC20 contract", erc20.address);
+    log("Operating on USDC contract", erc20.address);
     log("Operating on FiatGateway contract", gateway.address);
     log("Operating on SimpleAuction contract", auction.address);
     log("From admin account", admin);
     log("With Authorizer account", authorizer.address);
-    
+
+    let mintUSDC = async (account, amount) => {
+        let amountEncoded = web3.eth.abi.encodeParameter("uint256", amount);
+        await erc20.deposit(account, amountEncoded);
+    };
+
     const PAYMENT_SERVICE = await gateway.PAYMENT_SERVICE.call();
 
     log("Grant role to address for bid authorization");
@@ -42,7 +47,7 @@ module.exports = async function (done) {
     await gateway.grantRole(PAYMENT_SERVICE, serviceAccount);
 
     log("Mint and deposit some ERC20 to the admin account.");
-    await erc20.mint(admin, twoB);
+    await mintUSDC(admin, twoB);
     await erc20.approve(freeport.address, twoB);
     await freeport.deposit(twoB);
 

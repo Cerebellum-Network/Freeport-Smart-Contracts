@@ -30,7 +30,7 @@ Contracts: [Freeport](https://mumbai.polygonscan.com/address/0xacd8105cBA046307d
 [Fiat Gateway](https://mumbai.polygonscan.com/address/0xe25b31Aa454E28110E28C694ded69cD241A27Db1)
 and [Simple Auction](https://mumbai.polygonscan.com/address/0x71091eA5466E3Ca50971bd51c11069e5629a49dB)
 and [NFT Attachment](https://mumbai.polygonscan.com/address/0x84766787c6b9131927A76634F7DDCfcf3ff2e9d1)
-and [TestERC20](https://mumbai.polygonscan.com/address/0x93E73E25F290f8A50281A801109f75CB4E8e3233).
+and [Test USDC](https://mumbai.polygonscan.com/address/0x5517c3c3fe3688AEF2B5BBEc2B4D3b523B9E8144).
 
 Accounts:
 [Fiat-to-NFT Service](https://mumbai.polygonscan.com/address/0x53B53189e668dC2ee3bA7A44Bb033E60F400d395) (
@@ -43,7 +43,7 @@ Contracts: [Freeport](https://mumbai.polygonscan.com/address/0x702BA959B5542B2Bf
 [Fiat Gateway](https://mumbai.polygonscan.com/address/0x106Bf3D61952faE9279B08bdcB2e548316E0C1Ae)
 and [Simple Auction](https://mumbai.polygonscan.com/address/0xCEAc6c102bEcE4ed2E5ede9df096F7175BB8CbaD)
 and [NFT Attachment](https://mumbai.polygonscan.com/address/0x39B27a0bc81C1366E2b05E02642Ef343a4f9223a)
-and [TestERC20](https://mumbai.polygonscan.com/address/0x4e5a86E128f8Fb652169f6652e2Cd17aAe409e96).
+and [Test USDC](https://mumbai.polygonscan.com/address/0x5517c3c3fe3688AEF2B5BBEc2B4D3b523B9E8144).
 
 Accounts:
 [Fiat-to-NFT Service](https://mumbai.polygonscan.com/address/0xD2B94CBF0fFAA9bc07126ab53f980Cd95a5Ed243) (
