@@ -30,6 +30,7 @@ contract("Freeport", accounts => {
         } else {
             freeport = await deployProxy(Freeport, [], {kind: "uups"});
             erc20 = await USDC.new();
+            await erc20.initialize("USD Coin (PoS)", "F_T_USDC", 6, deployer);
             await freeport.setERC20(erc20.address);
         }
 
