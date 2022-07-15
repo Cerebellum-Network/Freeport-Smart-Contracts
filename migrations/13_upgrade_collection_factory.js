@@ -1,9 +1,10 @@
 const CollectionFactory = artifacts.require("CollectionFactory");
 const {upgradeProxy} = require('@openzeppelin/truffle-upgrades');
+const ctx = require("./deployment_context.json");
 const log = console.log;
 
 module.exports = async function (deployer, network, accounts) {
-    const collectionFactory = await CollectionFactory.deployed();
+    const collectionFactory = await CollectionFactory.at(ctx.dev.deploys.CollectionFactory);
 
     log("Operating on CollectionFactory contract", collectionFactory.address);
 

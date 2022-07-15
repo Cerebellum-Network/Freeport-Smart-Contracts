@@ -9,8 +9,9 @@ import "./Collection.sol";
 - Accept offer.
 - Capture variable royalties.
  */
-abstract contract Marketplace is BaseERC20Adapter, FreeportDelegator, HasGlobalNftId {
-    function __Marketplace_init(address _freeport) internal {
+contract Marketplace is BaseERC20Adapter, FreeportDelegator, HasGlobalNftId {
+    function initialize(address _freeport) public initializer {
+        __BaseERC20Adapter_init();
         __FreeportDelegator_init(Freeport(_freeport));
     }
 
