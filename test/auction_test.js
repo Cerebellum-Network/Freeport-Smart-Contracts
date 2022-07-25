@@ -4,10 +4,11 @@ const USDC = artifacts.require("USDC");
 const log = console.log;
 const {deployProxy} = require('@openzeppelin/truffle-upgrades');
 const {expectRevert, time} = require('@openzeppelin/test-helpers');
+const {getSigner, getRPCSigner, typedData} = require('./utils');
 const BN = require('bn.js');
 
 contract("SimpleAuction", accounts => {
-    const [deployer, issuer, buyerBob, buyerBill, beneficiary] = accounts;
+    const [deployer, issuer, buyerBob, buyerBill, beneficiary, buyerChris, buyerKen, issuer2] = accounts;
 
     const CURRENCY = 0;
     const UNIT = 1e6;
@@ -82,6 +83,9 @@ contract("SimpleAuction", accounts => {
                 let ercBalance = await erc20.balanceOf(account);
                 let currency = await freeport.balanceOf.call(account, CURRENCY);
                 let nfts = await freeport.balanceOf.call(account, nftId);
+                console.log("ercBalance >>>> ", +ercBalance)
+                console.log("currency >>>> ", +currency)
+                console.log("nfts >>>> ", +nfts)
                 assert.equal(ercBalance, expectedERC20 * UNIT);
                 assert.equal(currency, 0);
                 assert.equal(nfts, expectedNFTs);
@@ -179,4 +183,125 @@ contract("SimpleAuction", accounts => {
         // Can start another auction.
         await auction.startAuction(nftId, 100 * UNIT, closeTime + 2000, { from: issuer });
     });
+
+    it("sells an NFT on secured auction", async () => {
+        const auction = await SimpleAuction.deployed();
+        const PERCENT = 100;
+
+        let someMoney = 1000;
+        await erc20.mint(buyerChris, someMoney * UNIT);
+        await erc20.mint(buyerKen, someMoney * UNIT);
+
+        let nftSupply = 5;
+        let nftId = await freeport.issue.call(nftSupply, "0x", { from: issuer2 });
+        let closeTime = (await time.latest()).toNumber() + 1000;
+        
+        const checkBalances = async expected => {
+            for (let [account, expectedERC20, expectedNFTs] of expected) {
+                let ercBalance = await erc20.balanceOf(account);
+                let currency = await freeport.balanceOf.call(account, CURRENCY);
+                let nfts = await freeport.balanceOf.call(account, nftId);
+                console.log("ercBalance >>>> ", +ercBalance)
+                console.log("currency >>>> ", +currency)
+                console.log("nfts >>>> ", +nfts)
+                assert.equal(ercBalance, expectedERC20 * UNIT);
+                assert.equal(currency, 0);
+                assert.equal(nfts, expectedNFTs);
+            }
+        };
+
+        await expectRevert(
+            auction.startAuction(nftId, 100 * UNIT, closeTime, { from: issuer2 }),
+            "ERC1155: insufficient balance for transfer"
+        );
+
+        await freeport.issue(nftSupply, "0x", { from: issuer2 });
+        log("’Issuer’ creates", nftSupply, "NFTs of type", nftId.toString(16));
+        log();
+        
+        await freeport.configureRoyalties(
+            nftId,
+            beneficiary,
+            /* primaryCut */ 10 * PERCENT,
+            /* primaryMinimum */ 0,
+            beneficiary,
+            /* secondaryCut */ 0,
+            /* secondaryMinimum */ 0,
+            { from: issuer2 });
+        log("’Issuer’ configures royalties for this NFT type: 10% on primary sales");
+        log();
+        
+        await auction.startSecuredAuction(nftId, 100 * UNIT, closeTime, true, { from: issuer2 });
+        await checkBalances([
+            [issuer2, 0, 4],
+            [auction.address, 0, 1]
+        ]);
+
+        const signer = await getRPCSigner();
+        let {domain, types, value} = typedData(buyerChris, nftId);
+        let signature = await signer._signTypedData(domain, types, value);
+
+        await erc20.approve(auction.address, 1e9 * UNIT, {from: buyerChris});
+        await auction.bidOnSecuredAuction(issuer2, nftId, 100 * UNIT, signature, {from: buyerBob});
+
+        await checkBalances([
+            [buyerChris, someMoney - 100, 0], // BuyerBob put 100 money as deposit.
+            [auction.address, 100, 1],      // The contract took 100 money as deposit.
+        ]);
+
+        await expectRevert(
+            auction.bidOnSecuredAuction(issuer2, nftId, 109 * UNIT, signature, { from: buyerBill }),
+            "a new bid must be 10% greater than the current bid");
+        
+        await erc20.approve(auction.address, 1e9 * UNIT, {from: buyerKen});
+        let {domain1, types1, value1} = typedData(buyerKen, nftId);
+        signature = await signer._signTypedData(domain1, types1, value1);
+        await auction.bidOnSecuredAuction(issuer2, nftId, 110 * UNIT, signature, {from: buyerKen});
+        
+        let tooMuchMoney = someMoney + 1;
+        await expectRevert(
+            auction.bidOnAuction(issuer2, nftId, tooMuchMoney * UNIT, {from: buyerChris}),
+            "ERC20: transfer amount exceeds balance");
+
+        await checkBalances([
+            [buyerKen, someMoney, 0], // BuyerBob got back his 100 money.
+            [buyerChris, someMoney - 110, 0], // BuyerBill put 110 money as deposit.
+            [auction.address, 110, 1], // The contract took 110 money as deposit.
+        ]);
+
+        await expectRevert(
+            auction.startAuction(nftId, 100 * UNIT, closeTime, true, { from: issuer2 }),
+            "the auction must not exist");
+
+        // Cannot settle before the close time.
+        await expectRevert(
+            auction.settleAuction(issuer2, nftId),
+            "the auction must be closed");
+
+        // Wait for the close time.
+        await time.increaseTo(closeTime + 1);
+
+        // Settle the sale to buyer2 at 110 tokens.
+        await auction.settleAuction(issuer2, nftId);
+
+        // Issuer and benificiaries withdraw their earnings to ERC20.
+        await withdraw(issuer2);
+        await withdraw(beneficiary);
+
+        // Check every balance after settlement.
+        await checkBalances([
+            [issuer2, 110 - 11, 9], // Earned 110 money, spent 11 in royalties, spent 1 of 10 NFTs.
+            [buyerChris, someMoney - 110, 1], // Spent 110 money, earned the NFT.
+            [buyerKen, someMoney, 0], // No change, BuyerBob got his refund.
+            [auction.address, 0, 0], // No change, the contract gave back all deposits.
+            [beneficiary, 11, 0], // The beneficiary earned 10% of 110.
+        ]);
+
+        // Cannot settle twice.
+        await expectRevert(
+            auction.settleAuction(issuer2, nftId),
+            "the auction must exist");
+
+
+    })
 });
