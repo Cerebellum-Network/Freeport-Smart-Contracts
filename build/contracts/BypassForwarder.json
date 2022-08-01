@@ -1857,7 +1857,7 @@
                 }
               ]
             },
-            "name": "abi_decode_tuple_t_struct$_ForwardRequest_$4627_calldata_ptrt_bytes_calldata_ptr",
+            "name": "abi_decode_tuple_t_struct$_ForwardRequest_$4605_calldata_ptrt_bytes_calldata_ptr",
             "nodeType": "YulFunctionDefinition",
             "parameters": [
               {
@@ -6736,7 +6736,7 @@
           }
         ]
       },
-      "contents": "{\n    { }\n    function abi_decode_tuple_t_address(headStart, dataEnd) -> value0\n    {\n        if slt(sub(dataEnd, headStart), 32) { revert(value0, value0) }\n        let value := calldataload(headStart)\n        if iszero(eq(value, and(value, sub(shl(160, 1), 1)))) { revert(value0, value0) }\n        value0 := value\n    }\n    function abi_decode_tuple_t_bool_fromMemory(headStart, dataEnd) -> value0\n    {\n        if slt(sub(dataEnd, headStart), 32) { revert(value0, value0) }\n        let value := mload(headStart)\n        if iszero(eq(value, iszero(iszero(value)))) { revert(value0, value0) }\n        value0 := value\n    }\n    function abi_decode_tuple_t_struct$_ForwardRequest_$4627_calldata_ptrt_bytes_calldata_ptr(headStart, dataEnd) -> value0, value1, value2\n    {\n        if slt(sub(dataEnd, headStart), 64) { revert(value1, value1) }\n        let offset := calldataload(headStart)\n        let _1 := sub(shl(64, 1), 1)\n        if gt(offset, _1) { revert(value1, value1) }\n        let _2 := add(headStart, offset)\n        if slt(sub(dataEnd, _2), 192) { revert(value1, value1) }\n        value0 := _2\n        let offset_1 := calldataload(add(headStart, 32))\n        if gt(offset_1, _1) { revert(value1, value1) }\n        let _3 := add(headStart, offset_1)\n        if iszero(slt(add(_3, 0x1f), dataEnd)) { revert(value1, value1) }\n        let length := calldataload(_3)\n        if gt(length, _1) { revert(value1, value1) }\n        if gt(add(add(_3, length), 32), dataEnd) { revert(value1, value1) }\n        value1 := add(_3, 32)\n        value2 := length\n    }\n    function abi_encode_tuple_packed_t_bytes_calldata_ptr__to_t_bytes_memory_ptr__nonPadded_inplace_fromStack_reversed(pos, value1, value0) -> end\n    {\n        calldatacopy(pos, value0, value1)\n        let _1 := add(pos, value1)\n        mstore(_1, end)\n        end := _1\n    }\n    function abi_encode_tuple_packed_t_bytes_calldata_ptr_t_address__to_t_bytes_memory_ptr_t_address__nonPadded_inplace_fromStack_reversed(pos, value2, value1, value0) -> end\n    {\n        calldatacopy(pos, value0, value1)\n        let _1 := add(pos, value1)\n        mstore(_1, end)\n        mstore(_1, and(shl(96, value2), not(sub(shl(96, 1), 1))))\n        end := add(_1, 20)\n    }\n    function abi_encode_tuple_packed_t_bytes_memory_ptr__to_t_bytes_memory_ptr__nonPadded_inplace_fromStack_reversed(pos, value0) -> end\n    {\n        let length := mload(value0)\n        copy_memory_to_memory(add(value0, 0x20), pos, length)\n        end := add(pos, length)\n    }\n    function abi_encode_tuple_packed_t_stringliteral_301a50b291d33ce1e8e9064e3f6a6c51d902ec22892b50d58abf6357c6a45541_t_bytes32_t_bytes32__to_t_string_memory_ptr_t_bytes32_t_bytes32__nonPadded_inplace_fromStack_reversed(pos, value1, value0) -> end\n    {\n        mstore(pos, shl(240, 6401))\n        mstore(add(pos, 2), value0)\n        mstore(add(pos, 34), value1)\n        end := add(pos, 66)\n    }\n    function abi_encode_tuple_t_bool__to_t_bool__fromStack_reversed(headStart, value0) -> tail\n    {\n        tail := add(headStart, 32)\n        mstore(headStart, iszero(iszero(value0)))\n    }\n    function abi_encode_tuple_t_bool_t_bytes_memory_ptr__to_t_bool_t_bytes_memory_ptr__fromStack_reversed(headStart, value1, value0) -> tail\n    {\n        mstore(headStart, iszero(iszero(value0)))\n        mstore(add(headStart, 32), 64)\n        let length := mload(value1)\n        mstore(add(headStart, 64), length)\n        copy_memory_to_memory(add(value1, 32), add(headStart, 96), length)\n        tail := add(add(headStart, and(add(length, 31), not(31))), 96)\n    }\n    function abi_encode_tuple_t_bytes32__to_t_bytes32__fromStack_reversed(headStart, value0) -> tail\n    {\n        tail := add(headStart, 32)\n        mstore(headStart, value0)\n    }\n    function abi_encode_tuple_t_bytes32_t_address__to_t_bytes32_t_address__fromStack_reversed(headStart, value1, value0) -> tail\n    {\n        tail := add(headStart, 64)\n        mstore(headStart, value0)\n        mstore(add(headStart, 32), and(value1, sub(shl(160, 1), 1)))\n    }\n    function abi_encode_tuple_t_bytes32_t_address_t_address_t_uint256_t_uint256_t_uint256_t_bytes32__to_t_bytes32_t_address_t_address_t_uint256_t_uint256_t_uint256_t_bytes32__fromStack_reversed(headStart, value6, value5, value4, value3, value2, value1, value0) -> tail\n    {\n        tail := add(headStart, 224)\n        mstore(headStart, value0)\n        let _1 := sub(shl(160, 1), 1)\n        mstore(add(headStart, 32), and(value1, _1))\n        mstore(add(headStart, 64), and(value2, _1))\n        mstore(add(headStart, 96), value3)\n        mstore(add(headStart, 128), value4)\n        mstore(add(headStart, 160), value5)\n        mstore(add(headStart, 192), value6)\n    }\n    function abi_encode_tuple_t_bytes32_t_bytes32_t_bytes32_t_uint256_t_address__to_t_bytes32_t_bytes32_t_bytes32_t_uint256_t_address__fromStack_reversed(headStart, value4, value3, value2, value1, value0) -> tail\n    {\n        tail := add(headStart, 160)\n        mstore(headStart, value0)\n        mstore(add(headStart, 32), value1)\n        mstore(add(headStart, 64), value2)\n        mstore(add(headStart, 96), value3)\n        mstore(add(headStart, 128), and(value4, sub(shl(160, 1), 1)))\n    }\n    function abi_encode_tuple_t_bytes32_t_uint8_t_bytes32_t_bytes32__to_t_bytes32_t_uint8_t_bytes32_t_bytes32__fromStack_reversed(headStart, value3, value2, value1, value0) -> tail\n    {\n        tail := add(headStart, 128)\n        mstore(headStart, value0)\n        mstore(add(headStart, 32), and(value1, 0xff))\n        mstore(add(headStart, 64), value2)\n        mstore(add(headStart, 96), value3)\n    }\n    function abi_encode_tuple_t_stringliteral_00043f6bf76368aa97c21698e9b9d4779e31902453daccf3525ddfb36e53e2be__to_t_string_memory_ptr__fromStack_reversed(headStart) -> tail\n    {\n        mstore(headStart, 32)\n        mstore(add(headStart, 32), 24)\n        mstore(add(headStart, 64), \"ECDSA: invalid signature\")\n        tail := add(headStart, 96)\n    }\n    function abi_encode_tuple_t_stringliteral_0a1000a56588b05caffad06969cd7617cd0867f6c7d159cd7e5aa9b3c93b18ae__to_t_string_memory_ptr__fromStack_reversed(headStart) -> tail\n    {\n        mstore(headStart, 32)\n        mstore(add(headStart, 32), 50)\n        mstore(add(headStart, 64), \"MinimalForwarder: signature does\")\n        mstore(add(headStart, 96), \" not match request\")\n        tail := add(headStart, 128)\n    }\n    function abi_encode_tuple_t_stringliteral_1669ff3ba3cdf64474e1193492d05b8434e29b0b495e60095eb5f5c8ec14ce77__to_t_string_memory_ptr__fromStack_reversed(headStart) -> tail\n    {\n        mstore(headStart, 32)\n        mstore(add(headStart, 32), 31)\n        mstore(add(headStart, 64), \"ECDSA: invalid signature length\")\n        tail := add(headStart, 96)\n    }\n    function abi_encode_tuple_t_stringliteral_520d1f787dbcafbbfc007fd2c4ecf3d2711ec587f3ee9a1215c0b646c3e530bd__to_t_string_memory_ptr__fromStack_reversed(headStart) -> tail\n    {\n        mstore(headStart, 32)\n        mstore(add(headStart, 32), 34)\n        mstore(add(headStart, 64), \"ECDSA: invalid signature 's' val\")\n        mstore(add(headStart, 96), \"ue\")\n        tail := add(headStart, 128)\n    }\n    function abi_encode_tuple_t_stringliteral_8522ee1b53216f595394db8e80a64d9e7d9bd512c0811c18debe9f40858597e4__to_t_string_memory_ptr__fromStack_reversed(headStart) -> tail\n    {\n        mstore(headStart, 32)\n        mstore(add(headStart, 32), 34)\n        mstore(add(headStart, 64), \"ECDSA: invalid signature 'v' val\")\n        mstore(add(headStart, 96), \"ue\")\n        tail := add(headStart, 128)\n    }\n    function abi_encode_tuple_t_uint256__to_t_uint256__fromStack_reversed(headStart, value0) -> tail\n    {\n        tail := add(headStart, 32)\n        mstore(headStart, value0)\n    }\n    function access_calldata_tail_t_bytes_calldata_ptr(base_ref, ptr_to_tail) -> addr, length\n    {\n        let rel_offset_of_tail := calldataload(ptr_to_tail)\n        if iszero(slt(rel_offset_of_tail, add(sub(calldatasize(), base_ref), not(30)))) { revert(addr, addr) }\n        let addr_1 := add(base_ref, rel_offset_of_tail)\n        length := calldataload(addr_1)\n        if gt(length, sub(shl(64, 1), 1)) { revert(addr, addr) }\n        addr := add(addr_1, 0x20)\n        if sgt(addr, sub(calldatasize(), length)) { revert(0, 0) }\n    }\n    function checked_add_t_uint256(x, y) -> sum\n    {\n        if gt(x, not(y))\n        {\n            mstore(sum, shl(224, 0x4e487b71))\n            mstore(4, 0x11)\n            revert(sum, 0x24)\n        }\n        sum := add(x, y)\n    }\n    function checked_div_t_uint256(x, y) -> r\n    {\n        if iszero(y)\n        {\n            mstore(r, shl(224, 0x4e487b71))\n            mstore(4, 0x12)\n            revert(r, 0x24)\n        }\n        r := div(x, y)\n    }\n    function copy_memory_to_memory(src, dst, length)\n    {\n        let i := 0\n        for { } lt(i, length) { i := add(i, 32) }\n        {\n            mstore(add(dst, i), mload(add(src, i)))\n        }\n        if gt(i, length) { mstore(add(dst, length), 0) }\n    }\n}",
+      "contents": "{\n    { }\n    function abi_decode_tuple_t_address(headStart, dataEnd) -> value0\n    {\n        if slt(sub(dataEnd, headStart), 32) { revert(value0, value0) }\n        let value := calldataload(headStart)\n        if iszero(eq(value, and(value, sub(shl(160, 1), 1)))) { revert(value0, value0) }\n        value0 := value\n    }\n    function abi_decode_tuple_t_bool_fromMemory(headStart, dataEnd) -> value0\n    {\n        if slt(sub(dataEnd, headStart), 32) { revert(value0, value0) }\n        let value := mload(headStart)\n        if iszero(eq(value, iszero(iszero(value)))) { revert(value0, value0) }\n        value0 := value\n    }\n    function abi_decode_tuple_t_struct$_ForwardRequest_$4605_calldata_ptrt_bytes_calldata_ptr(headStart, dataEnd) -> value0, value1, value2\n    {\n        if slt(sub(dataEnd, headStart), 64) { revert(value1, value1) }\n        let offset := calldataload(headStart)\n        let _1 := sub(shl(64, 1), 1)\n        if gt(offset, _1) { revert(value1, value1) }\n        let _2 := add(headStart, offset)\n        if slt(sub(dataEnd, _2), 192) { revert(value1, value1) }\n        value0 := _2\n        let offset_1 := calldataload(add(headStart, 32))\n        if gt(offset_1, _1) { revert(value1, value1) }\n        let _3 := add(headStart, offset_1)\n        if iszero(slt(add(_3, 0x1f), dataEnd)) { revert(value1, value1) }\n        let length := calldataload(_3)\n        if gt(length, _1) { revert(value1, value1) }\n        if gt(add(add(_3, length), 32), dataEnd) { revert(value1, value1) }\n        value1 := add(_3, 32)\n        value2 := length\n    }\n    function abi_encode_tuple_packed_t_bytes_calldata_ptr__to_t_bytes_memory_ptr__nonPadded_inplace_fromStack_reversed(pos, value1, value0) -> end\n    {\n        calldatacopy(pos, value0, value1)\n        let _1 := add(pos, value1)\n        mstore(_1, end)\n        end := _1\n    }\n    function abi_encode_tuple_packed_t_bytes_calldata_ptr_t_address__to_t_bytes_memory_ptr_t_address__nonPadded_inplace_fromStack_reversed(pos, value2, value1, value0) -> end\n    {\n        calldatacopy(pos, value0, value1)\n        let _1 := add(pos, value1)\n        mstore(_1, end)\n        mstore(_1, and(shl(96, value2), not(sub(shl(96, 1), 1))))\n        end := add(_1, 20)\n    }\n    function abi_encode_tuple_packed_t_bytes_memory_ptr__to_t_bytes_memory_ptr__nonPadded_inplace_fromStack_reversed(pos, value0) -> end\n    {\n        let length := mload(value0)\n        copy_memory_to_memory(add(value0, 0x20), pos, length)\n        end := add(pos, length)\n    }\n    function abi_encode_tuple_packed_t_stringliteral_301a50b291d33ce1e8e9064e3f6a6c51d902ec22892b50d58abf6357c6a45541_t_bytes32_t_bytes32__to_t_string_memory_ptr_t_bytes32_t_bytes32__nonPadded_inplace_fromStack_reversed(pos, value1, value0) -> end\n    {\n        mstore(pos, shl(240, 6401))\n        mstore(add(pos, 2), value0)\n        mstore(add(pos, 34), value1)\n        end := add(pos, 66)\n    }\n    function abi_encode_tuple_t_bool__to_t_bool__fromStack_reversed(headStart, value0) -> tail\n    {\n        tail := add(headStart, 32)\n        mstore(headStart, iszero(iszero(value0)))\n    }\n    function abi_encode_tuple_t_bool_t_bytes_memory_ptr__to_t_bool_t_bytes_memory_ptr__fromStack_reversed(headStart, value1, value0) -> tail\n    {\n        mstore(headStart, iszero(iszero(value0)))\n        mstore(add(headStart, 32), 64)\n        let length := mload(value1)\n        mstore(add(headStart, 64), length)\n        copy_memory_to_memory(add(value1, 32), add(headStart, 96), length)\n        tail := add(add(headStart, and(add(length, 31), not(31))), 96)\n    }\n    function abi_encode_tuple_t_bytes32__to_t_bytes32__fromStack_reversed(headStart, value0) -> tail\n    {\n        tail := add(headStart, 32)\n        mstore(headStart, value0)\n    }\n    function abi_encode_tuple_t_bytes32_t_address__to_t_bytes32_t_address__fromStack_reversed(headStart, value1, value0) -> tail\n    {\n        tail := add(headStart, 64)\n        mstore(headStart, value0)\n        mstore(add(headStart, 32), and(value1, sub(shl(160, 1), 1)))\n    }\n    function abi_encode_tuple_t_bytes32_t_address_t_address_t_uint256_t_uint256_t_uint256_t_bytes32__to_t_bytes32_t_address_t_address_t_uint256_t_uint256_t_uint256_t_bytes32__fromStack_reversed(headStart, value6, value5, value4, value3, value2, value1, value0) -> tail\n    {\n        tail := add(headStart, 224)\n        mstore(headStart, value0)\n        let _1 := sub(shl(160, 1), 1)\n        mstore(add(headStart, 32), and(value1, _1))\n        mstore(add(headStart, 64), and(value2, _1))\n        mstore(add(headStart, 96), value3)\n        mstore(add(headStart, 128), value4)\n        mstore(add(headStart, 160), value5)\n        mstore(add(headStart, 192), value6)\n    }\n    function abi_encode_tuple_t_bytes32_t_bytes32_t_bytes32_t_uint256_t_address__to_t_bytes32_t_bytes32_t_bytes32_t_uint256_t_address__fromStack_reversed(headStart, value4, value3, value2, value1, value0) -> tail\n    {\n        tail := add(headStart, 160)\n        mstore(headStart, value0)\n        mstore(add(headStart, 32), value1)\n        mstore(add(headStart, 64), value2)\n        mstore(add(headStart, 96), value3)\n        mstore(add(headStart, 128), and(value4, sub(shl(160, 1), 1)))\n    }\n    function abi_encode_tuple_t_bytes32_t_uint8_t_bytes32_t_bytes32__to_t_bytes32_t_uint8_t_bytes32_t_bytes32__fromStack_reversed(headStart, value3, value2, value1, value0) -> tail\n    {\n        tail := add(headStart, 128)\n        mstore(headStart, value0)\n        mstore(add(headStart, 32), and(value1, 0xff))\n        mstore(add(headStart, 64), value2)\n        mstore(add(headStart, 96), value3)\n    }\n    function abi_encode_tuple_t_stringliteral_00043f6bf76368aa97c21698e9b9d4779e31902453daccf3525ddfb36e53e2be__to_t_string_memory_ptr__fromStack_reversed(headStart) -> tail\n    {\n        mstore(headStart, 32)\n        mstore(add(headStart, 32), 24)\n        mstore(add(headStart, 64), \"ECDSA: invalid signature\")\n        tail := add(headStart, 96)\n    }\n    function abi_encode_tuple_t_stringliteral_0a1000a56588b05caffad06969cd7617cd0867f6c7d159cd7e5aa9b3c93b18ae__to_t_string_memory_ptr__fromStack_reversed(headStart) -> tail\n    {\n        mstore(headStart, 32)\n        mstore(add(headStart, 32), 50)\n        mstore(add(headStart, 64), \"MinimalForwarder: signature does\")\n        mstore(add(headStart, 96), \" not match request\")\n        tail := add(headStart, 128)\n    }\n    function abi_encode_tuple_t_stringliteral_1669ff3ba3cdf64474e1193492d05b8434e29b0b495e60095eb5f5c8ec14ce77__to_t_string_memory_ptr__fromStack_reversed(headStart) -> tail\n    {\n        mstore(headStart, 32)\n        mstore(add(headStart, 32), 31)\n        mstore(add(headStart, 64), \"ECDSA: invalid signature length\")\n        tail := add(headStart, 96)\n    }\n    function abi_encode_tuple_t_stringliteral_520d1f787dbcafbbfc007fd2c4ecf3d2711ec587f3ee9a1215c0b646c3e530bd__to_t_string_memory_ptr__fromStack_reversed(headStart) -> tail\n    {\n        mstore(headStart, 32)\n        mstore(add(headStart, 32), 34)\n        mstore(add(headStart, 64), \"ECDSA: invalid signature 's' val\")\n        mstore(add(headStart, 96), \"ue\")\n        tail := add(headStart, 128)\n    }\n    function abi_encode_tuple_t_stringliteral_8522ee1b53216f595394db8e80a64d9e7d9bd512c0811c18debe9f40858597e4__to_t_string_memory_ptr__fromStack_reversed(headStart) -> tail\n    {\n        mstore(headStart, 32)\n        mstore(add(headStart, 32), 34)\n        mstore(add(headStart, 64), \"ECDSA: invalid signature 'v' val\")\n        mstore(add(headStart, 96), \"ue\")\n        tail := add(headStart, 128)\n    }\n    function abi_encode_tuple_t_uint256__to_t_uint256__fromStack_reversed(headStart, value0) -> tail\n    {\n        tail := add(headStart, 32)\n        mstore(headStart, value0)\n    }\n    function access_calldata_tail_t_bytes_calldata_ptr(base_ref, ptr_to_tail) -> addr, length\n    {\n        let rel_offset_of_tail := calldataload(ptr_to_tail)\n        if iszero(slt(rel_offset_of_tail, add(sub(calldatasize(), base_ref), not(30)))) { revert(addr, addr) }\n        let addr_1 := add(base_ref, rel_offset_of_tail)\n        length := calldataload(addr_1)\n        if gt(length, sub(shl(64, 1), 1)) { revert(addr, addr) }\n        addr := add(addr_1, 0x20)\n        if sgt(addr, sub(calldatasize(), length)) { revert(0, 0) }\n    }\n    function checked_add_t_uint256(x, y) -> sum\n    {\n        if gt(x, not(y))\n        {\n            mstore(sum, shl(224, 0x4e487b71))\n            mstore(4, 0x11)\n            revert(sum, 0x24)\n        }\n        sum := add(x, y)\n    }\n    function checked_div_t_uint256(x, y) -> r\n    {\n        if iszero(y)\n        {\n            mstore(r, shl(224, 0x4e487b71))\n            mstore(4, 0x12)\n            revert(r, 0x24)\n        }\n        r := div(x, y)\n    }\n    function copy_memory_to_memory(src, dst, length)\n    {\n        let i := 0\n        for { } lt(i, length) { i := add(i, 32) }\n        {\n            mstore(add(dst, i), mload(add(src, i)))\n        }\n        if gt(i, length) { mstore(add(dst, length), 0) }\n    }\n}",
       "id": 63,
       "language": "Yul",
       "name": "#utility.yul"
@@ -6774,7 +6774,7 @@
         3551
       ],
       "MinimalForwarder": [
-        4775
+        4753
       ],
       "Strings": [
         3233
@@ -6814,7 +6814,7 @@
         "nameLocation": "-1:-1:-1",
         "nodeType": "ImportDirective",
         "scope": 3605,
-        "sourceUnit": 4776,
+        "sourceUnit": 4754,
         "src": "117:32:27",
         "symbolAliases": [],
         "unitAlias": ""
@@ -6827,7 +6827,7 @@
               "id": 3556,
               "name": "MinimalForwarder",
               "nodeType": "IdentifierPath",
-              "referencedDeclaration": 4775,
+              "referencedDeclaration": 4753,
               "src": "539:16:27"
             },
             "id": 3557,
@@ -6841,7 +6841,7 @@
         "id": 3604,
         "linearizedBaseContracts": [
           3604,
-          4775,
+          4753,
           3515
         ],
         "name": "BypassForwarder",
@@ -6930,7 +6930,7 @@
           },
           {
             "baseFunctions": [
-              4708
+              4686
             ],
             "body": {
               "id": 3602,
@@ -6989,7 +6989,7 @@
                           "referencedDeclaration": 3566,
                           "src": "973:3:27",
                           "typeDescriptions": {
-                            "typeIdentifier": "t_struct$_ForwardRequest_$4627_calldata_ptr",
+                            "typeIdentifier": "t_struct$_ForwardRequest_$4605_calldata_ptr",
                             "typeString": "struct MinimalForwarder.ForwardRequest calldata"
                           }
                         },
@@ -7000,7 +7000,7 @@
                         "lValueRequested": false,
                         "memberName": "to",
                         "nodeType": "MemberAccess",
-                        "referencedDeclaration": 4618,
+                        "referencedDeclaration": 4596,
                         "src": "973:6:27",
                         "typeDescriptions": {
                           "typeIdentifier": "t_address",
@@ -7239,7 +7239,7 @@
                         "referencedDeclaration": 3566,
                         "src": "1125:3:27",
                         "typeDescriptions": {
-                          "typeIdentifier": "t_struct$_ForwardRequest_$4627_calldata_ptr",
+                          "typeIdentifier": "t_struct$_ForwardRequest_$4605_calldata_ptr",
                           "typeString": "struct MinimalForwarder.ForwardRequest calldata"
                         }
                       },
@@ -7259,7 +7259,7 @@
                     "expression": {
                       "argumentTypes": [
                         {
-                          "typeIdentifier": "t_struct$_ForwardRequest_$4627_calldata_ptr",
+                          "typeIdentifier": "t_struct$_ForwardRequest_$4605_calldata_ptr",
                           "typeString": "struct MinimalForwarder.ForwardRequest calldata"
                         },
                         {
@@ -7286,10 +7286,10 @@
                       "lValueRequested": false,
                       "memberName": "verify",
                       "nodeType": "MemberAccess",
-                      "referencedDeclaration": 4708,
+                      "referencedDeclaration": 4686,
                       "src": "1112:12:27",
                       "typeDescriptions": {
-                        "typeIdentifier": "t_function_internal_view$_t_struct$_ForwardRequest_$4627_calldata_ptr_$_t_bytes_calldata_ptr_$returns$_t_bool_$",
+                        "typeIdentifier": "t_function_internal_view$_t_struct$_ForwardRequest_$4605_calldata_ptr_$_t_bytes_calldata_ptr_$returns$_t_bool_$",
                         "typeString": "function (struct MinimalForwarder.ForwardRequest calldata,bytes calldata) view returns (bool)"
                       }
                     },
@@ -7351,7 +7351,7 @@
                   "stateVariable": false,
                   "storageLocation": "calldata",
                   "typeDescriptions": {
-                    "typeIdentifier": "t_struct$_ForwardRequest_$4627_calldata_ptr",
+                    "typeIdentifier": "t_struct$_ForwardRequest_$4605_calldata_ptr",
                     "typeString": "struct MinimalForwarder.ForwardRequest"
                   },
                   "typeName": {
@@ -7361,13 +7361,718 @@
                       "id": 3564,
                       "name": "ForwardRequest",
                       "nodeType": "IdentifierPath",
-                      "referencedDeclaration": 4627,
+                      "referencedDeclaration": 4605,
                       "src": "833:14:27"
                     },
-                    "referencedDeclaration": 4627,
+                    "referencedDeclaration": 4605,
                     "src": "833:14:27",
                     "typeDescriptions": {
-                      "typeIdentifier": "t_struct$_ForwardRequest_$4627_storage_ptr",
+                      "typeIdentifier": "t_struct$_ForwardRequest_$4605_storage_ptr",
+                      "typeString": "struct MinimalForwarder.ForwardRequest"
+                    }
+                  },
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 3568,
+                  "mutability": "mutable",
+                  "name": "signature",
+                  "nameLocation": "877:9:27",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3603,
+                  "src": "862:24:27",
+                  "stateVariable": false,
+                  "storageLocation": "calldata",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_bytes_calldata_ptr",
+                    "typeString": "bytes"
+                  },
+                  "typeName": {
+                    "id": 3567,
+                    "name": "bytes",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "862:5:27",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_bytes_storage_ptr",
+                      "typeString": "bytes"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "832:55:27"
+            },
+            "returnParameters": {
+              "id": 3573,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 3572,
+                  "mutability": "mutable",
+                  "name": "",
+                  "nameLocation": "-1:-1:-1",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3603,
+                  "src": "918:4:27",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_bool",
+                    "typeString": "bool"
+                  },
+                  "typeName": {
+                    "id": 3571,
+                    "name": "bool",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "918:4:27",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_bool",
+                      "typeString": "bool"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "917:6:27"
+            },
+            "scope": 3604,
+            "src": "817:330:27",
+            "stateMutability": "view",
+            "virtual": false,
+            "visibility": "public"
+          }
+        ],
+        "scope": 3605,
+        "src": "511:638:27",
+        "usedErrors": []
+      }
+    ],
+    "src": "33:1117:27"
+  },
+  "legacyAST": {
+    "absolutePath": "project:/contracts/BypassForwarder.sol",
+    "exportedSymbols": {
+      "AccessControl": [
+        2397
+      ],
+      "BypassForwarder": [
+        3604
+      ],
+      "Context": [
+        3030
+      ],
+      "ECDSA": [
+        3377
+      ],
+      "EIP712": [
+        3515
+      ],
+      "ERC165": [
+        3539
+      ],
+      "IAccessControl": [
+        2073
+      ],
+      "IERC165": [
+        3551
+      ],
+      "MinimalForwarder": [
+        4753
+      ],
+      "Strings": [
+        3233
+      ]
+    },
+    "id": 3605,
+    "license": "MIT",
+    "nodeType": "SourceUnit",
+    "nodes": [
+      {
+        "id": 3553,
+        "literals": [
+          "solidity",
+          "^",
+          "0.8",
+          ".0"
+        ],
+        "nodeType": "PragmaDirective",
+        "src": "33:23:27"
+      },
+      {
+        "absolutePath": "@openzeppelin/contracts/access/AccessControl.sol",
+        "file": "@openzeppelin/contracts/access/AccessControl.sol",
+        "id": 3554,
+        "nameLocation": "-1:-1:-1",
+        "nodeType": "ImportDirective",
+        "scope": 3605,
+        "sourceUnit": 2398,
+        "src": "58:58:27",
+        "symbolAliases": [],
+        "unitAlias": ""
+      },
+      {
+        "absolutePath": "project:/contracts/MinimalForwarder.sol",
+        "file": "./MinimalForwarder.sol",
+        "id": 3555,
+        "nameLocation": "-1:-1:-1",
+        "nodeType": "ImportDirective",
+        "scope": 3605,
+        "sourceUnit": 4754,
+        "src": "117:32:27",
+        "symbolAliases": [],
+        "unitAlias": ""
+      },
+      {
+        "abstract": false,
+        "baseContracts": [
+          {
+            "baseName": {
+              "id": 3556,
+              "name": "MinimalForwarder",
+              "nodeType": "IdentifierPath",
+              "referencedDeclaration": 4753,
+              "src": "539:16:27"
+            },
+            "id": 3557,
+            "nodeType": "InheritanceSpecifier",
+            "src": "539:16:27"
+          }
+        ],
+        "contractDependencies": [],
+        "contractKind": "contract",
+        "fullyImplemented": true,
+        "id": 3604,
+        "linearizedBaseContracts": [
+          3604,
+          4753,
+          3515
+        ],
+        "name": "BypassForwarder",
+        "nameLocation": "520:15:27",
+        "nodeType": "ContractDefinition",
+        "nodes": [
+          {
+            "constant": true,
+            "functionSelector": "448588e3",
+            "id": 3562,
+            "mutability": "constant",
+            "name": "BYPASS_SENDER",
+            "nameLocation": "587:13:27",
+            "nodeType": "VariableDeclaration",
+            "scope": 3604,
+            "src": "563:66:27",
+            "stateVariable": true,
+            "storageLocation": "default",
+            "typeDescriptions": {
+              "typeIdentifier": "t_bytes32",
+              "typeString": "bytes32"
+            },
+            "typeName": {
+              "id": 3558,
+              "name": "bytes32",
+              "nodeType": "ElementaryTypeName",
+              "src": "563:7:27",
+              "typeDescriptions": {
+                "typeIdentifier": "t_bytes32",
+                "typeString": "bytes32"
+              }
+            },
+            "value": {
+              "arguments": [
+                {
+                  "hexValue": "4259504153535f53454e444552",
+                  "id": 3560,
+                  "isConstant": false,
+                  "isLValue": false,
+                  "isPure": true,
+                  "kind": "string",
+                  "lValueRequested": false,
+                  "nodeType": "Literal",
+                  "src": "613:15:27",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_stringliteral_20a4be6e7127e439f48d6654377d19402cb883dd85029e600de9e17052f903d3",
+                    "typeString": "literal_string \"BYPASS_SENDER\""
+                  },
+                  "value": "BYPASS_SENDER"
+                }
+              ],
+              "expression": {
+                "argumentTypes": [
+                  {
+                    "typeIdentifier": "t_stringliteral_20a4be6e7127e439f48d6654377d19402cb883dd85029e600de9e17052f903d3",
+                    "typeString": "literal_string \"BYPASS_SENDER\""
+                  }
+                ],
+                "id": 3559,
+                "name": "keccak256",
+                "nodeType": "Identifier",
+                "overloadedDeclarations": [],
+                "referencedDeclaration": 4294967288,
+                "src": "603:9:27",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_function_keccak256_pure$_t_bytes_memory_ptr_$returns$_t_bytes32_$",
+                  "typeString": "function (bytes memory) pure returns (bytes32)"
+                }
+              },
+              "id": 3561,
+              "isConstant": false,
+              "isLValue": false,
+              "isPure": true,
+              "kind": "functionCall",
+              "lValueRequested": false,
+              "names": [],
+              "nodeType": "FunctionCall",
+              "src": "603:26:27",
+              "tryCall": false,
+              "typeDescriptions": {
+                "typeIdentifier": "t_bytes32",
+                "typeString": "bytes32"
+              }
+            },
+            "visibility": "public"
+          },
+          {
+            "baseFunctions": [
+              4686
+            ],
+            "body": {
+              "id": 3602,
+              "nodeType": "Block",
+              "src": "924:223:27",
+              "statements": [
+                {
+                  "assignments": [
+                    3576
+                  ],
+                  "declarations": [
+                    {
+                      "constant": false,
+                      "id": 3576,
+                      "mutability": "mutable",
+                      "name": "target",
+                      "nameLocation": "949:6:27",
+                      "nodeType": "VariableDeclaration",
+                      "scope": 3602,
+                      "src": "934:21:27",
+                      "stateVariable": false,
+                      "storageLocation": "default",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_contract$_IAccessControl_$2073",
+                        "typeString": "contract IAccessControl"
+                      },
+                      "typeName": {
+                        "id": 3575,
+                        "nodeType": "UserDefinedTypeName",
+                        "pathNode": {
+                          "id": 3574,
+                          "name": "IAccessControl",
+                          "nodeType": "IdentifierPath",
+                          "referencedDeclaration": 2073,
+                          "src": "934:14:27"
+                        },
+                        "referencedDeclaration": 2073,
+                        "src": "934:14:27",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_contract$_IAccessControl_$2073",
+                          "typeString": "contract IAccessControl"
+                        }
+                      },
+                      "visibility": "internal"
+                    }
+                  ],
+                  "id": 3581,
+                  "initialValue": {
+                    "arguments": [
+                      {
+                        "expression": {
+                          "id": 3578,
+                          "name": "req",
+                          "nodeType": "Identifier",
+                          "overloadedDeclarations": [],
+                          "referencedDeclaration": 3566,
+                          "src": "973:3:27",
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_struct$_ForwardRequest_$4605_calldata_ptr",
+                            "typeString": "struct MinimalForwarder.ForwardRequest calldata"
+                          }
+                        },
+                        "id": 3579,
+                        "isConstant": false,
+                        "isLValue": false,
+                        "isPure": false,
+                        "lValueRequested": false,
+                        "memberName": "to",
+                        "nodeType": "MemberAccess",
+                        "referencedDeclaration": 4596,
+                        "src": "973:6:27",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_address",
+                          "typeString": "address"
+                        }
+                      }
+                    ],
+                    "expression": {
+                      "argumentTypes": [
+                        {
+                          "typeIdentifier": "t_address",
+                          "typeString": "address"
+                        }
+                      ],
+                      "id": 3577,
+                      "name": "IAccessControl",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [],
+                      "referencedDeclaration": 2073,
+                      "src": "958:14:27",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_type$_t_contract$_IAccessControl_$2073_$",
+                        "typeString": "type(contract IAccessControl)"
+                      }
+                    },
+                    "id": 3580,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "kind": "typeConversion",
+                    "lValueRequested": false,
+                    "names": [],
+                    "nodeType": "FunctionCall",
+                    "src": "958:22:27",
+                    "tryCall": false,
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_contract$_IAccessControl_$2073",
+                      "typeString": "contract IAccessControl"
+                    }
+                  },
+                  "nodeType": "VariableDeclarationStatement",
+                  "src": "934:46:27"
+                },
+                {
+                  "assignments": [
+                    3583
+                  ],
+                  "declarations": [
+                    {
+                      "constant": false,
+                      "id": 3583,
+                      "mutability": "mutable",
+                      "name": "hasBypassRole",
+                      "nameLocation": "995:13:27",
+                      "nodeType": "VariableDeclaration",
+                      "scope": 3602,
+                      "src": "990:18:27",
+                      "stateVariable": false,
+                      "storageLocation": "default",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_bool",
+                        "typeString": "bool"
+                      },
+                      "typeName": {
+                        "id": 3582,
+                        "name": "bool",
+                        "nodeType": "ElementaryTypeName",
+                        "src": "990:4:27",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_bool",
+                          "typeString": "bool"
+                        }
+                      },
+                      "visibility": "internal"
+                    }
+                  ],
+                  "id": 3590,
+                  "initialValue": {
+                    "arguments": [
+                      {
+                        "id": 3586,
+                        "name": "BYPASS_SENDER",
+                        "nodeType": "Identifier",
+                        "overloadedDeclarations": [],
+                        "referencedDeclaration": 3562,
+                        "src": "1026:13:27",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_bytes32",
+                          "typeString": "bytes32"
+                        }
+                      },
+                      {
+                        "expression": {
+                          "id": 3587,
+                          "name": "msg",
+                          "nodeType": "Identifier",
+                          "overloadedDeclarations": [],
+                          "referencedDeclaration": 4294967281,
+                          "src": "1041:3:27",
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_magic_message",
+                            "typeString": "msg"
+                          }
+                        },
+                        "id": 3588,
+                        "isConstant": false,
+                        "isLValue": false,
+                        "isPure": false,
+                        "lValueRequested": false,
+                        "memberName": "sender",
+                        "nodeType": "MemberAccess",
+                        "src": "1041:10:27",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_address",
+                          "typeString": "address"
+                        }
+                      }
+                    ],
+                    "expression": {
+                      "argumentTypes": [
+                        {
+                          "typeIdentifier": "t_bytes32",
+                          "typeString": "bytes32"
+                        },
+                        {
+                          "typeIdentifier": "t_address",
+                          "typeString": "address"
+                        }
+                      ],
+                      "expression": {
+                        "id": 3584,
+                        "name": "target",
+                        "nodeType": "Identifier",
+                        "overloadedDeclarations": [],
+                        "referencedDeclaration": 3576,
+                        "src": "1011:6:27",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_contract$_IAccessControl_$2073",
+                          "typeString": "contract IAccessControl"
+                        }
+                      },
+                      "id": 3585,
+                      "isConstant": false,
+                      "isLValue": false,
+                      "isPure": false,
+                      "lValueRequested": false,
+                      "memberName": "hasRole",
+                      "nodeType": "MemberAccess",
+                      "referencedDeclaration": 2044,
+                      "src": "1011:14:27",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_function_external_view$_t_bytes32_$_t_address_$returns$_t_bool_$",
+                        "typeString": "function (bytes32,address) view external returns (bool)"
+                      }
+                    },
+                    "id": 3589,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "kind": "functionCall",
+                    "lValueRequested": false,
+                    "names": [],
+                    "nodeType": "FunctionCall",
+                    "src": "1011:41:27",
+                    "tryCall": false,
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_bool",
+                      "typeString": "bool"
+                    }
+                  },
+                  "nodeType": "VariableDeclarationStatement",
+                  "src": "990:62:27"
+                },
+                {
+                  "condition": {
+                    "id": 3592,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "lValueRequested": false,
+                    "nodeType": "UnaryOperation",
+                    "operator": "!",
+                    "prefix": true,
+                    "src": "1066:14:27",
+                    "subExpression": {
+                      "id": 3591,
+                      "name": "hasBypassRole",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [],
+                      "referencedDeclaration": 3583,
+                      "src": "1067:13:27",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_bool",
+                        "typeString": "bool"
+                      }
+                    },
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_bool",
+                      "typeString": "bool"
+                    }
+                  },
+                  "id": 3595,
+                  "nodeType": "IfStatement",
+                  "src": "1062:32:27",
+                  "trueBody": {
+                    "expression": {
+                      "hexValue": "66616c7365",
+                      "id": 3593,
+                      "isConstant": false,
+                      "isLValue": false,
+                      "isPure": true,
+                      "kind": "bool",
+                      "lValueRequested": false,
+                      "nodeType": "Literal",
+                      "src": "1089:5:27",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_bool",
+                        "typeString": "bool"
+                      },
+                      "value": "false"
+                    },
+                    "functionReturnParameters": 3573,
+                    "id": 3594,
+                    "nodeType": "Return",
+                    "src": "1082:12:27"
+                  }
+                },
+                {
+                  "expression": {
+                    "arguments": [
+                      {
+                        "id": 3598,
+                        "name": "req",
+                        "nodeType": "Identifier",
+                        "overloadedDeclarations": [],
+                        "referencedDeclaration": 3566,
+                        "src": "1125:3:27",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_struct$_ForwardRequest_$4605_calldata_ptr",
+                          "typeString": "struct MinimalForwarder.ForwardRequest calldata"
+                        }
+                      },
+                      {
+                        "id": 3599,
+                        "name": "signature",
+                        "nodeType": "Identifier",
+                        "overloadedDeclarations": [],
+                        "referencedDeclaration": 3568,
+                        "src": "1130:9:27",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_bytes_calldata_ptr",
+                          "typeString": "bytes calldata"
+                        }
+                      }
+                    ],
+                    "expression": {
+                      "argumentTypes": [
+                        {
+                          "typeIdentifier": "t_struct$_ForwardRequest_$4605_calldata_ptr",
+                          "typeString": "struct MinimalForwarder.ForwardRequest calldata"
+                        },
+                        {
+                          "typeIdentifier": "t_bytes_calldata_ptr",
+                          "typeString": "bytes calldata"
+                        }
+                      ],
+                      "expression": {
+                        "id": 3596,
+                        "name": "super",
+                        "nodeType": "Identifier",
+                        "overloadedDeclarations": [],
+                        "referencedDeclaration": 4294967271,
+                        "src": "1112:5:27",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_type$_t_super$_BypassForwarder_$3604_$",
+                          "typeString": "type(contract super BypassForwarder)"
+                        }
+                      },
+                      "id": 3597,
+                      "isConstant": false,
+                      "isLValue": false,
+                      "isPure": false,
+                      "lValueRequested": false,
+                      "memberName": "verify",
+                      "nodeType": "MemberAccess",
+                      "referencedDeclaration": 4686,
+                      "src": "1112:12:27",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_function_internal_view$_t_struct$_ForwardRequest_$4605_calldata_ptr_$_t_bytes_calldata_ptr_$returns$_t_bool_$",
+                        "typeString": "function (struct MinimalForwarder.ForwardRequest calldata,bytes calldata) view returns (bool)"
+                      }
+                    },
+                    "id": 3600,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "kind": "functionCall",
+                    "lValueRequested": false,
+                    "names": [],
+                    "nodeType": "FunctionCall",
+                    "src": "1112:28:27",
+                    "tryCall": false,
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_bool",
+                      "typeString": "bool"
+                    }
+                  },
+                  "functionReturnParameters": 3573,
+                  "id": 3601,
+                  "nodeType": "Return",
+                  "src": "1105:35:27"
+                }
+              ]
+            },
+            "documentation": {
+              "id": 3563,
+              "nodeType": "StructuredDocumentation",
+              "src": "636:176:27",
+              "text": "Verify that the sender has the `BYPASS_SENDER` role at the target contract,\n and verifies that the request is properly signed (See `MinimalForwarder.verify`)."
+            },
+            "functionSelector": "bf5d3bdb",
+            "id": 3603,
+            "implemented": true,
+            "kind": "function",
+            "modifiers": [],
+            "name": "verify",
+            "nameLocation": "826:6:27",
+            "nodeType": "FunctionDefinition",
+            "overrides": {
+              "id": 3570,
+              "nodeType": "OverrideSpecifier",
+              "overrides": [],
+              "src": "900:8:27"
+            },
+            "parameters": {
+              "id": 3569,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 3566,
+                  "mutability": "mutable",
+                  "name": "req",
+                  "nameLocation": "857:3:27",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3603,
+                  "src": "833:27:27",
+                  "stateVariable": false,
+                  "storageLocation": "calldata",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_struct$_ForwardRequest_$4605_calldata_ptr",
+                    "typeString": "struct MinimalForwarder.ForwardRequest"
+                  },
+                  "typeName": {
+                    "id": 3565,
+                    "nodeType": "UserDefinedTypeName",
+                    "pathNode": {
+                      "id": 3564,
+                      "name": "ForwardRequest",
+                      "nodeType": "IdentifierPath",
+                      "referencedDeclaration": 4605,
+                      "src": "833:14:27"
+                    },
+                    "referencedDeclaration": 4605,
+                    "src": "833:14:27",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_struct$_ForwardRequest_$4605_storage_ptr",
                       "typeString": "struct MinimalForwarder.ForwardRequest"
                     }
                   },
@@ -7481,8 +8186,8 @@
       "transactionHash": "0x2da5e85f4117a58c0c484213c368300f5dbda3f58e59953f3132544f80a495e5"
     }
   },
-  "schemaVersion": "3.4.8",
-  "updatedAt": "2022-07-15T15:24:50.573Z",
+  "schemaVersion": "3.4.4",
+  "updatedAt": "2022-07-29T10:20:24.146Z",
   "devdoc": {
     "kind": "dev",
     "methods": {},

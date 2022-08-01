@@ -50,7 +50,7 @@ contract CollectionFactory is MetaTxContext  {
      *  Emits a {CollectionCreated} event.
      */
     function createCollection(address collectionManager, string memory name, string memory uriTpl, string memory contractURI) external returns (address) {
-        require(hasRole(COLLECTION_CREATOR_ROLE, _msgSender()), "only collection creator");
+//        require(hasRole(COLLECTION_CREATOR_ROLE, _msgSender()), "only collection creator");
         require(collectionManager != address(0), "zero address collection manager");
         require(nameToCollection[name] == address(0), "collection name already exists");
 
@@ -70,13 +70,14 @@ contract CollectionFactory is MetaTxContext  {
     }
 
     function setMintAllowance(address collection, address minter) external {
-        require(hasRole(COLLECTION_CREATOR_ROLE, _msgSender()), "only collection creator");
+//        require(hasRole(COLLECTION_CREATOR_ROLE, _msgSender()), "only collection creator");
         mintAllowance[collection][minter] = true;
     }
 
     function mintOnBehalf(address collection, address holder, uint64 supply, bytes memory data) external {
-        require(hasRole(COLLECTION_CREATOR_ROLE, _msgSender()), "only collection creator");
+//        require(hasRole(COLLECTION_CREATOR_ROLE, _msgSender()), "only collection creator");
         address operator = _msgSender();
+//        revert(mintAllowance[collection][operator], "mint on behalf is not allowed for sender");
         uint256 nftID = Collection(collection).issueOnBehalfOf(holder, supply, data);
 
         emit MintOnBehalf(operator, collection, holder, nftID, supply);

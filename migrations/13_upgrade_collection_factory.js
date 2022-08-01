@@ -4,7 +4,7 @@ const ctx = require("./deployment_context.json");
 const log = console.log;
 
 module.exports = async function (deployer, network, accounts) {
-    const collectionFactory = await CollectionFactory.at(ctx.dev.deploys.CollectionFactory);
+    const collectionFactory = await CollectionFactory.deployed();
 
     log("Operating on CollectionFactory contract", collectionFactory.address);
 
