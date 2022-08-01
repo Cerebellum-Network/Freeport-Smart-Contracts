@@ -54,7 +54,8 @@ module.exports = {
           phrase: mnemonic
         },
         addressIndex: 1,
-        providerOrUrl:  `https://matic-mumbai.chainstacklabs.com`,
+        providerOrUrl: "https://polygon-mumbai.infura.io/v3/" + infuraProjectId,
+        //providerOrUrl:  `https://matic-mumbai.chainstacklabs.com`,
         //providerOrUrl:  `https://rpc-mumbai.maticvigil.com`, // Not working with upgradeProxy
         //providerOrUrl:  `https://rpc-mumbai.matic.today`,
         chainId: 80001,
@@ -67,7 +68,7 @@ module.exports = {
       skipDryRun: true,
       chainId: 80001,
       gas: 5e6,
-      gasPrice: 4e9,
+      gasPrice: 40e9,
     },
     //polygon mainnet
     polygon_mainnet: {
