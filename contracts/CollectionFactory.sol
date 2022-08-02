@@ -35,6 +35,10 @@ contract CollectionFactory is MetaTxContext  {
      */
     mapping (address => mapping(address => bool)) mintAllowance;
 
+    /** Allowance mapping for mint on behalf for each Collection.
+     */
+    bytes32 public constant COLLECTION_MANAGER_ROLE = keccak256("COLLECTION_MANAGER_ROLE");
+
     /** An event emitted when new collection is created.
      *
      * Contains unique name of collection and its address.
@@ -58,7 +62,6 @@ contract CollectionFactory is MetaTxContext  {
         collection.initialize(address(this), collectionManager, name, uriTpl, contractURI, freeport, nftAttachment);
 
         address collAddr = address(collection);
-        mintAllowance[collAddr][collectionManager] = true;
 
         addressProxies[collectionCounter] = address(collection);
         collectionCounter = collectionCounter + 1;
@@ -69,15 +72,9 @@ contract CollectionFactory is MetaTxContext  {
         return address(collection);
     }
 
-    function setMintAllowance(address collection, address minter) external {
-//        require(hasRole(COLLECTION_CREATOR_ROLE, _msgSender()), "only collection creator");
-        mintAllowance[collection][minter] = true;
-    }
-
     function mintOnBehalf(address collection, address holder, uint64 supply, bytes memory data) external {
-//        require(hasRole(COLLECTION_CREATOR_ROLE, _msgSender()), "only collection creator");
         address operator = _msgSender();
-//        revert(mintAllowance[collection][operator], "mint on behalf is not allowed for sender");
+        require(Collection(collection).hasRole(COLLECTION_MANAGER_ROLE, operator), "sender is not collection manager");
         uint256 nftID = Collection(collection).issueOnBehalfOf(holder, supply, data);
 
         emit MintOnBehalf(operator, collection, holder, nftID, supply);

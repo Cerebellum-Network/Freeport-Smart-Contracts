@@ -22,6 +22,7 @@ contract Collection is OpenSeaCollection, CollectionRoyalties, CollectionIssuanc
 
         _setupRole(DEFAULT_ADMIN_ROLE, admin);
         _setupRole(COLLECTION_MANAGER_ROLE, manager);
+        _setupRole(COLLECTION_MANAGER_ROLE, admin);
     }
 
     /**
