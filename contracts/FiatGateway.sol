@@ -161,6 +161,7 @@ contract FiatGateway is Upgradeable, ERC1155HolderUpgradeable {
         address buyer,
         address seller,
         uint nftId,
+        uint quantity,
         uint expectedPriceOrZero,
         uint nonce)
     public onlyRole(PAYMENT_SERVICE) {
@@ -168,10 +169,9 @@ contract FiatGateway is Upgradeable, ERC1155HolderUpgradeable {
         totalPenniesReceived += penniesReceived;
 
         uint boughtTokens = penniesReceived * cereUnitsPerPenny;
-        require(boughtTokens >= expectedPriceOrZero, "Insufficient payment");
+        require(boughtTokens >= expectedPriceOrZero * quantity, "Insufficient payment");
 
-        uint amount = 1;
-        freeport.takeOffer(buyer, seller, nftId, expectedPriceOrZero, amount);
+        freeport.takeOffer(buyer, seller, nftId, expectedPriceOrZero, quantity);
     }
 
     /** Guarantee that a version of Solidity with safe math is used.
