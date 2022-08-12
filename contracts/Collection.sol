@@ -1,5 +1,6 @@
 pragma solidity ^0.8.0;
 
+import "@openzeppelin/contracts/utils/Strings.sol";
 import "./freeportParts/collections/CollectionRoyalties.sol";
 import "./freeportParts/collections/CollectionIssuance.sol";
 import "./freeportParts/collections/CollectionNFTAttachment.sol";
@@ -11,6 +12,9 @@ import "./freeportParts/BaseTransferOperator.sol";
  *
  */
 contract Collection is OpenSeaCollection, CollectionRoyalties, CollectionIssuance, CollectionNFTAttachment, BaseTransferOperator, BaseNFT {
+
+    using Strings for uint256;
+
     function initialize(address admin, address manager, string memory _name, string memory _uri, string memory __contractURI, Freeport _freeport, NFTAttachment _nftAttachment) public initializer {
         __OpenSeaCollection_init(_name, __contractURI);
         __CollectionRoyalties_init(_freeport);
@@ -18,7 +22,7 @@ contract Collection is OpenSeaCollection, CollectionRoyalties, CollectionIssuanc
         __CollectionIssuance_init();
         __BaseTransferOperator_init();
         __BaseNFT_init();
-        if (bytes(_uri).length == 0) _setURI(_uri);
+        if (bytes(_uri).length != 0) _setURI(_uri);
 
         _setupRole(DEFAULT_ADMIN_ROLE, admin);
         _setupRole(COLLECTION_MANAGER_ROLE, manager);
@@ -49,5 +53,10 @@ contract Collection is OpenSeaCollection, CollectionRoyalties, CollectionIssuanc
     function isApprovedForAll(address account, address operator)
     public view virtual override(BaseTransferOperator, ERC1155Upgradeable) returns (bool) {
         return super.isApprovedForAll(account, operator);
+    }
+
+    /** @dev URI override for OpenSea traits compatibility. */
+    function uri(uint256 nftId) override public view returns (string memory) {
+        return string(abi.encodePacked(ERC1155Upgradeable.uri(nftId), Strings.toString(nftId)));
     }
 }
