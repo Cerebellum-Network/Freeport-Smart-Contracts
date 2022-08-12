@@ -6,6 +6,8 @@ import "./freeportParts/collections/CollectionIssuance.sol";
 import "./freeportParts/collections/CollectionNFTAttachment.sol";
 import "./freeportParts/OpenSeaCollection.sol";
 import "./freeportParts/BaseTransferOperator.sol";
+import "./Marketplace.sol";
+import "./Auction.sol";
 
 
 /** This this contract describes the collection of NFTs associated with a particular user.
@@ -15,7 +17,7 @@ contract Collection is OpenSeaCollection, CollectionRoyalties, CollectionIssuanc
 
     using Strings for uint256;
 
-    function initialize(address admin, address manager, string memory _name, string memory _uri, string memory __contractURI, Freeport _freeport, NFTAttachment _nftAttachment) public initializer {
+    function initialize(address admin, address manager, string memory _name, string memory _uri, string memory __contractURI, Freeport _freeport, NFTAttachment _nftAttachment, Marketplace _marketplace, Auction _auction) public initializer {
         __OpenSeaCollection_init(_name, __contractURI);
         __CollectionRoyalties_init(_freeport);
         __CollectionNFTAttachment_init(_nftAttachment);
@@ -23,6 +25,9 @@ contract Collection is OpenSeaCollection, CollectionRoyalties, CollectionIssuanc
         __BaseTransferOperator_init();
         __BaseNFT_init();
         if (bytes(_uri).length != 0) _setURI(_uri);
+
+        _setupRole(TRANSFER_OPERATOR, address(_marketplace));
+        _setupRole(TRANSFER_OPERATOR, address(_auction));
 
         _setupRole(DEFAULT_ADMIN_ROLE, admin);
         _setupRole(COLLECTION_MANAGER_ROLE, manager);

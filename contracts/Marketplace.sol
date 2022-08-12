@@ -2,6 +2,7 @@ pragma solidity ^0.8.0;
 
 import "./freeportParts/BaseERC20Adapter.sol";
 import "./freeportParts/delegators/FreeportDelegator.sol";
+import "./freeportParts/HasGlobalNftId.sol";
 import "./Collection.sol";
 
 /**

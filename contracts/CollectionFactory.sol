@@ -2,16 +2,20 @@ pragma solidity ^0.8.0;
 
 import "./freeportParts/MetaTxContext.sol";
 import "./Collection.sol";
+import "./Marketplace.sol";
+import "./Auction.sol";
 
 /** This is a contract for creating standalone contracts (collections) for users.
  *
  */
 contract CollectionFactory is MetaTxContext  {
-    function initialize(Freeport _freeport, NFTAttachment _nftAttachment) public initializer {
+    function initialize(Freeport _freeport, NFTAttachment _nftAttachment, Marketplace _marketplace, Auction _auction) public initializer {
         __MetaTxContext_init();
 
         freeport = _freeport;
         nftAttachment = _nftAttachment;
+        marketplace = _marketplace;
+        auction = _auction;
     }
 
     // Standalone user collections mapped to its names.
@@ -21,6 +25,10 @@ contract CollectionFactory is MetaTxContext  {
     Freeport public freeport;
     // The address of NFTAttachment contract.
     NFTAttachment public nftAttachment;
+    // The address of Marketplace contract.
+    Marketplace public marketplace;
+    // The address of Auction contract.
+    Auction public auction;
 
     // Collection id to address.
     mapping(uint256 => address) private addressProxies;
@@ -59,7 +67,7 @@ contract CollectionFactory is MetaTxContext  {
         require(nameToCollection[name] == address(0), "collection name already exists");
 
         Collection collection = new Collection();
-        collection.initialize(address(this), collectionManager, name, uriTpl, contractURI, freeport, nftAttachment);
+        collection.initialize(address(this), collectionManager, name, uriTpl, contractURI, freeport, nftAttachment, marketplace, auction);
 
         address collAddr = address(collection);
 
