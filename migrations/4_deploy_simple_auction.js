@@ -7,7 +7,10 @@ module.exports = async function (deployer, network, accounts) {
     const freeport = await Freeport.deployed();
     log("Operating on Freeport contract", freeport.address);
 
-    const auction = await deployProxy(SimpleAuction, [freeport.address], {deployer, kind: "uups"});
+    const auctionUSDC = await deployProxy(SimpleAuction, [freeport.address, config.USDC], {deployer, kind: "uups"});
+    log("Deployed SimpleAuction proxy", auction.address);
+
+    const auctionCERE = await deployProxy(SimpleAuction, [freeport.address, config.CERE], {deployer, kind: "uups"});
     log("Deployed SimpleAuction proxy", auction.address);
 
     const TRANSFER_OPERATOR = await freeport.TRANSFER_OPERATOR.call();

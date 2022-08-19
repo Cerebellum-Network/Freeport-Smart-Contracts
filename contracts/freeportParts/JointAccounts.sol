@@ -14,9 +14,9 @@ including if that owner is itself a JA.
 
 [An implementation that distributes to all owners at once.]
 */
-abstract contract JointAccounts is Issuance {
+contract JointAccounts {
     function __JointAccounts_init() internal {
-        __Issuance_init();
+
     }
 
     /** The total fraction representing 100% of an account.
@@ -30,7 +30,7 @@ abstract contract JointAccounts is Issuance {
         uint256 fraction;
     }
 
-    mapping(address => JointAccountShare[]) public jointAccounts;
+    JointAccountShare[] public shares;
 
     /** Notify that a Joint Account was created at the address `account`.
      *
@@ -47,15 +47,10 @@ abstract contract JointAccounts is Issuance {
      *
      * Anyone can create Joint Accounts including any owners.
      */
-    function createJointAccount(address[] memory owners, uint256[] memory fractions)
-    public returns (address) {
+    constructor(address[] memory owners, uint256[] memory fractions)
+    public {
         require(owners.length == fractions.length, "Arrays of owners and fractions must have the same length");
         require(owners.length <= MAX_JOINT_ACCOUNT_SHARES, "Too many shares");
-
-        address account = makeAddressOfJointAccount(owners, fractions);
-        JointAccountShare[] storage newShares = jointAccounts[account];
-
-        require(newShares.length == 0, "The account already exists");
 
         uint256 totalFraction = 0;
         for (uint256 i = 0; i < owners.length; i++) {
@@ -63,14 +58,12 @@ abstract contract JointAccounts is Issuance {
             uint256 fraction = fractions[i];
             require(owner != address(0) && fraction != 0, "0 values are not permitted");
 
-            newShares.push(JointAccountShare({owner : owner, fraction : fraction}));
+            shares.push(JointAccountShare({owner : owner, fraction : fraction}));
             totalFraction += fraction;
 
             emit JointAccountShareCreated(account, owner, fraction);
         }
         require(totalFraction == BASIS_POINTS, "Total fractions must be 10,000");
-
-        return account;
     }
 
     /** Distribute all tokens available to all owners of a Joint Account.
@@ -79,15 +72,14 @@ abstract contract JointAccounts is Issuance {
      *
      * Anyone can trigger the distribution.
      */
-    function distributeJointAccount(address account)
+    function distributeJointAccount(ERC20 erc20)
     public {
-        uint accountBalance = balanceOf(account, CURRENCY);
-        JointAccountShare[] storage shares = jointAccounts[account];
+        uint accountBalance = erc20.balanceOf(address(this));
 
         for (uint i = 0; i < shares.length; i++) {
             JointAccountShare storage share = shares[i];
             uint256 ownerBalance = accountBalance * share.fraction / BASIS_POINTS;
-            sendShare(account, share.owner, ownerBalance);
+            erc20.transfer(share.owner, ownerBalance);
         }
     }
 

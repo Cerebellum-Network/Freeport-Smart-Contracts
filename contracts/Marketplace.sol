@@ -91,13 +91,16 @@ contract Marketplace is BaseERC20Adapter, FreeportDelegator, HasGlobalNftId {
 
         uint totalPrice = price * amount;
         // Deposit ERC20 from payer. This verifies the intent of the payer.
-        deposit(totalPrice);
-        // Pay the seller. This verifies the intent of the payer.
-        safeTransferFrom(payer, seller, CURRENCY, totalPrice, "");
+        currencyContract.transferFrom(payer, address(this), totalPrice);
 
         // Take a fee from the seller (really a cut of the above payment).
-        uint totalFee = freeport.captureFee(seller, nftId, price, amount);
+        uint (totalFee, feeDestination) = freeport.calculateFee(seller, nftId, price, amount);
         require(totalFee <= totalPrice, "Cannot take more fees than the price.");
+        //currencyContract.transferFrom(address(this), feeDestination, totalFee);
+        freeport.transferToJA(address(this), feeDestination, totalFee);
+
+        // Pay the seller. This verifies the intent of the payer.
+        currencyContract.transferFrom(address(this), seller, totalPrice - totalFee);
 
         // Move the NFTs to the buyer.
         //todo add supportInterface to collection SC

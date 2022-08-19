@@ -42,13 +42,15 @@ contract Auction is /* AccessControl, */ MetaTxContext, ERC1155HolderUpgradeable
     }
 
     Freeport public freeport;
+    ERC20 public currencyContract;
 
     /** Initialize this contract and its dependencies.
      */
-    function initialize(Freeport _freeport) public initializer {
+    function initialize(Freeport _freeport, ERC20 _currencyContract) public initializer {
         __MetaTxContext_init();
         __ERC1155Holder_init();
         freeport = _freeport;
+        currencyContract = _currencyContract;
     }
 
     /** Initialize this contract after version 2.0.0.
@@ -239,7 +241,7 @@ contract Auction is /* AccessControl, */ MetaTxContext, ERC1155HolderUpgradeable
         address from,
         uint amount
     ) internal {
-        freeport.currencyContract().transferFrom(from, address(this), amount);
+        currencyContract.transferFrom(from, address(this), amount);
     }
 
     /** Return the USDC deposit.
@@ -248,7 +250,7 @@ contract Auction is /* AccessControl, */ MetaTxContext, ERC1155HolderUpgradeable
         address to,
         uint amount
     ) internal {
-        freeport.currencyContract().transfer(to, amount);
+        currencyContract.transfer(to, amount);
     }
 
     /** Convert the USDC deposit into Freeport-USDC and pay out to the seller.
@@ -259,7 +261,6 @@ contract Auction is /* AccessControl, */ MetaTxContext, ERC1155HolderUpgradeable
         address to,
         uint amount
     ) internal {
-        freeport.deposit(amount);
-        freeport.transferFrom(address(this), to, CURRENCY, amount);
+        currencyContract.transfer(to, amount);
     }
 }
