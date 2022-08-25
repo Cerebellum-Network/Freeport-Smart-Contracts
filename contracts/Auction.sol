@@ -83,6 +83,10 @@ contract Auction is /* AccessControl, */ MetaTxContext, ERC1155HolderUpgradeable
      */
     mapping(address => mapping(uint256 => Bid)) public sellerNftBids;
 
+    /** Tracking amount of collateral NFTs.
+     */
+    mapping(address => mapping(uint256 => uint256)) public bidCollateral;
+
     /**
      * Note: `price` is the minimum price minus 10%, because a bid must be 10% higher, resulting in the requested minimum price.
      */
@@ -149,6 +153,8 @@ contract Auction is /* AccessControl, */ MetaTxContext, ERC1155HolderUpgradeable
         // Use the TRANSFER_OPERATOR role.
         (address issuer, uint32 innerId, uint64 supply) = _parseNftId(nftId);
         Collection(issuer).transferFrom(seller, address(this), nftId, 1);
+        // Tracking amount of collateral NFTs
+        bidCollateral[seller][nftId] += 1;
 
         emit StartAuction(seller, nftId, price, closeTimeSec, secured);
     }
@@ -220,6 +226,8 @@ contract Auction is /* AccessControl, */ MetaTxContext, ERC1155HolderUpgradeable
             // Transfer the NFT to the buyer.
             (address issuer, uint32 innerId, uint64 supply) = _parseNftId(nftId);
             Collection(issuer).transferFrom(address(this), buyer, nftId, 1);
+            // Tracking amount of collateral NFTs
+            bidCollateral[seller][nftId] -= 1;
 
             // Collect royalty.
             try freeport.captureFee(seller, nftId, price, 1) {
@@ -229,6 +237,9 @@ contract Auction is /* AccessControl, */ MetaTxContext, ERC1155HolderUpgradeable
             // give back the NFT to the seller.
             (address issuer, uint32 innerId, uint64 supply) = _parseNftId(nftId);
             Collection(issuer).transferFrom(address(this), seller, nftId, 1);
+
+            // Tracking amount of collateral NFTs
+            bidCollateral[seller][nftId] -= 1;
         }
 
         emit SettleAuction(seller, nftId, price, buyer);

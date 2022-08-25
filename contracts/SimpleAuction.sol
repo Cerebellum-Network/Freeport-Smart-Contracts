@@ -81,6 +81,10 @@ contract SimpleAuction is /* AccessControl, */ MetaTxContext, ERC1155HolderUpgra
      */
     mapping(address => mapping(uint256 => Bid)) public sellerNftBids;
 
+    /** Tracking amount of collateral NFTs.
+     */
+    mapping(address => mapping(uint256 => uint256)) public bidCollateral;
+
     /**
      * Note: `price` is the minimum price minus 10%, because a bid must be 10% higher, resulting in the requested minimum price.
      */
@@ -146,6 +150,8 @@ contract SimpleAuction is /* AccessControl, */ MetaTxContext, ERC1155HolderUpgra
         // Take the NFT from the seller.
         // Use the TRANSFER_OPERATOR role.
         freeport.transferFrom(seller, address(this), nftId, 1);
+        // Tracking amount of collateral NFTs
+        bidCollateral[seller][nftId] += 1;
 
         emit StartAuction(seller, nftId, price, closeTimeSec, secured);
     }
@@ -216,6 +222,8 @@ contract SimpleAuction is /* AccessControl, */ MetaTxContext, ERC1155HolderUpgra
 
             // Transfer the NFT to the buyer.
             freeport.transferFrom(address(this), buyer, nftId, 1);
+            // Tracking amount of collateral NFTs
+            bidCollateral[seller][nftId] -= 1;
 
             // Collect royalty.
             try freeport.captureFee(seller, nftId, price, 1) {
@@ -224,6 +232,9 @@ contract SimpleAuction is /* AccessControl, */ MetaTxContext, ERC1155HolderUpgra
             // Otherwise, there was no buyer,
             // give back the NFT to the seller.
             freeport.transferFrom(address(this), seller, nftId, 1);
+
+            // Tracking amount of collateral NFTs
+            bidCollateral[seller][nftId] -= 1;
         }
 
         emit SettleAuction(seller, nftId, price, buyer);
