@@ -51,6 +51,10 @@ contract Auction is /* AccessControl, */ MetaTxContext, ERC1155HolderUpgradeable
         freeport = _freeport;
     }
 
+    function initialize_update(Freeport _freeport) external onlyRole(DEFAULT_ADMIN_ROLE) {
+        freeport = _freeport;
+    }
+
     /** Initialize this contract after version 2.0.0.
      *
      * Allow deposit of USDC into Freeport.
@@ -198,9 +202,6 @@ contract Auction is /* AccessControl, */ MetaTxContext, ERC1155HolderUpgradeable
 
         // Check that the auction exists.
         require(bid.closeTimeSec != 0, "the auction must exist");
-
-        // Check that the auction is closed.
-        require(bid.closeTimeSec <= block.timestamp, "the auction must be closed");
 
         address buyer = bid.buyer;
         uint256 price = bid.price;
