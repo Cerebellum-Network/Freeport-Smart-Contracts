@@ -18,6 +18,13 @@ contract CollectionFactory is MetaTxContext  {
         auction = _auction;
     }
 
+    function initialize_update(Freeport _freeport, NFTAttachment _nftAttachment, Marketplace _marketplace, Auction _auction) external onlyRole(DEFAULT_ADMIN_ROLE) {
+        freeport = _freeport;
+        nftAttachment = _nftAttachment;
+        marketplace = _marketplace;
+        auction = _auction;
+    }
+
     // Standalone user collections mapped to its names.
     mapping(string => address) nameToCollection;
 
@@ -25,10 +32,6 @@ contract CollectionFactory is MetaTxContext  {
     Freeport public freeport;
     // The address of NFTAttachment contract.
     NFTAttachment public nftAttachment;
-    // The address of Marketplace contract.
-    Marketplace public marketplace;
-    // The address of Auction contract.
-    Auction public auction;
 
     // Collection id to address.
     mapping(uint256 => address) private addressProxies;
@@ -46,6 +49,11 @@ contract CollectionFactory is MetaTxContext  {
     /** Allowance mapping for mint on behalf for each Collection.
      */
     bytes32 public constant COLLECTION_MANAGER_ROLE = keccak256("COLLECTION_MANAGER_ROLE");
+
+    // The address of Marketplace contract.
+    Marketplace public marketplace;
+    // The address of Auction contract.
+    Auction public auction;
 
     /** An event emitted when new collection is created.
      *

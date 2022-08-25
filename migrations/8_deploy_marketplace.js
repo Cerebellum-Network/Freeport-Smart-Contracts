@@ -8,6 +8,11 @@ module.exports = async function (deployer, network, accounts) {
     const freeport = await Freeport.at(ctx.dev.deploys.Freeport);
     log("Operating Marketplace with Freeport contract", freeport.address);
 
-    const cf = await deployProxy(Marketplace, [freeport.address], {deployer, kind: "uups"});
-    log("Deployed Marketplace proxy", cf.address);
+    const marketplace = await deployProxy(Marketplace, [freeport.address], {deployer, kind: "uups"});
+    log("Deployed Marketplace proxy", marketplace.address);
+
+    const TRANSFER_OPERATOR = await freeport.TRANSFER_OPERATOR.call();
+
+    log("Give the permission to make transfers to Auction.")
+    await freeport.grantRole(TRANSFER_OPERATOR, marketplace.address);
 };

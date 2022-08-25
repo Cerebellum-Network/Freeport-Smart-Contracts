@@ -1,9 +1,10 @@
 const FiatGateway = artifacts.require("FiatGateway");
 const {upgradeProxy} = require('@openzeppelin/truffle-upgrades');
+const ctx = require("./deployment_context.json");
 const log = console.log;
 
 module.exports = async function (deployer, network, accounts) {
-    const gateway = await FiatGateway.deployed();
+    const gateway = await FiatGateway.at(ctx.dev.deploys.FiatGateway);
     log("Operating on FiatGateway contract", gateway.address);
 
     try {

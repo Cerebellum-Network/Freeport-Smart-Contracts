@@ -60,6 +60,16 @@ contract Collection is OpenSeaCollection, CollectionRoyalties, CollectionIssuanc
         return super.isApprovedForAll(account, operator);
     }
 
+    /**
+     * @dev Wrapper around {IERC1155-balanceOf}.
+     *
+     * Convenient way of getting NFT balance.
+     */
+    function balanceOfGlobalNftId(address account, uint256 nftId) public view returns (uint256) {
+        (address issuer, uint32 innerId, uint64 supply) = _parseNftId(nftId);
+        return ERC1155Upgradeable.balanceOf(account, innerId);
+    }
+
     /** @dev URI override for OpenSea traits compatibility. */
     function uri(uint256 nftId) override public view returns (string memory) {
         return string(abi.encodePacked(ERC1155Upgradeable.uri(nftId), Strings.toString(nftId)));

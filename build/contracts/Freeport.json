@@ -405,8 +405,7 @@
         }
       ],
       "stateMutability": "view",
-      "type": "function",
-      "constant": true
+      "type": "function"
     },
     {
       "inputs": [],
@@ -419,8 +418,7 @@
         }
       ],
       "stateMutability": "view",
-      "type": "function",
-      "constant": true
+      "type": "function"
     },
     {
       "inputs": [],
@@ -433,8 +431,7 @@
         }
       ],
       "stateMutability": "view",
-      "type": "function",
-      "constant": true
+      "type": "function"
     },
     {
       "inputs": [],
@@ -447,8 +444,7 @@
         }
       ],
       "stateMutability": "view",
-      "type": "function",
-      "constant": true
+      "type": "function"
     },
     {
       "inputs": [],
@@ -461,8 +457,7 @@
         }
       ],
       "stateMutability": "view",
-      "type": "function",
-      "constant": true
+      "type": "function"
     },
     {
       "inputs": [],
@@ -475,8 +470,7 @@
         }
       ],
       "stateMutability": "view",
-      "type": "function",
-      "constant": true
+      "type": "function"
     },
     {
       "inputs": [],
@@ -489,8 +483,7 @@
         }
       ],
       "stateMutability": "view",
-      "type": "function",
-      "constant": true
+      "type": "function"
     },
     {
       "inputs": [
@@ -514,8 +507,7 @@
         }
       ],
       "stateMutability": "view",
-      "type": "function",
-      "constant": true
+      "type": "function"
     },
     {
       "inputs": [
@@ -539,8 +531,7 @@
         }
       ],
       "stateMutability": "view",
-      "type": "function",
-      "constant": true
+      "type": "function"
     },
     {
       "inputs": [
@@ -564,8 +555,7 @@
         }
       ],
       "stateMutability": "view",
-      "type": "function",
-      "constant": true
+      "type": "function"
     },
     {
       "inputs": [
@@ -679,8 +669,7 @@
         }
       ],
       "stateMutability": "view",
-      "type": "function",
-      "constant": true
+      "type": "function"
     },
     {
       "inputs": [
@@ -730,8 +719,7 @@
         }
       ],
       "stateMutability": "view",
-      "type": "function",
-      "constant": true
+      "type": "function"
     },
     {
       "inputs": [
@@ -760,8 +748,7 @@
         }
       ],
       "stateMutability": "pure",
-      "type": "function",
-      "constant": true
+      "type": "function"
     },
     {
       "inputs": [
@@ -785,8 +772,7 @@
         }
       ],
       "stateMutability": "view",
-      "type": "function",
-      "constant": true
+      "type": "function"
     },
     {
       "inputs": [
@@ -805,8 +791,7 @@
         }
       ],
       "stateMutability": "view",
-      "type": "function",
-      "constant": true
+      "type": "function"
     },
     {
       "inputs": [
@@ -850,8 +835,7 @@
         }
       ],
       "stateMutability": "view",
-      "type": "function",
-      "constant": true
+      "type": "function"
     },
     {
       "inputs": [
@@ -890,8 +874,7 @@
         }
       ],
       "stateMutability": "view",
-      "type": "function",
-      "constant": true
+      "type": "function"
     },
     {
       "inputs": [
@@ -933,8 +916,7 @@
         }
       ],
       "stateMutability": "view",
-      "type": "function",
-      "constant": true
+      "type": "function"
     },
     {
       "inputs": [
@@ -958,8 +940,7 @@
         }
       ],
       "stateMutability": "view",
-      "type": "function",
-      "constant": true
+      "type": "function"
     },
     {
       "inputs": [
@@ -978,8 +959,7 @@
         }
       ],
       "stateMutability": "view",
-      "type": "function",
-      "constant": true
+      "type": "function"
     },
     {
       "inputs": [
@@ -998,8 +978,7 @@
         }
       ],
       "stateMutability": "view",
-      "type": "function",
-      "constant": true
+      "type": "function"
     },
     {
       "inputs": [
@@ -1052,8 +1031,7 @@
         }
       ],
       "stateMutability": "view",
-      "type": "function",
-      "constant": true
+      "type": "function"
     },
     {
       "inputs": [
@@ -1095,8 +1073,7 @@
         }
       ],
       "stateMutability": "pure",
-      "type": "function",
-      "constant": true
+      "type": "function"
     },
     {
       "inputs": [
@@ -1279,8 +1256,7 @@
         }
       ],
       "stateMutability": "view",
-      "type": "function",
-      "constant": true
+      "type": "function"
     },
     {
       "inputs": [
@@ -1372,8 +1348,7 @@
       "name": "upgradeToAndCall",
       "outputs": [],
       "stateMutability": "payable",
-      "type": "function",
-      "payable": true
+      "type": "function"
     },
     {
       "inputs": [
@@ -1392,8 +1367,7 @@
         }
       ],
       "stateMutability": "view",
-      "type": "function",
-      "constant": true
+      "type": "function"
     },
     {
       "inputs": [
@@ -25806,16 +25780,16 @@
         1519
       ],
       "BaseNFT": [
-        6786
+        6848
       ],
       "ContextUpgradeable": [
         1564
       ],
       "Currency": [
-        6934
+        6996
       ],
       "ERC1155Upgradeable": [
-        10277
+        10339
       ],
       "ERC165Upgradeable": [
         2017
@@ -25824,10 +25798,10 @@
         829
       ],
       "ERC20Adapter": [
-        7062
+        7124
       ],
       "Freeport": [
-        5114
+        5176
       ],
       "IAccessControlUpgradeable": [
         44
@@ -25854,16 +25828,16 @@
         885
       ],
       "Issuance": [
-        7429
+        7491
       ],
       "JointAccounts": [
-        7773
+        7835
       ],
       "MetaTxContext": [
-        7850
+        7912
       ],
       "SimpleExchange": [
-        8130
+        8192
       ],
       "StorageSlotUpgradeable": [
         1624
@@ -25872,23 +25846,23 @@
         1827
       ],
       "TransferFees": [
-        8746
+        8808
       ],
       "TransferOperator": [
-        8790
+        8852
       ],
       "UUPSUpgradeable": [
         959
       ],
       "Upgradeable": [
-        8831
+        8893
       ]
     },
-    "id": 5115,
+    "id": 5177,
     "nodeType": "SourceUnit",
     "nodes": [
       {
-        "id": 5099,
+        "id": 5161,
         "literals": [
           "solidity",
           "^",
@@ -25901,11 +25875,11 @@
       {
         "absolutePath": "project:/contracts/freeportParts/SimpleExchange.sol",
         "file": "./freeportParts/SimpleExchange.sol",
-        "id": 5100,
+        "id": 5162,
         "nameLocation": "-1:-1:-1",
         "nodeType": "ImportDirective",
-        "scope": 5115,
-        "sourceUnit": 8131,
+        "scope": 5177,
+        "sourceUnit": 8193,
         "src": "25:44:32",
         "symbolAliases": [],
         "unitAlias": ""
@@ -25915,13 +25889,13 @@
         "baseContracts": [
           {
             "baseName": {
-              "id": 5102,
+              "id": 5164,
               "name": "SimpleExchange",
               "nodeType": "IdentifierPath",
-              "referencedDeclaration": 8130,
+              "referencedDeclaration": 8192,
               "src": "597:14:32"
             },
-            "id": 5103,
+            "id": 5165,
             "nodeType": "InheritanceSpecifier",
             "src": "597:14:32"
           }
@@ -25929,27 +25903,27 @@
         "contractDependencies": [],
         "contractKind": "contract",
         "documentation": {
-          "id": 5101,
+          "id": 5163,
           "nodeType": "StructuredDocumentation",
           "src": "71:325:32",
           "text": "Main contract, including all components.\n- Hold and transfer NFTs using ERC1155.\n- Support atomic exchanges of NFTs for currency.\n- Issuance of NFTs with fixed supply.\n- Joint Accounts that distribute their funds over multiple owners.\n- Capture royalties on primary and secondary transfers, configurable per NFT type."
         },
         "fullyImplemented": true,
-        "id": 5114,
+        "id": 5176,
         "linearizedBaseContracts": [
-          5114,
-          8130,
-          8746,
-          7773,
-          7429,
-          7062,
-          8790,
-          6934,
-          6786,
-          7850,
-          8831,
+          5176,
+          8192,
+          8808,
+          7835,
+          7491,
+          7124,
+          8852,
+          6996,
+          6848,
+          7912,
+          8893,
           395,
-          10277,
+          10339,
           1137,
           1122,
           2017,
@@ -25966,7 +25940,7 @@
         "nodes": [
           {
             "body": {
-              "id": 5112,
+              "id": 5174,
               "nodeType": "Block",
               "src": "723:40:32",
               "statements": [
@@ -25975,18 +25949,18 @@
                     "arguments": [],
                     "expression": {
                       "argumentTypes": [],
-                      "id": 5109,
+                      "id": 5171,
                       "name": "__SimpleExchange_init",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
-                      "referencedDeclaration": 7950,
+                      "referencedDeclaration": 8012,
                       "src": "733:21:32",
                       "typeDescriptions": {
                         "typeIdentifier": "t_function_internal_nonpayable$__$returns$__$",
                         "typeString": "function ()"
                       }
                     },
-                    "id": 5110,
+                    "id": 5172,
                     "isConstant": false,
                     "isLValue": false,
                     "isPure": false,
@@ -26001,28 +25975,28 @@
                       "typeString": "tuple()"
                     }
                   },
-                  "id": 5111,
+                  "id": 5173,
                   "nodeType": "ExpressionStatement",
                   "src": "733:23:32"
                 }
               ]
             },
             "documentation": {
-              "id": 5104,
+              "id": 5166,
               "nodeType": "StructuredDocumentation",
               "src": "619:58:32",
               "text": "Initialize this contract and its dependencies."
             },
             "functionSelector": "8129fc1c",
-            "id": 5113,
+            "id": 5175,
             "implemented": true,
             "kind": "function",
             "modifiers": [
               {
-                "id": 5107,
+                "id": 5169,
                 "kind": "modifierInvocation",
                 "modifierName": {
-                  "id": 5106,
+                  "id": 5168,
                   "name": "initializer",
                   "nodeType": "IdentifierPath",
                   "referencedDeclaration": 884,
@@ -26036,290 +26010,25 @@
             "nameLocation": "691:10:32",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 5105,
+              "id": 5167,
               "nodeType": "ParameterList",
               "parameters": [],
               "src": "701:2:32"
             },
             "returnParameters": {
-              "id": 5108,
+              "id": 5170,
               "nodeType": "ParameterList",
               "parameters": [],
               "src": "723:0:32"
             },
-            "scope": 5114,
+            "scope": 5176,
             "src": "682:81:32",
             "stateMutability": "nonpayable",
             "virtual": false,
             "visibility": "public"
           }
         ],
-        "scope": 5115,
-        "src": "397:368:32",
-        "usedErrors": []
-      }
-    ],
-    "src": "0:766:32"
-  },
-  "legacyAST": {
-    "absolutePath": "project:/contracts/Freeport.sol",
-    "exportedSymbols": {
-      "AccessControlUpgradeable": [
-        395
-      ],
-      "AddressUpgradeable": [
-        1519
-      ],
-      "BaseNFT": [
-        6786
-      ],
-      "ContextUpgradeable": [
-        1564
-      ],
-      "Currency": [
-        6934
-      ],
-      "ERC1155Upgradeable": [
-        10277
-      ],
-      "ERC165Upgradeable": [
-        2017
-      ],
-      "ERC1967UpgradeUpgradeable": [
-        829
-      ],
-      "ERC20Adapter": [
-        7062
-      ],
-      "Freeport": [
-        5114
-      ],
-      "IAccessControlUpgradeable": [
-        44
-      ],
-      "IBeaconUpgradeable": [
-        839
-      ],
-      "IERC1155MetadataURIUpgradeable": [
-        1137
-      ],
-      "IERC1155ReceiverUpgradeable": [
-        1000
-      ],
-      "IERC1155Upgradeable": [
-        1122
-      ],
-      "IERC165Upgradeable": [
-        2029
-      ],
-      "IERC20": [
-        2982
-      ],
-      "Initializable": [
-        885
-      ],
-      "Issuance": [
-        7429
-      ],
-      "JointAccounts": [
-        7773
-      ],
-      "MetaTxContext": [
-        7850
-      ],
-      "SimpleExchange": [
-        8130
-      ],
-      "StorageSlotUpgradeable": [
-        1624
-      ],
-      "StringsUpgradeable": [
-        1827
-      ],
-      "TransferFees": [
-        8746
-      ],
-      "TransferOperator": [
-        8790
-      ],
-      "UUPSUpgradeable": [
-        959
-      ],
-      "Upgradeable": [
-        8831
-      ]
-    },
-    "id": 5115,
-    "nodeType": "SourceUnit",
-    "nodes": [
-      {
-        "id": 5099,
-        "literals": [
-          "solidity",
-          "^",
-          "0.8",
-          ".0"
-        ],
-        "nodeType": "PragmaDirective",
-        "src": "0:23:32"
-      },
-      {
-        "absolutePath": "project:/contracts/freeportParts/SimpleExchange.sol",
-        "file": "./freeportParts/SimpleExchange.sol",
-        "id": 5100,
-        "nameLocation": "-1:-1:-1",
-        "nodeType": "ImportDirective",
-        "scope": 5115,
-        "sourceUnit": 8131,
-        "src": "25:44:32",
-        "symbolAliases": [],
-        "unitAlias": ""
-      },
-      {
-        "abstract": false,
-        "baseContracts": [
-          {
-            "baseName": {
-              "id": 5102,
-              "name": "SimpleExchange",
-              "nodeType": "IdentifierPath",
-              "referencedDeclaration": 8130,
-              "src": "597:14:32"
-            },
-            "id": 5103,
-            "nodeType": "InheritanceSpecifier",
-            "src": "597:14:32"
-          }
-        ],
-        "contractDependencies": [],
-        "contractKind": "contract",
-        "documentation": {
-          "id": 5101,
-          "nodeType": "StructuredDocumentation",
-          "src": "71:325:32",
-          "text": "Main contract, including all components.\n- Hold and transfer NFTs using ERC1155.\n- Support atomic exchanges of NFTs for currency.\n- Issuance of NFTs with fixed supply.\n- Joint Accounts that distribute their funds over multiple owners.\n- Capture royalties on primary and secondary transfers, configurable per NFT type."
-        },
-        "fullyImplemented": true,
-        "id": 5114,
-        "linearizedBaseContracts": [
-          5114,
-          8130,
-          8746,
-          7773,
-          7429,
-          7062,
-          8790,
-          6934,
-          6786,
-          7850,
-          8831,
-          395,
-          10277,
-          1137,
-          1122,
-          2017,
-          2029,
-          44,
-          1564,
-          959,
-          829,
-          885
-        ],
-        "name": "Freeport",
-        "nameLocation": "406:8:32",
-        "nodeType": "ContractDefinition",
-        "nodes": [
-          {
-            "body": {
-              "id": 5112,
-              "nodeType": "Block",
-              "src": "723:40:32",
-              "statements": [
-                {
-                  "expression": {
-                    "arguments": [],
-                    "expression": {
-                      "argumentTypes": [],
-                      "id": 5109,
-                      "name": "__SimpleExchange_init",
-                      "nodeType": "Identifier",
-                      "overloadedDeclarations": [],
-                      "referencedDeclaration": 7950,
-                      "src": "733:21:32",
-                      "typeDescriptions": {
-                        "typeIdentifier": "t_function_internal_nonpayable$__$returns$__$",
-                        "typeString": "function ()"
-                      }
-                    },
-                    "id": 5110,
-                    "isConstant": false,
-                    "isLValue": false,
-                    "isPure": false,
-                    "kind": "functionCall",
-                    "lValueRequested": false,
-                    "names": [],
-                    "nodeType": "FunctionCall",
-                    "src": "733:23:32",
-                    "tryCall": false,
-                    "typeDescriptions": {
-                      "typeIdentifier": "t_tuple$__$",
-                      "typeString": "tuple()"
-                    }
-                  },
-                  "id": 5111,
-                  "nodeType": "ExpressionStatement",
-                  "src": "733:23:32"
-                }
-              ]
-            },
-            "documentation": {
-              "id": 5104,
-              "nodeType": "StructuredDocumentation",
-              "src": "619:58:32",
-              "text": "Initialize this contract and its dependencies."
-            },
-            "functionSelector": "8129fc1c",
-            "id": 5113,
-            "implemented": true,
-            "kind": "function",
-            "modifiers": [
-              {
-                "id": 5107,
-                "kind": "modifierInvocation",
-                "modifierName": {
-                  "id": 5106,
-                  "name": "initializer",
-                  "nodeType": "IdentifierPath",
-                  "referencedDeclaration": 884,
-                  "src": "711:11:32"
-                },
-                "nodeType": "ModifierInvocation",
-                "src": "711:11:32"
-              }
-            ],
-            "name": "initialize",
-            "nameLocation": "691:10:32",
-            "nodeType": "FunctionDefinition",
-            "parameters": {
-              "id": 5105,
-              "nodeType": "ParameterList",
-              "parameters": [],
-              "src": "701:2:32"
-            },
-            "returnParameters": {
-              "id": 5108,
-              "nodeType": "ParameterList",
-              "parameters": [],
-              "src": "723:0:32"
-            },
-            "scope": 5114,
-            "src": "682:81:32",
-            "stateMutability": "nonpayable",
-            "virtual": false,
-            "visibility": "public"
-          }
-        ],
-        "scope": 5115,
+        "scope": 5177,
         "src": "397:368:32",
         "usedErrors": []
       }
@@ -27128,13 +26837,12 @@
         }
       },
       "links": {},
-      "address": "0xB41578966F8B12054Da2BA1363988DE190bF12Cf",
+      "address": "0xf6982632Ca45010AE55a4D827D70F176E0a7cf61",
       "transactionHash": "0x6adad31facec0e596e0a63d3d14003b398034d6ca130ae7c9f46b4ebe3e2d4c2"
     }
   },
-  "schemaVersion": "3.4.4",
-  "updatedAt": "2022-08-12T08:29:52.080Z",
-  "networkType": "ethereum",
+  "schemaVersion": "3.4.8",
+  "updatedAt": "2022-08-24T00:11:04.312Z",
   "devdoc": {
     "kind": "dev",
     "methods": {
