@@ -11,10 +11,10 @@ module.exports = async function (deployer, network, accounts) {
     const collectionFactory = await CollectionFactory.deployed();
     log("Operating on CollectionFactory contract", collectionFactory.address);
 
-    const freeport = await Freeport.at(ctx.dev.deploys.Freeport);
-    const nftAttachment = await NFTAttachment.at(ctx.dev.deploys.NFTAttachment);
-    const marketplace = await Marketplace.at(ctx.dev.deploys.Marketplace);
-    const auction = await Auction.at(ctx.dev.deploys.Auction);
+    const freeport = await Freeport.deployed();
+    const nftAttachment = await NFTAttachment.deployed();
+    const marketplace = await Marketplace.deployed();
+    const auction = await Auction.deployed();
     log("Operating CollectionFactory with Freeport contract", freeport.address);
     log("Operating CollectionFactory with NFTAttachment contract", nftAttachment.address);
     log("Operating CollectionFactory with Marketplace contract", marketplace.address);

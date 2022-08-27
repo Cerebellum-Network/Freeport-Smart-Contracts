@@ -5,10 +5,10 @@ const ctx = require("./deployment_context.json");
 const log = console.log;
 
 module.exports = async function (deployer, network, accounts) {
-    const auction = await Auction.at(ctx.dev.deploys.Auction);
+    const auction = await Auction.deployed();
     log("Operating on Auction contract", auction.address);
 
-    const freeport = await Freeport.at(ctx.dev.deploys.Freeport);
+    const freeport = await Freeport.deployed();
     log("Operating Auction with Freeport contract", freeport.address);
 
     try {

@@ -6,10 +6,10 @@ const ctx = require("./deployment_context.json")
 const log = console.log;
 
 module.exports = async function (deployer, network, accounts) {
-    const freeport = await Freeport.at(ctx.dev.deploys.Freeport);
-    const nftAttachment = await NFTAttachment.at(ctx.dev.deploys.NFTAttachment);
-    const marketplace = await NFTAttachment.at(ctx.dev.deploys.Marketplace);
-    const auction = await NFTAttachment.at(ctx.dev.deploys.Auction);
+    const freeport = await Freeport.deployed();
+    const nftAttachment = await NFTAttachment.deployed();
+    const marketplace = await NFTAttachment.deployed();
+    const auction = await NFTAttachment.deployed();
     log("Operating CollectionFactory with Freeport contract", freeport.address);
     log("Operating CollectionFactory with NFTAttachment contract", nftAttachment.address);
     log("Operating CollectionFactory with Marketplace contract", marketplace.address);
