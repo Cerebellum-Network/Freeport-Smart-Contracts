@@ -1,6 +1,7 @@
 pragma solidity ^0.8.0;
 
 import "./freeportParts/MetaTxContext.sol";
+import "./freeportParts/HasGlobalNftId.sol";
 import "./Collection.sol";
 import "./Marketplace.sol";
 import "./Auction.sol";
@@ -8,7 +9,7 @@ import "./Auction.sol";
 /** This is a contract for creating standalone contracts (collections) for users.
  *
  */
-contract CollectionFactory is MetaTxContext  {
+contract CollectionFactory is MetaTxContext, HasGlobalNftId {
     function initialize(Freeport _freeport, NFTAttachment _nftAttachment, Marketplace _marketplace, Auction _auction) public initializer {
         __MetaTxContext_init();
 
@@ -44,7 +45,7 @@ contract CollectionFactory is MetaTxContext  {
 
     /** Allowance mapping for mint on behalf for each Collection.
      */
-    mapping (address => mapping(address => bool)) mintAllowance;
+    mapping(address => mapping(address => bool)) mintAllowance;
 
     /** Allowance mapping for mint on behalf for each Collection.
      */
@@ -70,7 +71,7 @@ contract CollectionFactory is MetaTxContext  {
      *  Emits a {CollectionCreated} event.
      */
     function createCollection(address collectionManager, string memory name, string memory uriTpl, string memory contractURI) external returns (address) {
-//        require(hasRole(COLLECTION_CREATOR_ROLE, _msgSender()), "only collection creator");
+        //        require(hasRole(COLLECTION_CREATOR_ROLE, _msgSender()), "only collection creator");
         require(collectionManager != address(0), "zero address collection manager");
         require(nameToCollection[name] == address(0), "collection name already exists");
 
@@ -94,5 +95,10 @@ contract CollectionFactory is MetaTxContext  {
         uint256 nftID = Collection(collection).issueOnBehalfOf(holder, supply, data);
 
         emit MintOnBehalf(operator, collection, holder, nftID, supply);
+    }
+
+    function parseNftId(uint256 id) pure external
+    returns (address collection, uint32 innerId, uint64 supply) {
+        return _parseNftId(id);
     }
 }

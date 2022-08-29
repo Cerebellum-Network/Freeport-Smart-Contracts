@@ -4,7 +4,7 @@ const ctx = require("./deployment_context.json");
 const log = console.log;
 
 module.exports = async function (deployer, network, accounts) {
-    const gateway = await FiatGateway.at(ctx.dev.deploys.FiatGateway);
+    const gateway = await FiatGateway.deployed();
     log("Operating on FiatGateway contract", gateway.address);
 
     try {

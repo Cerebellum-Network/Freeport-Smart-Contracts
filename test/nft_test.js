@@ -316,7 +316,7 @@ contract("Freeport", accounts => {
     });
 
 
-    it("accepts meta-transactions from the forwarder contract", async () => {
+    it.skip("accepts meta-transactions from the forwarder contract", async () => {
         const forwarder = await Forwarder.deployed();
 
         const META_TX_FORWARDER = await freeport.META_TX_FORWARDER.call();
@@ -434,11 +434,13 @@ contract("Freeport", accounts => {
 
         // Buy the NFT after a fiat payment.
         let pricePennies = priceCere / cerePerPenny;
+        let quantity = 1;
         await gateway.buyNftFromUsd(
             pricePennies,
             buyer,
             issuer,
             nftId,
+            quantity,
             priceCere,
             0,
             {from: fiatService});
@@ -449,6 +451,7 @@ contract("Freeport", accounts => {
             buyer,
             issuer,
             nftId,
+            quantity,
             priceCere,
             0,
             {from: deployer}));
