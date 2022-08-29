@@ -12,6 +12,7 @@ const BN = require('bn.js');
 
 contract("Collection", accounts => {
     const deployer = accounts[0];
+    const minter = accounts[1];
 
     const CURRENCY = 0;
     const UNIT = 1e6;
@@ -67,8 +68,32 @@ contract("Collection", accounts => {
     });
 
     it("creates a collection", async () => {
-        let collectionAddr = await factory.createCollection(deployer, "my collection", "https://{id}.json", "https://my_contract");
-        log("collectionAddr", collectionAddr);
+        let createTx = await factory.createCollection(minter, "my collection", "https://{id}.json", "https://my_contract");
+
+        let collectionAddr = getEvent(createTx, "CollectionCreated").addr;
+
+        let mintTx = await factory.mintOnBehalf(collectionAddr, minter, 10, "0x", {from: minter});
+
+        let mintEvent = getEvent(mintTx, "MintOnBehalf");
+        assert.equal(mintEvent._operator, minter);
+        assert.equal(mintEvent._collection, collectionAddr);
+        assert.equal(mintEvent._holder, minter);
+        assert.equal(mintEvent._amount, 10);
+
+        let parsedId = await factory.parseNftId(mintEvent._id);
+        assert.equal(parsedId.collection, collectionAddr);
+        assert.equal(parsedId.innerId.toNumber(), 1);
+        assert.equal(parsedId.supply.toNumber(), 0);
+
+        let collection = await Collection.at(collectionAddr);
+        let balance = await collection.balanceOf(minter, mintEvent._id);
+        assert.equal(balance.toNumber(), 10);
     });
 
 });
+
+function getEvent(tx, eventName) {
+    return tx.logs.find((log) =>
+        log.event === eventName
+    ).args;
+}
