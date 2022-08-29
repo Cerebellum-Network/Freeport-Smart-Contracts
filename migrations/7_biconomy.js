@@ -3,7 +3,6 @@ const SimpleAuction = artifacts.require("SimpleAuction");
 const log = console.log;
 
 module.exports = async function (deployer, network, accounts) {
-
     // Pick the forwarder contract from https://docs.biconomy.io/misc/contract-addresses
     let biconomyForwarder;
     if (network === "polygon_mainnet") biconomyForwarder = "0x86C80a8aa58e0A4fa09A69624c31Ab2a6CAD56b8";
