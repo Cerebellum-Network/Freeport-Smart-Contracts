@@ -90,8 +90,8 @@ contract("Collection", accounts => {
         assert.equal(parsedId.supply.toNumber(), 0);
 
         let collection = await Collection.at(collectionAddr);
-        let balance = await collection.balanceOf(minter, nftId);
-        assert.equal(balance.toNumber(), 10);
+        let balance = +(await collection.balanceOf(minter, nftId));
+        assert.equal(balance, 10);
 
         // The minter puts the NFTs for sale.
         let price = 100;
@@ -103,9 +103,11 @@ contract("Collection", accounts => {
 
         // The buyer gets some money.
         await erc20.mint(buyer, 1000);
-
         // The buyer approves the marketplace.
         await erc20.approve(marketplace.address, aLot, {from: buyer});
+
+        let minterMoney0 = +(await erc20.balanceOf(minter));
+        let buyerMoney0 = +(await erc20.balanceOf(buyer));
 
         // The buyer buys one NFT.
         let takeOfferTx = await marketplace.takeOffer(buyer, minter, nftId, 0, 2, {from: buyer});
@@ -115,6 +117,18 @@ contract("Collection", accounts => {
         assert.equal(takeOfferEv.nftId.toString(), nftId.toString());
         assert.equal(takeOfferEv.price.toNumber(), price);
         assert.equal(takeOfferEv.amount.toNumber(), 2);
+
+        // The NFTs were transferred.
+        let minterNfts = +(await collection.balanceOf(minter, nftId));
+        let buyerNfts = +(await collection.balanceOf(buyer, nftId));
+        assert.equal(minterNfts, 10 - 2);
+        assert.equal(buyerNfts, 2);
+
+        // Where's the money Lebowski?
+        let minterMoney1 = +(await erc20.balanceOf(minter));
+        let buyerMoney1 = +(await erc20.balanceOf(buyer));
+        assert.equal(minterMoney1 - minterMoney0, price*2);
+        assert.equal(buyerMoney1 - buyerMoney0, -price*2);
     });
 
 });
