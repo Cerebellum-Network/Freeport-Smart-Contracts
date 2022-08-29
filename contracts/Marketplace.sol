@@ -97,7 +97,7 @@ contract Marketplace is MetaTxContext, FreeportDelegator, HasGlobalNftId {
         require(freeport.currencyContract().transferFrom(payer, seller, totalPrice), "Payment failed");
 
         // Take a fee from the seller (really a cut of the above payment).
-        // TODO: capture fee.
+        // TODO: capture fee from the payment instead of in Freeport.
         //uint totalFee = freeport.captureFee(seller, nftId, price, amount);
         //require(totalFee <= totalPrice, "Cannot take more fees than the price.");
 

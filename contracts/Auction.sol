@@ -230,8 +230,9 @@ contract Auction is /* AccessControl, */ MetaTxContext, ERC1155HolderUpgradeable
             bidCollateral[seller][nftId] -= 1;
 
             // Collect royalty.
-            try freeport.captureFee(seller, nftId, price, 1) {
-            } catch {}
+            // TODO: capture fee from the payment instead of in Freeport.
+            //try freeport.captureFee(seller, nftId, price, 1) {
+            //} catch {}
         } else {
             // Otherwise, there was no buyer,
             // give back the NFT to the seller.
@@ -263,15 +264,14 @@ contract Auction is /* AccessControl, */ MetaTxContext, ERC1155HolderUpgradeable
         freeport.currencyContract().transfer(to, amount);
     }
 
-    /** Convert the USDC deposit into Freeport-USDC and pay out to the seller.
+    /** Pay USDC from the deposit in this contract to the seller.
      *
-     * This supports joint accounts and royalties (captureFee).
+     * This does NOT supports joint accounts and royalties (captureFee).
      */
     function _finalizePayment(
         address to,
         uint amount
     ) internal {
-        freeport.deposit(amount);
-        freeport.transferFrom(address(this), to, CURRENCY, amount);
+        freeport.currencyContract().transfer(to, amount);
     }
 }
