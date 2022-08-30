@@ -223,7 +223,7 @@ contract SimpleAuction is /* AccessControl, */ MetaTxContext, ERC1155HolderUpgra
             // Transfer the NFT to the buyer.
             freeport.transferFrom(address(this), buyer, nftId, 1);
             // Tracking amount of collateral NFTs
-            bidCollateral[seller][nftId] -= 1;
+            bidCollateral[seller][nftId] = 0;
 
             // Collect royalty.
             try freeport.captureFee(seller, nftId, price, 1) {
@@ -234,7 +234,7 @@ contract SimpleAuction is /* AccessControl, */ MetaTxContext, ERC1155HolderUpgra
             freeport.transferFrom(address(this), seller, nftId, 1);
 
             // Tracking amount of collateral NFTs
-            bidCollateral[seller][nftId] -= 1;
+            bidCollateral[seller][nftId] = 0;
         }
 
         emit SettleAuction(seller, nftId, price, buyer);

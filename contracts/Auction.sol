@@ -240,7 +240,7 @@ contract Auction is /* AccessControl, */ MetaTxContext, ERC1155HolderUpgradeable
             Collection(issuer).transferFrom(address(this), seller, nftId, 1);
 
             // Tracking amount of collateral NFTs
-            bidCollateral[seller][nftId] -= 1;
+            bidCollateral[seller][nftId] = 0;
         }
 
         emit SettleAuction(seller, nftId, price, buyer);
