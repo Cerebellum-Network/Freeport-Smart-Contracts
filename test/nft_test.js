@@ -442,11 +442,13 @@ contract("Freeport", accounts => {
 
         // Buy the NFT after a fiat payment.
         let pricePennies = priceCere / cerePerPenny;
+        let quantity = 1;
         await gateway.buyNftFromUsd(
             pricePennies,
             buyer,
             issuer,
             nftId,
+            quantity,
             priceCere,
             0,
             {from: fiatService});
@@ -457,6 +459,7 @@ contract("Freeport", accounts => {
             buyer,
             issuer,
             nftId,
+            quantity,
             priceCere,
             0,
             {from: deployer}));
