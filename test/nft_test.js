@@ -442,13 +442,12 @@ contract("Freeport", accounts => {
 
         // Buy the NFT after a fiat payment.
         let pricePennies = priceCere / cerePerPenny;
-        let quantity = 1;
         await gateway.buyNftFromUsd(
             pricePennies,
             buyer,
             issuer,
             nftId,
-            quantity,
+            1, // quantity
             priceCere,
             0,
             {from: fiatService});
@@ -459,7 +458,7 @@ contract("Freeport", accounts => {
             buyer,
             issuer,
             nftId,
-            quantity,
+            1, // quantity
             priceCere,
             0,
             {from: deployer}));
@@ -480,6 +479,34 @@ contract("Freeport", accounts => {
         balance = await freeport.balanceOf(buyer, nftId);
         assert.equal(balance, 1);
 
+        // Buy multiple NFTs at once.
+        let quantity = 2;
+        await gateway.buyNftFromUsd(
+            pricePennies * quantity,
+            buyer,
+            issuer,
+            nftId,
+            quantity,
+            priceCere,
+            0,
+            {from: fiatService});
+
+        // Check all balances again after a total of 1+2 NFT sales.
+        balance = await erc20.balanceOf(gateway.address);
+        assert.equal(balance, liquidities - priceCere * 3);
+
+        balance = await freeport.balanceOf(issuer, CURRENCY);
+        assert.equal(balance, priceCere * 3);
+
+        balance = await freeport.balanceOf(buyer, CURRENCY);
+        assert.equal(balance, 0);
+
+        balance = await freeport.balanceOf(issuer, nftId);
+        assert.equal(balance, 10 - 3);
+
+        balance = await freeport.balanceOf(buyer, nftId);
+        assert.equal(balance, 3);
+
         // Issuer withdraws to ERC20.
         await withdraw(issuer);
 
@@ -487,14 +514,14 @@ contract("Freeport", accounts => {
         assert.equal(balance, 0);
 
         balance = await erc20.balanceOf(issuer);
-        assert.equal(balance, priceCere);
+        assert.equal(balance, priceCere * 3);
 
         // Admin withdraws what remains in the gateway.
         balance = await gateway.withdrawERC20.call();
-        assert.equal(balance, liquidities - priceCere);
+        assert.equal(balance, liquidities - priceCere * 3);
         await gateway.withdrawERC20();
         balance = await erc20.balanceOf(accounts[0]);
-        assert.equal(balance, liquidities - priceCere);
+        assert.equal(balance, liquidities - priceCere * 3);
     });
 
     it("exchange ERC20 into internal currency", async () => {
