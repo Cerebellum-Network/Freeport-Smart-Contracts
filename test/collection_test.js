@@ -3,7 +3,7 @@ const CollectionFactory = artifacts.require("CollectionFactory");
 const Collection = artifacts.require("Collection");
 const Marketplace = artifacts.require("Marketplace");
 const Auction = artifacts.require("Auction");
-const ERC20 = artifacts.require("TestERC20");
+const USDC = artifacts.require("USDC");
 const log = console.log;
 const {deployProxy} = require('@openzeppelin/truffle-upgrades');
 const {expectEvent, expectRevert} = require('@openzeppelin/test-helpers');
@@ -24,28 +24,30 @@ contract("Collection", accounts => {
         let erc20;
         if (freeport) {
             let erc20address = await freeport.currencyContract.call();
-            erc20 = await ERC20.at(erc20address);
+            erc20 = await USDC.at(erc20address);
         } else {
             freeport = await deployProxy(Freeport, [], {kind: "uups"});
-            erc20 = await ERC20.new();
+            erc20 = await USDC.new();
+            await erc20.initialize("USD Coin (PoS)", "F_T_USDC", 6, deployer);
             await freeport.setERC20(erc20.address);
         }
 
-        await erc20.mint(deployer, aLot);
-        await erc20.mint(freeport.address, freeportUSDCAmount);
+        let mintUSDC = async (account, amount) => {
+            let amountEncoded = web3.eth.abi.encodeParameter("uint256", amount);
+            await erc20.deposit(account, amountEncoded);
+        };
+
+        await mintUSDC(deployer, aLot);
+        await mintUSDC(freeport.address, freeportUSDCAmount);
         await erc20.approve(freeport.address, aLot);
         await freeport.deposit(aLot);
-
-        let deposit = async (account, amount) => {
-            await freeport.safeTransferFrom(deployer, account, CURRENCY, amount, "0x");
-        };
 
         let withdraw = async (account) => {
             let balance = await freeport.balanceOf(account, CURRENCY);
             await freeport.withdraw(balance, {from: account});
         };
 
-        return {freeport, erc20, deposit, withdraw};
+        return {freeport, erc20, mintUSDC, withdraw};
     };
 
     let freeport;
@@ -53,7 +55,7 @@ contract("Collection", accounts => {
     let marketplace;
     let auction;
     let erc20;
-    let deposit;
+    let mintUSDC;
     let withdraw;
 
     before(async () => {
@@ -64,7 +66,7 @@ contract("Collection", accounts => {
         marketplace = await Marketplace.deployed();
         auction = await Auction.deployed();
         erc20 = x.erc20;
-        deposit = x.deposit;
+        mintUSDC = x.mintUSDC;
         withdraw = x.withdraw;
     });
 
@@ -102,7 +104,7 @@ contract("Collection", accounts => {
         assert.equal(makeOfferEv.price.toNumber(), price);
 
         // The buyer gets some money.
-        await erc20.mint(buyer, 1000);
+        await mintUSDC(buyer, 1000);
         // The buyer approves the marketplace.
         await erc20.approve(marketplace.address, aLot, {from: buyer});
 
@@ -127,8 +129,8 @@ contract("Collection", accounts => {
         // Where's the money Lebowski?
         let minterMoney1 = +(await erc20.balanceOf(minter));
         let buyerMoney1 = +(await erc20.balanceOf(buyer));
-        assert.equal(minterMoney1 - minterMoney0, price*2);
-        assert.equal(buyerMoney1 - buyerMoney0, -price*2);
+        assert.equal(minterMoney1 - minterMoney0, price * 2);
+        assert.equal(buyerMoney1 - buyerMoney0, -price * 2);
     });
 
 });
