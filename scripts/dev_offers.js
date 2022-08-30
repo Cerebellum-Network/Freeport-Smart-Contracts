@@ -46,6 +46,7 @@ module.exports = async function (done) {
         buyer,
         issuer,
         nftId,
+        1,
         priceCere,
         0);
 
