@@ -447,7 +447,7 @@ contract("Freeport", accounts => {
             buyer,
             issuer,
             nftId,
-            1, // quantity
+            // Implied quantity = 1
             priceCere,
             0,
             {from: fiatService});
@@ -458,7 +458,7 @@ contract("Freeport", accounts => {
             buyer,
             issuer,
             nftId,
-            1, // quantity
+            // Implied quantity = 1
             priceCere,
             0,
             {from: deployer}));
@@ -481,7 +481,7 @@ contract("Freeport", accounts => {
 
         // Buy multiple NFTs at once.
         let quantity = 2;
-        await gateway.buyNftFromUsd(
+        await gateway.buyNftsFromUsd(
             pricePennies * quantity,
             buyer,
             issuer,
