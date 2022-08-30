@@ -5,7 +5,7 @@ const ctx = require("./deployment_context.json")
 const log = console.log;
 
 module.exports = async function (deployer, network, accounts) {
-    const freeport = await Freeport.at("0xf6982632Ca45010AE55a4D827D70F176E0a7cf61");
+    const freeport = await Freeport.deployed();
     log("Operating Marketplace with Freeport contract", freeport.address);
 
     const marketplace = await deployProxy(Marketplace, [freeport.address], {deployer, kind: "uups"});
