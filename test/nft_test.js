@@ -1,7 +1,7 @@
 const Freeport = artifacts.require("Freeport");
 const Forwarder = artifacts.require("MinimalForwarder");
 const FiatGateway = artifacts.require("FiatGateway");
-const TestERC20 = artifacts.require("TestERC20");
+const USDC = artifacts.require("USDC");
 const log = console.log;
 const {deployProxy} = require('@openzeppelin/truffle-upgrades');
 const {expectEvent, expectRevert} = require('@openzeppelin/test-helpers');
@@ -26,15 +26,21 @@ contract("Freeport", accounts => {
         let erc20;
         if (freeport) {
             let erc20address = await freeport.currencyContract.call();
-            erc20 = await TestERC20.at(erc20address);
+            erc20 = await USDC.at(erc20address);
         } else {
             freeport = await deployProxy(Freeport, [], {kind: "uups"});
-            erc20 = await TestERC20.new();
+            erc20 = await USDC.new();
+            await erc20.initialize("USD Coin (PoS)", "F_T_USDC", 6, deployer);
             await freeport.setERC20(erc20.address);
         }
 
-        await erc20.mint(deployer, aLot);
-        await erc20.mint(freeport.address, freeportUSDCAmount);
+        let mintUSDC = async (account, amount) => {
+            let amountEncoded = web3.eth.abi.encodeParameter("uint256", amount);
+            await erc20.deposit(account, amountEncoded);
+        };
+
+        await mintUSDC(deployer, aLot);
+        await mintUSDC(freeport.address, freeportUSDCAmount);
         await erc20.approve(freeport.address, aLot);
         await freeport.deposit(aLot);
 
@@ -47,13 +53,14 @@ contract("Freeport", accounts => {
             await freeport.withdraw(balance, {from: account});
         };
 
-        return {freeport, erc20, deposit, withdraw};
+        return {freeport, erc20, deposit, withdraw, mintUSDC};
     };
 
     let freeport;
     let erc20;
     let deposit;
     let withdraw;
+    let mintUSDC;
 
     before(async () => {
         let freeportOfMigrations = await Freeport.deployed();
@@ -62,6 +69,7 @@ contract("Freeport", accounts => {
         erc20 = x.erc20;
         deposit = x.deposit;
         withdraw = x.withdraw;
+        mintUSDC = x.mintUSDC;
     });
 
 
@@ -226,11 +234,11 @@ contract("Freeport", accounts => {
     it("executes sales with variable royalties", async () => {
         log();
 
-        const {freeport, erc20, deposit, withdraw} = await deploy();
+        const {freeport, erc20, withdraw, mintUSDC} = await deploy();
 
         let pocketMoney = 1000 * UNIT;
-        await erc20.mint(buyer, pocketMoney);
-        await erc20.mint(buyer2, pocketMoney);
+        await mintUSDC(buyer, pocketMoney);
+        await mintUSDC(buyer2, pocketMoney);
         log("Deposit", pocketMoney / UNIT, "USDC to account ’Buyer’");
         log();
 
@@ -424,9 +432,9 @@ contract("Freeport", accounts => {
         let priceCere = 200 * UNIT;
         await freeport.makeOffer(nftId, priceCere, {from: issuer});
 
-        // Top up FiatGateway with CERE.
+        // Top up FiatGateway with USDC.
         let liquidities = 1000 * UNIT;
-        await erc20.mint(gateway.address, liquidities);
+        await mintUSDC(gateway.address, liquidities);
 
         // Set exchange rate.
         let cerePerPenny = 0.1 * UNIT;

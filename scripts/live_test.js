@@ -1,5 +1,5 @@
 const Freeport = artifacts.require("Freeport");
-const TestERC20 = artifacts.require("TestERC20");
+const USDC = artifacts.require("USDC");
 const FiatGateway = artifacts.require("FiatGateway");
 const SimpleAuction = artifacts.require("SimpleAuction");
 const {time} = require('@openzeppelin/test-helpers');
@@ -20,13 +20,18 @@ module.exports = async function (done) {
         log("From seller account", seller);
         log("From buyer account", buyer);
         let freeport = await Freeport.deployed();
-        let erc20 = await TestERC20.deployed();
+        let erc20 = await USDC.deployed();
         let gateway = await FiatGateway.deployed();
         let auction = await SimpleAuction.deployed();
         log("Operating on Freeport contract", freeport.address);
-        log("Operating on TestERC20 contract", erc20.address);
+        log("Operating on USDC contract", erc20.address);
         log("Operating on FiatGateway contract", gateway.address);
         log("Operating on SimpleAuction contract", auction.address);
+
+        let mintUSDC = async (account, amount) => {
+            let amountEncoded = web3.eth.abi.encodeParameter("uint256", amount);
+            await erc20.deposit(account, amountEncoded);
+        };
 
 
         // Issue an NFT.
@@ -40,7 +45,7 @@ module.exports = async function (done) {
         log("makeOffer ok");
 
         // Get money ready.
-        await erc20.mint(buyer, oneK);
+        await mintUSDC(buyer, oneK);
         await erc20.approve(freeport.address, 1e9 * UNIT, {from: buyer});
         await erc20.approve(auction.address, 1e9 * UNIT, {from: buyer});
 

@@ -1,0 +1,247 @@
+Deployed Freeport proxy 0x302a0D1208e5FFB0371CA15470639A946fc4a17d
+Deployed FiatGateway proxy 0xeC9b0dEEE224c759D99D1ebb90330Ed9A275beBb
+Deployed SimpleAuction proxy 0x09CE7099FB6772244073496e6D04ec43DCC83c34
+Deployed NFTAttachment proxy 0xF493a7E942d709f56bE6CFa0579210a070DF6803
+Operating on USDC ERC20 contract 0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174
+Give the permission to execute payments to the service account 0x718B310Be805e3Df552621b3ea11b59871183D19
+Make Gnosis admin 0x87A0892F98914c567379475a806A1419143406F6
+
+----------------------------------------------------------------------------------------------------
+
+# truffle migrate --compile-all --network=polygon_mainnet
+
+1_deploy_freeport.js
+====================
+
+   Replacing 'Freeport'
+   --------------------
+   > transaction hash:    0x1da37868be3f5b9cb5d2580afcf0319b52d1b21f5dbc464aaa4bf46c0d276432
+   > Blocks: 0            Seconds: 0
+   > contract address:    0x09D34A2e33da88Fb5F73000e54936ab10626aD03
+   > block number:        28712647
+   > block timestamp:     1653397525
+   > account:             0x4D632F8513554d7647a326c1f4ca72caEfF93e63
+   > balance:             1.909804489347704196
+   > gas used:            3872398 (0x3b168e)
+   > gas price:           40 gwei
+   > value sent:          0 ETH
+   > total cost:          0.15489592 ETH
+
+   Pausing for 1 confirmations...
+   ------------------------------
+   > confirmation number: 15 (block: 28712663)
+
+   Deploying 'ERC1967Proxy'
+   ------------------------
+   > transaction hash:    0x9cf263a8f72af3a7698f94a32adb7a3e2ab86c8338d1623f2fdfa2f3b2dc5251
+   > Blocks: 0            Seconds: 0
+   > contract address:    0x302a0D1208e5FFB0371CA15470639A946fc4a17d
+   > block number:        28712667
+   > block timestamp:     1653397565
+   > account:             0x4D632F8513554d7647a326c1f4ca72caEfF93e63
+   > balance:             1.895047729347704196
+   > gas used:            368919 (0x5a117)
+   > gas price:           40 gwei
+   > value sent:          0 ETH
+   > total cost:          0.01475676 ETH
+
+   Pausing for 1 confirmations...
+   ------------------------------
+   > confirmation number: 15 (block: 28712683)
+Deployed Freeport proxy 0x302a0D1208e5FFB0371CA15470639A946fc4a17d
+   > Saving artifacts
+   -------------------------------------
+   > Total cost:          0.16965268 ETH
+
+
+2_deploy_forwarder.js
+=====================
+Not deploying unnecessary MinimalForwarder and BypassForwarder
+   -------------------------------------
+   > Total cost:                   0 undefined
+
+
+3_deploy_fiat_gateway.js
+========================
+Operating on Freeport contract 0x302a0D1208e5FFB0371CA15470639A946fc4a17d
+From admin account 0x4D632F8513554d7647a326c1f4ca72caEfF93e63
+
+   Deploying 'ERC1967Proxy'
+   ------------------------
+   > transaction hash:    0xbba0eac7c7d461b979b23eb6b7553a8ec240c5644b9e459d6bf5939b66524cbc
+   > Blocks: 0            Seconds: 0
+   > contract address:    0xeC9b0dEEE224c759D99D1ebb90330Ed9A275beBb
+   > block number:        28712752
+   > block timestamp:     1653397739
+   > account:             0x4D632F8513554d7647a326c1f4ca72caEfF93e63
+   > balance:             1.882169489347704196
+   > gas used:            321956 (0x4e9a4)
+   > gas price:           40 gwei
+   > value sent:          0 ETH
+   > total cost:          0.01287824 ETH
+
+   Pausing for 1 confirmations...
+   ------------------------------
+   > confirmation number: 14 (block: 28712767)
+Deployed FiatGateway proxy 0xeC9b0dEEE224c759D99D1ebb90330Ed9A275beBb
+Operating on Admin account 0x4D632F8513554d7647a326c1f4ca72caEfF93e63
+Give the permission to withdraw funds to Admin.
+Give the permission to change the exchange rate to Admin.
+
+   > Saving artifacts
+   -------------------------------------
+   > Total cost:          0.01287824 ETH
+
+
+4_deploy_simple_auction.js
+==========================
+Operating on Freeport contract 0x302a0D1208e5FFB0371CA15470639A946fc4a17d
+
+   Replacing 'SimpleAuction'
+   -------------------------
+   > transaction hash:    0x38ae46cdf599017a72816939871ec9964d655b6bffdaffd0c526a9640c1ef8b3
+   > Blocks: 0            Seconds: 0
+   > contract address:    0x8b24B644Af70ef50CF0Fb950E2d14e24029eF73C
+   > block number:        28712829
+   > block timestamp:     1653397897
+   > account:             0x4D632F8513554d7647a326c1f4ca72caEfF93e63
+   > balance:             1.790512009347704196
+   > gas used:            2235070 (0x221abe)
+   > gas price:           40 gwei
+   > value sent:          0 ETH
+   > total cost:          0.0894028 ETH
+
+   Pausing for 1 confirmations...
+   ------------------------------
+   > confirmation number: 13 (block: 28712843)
+
+   Deploying 'ERC1967Proxy'
+   ------------------------
+   > transaction hash:    0x20df69bcac4e38e21403301362b50fa78f4bb451d93786e9305f9c8f01eda2f4
+   > Blocks: 0            Seconds: 0
+   > contract address:    0x09CE7099FB6772244073496e6D04ec43DCC83c34
+   > block number:        28712848
+   > block timestamp:     1653397939
+   > account:             0x4D632F8513554d7647a326c1f4ca72caEfF93e63
+   > balance:             1.777534209347704196
+   > gas used:            324445 (0x4f35d)
+   > gas price:           40 gwei
+   > value sent:          0 ETH
+   > total cost:          0.0129778 ETH
+
+   Pausing for 1 confirmations...
+   ------------------------------
+   > confirmation number: 15 (block: 28712864)
+Deployed SimpleAuction proxy 0x09CE7099FB6772244073496e6D04ec43DCC83c34
+Give the permission to make transfers to SimpleAuction.
+
+   > Saving artifacts
+   -------------------------------------
+   > Total cost:           0.1023806 ETH
+
+
+5_deploy_nft_attachment.js
+==========================
+Operating on Freeport contract 0x302a0D1208e5FFB0371CA15470639A946fc4a17d
+
+   Deploying 'ERC1967Proxy'
+   ------------------------
+   > transaction hash:    0x4c33dabf4604d9e7c18400308f10a627d32d81cf492e54ff975647be7f146948
+   > Blocks: 0            Seconds: 0
+   > contract address:    0xF493a7E942d709f56bE6CFa0579210a070DF6803
+   > block number:        28712922
+   > block timestamp:     1653398091
+   > account:             0x4D632F8513554d7647a326c1f4ca72caEfF93e63
+   > balance:             1.762238969347704196
+   > gas used:            322988 (0x4edac)
+   > gas price:           40 gwei
+   > value sent:          0 ETH
+   > total cost:          0.01291952 ETH
+
+   Pausing for 1 confirmations...
+   ------------------------------
+   > confirmation number: 15 (block: 28712938)
+Deployed NFTAttachment proxy 0xF493a7E942d709f56bE6CFa0579210a070DF6803
+
+   > Saving artifacts
+   -------------------------------------
+   > Total cost:          0.01291952 ETH
+
+
+6_deploy_testerc20.js
+=====================
+Operating on Freeport contract 0x302a0D1208e5FFB0371CA15470639A946fc4a17d
+Operating on TestERC20 contract 0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174
+Connect Freeport to TestERC20
+   -------------------------------------
+   > Total cost:                   0 undefined
+
+
+7_biconomy.js
+=============
+Using Biconomy Forwarder 0x86C80a8aa58e0A4fa09A69624c31Ab2a6CAD56b8 for network polygon_mainnet
+From admin account 0x4D632F8513554d7647a326c1f4ca72caEfF93e63
+Operating on Freeport contract 0x302a0D1208e5FFB0371CA15470639A946fc4a17d
+Operating on SimpleAuction contract 0x09CE7099FB6772244073496e6D04ec43DCC83c34
+Give the permission to forward meta-transactions on Freeport to the Biconomy Forwarder
+Give the permission to forward meta-transactions on SimpleAuction to the Biconomy Forwarder
+
+   -------------------------------------
+   > Total cost:                   0 undefined
+
+
+8_upgrade_freeport.js
+=====================
+Operating on Freeport contract 0x302a0D1208e5FFB0371CA15470639A946fc4a17d
+Upgraded 0x302a0D1208e5FFB0371CA15470639A946fc4a17d
+
+   -------------------------------------
+   > Total cost:                   0 undefined
+
+
+9_upgrade_auction.js
+====================
+Operating on SimpleAuction contract 0x09CE7099FB6772244073496e6D04ec43DCC83c34
+Upgraded 0x09CE7099FB6772244073496e6D04ec43DCC83c34
+Done initialize_v2_0_0
+
+   -------------------------------------
+   > Total cost:                   0 undefined
+
+
+10_upgrade_fiat_gateway.js
+==========================
+Operating on FiatGateway contract 0xeC9b0dEEE224c759D99D1ebb90330Ed9A275beBb
+Upgraded 0xeC9b0dEEE224c759D99D1ebb90330Ed9A275beBb
+Done initialize_v2_0_0
+
+   -------------------------------------
+   > Total cost:                   0 undefined
+
+
+# truffle exec scripts/prod_setup.js --network polygon_mainnet
+ Using network 'polygon_mainnet'.
+
+ Operating on Freeport contract 0x302a0D1208e5FFB0371CA15470639A946fc4a17d
+ Operating on FiatGateway contract 0xeC9b0dEEE224c759D99D1ebb90330Ed9A275beBb
+ From admin account 0x4D632F8513554d7647a326c1f4ca72caEfF93e63
+ Set an exchange rate of 1:1 (0.01 with 6 decimals of ERC20 for $0.01)
+ Give the permission to execute payments to the service account 0x718B310Be805e3Df552621b3ea11b59871183D19
+
+
+# truffle exec scripts/prod_add_admin.js --network polygon_mainnet
+ Using network 'polygon_mainnet'.
+
+ From admin account 0x4D632F8513554d7647a326c1f4ca72caEfF93e63
+
+ Operating on Freeport 0x302a0D1208e5FFB0371CA15470639A946fc4a17d
+ Make Gnosis admin 0x87A0892F98914c567379475a806A1419143406F6
+
+ Operating on FiatGateway 0xeC9b0dEEE224c759D99D1ebb90330Ed9A275beBb
+ Make Gnosis admin 0x87A0892F98914c567379475a806A1419143406F6
+
+ Operating on SimpleAuction 0x09CE7099FB6772244073496e6D04ec43DCC83c34
+ Make Gnosis admin 0x87A0892F98914c567379475a806A1419143406F6
+
+ Operating on NFTAttachment 0xF493a7E942d709f56bE6CFa0579210a070DF6803
+ Make Gnosis admin 0x87A0892F98914c567379475a806A1419143406F6
