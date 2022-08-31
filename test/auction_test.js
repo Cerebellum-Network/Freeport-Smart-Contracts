@@ -148,9 +148,11 @@ contract("SimpleAuction", accounts => {
             "the auction must not exist");
 
         // Cannot settle before the close time.
+        /* This is no longer required.
         await expectRevert(
             auction.settleAuction(issuer, nftId),
             "the auction must be closed");
+         */
 
         // Wait for the close time.
         await time.increaseTo(closeTime + 1);
