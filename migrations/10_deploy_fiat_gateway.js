@@ -1,4 +1,5 @@
 const Freeport = artifacts.require("Freeport");
+const Marketplace = artifacts.require("Marketplace");
 const FiatGateway = artifacts.require("FiatGateway");
 const {deployProxy} = require('@openzeppelin/truffle-upgrades');
 const log = console.log;
@@ -7,9 +8,11 @@ module.exports = async function (deployer, network, accounts) {
     const admin = accounts[0];
     const freeport = await Freeport.deployed();
     log("Operating on Freeport contract", freeport.address);
+    const marketplace = await Marketplace.deployed();
+    log("Operating on Marketplace contract", marketplace.address);
     log("From admin account", admin);
 
-    const gateway = await deployProxy(FiatGateway, [freeport.address], {deployer, kind: "uups"});
+    const gateway = await deployProxy(FiatGateway, [freeport.address, marketplace.address], {deployer, kind: "uups"});
     log("Deployed FiatGateway proxy", gateway.address);
 
     const TRANSFER_OPERATOR = await freeport.TRANSFER_OPERATOR.call();

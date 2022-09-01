@@ -2,6 +2,8 @@ const Freeport = artifacts.require("Freeport");
 const FiatGateway = artifacts.require("FiatGateway");
 const SimpleAuction = artifacts.require("SimpleAuction");
 const NFTAttachment = artifacts.require("NFTAttachment");
+const Auction = artifacts.require("Auction");
+const Marketplace = artifacts.require("Marketplace");
 const USDC = artifacts.require("USDC");
 const TestFreeport2 = artifacts.require("TestFreeport2");
 const TestAuction2 = artifacts.require("TestAuction2");
@@ -17,15 +19,17 @@ contract("Upgrades", accounts => {
     const UNIT = 1e6;
     const aLot = 100e3 * UNIT;
 
-    let freeport, erc20, gateway, auction, attachment, ADMIN_ROLE;
+    let freeport, erc20, gateway, simpleAuction, attachment, auction, marketplace, ADMIN_ROLE;
 
     before(async () => {
         freeport = await Freeport.deployed();
         let erc20Address = await freeport.currencyContract();
         erc20 = await USDC.at(erc20Address);
         gateway = await FiatGateway.deployed();
-        auction = await SimpleAuction.deployed();
+        simpleAuction = await SimpleAuction.deployed();
         attachment = await NFTAttachment.deployed();
+        auction = await Auction.deployed();
+        marketplace = await Marketplace.deployed();
         ADMIN_ROLE = await freeport.DEFAULT_ADMIN_ROLE();
     });
 
@@ -33,7 +37,7 @@ contract("Upgrades", accounts => {
     it("deployer is admin", async () => {
         expect(await freeport.hasRole(ADMIN_ROLE, deployer)).equal(true);
         expect(await gateway.hasRole(ADMIN_ROLE, deployer)).equal(true);
-        expect(await auction.hasRole(ADMIN_ROLE, deployer)).equal(true);
+        expect(await simpleAuction.hasRole(ADMIN_ROLE, deployer)).equal(true);
         expect(await attachment.hasRole(ADMIN_ROLE, deployer)).equal(true);
     });
 
@@ -41,7 +45,7 @@ contract("Upgrades", accounts => {
         let allowanceGateway = await erc20.allowance(gateway.address, freeport.address);
         expect(allowanceGateway.gt(1e9 * 1e6)).equal(true);
 
-        let allowanceAuction = await erc20.allowance(auction.address, freeport.address);
+        let allowanceAuction = await erc20.allowance(simpleAuction.address, freeport.address);
         expect(allowanceAuction.gt(1e9 * 1e6)).equal(true);
     });
 
@@ -50,13 +54,19 @@ contract("Upgrades", accounts => {
             freeport.initialize(),
             "Initializable: contract is already initialized");
         await expectRevert(
-            gateway.initialize(freeport.address),
+            gateway.initialize(freeport.address, marketplace.address),
+            "Initializable: contract is already initialized");
+        await expectRevert(
+            simpleAuction.initialize(freeport.address),
+            "Initializable: contract is already initialized");
+        await expectRevert(
+            attachment.initialize(freeport.address),
             "Initializable: contract is already initialized");
         await expectRevert(
             auction.initialize(freeport.address),
             "Initializable: contract is already initialized");
         await expectRevert(
-            attachment.initialize(freeport.address),
+            marketplace.initialize(freeport.address),
             "Initializable: contract is already initialized");
     });
 
@@ -68,7 +78,7 @@ contract("Upgrades", accounts => {
             gateway.upgradeTo(freeport.address, {from: bob}),
             "Only Admin");
         await expectRevert(
-            auction.upgradeTo(freeport.address, {from: bob}),
+            simpleAuction.upgradeTo(freeport.address, {from: bob}),
             "Only Admin");
         await expectRevert(
             attachment.upgradeTo(freeport.address, {from: bob}),
@@ -86,22 +96,22 @@ contract("Upgrades", accounts => {
         let balance = await freeport.balanceOf.call(deployer, nftId);
         expect(+balance).equal(1);
 
-        // Start an auction.
+        // Start an simpleAuction.
         let closeTime = (await time.latest()).toNumber() + 1e6;
-        auction.startAuction(nftId, 100 * UNIT, closeTime);
+        simpleAuction.startAuction(nftId, 100 * UNIT, closeTime);
 
         // Upgrade to TestAuction2.
-        const auction2 = await upgradeProxy(auction.address, TestAuction2);
-        expect(auction2.address).equal(auction.address);
+        const auction2 = await upgradeProxy(simpleAuction.address, TestAuction2);
+        expect(auction2.address).equal(simpleAuction.address);
 
         // Use a new function of TestAuction2.
         balance = await freeport.balanceOf.call(deployer, nftId);
-        expect(+balance).equal(0); // during auction.
+        expect(+balance).equal(0); // during simpleAuction.
 
         await auction2.testForceSettle(deployer, nftId);
 
         balance = await freeport.balanceOf.call(deployer, nftId);
-        expect(+balance).equal(1); // after auction.
+        expect(+balance).equal(1); // after simpleAuction.
     });
 
 });

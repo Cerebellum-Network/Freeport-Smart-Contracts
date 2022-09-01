@@ -61,7 +61,7 @@ Not deploying unnecessary MinimalForwarder and BypassForwarder
    > Total cost:                   0 undefined
 
 
-3_deploy_fiat_gateway.js
+10_deploy_fiat_gateway.js
 ========================
 Operating on Freeport contract 0x302a0D1208e5FFB0371CA15470639A946fc4a17d
 From admin account 0x4D632F8513554d7647a326c1f4ca72caEfF93e63
@@ -209,7 +209,7 @@ Done initialize_v2_0_0
    > Total cost:                   0 undefined
 
 
-10_upgrade_fiat_gateway.js
+11_upgrade_fiat_gateway.js
 ==========================
 Operating on FiatGateway contract 0xeC9b0dEEE224c759D99D1ebb90330Ed9A275beBb
 Upgraded 0xeC9b0dEEE224c759D99D1ebb90330Ed9A275beBb

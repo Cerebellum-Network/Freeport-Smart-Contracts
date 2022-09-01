@@ -1,9 +1,11 @@
 pragma solidity ^0.8.0;
 
 import "./freeportParts/Upgradeable.sol";
+import "./freeportParts/HasGlobalNftId.sol";
 import "./Freeport.sol";
 import "@openzeppelin/contracts-upgradeable/token/ERC1155/utils/ERC1155HolderUpgradeable.sol";
 import "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol";
+import "./Marketplace.sol";
 
 /** The FiatGateway contract allows buying NFTs from an external fiat payment.
   *
@@ -14,7 +16,7 @@ import "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol";
   *
   * This contract is operational only when the exchange rate is set to a non-zero value.
  */
-contract FiatGateway is Upgradeable, ERC1155HolderUpgradeable {
+contract FiatGateway is Upgradeable, ERC1155HolderUpgradeable, HasGlobalNftId {
 
     /** Supports interfaces of AccessControl and ERC1155Receiver.
      */
@@ -31,6 +33,8 @@ contract FiatGateway is Upgradeable, ERC1155HolderUpgradeable {
     uint256 public constant CURRENCY = 0;
 
     Freeport public freeport;
+
+    Marketplace public marketplace;
 
     /** The current exchange rate of ERC20 Units (with 6 decimals) per USD cent (1 penny).
      */
@@ -51,11 +55,17 @@ contract FiatGateway is Upgradeable, ERC1155HolderUpgradeable {
     event SetExchangeRate(
         uint256 cereUnitsPerPenny);
 
-    function initialize(Freeport _freeport) public initializer {
+    function initialize(Freeport _freeport, Marketplace _marketplace) public initializer {
         __Upgradeable_init();
         __ERC1155Holder_init();
 
         freeport = _freeport;
+        marketplace = _marketplace;
+    }
+
+    function initialize_update(Freeport _freeport, Marketplace _marketplace) external onlyRole(DEFAULT_ADMIN_ROLE) {
+        freeport = _freeport;
+        marketplace = _marketplace;
     }
 
     /** Initialize this contract after version 2.0.0.
@@ -171,7 +181,15 @@ contract FiatGateway is Upgradeable, ERC1155HolderUpgradeable {
         uint boughtTokens = penniesReceived * cereUnitsPerPenny;
         require(boughtTokens >= expectedPriceOrZero * quantity, "Insufficient payment");
 
-        freeport.takeOffer(buyer, seller, nftId, expectedPriceOrZero, quantity);
+        (address collection, uint32 innerId, uint64 supply) = _parseNftId(nftId);
+        /* Zero supply means that nftId is just a identifier of the NFT and does not have state.
+         * This means that it's compatible with new version of Freeport.
+         */
+        if (supply == 0) {
+            marketplace.takeOffer(buyer, seller, nftId, expectedPriceOrZero, quantity);
+        } else {
+            freeport.takeOffer(buyer, seller, nftId, expectedPriceOrZero, quantity);
+        }
     }
 
     /** Backward-compatible variant with quantity=1.
