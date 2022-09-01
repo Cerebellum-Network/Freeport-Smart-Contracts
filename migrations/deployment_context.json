@@ -1,0 +1,19 @@
+{
+  "dev": {
+    "deploys": {
+      "Freeport": "0x702BA959B5542B2Bf88a1C5924F73Ed97482c64B",
+      "FiatGateway": "0x106Bf3D61952faE9279B08bdcB2e548316E0C1Ae",
+      "SimpleAuction": "0xCEAc6c102bEcE4ed2E5ede9df096F7175BB8CbaD",
+      "NFTAttachment": "0x39B27a0bc81C1366E2b05E02642Ef343a4f9223a",
+      "MinimalForwarder": "0x2d7FCbBfe773c5E7C7fccbA8434386048267c16D",
+      "ERC20": "0x4e5a86E128f8Fb652169f6652e2Cd17aAe409e96",
+      "CollectionFactory": "0xc4018973d7ae51b4669dDe7948904d034A79Bb86",
+      "Marketplace": "0xB0D3aF64CD682aF52d5Dd77D2402EE253be38107",
+      "Auction": "0xe0676BD7940c44e9C2d908acd9Bdb8Ab3750b524"
+    },
+    "Token": {
+      "symbol": "USDC",
+      "decimals": 6
+    }
+  }
+}
