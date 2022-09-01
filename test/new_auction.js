@@ -92,11 +92,7 @@ contract("Auction", accounts => {
 
         let checkBalances = async (expected, nftId) => {
             for (let [account, expectedERC20, expectedNFTs] of expected) {
-                log("#@#@#@#@#@#@#@#")
-                log(`account, expectedERC20, expectedNFTs = [${account}, ${expectedERC20}, ${expectedNFTs}]`)
                 let ercBalance = await erc20.balanceOf(account);
-                log(`ercBalance = [${ercBalance}]`)
-                log("#@#@#@#@#@#@#@#")
                 let currency = await freeport.balanceOf.call(account, CURRENCY);
                 let nfts = await collection.balanceOf.call(account, nftId);
                 assert.equal(ercBalance, expectedERC20 * UNIT);
