@@ -119,6 +119,12 @@ contract("Collection", accounts => {
         assert.equal(takeOfferEv.nftId.toString(), nftId.toString());
         assert.equal(takeOfferEv.price.toNumber(), price);
         assert.equal(takeOfferEv.amount.toNumber(), 2);
+        let transferSingleEv = getEvent(takeOfferTx, "TransferSingle");
+        assert.equal(transferSingleEv.operator.toString(), marketplace.address);
+        assert.equal(transferSingleEv.from.toString(), minter);
+        assert.equal(transferSingleEv.to.toString(), buyer);
+        assert.equal(transferSingleEv.id.toString(), nftId.toString());
+        assert.equal(transferSingleEv.value.toNumber(), 2);
 
         // The NFTs were transferred.
         let minterNfts = +(await collection.balanceOf(minter, nftId));

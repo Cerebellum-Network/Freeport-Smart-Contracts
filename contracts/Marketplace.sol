@@ -46,6 +46,11 @@ contract Marketplace is MetaTxContext, FreeportDelegator, HasGlobalNftId {
         uint256 price,
         uint256 amount);
 
+    /**
+     * @dev Emitted when `value` tokens of token type `id` are transferred from `from` to `to` by `operator`.
+     */
+    event TransferSingle(address indexed operator, address indexed from, address indexed to, uint256 id, uint256 value);
+
     /** Create an offer to sell a type of NFTs for a price per unit.
      * All the NFTs of this type owned by the caller will be for sale.
      *
@@ -107,6 +112,7 @@ contract Marketplace is MetaTxContext, FreeportDelegator, HasGlobalNftId {
         //todo add supportInterface to collection SC
         (address issuer, uint32 innerId, uint64 supply) = _parseNftId(nftId);
         Collection(issuer).transferFrom(seller, buyer, nftId, amount);
+        emit TransferSingle(address(this), seller, buyer, nftId, amount);
 
         emit TakeOffer(buyer, seller, nftId, price, amount);
     }
