@@ -49,6 +49,10 @@ contract SimpleAuction is /* AccessControl, */ MetaTxContext, ERC1155HolderUpgra
         freeport = _freeport;
     }
 
+    function initialize_update(Freeport _freeport) external onlyRole(DEFAULT_ADMIN_ROLE) {
+        freeport = _freeport;
+    }
+
     /** Initialize this contract after version 2.0.0.
      *
      * Allow deposit of USDC into Freeport.
@@ -76,6 +80,11 @@ contract SimpleAuction is /* AccessControl, */ MetaTxContext, ERC1155HolderUpgra
     /** Seller => NFT ID => Bid.
      */
     mapping(address => mapping(uint256 => Bid)) public sellerNftBids;
+
+    /** This field is reserved for the bidCollateral variable,
+     * for compatibility between upgrades.
+     */
+    mapping(address => mapping(uint256 => uint256)) public _bidCollateral;
 
     /**
      * Note: `price` is the minimum price minus 10%, because a bid must be 10% higher, resulting in the requested minimum price.
@@ -106,7 +115,7 @@ contract SimpleAuction is /* AccessControl, */ MetaTxContext, ERC1155HolderUpgra
         uint256 price,
         address buyer);
 
-    function startAuction(uint256 nftId, uint256 minPrice, uint closeTimeSec) 
+    function startAuction(uint256 nftId, uint256 minPrice, uint closeTimeSec)
     public {
         startSecuredAuction(nftId, minPrice, closeTimeSec, false);
     }
@@ -156,10 +165,10 @@ contract SimpleAuction is /* AccessControl, */ MetaTxContext, ERC1155HolderUpgra
     public {
         address buyer = _msgSender();
         Bid storage bid = sellerNftBids[seller][nftId];
-        
+
         if (bid.secured) {
             address verifier = recoverAddressFromSignature(buyer, nftId, signature);
-            require(hasRole(BUY_AUTHORIZER_ROLE, verifier), "Authroizer doesn't have a role");        
+            require(hasRole(BUY_AUTHORIZER_ROLE, verifier), "Authorizer doesn't have a role");
         }
 
         // Check that the auction exists and is open.
@@ -185,7 +194,7 @@ contract SimpleAuction is /* AccessControl, */ MetaTxContext, ERC1155HolderUpgra
         bid.buyer = buyer;
         bid.price = price;
         _takeDeposit(buyer, price);
-        
+
         emit BidOnAuction(seller, nftId, price, bid.closeTimeSec, buyer);
     }
 
@@ -195,9 +204,6 @@ contract SimpleAuction is /* AccessControl, */ MetaTxContext, ERC1155HolderUpgra
 
         // Check that the auction exists.
         require(bid.closeTimeSec != 0, "the auction must exist");
-
-        // Check that the auction is closed.
-        require(bid.closeTimeSec <= block.timestamp, "the auction must be closed");
 
         address buyer = bid.buyer;
         uint256 price = bid.price;
