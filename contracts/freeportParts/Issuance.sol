@@ -60,19 +60,6 @@ abstract contract Issuance is ERC20Adapter {
         return addr == issuer;
     }
 
-    /** Return whether the address is the issuer of an NFT type, and
-     * currently owns all NFT of this type (normally right after issuance).
-     */
-    function _isIssuerAndOnlyOwner(address addr, uint256 id)
-    internal view returns (bool) {
-        (address issuer, uint32 nonce, uint64 supply) = _parseNftId(id);
-        uint64 balance = uint64(balanceOf(issuer, id));
-
-        bool isIssuer = addr == issuer;
-        bool ownsAll = balance == supply;
-        return isIssuer && ownsAll;
-    }
-
     /** Calculate the ID of an NFT type, identifying its issuer, its supply, and an arbitrary nonce.
      */
     function getNftId(address issuer, uint32 nonce, uint64 supply)
