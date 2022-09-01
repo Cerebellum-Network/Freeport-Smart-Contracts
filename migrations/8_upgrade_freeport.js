@@ -1,5 +1,6 @@
 const Freeport = artifacts.require("Freeport");
 const {upgradeProxy} = require('@openzeppelin/truffle-upgrades');
+const ctx = require("./deployment_context.json");
 const log = console.log;
 
 module.exports = async function (deployer, network, accounts) {
