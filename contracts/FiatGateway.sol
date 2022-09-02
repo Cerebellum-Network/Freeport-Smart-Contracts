@@ -34,8 +34,6 @@ contract FiatGateway is Upgradeable, ERC1155HolderUpgradeable, HasGlobalNftId {
 
     Freeport public freeport;
 
-    Marketplace public marketplace;
-
     /** The current exchange rate of ERC20 Units (with 6 decimals) per USD cent (1 penny).
      */
     uint cereUnitsPerPenny;
@@ -47,6 +45,8 @@ contract FiatGateway is Upgradeable, ERC1155HolderUpgradeable, HasGlobalNftId {
     /** Discontinued variable.
      */
     uint public totalCereUnitsSent;
+
+    Marketplace public marketplace;
 
     /** An event emitted when the exchange rate was set to a new value.
      *
