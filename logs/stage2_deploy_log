@@ -54,7 +54,7 @@ Not deploying unnecessary MinimalForwarder and BypassForwarder
    > Total cost:                   0 ETH
 
 
-3_deploy_fiat_gateway.js
+10_deploy_fiat_gateway.js
 ========================
 Operating on Freeport contract 0x918E6Ce38Fd2ea97007A6b6F2a4Eaf2A73c9c3De
 From admin account 0x63846e2D234e4F854F43423014430b4e131f697b
@@ -182,7 +182,7 @@ Done initialize_v2_0_0
    > Total cost:                   0 undefined
 
 
-10_upgrade_fiat_gateway.js
+11_upgrade_fiat_gateway.js
 ==========================
 Operating on FiatGateway contract 0x99005372cF2699D0722A380C779Da6D1F2e5BADC
 Upgraded 0x99005372cF2699D0722A380C779Da6D1F2e5BADC

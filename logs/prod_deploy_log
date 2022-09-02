@@ -60,7 +60,7 @@ Skipping unused Forwarder contracts
    > Total cost:                   0 ETH
 
 
-3_deploy_fiat_gateway.js
+10_deploy_fiat_gateway.js
 ========================
 Operating on Freeport contract 0xf9AC6022F786f6f64Fd8abf661190b8517D92396
 From admin account 0x4D632F8513554d7647a326c1f4ca72caEfF93e63

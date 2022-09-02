@@ -420,7 +420,7 @@ contract("Freeport", accounts => {
             "Discontinued");
     });
 
-    it("buys an NFT from USD", async () => {
+    it("buys an NFT from USD on Freeport", async () => {
         const gateway = await FiatGateway.deployed();
         await setupFiatService(gateway);
 
@@ -523,6 +523,8 @@ contract("Freeport", accounts => {
         balance = await erc20.balanceOf(accounts[0]);
         assert.equal(balance, liquidities - priceCere * 3);
     });
+
+    // TODO: create test case for buying NFT from USD on Collection
 
     it("exchange ERC20 into internal currency", async () => {
         let {freeport, erc20, deposit} = await deploy();
