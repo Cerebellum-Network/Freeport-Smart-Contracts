@@ -54,8 +54,8 @@ module.exports = {
           phrase: mnemonic
         },
         addressIndex: 1,
-        providerOrUrl: "https://polygon-mumbai.infura.io/v3/" + infuraProjectId,
-        //providerOrUrl:  `https://matic-mumbai.chainstacklabs.com`,
+        //providerOrUrl: "https://polygon-mumbai.infura.io/v3/" + infuraProjectId,
+        providerOrUrl:  `https://matic-mumbai.chainstacklabs.com`,
         //providerOrUrl:  `https://rpc-mumbai.maticvigil.com`, // Not working with upgradeProxy
         //providerOrUrl:  `https://rpc-mumbai.matic.today`,
         chainId: 80001,

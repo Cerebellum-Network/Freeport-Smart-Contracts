@@ -40,10 +40,10 @@
     "@openzeppelin/test-helpers": "^0.5.12",
     "@openzeppelin/truffle-upgrades": "^1.12.0",
     "@poanet/solidity-flattener": "^3.0.6",
-    "@truffle/hdwallet-provider": "^1.4.1",
+    "@truffle/hdwallet-provider": "^2.0.14",
     "dotenv": "^9.0.0",
     "solc-0.8": "npm:solc@0.8.4",
     "solidity-docgen": "^0.5.13",
-    "truffle": "^5.3.10"
+    "truffle": "^5.5.28"
   }
 }
