@@ -58,21 +58,21 @@ contract FiatGateway is Upgradeable, ERC1155HolderUpgradeable, HasGlobalNftId {
     function initialize(Freeport _freeport, Marketplace _marketplace) public initializer {
         __Upgradeable_init();
         __ERC1155Holder_init();
-
-        freeport = _freeport;
-        marketplace = _marketplace;
+        initialize_update(_freeport, _marketplace);
     }
 
-    function initialize_update(Freeport _freeport, Marketplace _marketplace) external onlyRole(DEFAULT_ADMIN_ROLE) {
+    function initialize_update(Freeport _freeport, Marketplace _marketplace) public onlyRole(DEFAULT_ADMIN_ROLE) {
         freeport = _freeport;
         marketplace = _marketplace;
+        initialize_v2_0_0();
+        initialize_v3_0_0();
     }
 
     /** Initialize this contract after version 2.0.0.
      *
      * Allow deposit of USDC into Freeport.
      */
-    function initialize_v2_0_0() public {
+    function initialize_v2_0_0() internal {
         IERC20 erc20 = freeport.currencyContract();
 
         bool init = erc20.allowance(address(this), address(freeport)) > 0;
@@ -80,6 +80,20 @@ contract FiatGateway is Upgradeable, ERC1155HolderUpgradeable, HasGlobalNftId {
 
         uint256 maxInt = 0xffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff;
         erc20.approve(address(freeport), maxInt);
+    }
+
+    /** Initialize this contract after version 3.0.0.
+     *
+     * Allow payments of USDC into Marketplace.
+     */
+    function initialize_v3_0_0() internal {
+        IERC20 erc20 = freeport.currencyContract();
+
+        bool init = erc20.allowance(address(this), address(marketplace)) > 0;
+        if (init) return;
+
+        uint256 maxInt = 0xffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff;
+        erc20.approve(address(marketplace), maxInt);
     }
 
     /** Set the exchange rate between fiat (USD) and Freeport currency (CERE).

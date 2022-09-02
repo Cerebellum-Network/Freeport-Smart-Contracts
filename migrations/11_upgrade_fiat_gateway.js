@@ -15,16 +15,11 @@ module.exports = async function (deployer, network, accounts) {
     log("Operating on Marketplace contract", marketplace.address);
 
     try {
-        const gateway2 = await upgradeProxy(gateway.address, FiatGateway, {deployer, kind: "uups",
-            call: {
-                fn: 'initialize_update',
-                args: [freeport.address, marketplace.address]
-            }
-        });
+        const gateway2 = await upgradeProxy(gateway.address, FiatGateway, {deployer, kind: "uups"});
         log("Upgraded", gateway2.address);
 
-        await gateway2.initialize_v2_0_0();
-        log("Done initialize_v2_0_0");
+        await gateway2.initialize_update(freeport.address, marketplace.address);
+        log("Done initialize_update");
     } catch (e) {
         log("Error", e);
         throw e;
