@@ -1,10 +1,12 @@
 pragma solidity ^0.8.0;
 
-import "./freeportParts/MetaTxContext.sol";
-import "./Freeport.sol";
-import "./freeportParts/SignatureVerifier.sol";
 import "@openzeppelin/contracts-upgradeable/token/ERC1155/utils/ERC1155HolderUpgradeable.sol";
 import "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol";
+import "./freeportParts/MetaTxContext.sol";
+import "./freeportParts/SignatureVerifier.sol";
+import "./freeportParts/HasGlobalNftId.sol";
+import "./Freeport.sol";
+import "./Collection.sol";
 
 /**
 An auction is characterized by a sequence of transactions and their corresponding events:
@@ -27,9 +29,9 @@ However, after the auction is settled, a new auction with the *same tuple* may s
 This contract is not meant to be used from another contract; if it is,
 it will not call onERC1155Received hooks for security reasons.
 
-This contract must have the TRANSFER_OPERATOR role in the Freeport contract.
+This contract must have the TRANSFER_OPERATOR role in the Collection contract.
  */
-contract SimpleAuction is /* AccessControl, */ MetaTxContext, ERC1155HolderUpgradeable, SignatureVerifier {
+contract Auction is /* AccessControl, */ MetaTxContext, ERC1155HolderUpgradeable, SignatureVerifier, HasGlobalNftId {
 
     /** Supports interfaces of AccessControl and ERC1155Receiver.
      */
@@ -81,10 +83,9 @@ contract SimpleAuction is /* AccessControl, */ MetaTxContext, ERC1155HolderUpgra
      */
     mapping(address => mapping(uint256 => Bid)) public sellerNftBids;
 
-    /** This field is reserved for the bidCollateral variable,
-     * for compatibility between upgrades.
+    /** Tracking amount of collateral NFTs.
      */
-    mapping(address => mapping(uint256 => uint256)) public _bidCollateral;
+    mapping(address => mapping(uint256 => uint256)) public bidCollateral;
 
     /**
      * Note: `price` is the minimum price minus 10%, because a bid must be 10% higher, resulting in the requested minimum price.
@@ -150,7 +151,10 @@ contract SimpleAuction is /* AccessControl, */ MetaTxContext, ERC1155HolderUpgra
 
         // Take the NFT from the seller.
         // Use the TRANSFER_OPERATOR role.
-        freeport.transferFrom(seller, address(this), nftId, 1);
+        (address issuer, uint32 innerId, uint64 supply) = _parseNftId(nftId);
+        Collection(issuer).transferFrom(seller, address(this), nftId, 1);
+        // Tracking amount of collateral NFTs
+        bidCollateral[seller][nftId] += 1;
 
         emit StartAuction(seller, nftId, price, closeTimeSec, secured);
     }
@@ -168,7 +172,7 @@ contract SimpleAuction is /* AccessControl, */ MetaTxContext, ERC1155HolderUpgra
 
         if (bid.secured) {
             address verifier = recoverAddressFromSignature(buyer, nftId, signature);
-            require(hasRole(BUY_AUTHORIZER_ROLE, verifier), "Authorizer doesn't have a role");
+            require(hasRole(BUY_AUTHORIZER_ROLE, verifier), "Authroizer doesn't have a role");
         }
 
         // Check that the auction exists and is open.
@@ -220,15 +224,23 @@ contract SimpleAuction is /* AccessControl, */ MetaTxContext, ERC1155HolderUpgra
             _finalizePayment(seller, price);
 
             // Transfer the NFT to the buyer.
-            freeport.transferFrom(address(this), buyer, nftId, 1);
+            (address issuer, uint32 innerId, uint64 supply) = _parseNftId(nftId);
+            Collection(issuer).transferFrom(address(this), buyer, nftId, 1);
+            // Tracking amount of collateral NFTs
+            bidCollateral[seller][nftId] -= 1;
 
             // Collect royalty.
-            try freeport.captureFee(seller, nftId, price, 1) {
-            } catch {}
+            // TODO: capture fee from the payment instead of in Freeport.
+            //try freeport.captureFee(seller, nftId, price, 1) {
+            //} catch {}
         } else {
             // Otherwise, there was no buyer,
             // give back the NFT to the seller.
-            freeport.transferFrom(address(this), seller, nftId, 1);
+            (address issuer, uint32 innerId, uint64 supply) = _parseNftId(nftId);
+            Collection(issuer).transferFrom(address(this), seller, nftId, 1);
+
+            // Tracking amount of collateral NFTs
+            bidCollateral[seller][nftId] = 0;
         }
 
         emit SettleAuction(seller, nftId, price, buyer);
@@ -252,15 +264,14 @@ contract SimpleAuction is /* AccessControl, */ MetaTxContext, ERC1155HolderUpgra
         freeport.currencyContract().transfer(to, amount);
     }
 
-    /** Convert the USDC deposit into Freeport-USDC and pay out to the seller.
+    /** Pay USDC from the deposit in this contract to the seller.
      *
-     * This supports joint accounts and royalties (captureFee).
+     * This does NOT supports joint accounts and royalties (captureFee).
      */
     function _finalizePayment(
         address to,
         uint amount
     ) internal {
-        freeport.deposit(amount);
-        freeport.transferFrom(address(this), to, CURRENCY, amount);
+        freeport.currencyContract().transfer(to, amount);
     }
 }
