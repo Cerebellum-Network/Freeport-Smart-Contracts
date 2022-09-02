@@ -156,7 +156,7 @@ contract FiatGateway is Upgradeable, ERC1155HolderUpgradeable {
      *
      * The parameter nonce is ignored and accepted for compatibility.
      */
-    function buyNftFromUsd(
+    function buyNftsFromUsd(
         uint penniesReceived,
         address buyer,
         address seller,
@@ -172,6 +172,20 @@ contract FiatGateway is Upgradeable, ERC1155HolderUpgradeable {
         require(boughtTokens >= expectedPriceOrZero * quantity, "Insufficient payment");
 
         freeport.takeOffer(buyer, seller, nftId, expectedPriceOrZero, quantity);
+    }
+
+    /** Backward-compatible variant with quantity=1.
+     */
+    function buyNftFromUsd(
+        uint penniesReceived,
+        address buyer,
+        address seller,
+        uint nftId,
+        uint expectedPriceOrZero,
+        uint nonce)
+    public {
+        uint quantity = 1;
+        buyNftsFromUsd(penniesReceived, buyer, seller, nftId, quantity, expectedPriceOrZero, nonce);
     }
 
     /** Guarantee that a version of Solidity with safe math is used.
