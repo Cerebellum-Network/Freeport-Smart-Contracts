@@ -112,6 +112,8 @@ contract Marketplace is MetaTxContext, FreeportDelegator, HasGlobalNftId {
         //todo add supportInterface to collection SC
         (address issuer, uint32 innerId, uint64 supply) = _parseNftId(nftId);
         Collection(issuer).transferFrom(seller, buyer, nftId, amount);
+
+        // TODO: remove this after a correct way has been implemented.
         emit TransferSingle(address(this), seller, buyer, nftId, amount);
 
         emit TakeOffer(buyer, seller, nftId, price, amount);
