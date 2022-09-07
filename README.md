@@ -24,26 +24,34 @@ Accounts:
 see [prod_setup](scripts/prod_setup.js)). Biconomy enabled.
 [Admin](https://polygonscan.com/address/0x87A0892F98914c567379475a806A1419143406F6).
 
-#### v2.0.0 on Polygon Mumbai testnet (Staging)
+#### v3.0.0 on Polygon Mumbai testnet (Staging)
 
 Contracts: [Freeport](https://mumbai.polygonscan.com/address/0xacd8105cBA046307d2228794ba2F81aA15e82E0D) and
 [Fiat Gateway](https://mumbai.polygonscan.com/address/0xe25b31Aa454E28110E28C694ded69cD241A27Db1)
 and [Simple Auction](https://mumbai.polygonscan.com/address/0x71091eA5466E3Ca50971bd51c11069e5629a49dB)
 and [NFT Attachment](https://mumbai.polygonscan.com/address/0x84766787c6b9131927A76634F7DDCfcf3ff2e9d1)
-and [Test USDC](https://mumbai.polygonscan.com/address/0x5517c3c3fe3688AEF2B5BBEc2B4D3b523B9E8144).
+and [Test USDC](https://mumbai.polygonscan.com/address/0x5517c3c3fe3688AEF2B5BBEc2B4D3b523B9E8144)
+and [CollectionFactory](https://mumbai.polygonscan.com/address/0x3ddb5ef7a725FDf74A680a312Bf0e4fa3a7D2874)
+and [Auction](https://mumbai.polygonscan.com/address/0xF04c34Cc5773fd726e544a32c25e7Ad6FF7eb875)
+and [Marketplace](https://mumbai.polygonscan.com/address/0x89121a08cCb7C52d7bd6C6e93bF1c9Cdf341dC13)
+.
 
 Accounts:
 [Fiat-to-NFT Service](https://mumbai.polygonscan.com/address/0x53B53189e668dC2ee3bA7A44Bb033E60F400d395) (
 see [stage_setup](scripts/stage_setup.js)). Biconomy enabled.
 [Admin](https://mumbai.polygonscan.com/address/0x63846e2D234e4F854F43423014430b4e131f697b).
 
-#### v2.2.0 on Polygon Mumbai testnet (Dev)
+#### v3.0.0 on Polygon Mumbai testnet (Dev)
 
 Contracts: [Freeport](https://mumbai.polygonscan.com/address/0x702BA959B5542B2Bf88a1C5924F73Ed97482c64B) and
 [Fiat Gateway](https://mumbai.polygonscan.com/address/0x106Bf3D61952faE9279B08bdcB2e548316E0C1Ae)
 and [Simple Auction](https://mumbai.polygonscan.com/address/0xCEAc6c102bEcE4ed2E5ede9df096F7175BB8CbaD)
 and [NFT Attachment](https://mumbai.polygonscan.com/address/0x39B27a0bc81C1366E2b05E02642Ef343a4f9223a)
-and [Test USDC](https://mumbai.polygonscan.com/address/0x5517c3c3fe3688AEF2B5BBEc2B4D3b523B9E8144).
+and [Test USDC](https://mumbai.polygonscan.com/address/0x5517c3c3fe3688AEF2B5BBEc2B4D3b523B9E8144)
+and [CollectionFactory](https://mumbai.polygonscan.com/address/0xc4018973d7ae51b4669dDe7948904d034A79Bb86)
+and [Auction](https://mumbai.polygonscan.com/address/0xe0676BD7940c44e9C2d908acd9Bdb8Ab3750b524)
+and [Marketplace](https://mumbai.polygonscan.com/address/0x40bb79b400Cee631B914820C2CAD9707B554398e)
+.
 
 Accounts:
 [Fiat-to-NFT Service](https://mumbai.polygonscan.com/address/0xD2B94CBF0fFAA9bc07126ab53f980Cd95a5Ed243) (
