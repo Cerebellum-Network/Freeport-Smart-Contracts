@@ -8,7 +8,7 @@ const log = console.log;
 
 // Take the config from https://github.com/Cerebellum-Network/Freeport-Smart-Contracts-SDK
 const CONFIG_PATH = "../Freeport-Smart-Contracts-SDK/src/config.json";
-const DEPLOYMENT = "stage";
+const DEPLOYMENT = "dev";
 const NETWORK_ID = "80001";
 const BUILD_PATH = "build/contracts/";
 
