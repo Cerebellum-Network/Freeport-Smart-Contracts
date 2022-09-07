@@ -1,7 +1,12 @@
+/* This scripts copies the configuration from the SDK into the build/*.json files,
+ * which are then used by other scripts .deployed() functions.
+ */
+
 const fs = require("fs/promises");
 const assert = require("assert/strict");
 const log = console.log;
 
+// Take the config from https://github.com/Cerebellum-Network/Freeport-Smart-Contracts-SDK
 const CONFIG_PATH = "../Freeport-Smart-Contracts-SDK/src/config.json";
 const DEPLOYMENT = "stage";
 const NETWORK_ID = "80001";
@@ -13,6 +18,7 @@ module.exports = async function (done) {
         // Load the deployment configuration.
         log("Network ID:", NETWORK_ID);
         log("Deployment name:", DEPLOYMENT);
+        log("Config file:", CONFIG_PATH);
         let allConfig = JSON.parse(await fs.readFile(CONFIG_PATH));
         let config = allConfig[DEPLOYMENT][NETWORK_ID];
         assert(config, "Config not found");

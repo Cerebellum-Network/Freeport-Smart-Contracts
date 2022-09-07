@@ -125,6 +125,21 @@
       "address": "0x3ddb5ef7a725FDf74A680a312Bf0e4fa3a7D2874",
       "txHash": "0x9590deee03a7a95a4b7caecb500866be75a2108fc711a962118dd49817606678",
       "kind": "uups"
+    },
+    {
+      "address": "0x3Bdf79705E11ad90ab8Beba643429be314e894e8",
+      "txHash": "0xc1e802679e813abb5e5a4c916c8b371a73daeb1e6c7cad19a48ae6a6385c5159",
+      "kind": "uups"
+    },
+    {
+      "address": "0xA6820ebdef38dD696E5E721e6E169933b0C24A66",
+      "txHash": "0xadcbb94721626cbfe3ed3ebd04057d658e6dfa0f28f38891dbfa6623a2de7075",
+      "kind": "uups"
+    },
+    {
+      "address": "0x21Fa62cC319be6Ea8662cfFE0c50a5d7cc60F7E1",
+      "txHash": "0x7a83c05fd0fd326064943c3f40b7962c36e904a7bc52e5a71bec2ac7f19fd49c",
+      "kind": "uups"
     }
   ],
   "impls": {
@@ -1738,7 +1753,7 @@
           {
             "contract": "JointAccounts",
             "label": "jointAccounts",
-            "type": "t_mapping(t_address,t_array(t_struct(JointAccountShare)7483_storage)dyn_storage)",
+            "type": "t_mapping(t_address,t_array(t_struct(JointAccountShare)11986_storage)dyn_storage)",
             "src": "../project:/contracts/freeportParts/JointAccounts.sol:33"
           },
           {
@@ -1806,13 +1821,13 @@
           "t_mapping(t_uint256,t_address)": {
             "label": "mapping(uint256 => address)"
           },
-          "t_mapping(t_address,t_array(t_struct(JointAccountShare)7483_storage)dyn_storage)": {
+          "t_mapping(t_address,t_array(t_struct(JointAccountShare)11986_storage)dyn_storage)": {
             "label": "mapping(address => struct JointAccounts.JointAccountShare[])"
           },
-          "t_array(t_struct(JointAccountShare)7483_storage)dyn_storage": {
+          "t_array(t_struct(JointAccountShare)11986_storage)dyn_storage": {
             "label": "struct JointAccounts.JointAccountShare[]"
           },
-          "t_struct(JointAccountShare)7483_storage": {
+          "t_struct(JointAccountShare)11986_storage": {
             "label": "struct JointAccounts.JointAccountShare",
             "members": [
               {
