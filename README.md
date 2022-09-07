@@ -75,6 +75,8 @@ Review all code changes since the last deployed release. Understand how upgradea
 
 Bump the version, maintain [CHANGELOG.md](CHANGELOG.md), and create a release in github.
 
+Then, select which deployment to operate on. One way is to use the [configure_deployment](scripts/configure_deployment.js) script (see configuration inside).
+
 Choose a [migration script](migrations/) depending on which contract to upgrade (e.g.: N=8). For the DEV environment, you need to edit the addresses in `build/*.json`. Then run:
 
     npm run test
