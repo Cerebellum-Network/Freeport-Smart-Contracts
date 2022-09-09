@@ -3,7 +3,6 @@ pragma solidity ^0.8.0;
 import "@openzeppelin/contracts/utils/Strings.sol";
 import "./freeportParts/collections/CollectionRoyalties.sol";
 import "./freeportParts/collections/CollectionIssuance.sol";
-import "./freeportParts/collections/CollectionNFTAttachment.sol";
 import "./freeportParts/OpenSeaCollection.sol";
 import "./freeportParts/BaseTransferOperator.sol";
 import "./Marketplace.sol";
@@ -13,14 +12,13 @@ import "./Auction.sol";
 /** This this contract describes the collection of NFTs associated with a particular user.
  *
  */
-contract Collection is OpenSeaCollection, CollectionRoyalties, CollectionIssuance, CollectionNFTAttachment, BaseTransferOperator, BaseNFT {
+contract Collection is OpenSeaCollection, CollectionRoyalties, CollectionIssuance, BaseTransferOperator, BaseNFT {
 
     using Strings for uint256;
 
-    function initialize(address admin, address manager, string memory _name, string memory _uri, string memory __contractURI, Freeport _freeport, NFTAttachment _nftAttachment, Marketplace _marketplace, Auction _auction) public initializer {
+    function initialize(address admin, address manager, string memory _name, string memory _uri, string memory __contractURI, Freeport _freeport, Marketplace _marketplace, Auction _auction) public initializer {
         __OpenSeaCollection_init(_name, __contractURI);
         __CollectionRoyalties_init(_freeport);
-        __CollectionNFTAttachment_init(_nftAttachment);
         __CollectionIssuance_init();
         __BaseTransferOperator_init();
         __BaseNFT_init();
