@@ -35,6 +35,17 @@ module.exports = async function (done) {
             let path = BUILD_PATH + contractName + ".json";
             let artif = JSON.parse(await fs.readFile(path));
 
+            // Support fresh artifacts that do not have any deployment yet.
+            if (!artif["networks"]) artif["networks"] = {};
+            if (!artif["networks"][NETWORK_ID]) {
+                artif["networks"][NETWORK_ID] = {
+                    "events": {},
+                    "links": {},
+                    "transactionHash": "0x0000000000000000000000000000000000000000000000000000000000000000",
+                };
+            }
+
+            // Set the address for this deployment.
             artif["networks"][NETWORK_ID].address = address;
 
             await fs.writeFile(path, JSON.stringify(artif, null, 2));
