@@ -300,3 +300,26 @@ Done initialize_v2_0_0
    > Saving artifacts
    -------------------------------------
    > Total cost:          0.00894028 ETH
+
+
+# Deploying FREEP-687 (commit 0a15fd6c)
+
+26_upgrade_nftattachment.js
+===========================
+Operating on NFTAttachment contract 0x39B27a0bc81C1366E2b05E02642Ef343a4f9223a
+
+   Replacing 'NFTAttachment'
+   -------------------------
+   > transaction hash:    0x940e63aac25aeeb54adbd480a9746a2822f01801368b7cf5917f1110b8c41ab8
+   > Blocks: 0            Seconds: 4
+   > contract address:    0x477332Aa86c8c4daF988555b8047b7005C369162
+   > block number:        28015049
+   > block timestamp:     1662739399
+   > account:             0x63846e2D234e4F854F43423014430b4e131f697b
+   > balance:             0.749144648983013339
+   > gas used:            1360049 (0x14c0b1)
+   > gas price:           40 gwei
+   > value sent:          0 ETH
+   > total cost:          0.05440196 ETH
+
+Upgraded 0x39B27a0bc81C1366E2b05E02642Ef343a4f9223a

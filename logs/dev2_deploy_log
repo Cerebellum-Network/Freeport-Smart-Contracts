@@ -183,3 +183,12 @@ Done initialize_v2_0_0
 
    -------------------------------------
    > Total cost:                   0 undefined
+
+
+# Deploying FREEP-687 (commit 0a15fd6c)
+
+26_upgrade_nftattachment.js
+===========================
+Operating on NFTAttachment contract 0x891e1e06Ec421b193CdC9bC53b038AD5e053bED9
+Upgraded 0x891e1e06Ec421b193CdC9bC53b038AD5e053bED9
+
