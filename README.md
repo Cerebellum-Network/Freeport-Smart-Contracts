@@ -26,7 +26,7 @@ and [Marketplace](https://polygonscan.com/address/0xd24CFfD60380A82A3cd1596642BE
 Accounts:
 [Fiat-to-NFT Service](https://polygonscan.com/address/0x2352f1167F1c1c5273bB64a1FEEAf9dF49702A19) (
 see [prod_setup](scripts/prod_setup.js)). Biconomy enabled.
-[Admin](https://polygonscan.com/address/0x87A0892F98914c567379475a806A1419143406F6).
+[Admin Gnosis Safe](https://gnosis-safe.io/app/matic:0x87A0892F98914c567379475a806A1419143406F6/home).
 
 #### v3.0.0 on Polygon Mumbai testnet (Staging)
 
