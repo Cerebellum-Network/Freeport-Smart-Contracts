@@ -1,6 +1,8 @@
 pragma solidity ^0.8.0;
 
 import "./freeportParts/MetaTxContext.sol";
+import "./freeportParts/HasGlobalNftId.sol";
+import "./Collection.sol";
 import "./Freeport.sol";
 
 /** The contract NFTAttachment allows users to attach objects to NFTs.
@@ -14,7 +16,7 @@ import "./Freeport.sol";
  * such as a CID, a.k.a. Content Identifier, or a DDC URL.
  * The content may be retrieved from Cere DDC or some other store.
  */
-contract NFTAttachment is /* AccessControl, */ MetaTxContext {
+contract NFTAttachment is /* AccessControl, */ MetaTxContext, HasGlobalNftId {
 
     /** This attachment contract refers to the NFT contract in this variable.
      */
@@ -22,6 +24,11 @@ contract NFTAttachment is /* AccessControl, */ MetaTxContext {
 
     /** The token ID that represents the internal currency for all payments in Freeport. */
     uint256 constant CURRENCY = 0;
+
+    /** Collection manager role.
+     *  Used for configuring the amounts and beneficiaries of royalties on primary and secondary transfers of this NFT.
+     */
+    bytes32 public constant COLLECTION_MANAGER_ROLE = keccak256("COLLECTION_MANAGER_ROLE");
 
     /** Set which NFT contract to refer to.
      *
@@ -75,6 +82,21 @@ contract NFTAttachment is /* AccessControl, */ MetaTxContext {
         address actualMinter = _minterFromNftId(nftId);
         require(minter == actualMinter, "Only minter");
         emit MinterAttachToNFT(minter, nftId, attachment);
+    }
+
+    /** Attach data `attachment` to the NFT type `nftId`, as manager of collection.
+     *
+     * This only works with NFTs on Collections.
+     */
+    function collectionManagerAttachToNFT(uint256 nftId, bytes calldata attachment)
+    public {
+        (address collection, uint32 innerId, uint64 zeroSupply) = _parseNftId(nftId);
+        require(zeroSupply == 0, "NFT format is not compatible with Collections");
+
+        address manager = _msgSender();
+        require(Collection(collection).hasRole(COLLECTION_MANAGER_ROLE, manager), "sender is not collection manager");
+
+        emit MinterAttachToNFT(manager, nftId, attachment);
     }
 
     /** Attach data `attachment` to the NFT type `nftId`, as a current owner of an NFT of this type.

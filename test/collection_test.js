@@ -1,5 +1,6 @@
 const Freeport = artifacts.require("Freeport");
 const CollectionFactory = artifacts.require("CollectionFactory");
+const NFTAttachment = artifacts.require("NFTAttachment");
 const Collection = artifacts.require("Collection");
 const Marketplace = artifacts.require("Marketplace");
 const Auction = artifacts.require("Auction");
@@ -14,11 +15,13 @@ contract("Collection", accounts => {
     const deployer = accounts[0];
     const minter = accounts[1];
     const buyer = accounts[2];
+    const anon = accounts[9];
 
     const CURRENCY = 0;
     const UNIT = 1e6;
     const aLot = 100e3 * UNIT;
     const freeportUSDCAmount = 10e3 * UNIT;
+    const attachmentData = "0x11223344556677889900112233445566778899001122334455667788990011223344556677889900";
 
     let deploy = async (freeport) => {
         let erc20;
@@ -54,6 +57,7 @@ contract("Collection", accounts => {
     let factory;
     let marketplace;
     let auction;
+    let attachment;
     let erc20;
     let mintUSDC;
     let withdraw;
@@ -65,6 +69,7 @@ contract("Collection", accounts => {
         factory = await CollectionFactory.deployed();
         marketplace = await Marketplace.deployed();
         auction = await Auction.deployed();
+        attachment = await NFTAttachment.deployed();
         erc20 = x.erc20;
         mintUSDC = x.mintUSDC;
         withdraw = x.withdraw;
@@ -102,6 +107,17 @@ contract("Collection", accounts => {
         assert.equal(makeOfferEv.seller, minter);
         assert.equal(makeOfferEv.nftId.toString(), nftId.toString());
         assert.equal(makeOfferEv.price.toNumber(), price);
+
+        await expectRevert(
+            attachment.collectionManagerAttachToNFT(nftId, attachmentData, {from: anon}),
+            "sender is not collection manager");
+
+        let receipt = await attachment.collectionManagerAttachToNFT(nftId, attachmentData, {from: minter});
+        expectEvent(receipt, 'MinterAttachToNFT', {
+            minter,
+            nftId,
+            attachment: attachmentData,
+        });
 
         // The buyer gets some money.
         await mintUSDC(buyer, 1000);
