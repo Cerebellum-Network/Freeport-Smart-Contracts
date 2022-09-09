@@ -11,13 +11,17 @@ See the [documentation](docs/Freeport.md) (regenerate with `npm run doc`).
 ## Deployments
 
 
-#### v2.0.0 on Polygon (Production)
+#### v3.0.0 on Polygon (Production)
 
 Contracts: [Freeport](https://polygonscan.com/address/0xf9AC6022F786f6f64Fd8abf661190b8517D92396) and
 [Fiat Gateway](https://polygonscan.com/address/0x4478e3B0B71531DAc9d0ECe9357eBB0043669804)
 and [Simple Auction](https://polygonscan.com/address/0xf6a530242B233B1b4208c449D6C72FB7c6133cC0)
 and [NFT Attachment](https://polygonscan.com/address/0x651f2C6942F1c290632Ad5bB61D9ece789f82f35)
-and [USDC ERC20](https://polygonscan.com/address/0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174).
+and [USDC ERC20](https://polygonscan.com/address/0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174)
+and [CollectionFactory](https://polygonscan.com/address/0x80F9DdF6De7a7bBfF651580944F4746665335ecd)
+and [Auction](https://polygonscan.com/address/0xeD40a2D2785755cEA0DeB36Fb3bB9AA74aD61f34)
+and [Marketplace](https://polygonscan.com/address/0xd24CFfD60380A82A3cd1596642BE4dB5DAe6F2F9)
+.
 
 Accounts:
 [Fiat-to-NFT Service](https://polygonscan.com/address/0x2352f1167F1c1c5273bB64a1FEEAf9dF49702A19) (

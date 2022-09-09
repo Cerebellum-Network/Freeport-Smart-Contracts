@@ -230,3 +230,243 @@ Summary
 > Final cost:          0.37542856 ETH
 
 
+#### On the 2022-09-09, v3.0.0 (commit 6c1fc06e)
+
+From admin account 0x4D632F8513554d7647a326c1f4ca72caEfF93e63
+Admin role: 0x0000000000000000000000000000000000000000000000000000000000000000
+
+3_deploy_marketplace.js
+=======================
+Operating Marketplace with Freeport contract 0xf9AC6022F786f6f64Fd8abf661190b8517D92396
+
+   Deploying 'Marketplace'
+   -----------------------
+   > transaction hash:    0x2ff5e19c54361dcdb847c07ae2061f85feff26dca8e7ec325e4d32c541550843
+   > Blocks: 5            Seconds: 8
+   > contract address:    0xB4E76Dc167afceac39B6fBd489FB54e26de6C292
+   > block number:        32886741
+   > block timestamp:     1662725280
+   > account:             0x4D632F8513554d7647a326c1f4ca72caEfF93e63
+   > balance:             1.72472767902524986
+   > gas used:            1295110 (0x13c306)
+   > gas price:           60 gwei
+   > value sent:          0 ETH
+   > total cost:          0.0777066 ETH
+
+   Pausing for 1 confirmations...
+
+   -------------------------------
+   > confirmation number: 2 (block: 32886744)
+
+   Deploying 'ERC1967Proxy'
+   ------------------------
+   > transaction hash:    0x4c326b341a26ccd3d6c9931bfda99e05accfc3f61649e29a22853ebb5b8a6210
+   > Blocks: 2            Seconds: 4
+   > contract address:    0xd24CFfD60380A82A3cd1596642BE4dB5DAe6F2F9
+   > block number:        32886750
+   > block timestamp:     1662725298
+   > account:             0x4D632F8513554d7647a326c1f4ca72caEfF93e63
+   > balance:             1.62764125902524986
+   > gas used:            322997 (0x4edb5)
+   > gas price:           60 gwei
+   > value sent:          0 ETH
+   > total cost:          0.01937982 ETH
+
+   Pausing for 1 confirmations...
+
+   -------------------------------
+   > confirmation number: 2 (block: 32886753)
+Deployed Marketplace proxy 0xd24CFfD60380A82A3cd1596642BE4dB5DAe6F2F9
+Give the permission to make transfers to Auction.
+
+
+8_upgrade_freeport.js
+=====================
+Operating on Freeport contract 0xf9AC6022F786f6f64Fd8abf661190b8517D92396
+Upgraded 0xf9AC6022F786f6f64Fd8abf661190b8517D92396
+
+   -------------------------------------
+   > Total cost:                   0 ETH
+
+
+9_upgrade_simple_auction.js
+===========================
+Operating on SimpleAuction contract 0xf6a530242B233B1b4208c449D6C72FB7c6133cC0
+Operating SimpleAuction with Freeport contract 0xf9AC6022F786f6f64Fd8abf661190b8517D92396
+
+   Replacing 'SimpleAuction'
+   -------------------------
+   > transaction hash:    0x8212c432eb5447ff6d6de33834c461ccb22f28faba6fc656fded96d7f4f5c505
+   > Blocks: 2            Seconds: 4
+   > contract address:    0xFEcDd4dCeD045365620ba79E0A53079030C36481
+   > block number:        32886838
+   > block timestamp:     1662725478
+   > account:             0x4D632F8513554d7647a326c1f4ca72caEfF93e63
+   > balance:             1.48580899902524986
+   > gas used:            2252359 (0x225e47)
+   > gas price:           60 gwei
+   > value sent:          0 ETH
+   > total cost:          0.13514154 ETH
+
+   Pausing for 1 confirmations...
+
+   -------------------------------
+   > confirmation number: 2 (block: 32886841)
+Upgraded 0xf6a530242B233B1b4208c449D6C72FB7c6133cC0
+Done initialize_v2_0_0
+
+
+11_upgrade_fiat_gateway.js
+==========================
+Operating on FiatGateway contract 0x4478e3B0B71531DAc9d0ECe9357eBB0043669804
+Operating on Freeport contract 0xf9AC6022F786f6f64Fd8abf661190b8517D92396
+Operating on Marketplace contract 0xd24CFfD60380A82A3cd1596642BE4dB5DAe6F2F9
+
+   Replacing 'FiatGateway'
+   -----------------------
+   > transaction hash:    0x40e476081876a81506492ae79b47972d80bdbd56ddd509a989a8e85a97013923
+   > Blocks: 2            Seconds: 4
+   > contract address:    0xAdC956668851a2D927edD265c642F562896cd955
+   > block number:        32886893
+   > block timestamp:     1662725592
+   > account:             0x4D632F8513554d7647a326c1f4ca72caEfF93e63
+   > balance:             1.37228425902524986
+   > gas used:            1783444 (0x1b3694)
+   > gas price:           60 gwei
+   > value sent:          0 ETH
+   > total cost:          0.10700664 ETH
+
+   Pausing for 1 confirmations...
+
+   -------------------------------
+   > confirmation number: 2 (block: 32886896)
+Upgraded 0x4478e3B0B71531DAc9d0ECe9357eBB0043669804
+Done initialize_update
+
+
+21_deploy_auction.js
+====================
+Operating on Freeport contract 0xf9AC6022F786f6f64Fd8abf661190b8517D92396
+
+   Deploying 'Auction'
+   -------------------
+   > transaction hash:    0x191876c186ebbf2a8445c26060c993d116fb23a18ed974b0ee1b9f8c0bb0f757
+   > Blocks: 2            Seconds: 4
+   > contract address:    0xF61C8f4B8Fe0E6Dc4b96F7dc8Bf7393FC337dD86
+   > block number:        32886988
+   > block timestamp:     1662725790
+   > account:             0x4D632F8513554d7647a326c1f4ca72caEfF93e63
+   > balance:             1.22724403902524986
+   > gas used:            2252359 (0x225e47)
+   > gas price:           60 gwei
+   > value sent:          0 ETH
+   > total cost:          0.13514154 ETH
+
+   Pausing for 1 confirmations...
+
+   -------------------------------
+   > confirmation number: 2 (block: 32886991)
+
+   Deploying 'ERC1967Proxy'
+   ------------------------
+   > transaction hash:    0x668225ef7d4263669398e6ac5b8f0eb2e73be99546622bf23dee6bc173fca018
+   > Blocks: 2            Seconds: 4
+   > contract address:    0xeD40a2D2785755cEA0DeB36Fb3bB9AA74aD61f34
+   > block number:        32886996
+   > block timestamp:     1662725806
+   > account:             0x4D632F8513554d7647a326c1f4ca72caEfF93e63
+   > balance:             1.20777469902524986
+   > gas used:            324489 (0x4f389)
+   > gas price:           60 gwei
+   > value sent:          0 ETH
+   > total cost:          0.01946934 ETH
+
+   Pausing for 1 confirmations...
+
+   -------------------------------
+   > confirmation number: 2 (block: 32886999)
+Deployed Auction proxy 0xeD40a2D2785755cEA0DeB36Fb3bB9AA74aD61f34
+Give the permission to make transfers to SimpleAuction.
+
+   > Saving artifacts
+   -------------------------------------
+   > Total cost:          0.15461088 ETH
+
+
+22_deploy_collection_factory.js
+===============================
+Operating CollectionFactory with Freeport contract 0xf9AC6022F786f6f64Fd8abf661190b8517D92396
+Operating CollectionFactory with NFTAttachment contract 0x651f2C6942F1c290632Ad5bB61D9ece789f82f35
+Operating CollectionFactory with Marketplace contract 0xd24CFfD60380A82A3cd1596642BE4dB5DAe6F2F9
+Operating CollectionFactory with Auction contract 0xeD40a2D2785755cEA0DeB36Fb3bB9AA74aD61f34
+
+   Deploying 'CollectionFactory'
+   -----------------------------
+   > transaction hash:    0x361e2d7a2e43abed062f32214620593bb208b83ced4f4a3fd76e13d92683235b
+   > Blocks: 2            Seconds: 4
+   > contract address:    0x3fFD18E92cD16e67A4F18cf419140c1F4680ce8e
+   > block number:        32887009
+   > block timestamp:     1662725832
+   > account:             0x4D632F8513554d7647a326c1f4ca72caEfF93e63
+   > balance:             0.91606597902524986
+   > gas used:            4802419 (0x494773)
+   > gas price:           60 gwei
+   > value sent:          0 ETH
+   > total cost:          0.28814514 ETH
+
+   Pausing for 1 confirmations...
+
+   -------------------------------
+   > confirmation number: 2 (block: 32887012)
+
+   Deploying 'ERC1967Proxy'
+   ------------------------
+   > transaction hash:    0x6b107551a532c99f3a390690b1d5318db60bc20634a735abc184ee0a2160554f
+   > Blocks: 3            Seconds: 4
+   > contract address:    0x80F9DdF6De7a7bBfF651580944F4746665335ecd
+   > block number:        32887017
+   > block timestamp:     1662725848
+   > account:             0x4D632F8513554d7647a326c1f4ca72caEfF93e63
+   > balance:             0.89258221902524986
+   > gas used:            391396 (0x5f8e4)
+   > gas price:           60 gwei
+   > value sent:          0 ETH
+   > total cost:          0.02348376 ETH
+
+   Pausing for 1 confirmations...
+
+   -------------------------------
+   > confirmation number: 2 (block: 32887020)
+Deployed CollectionFactory proxy 0x80F9DdF6De7a7bBfF651580944F4746665335ecd
+
+
+23_upgrade_auction.js
+=====================
+Operating on Auction contract 0xeD40a2D2785755cEA0DeB36Fb3bB9AA74aD61f34
+Operating Auction with Freeport contract 0xf9AC6022F786f6f64Fd8abf661190b8517D92396
+Upgraded 0xeD40a2D2785755cEA0DeB36Fb3bB9AA74aD61f34
+Done initialize_v2_0_0
+
+   -------------------------------------
+   > Total cost:                   0 ETH
+
+
+24_upgrade_collection_factory.js
+================================
+Operating on CollectionFactory contract 0x80F9DdF6De7a7bBfF651580944F4746665335ecd
+Operating CollectionFactory with Freeport contract 0xf9AC6022F786f6f64Fd8abf661190b8517D92396
+Operating CollectionFactory with NFTAttachment contract 0x651f2C6942F1c290632Ad5bB61D9ece789f82f35
+Operating CollectionFactory with Marketplace contract 0xd24CFfD60380A82A3cd1596642BE4dB5DAe6F2F9
+Operating CollectionFactory with Auction contract 0xeD40a2D2785755cEA0DeB36Fb3bB9AA74aD61f34
+Upgraded 0x80F9DdF6De7a7bBfF651580944F4746665335ecd
+
+   -------------------------------------
+   > Total cost:                   0 ETH
+
+
+25_upgrade_marketplace.js
+=========================
+Operating on Marketplace contract 0xd24CFfD60380A82A3cd1596642BE4dB5DAe6F2F9
+Upgraded 0xd24CFfD60380A82A3cd1596642BE4dB5DAe6F2F9
+
+
