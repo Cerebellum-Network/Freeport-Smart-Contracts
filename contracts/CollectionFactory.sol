@@ -10,18 +10,16 @@ import "./Auction.sol";
  *
  */
 contract CollectionFactory is MetaTxContext, HasGlobalNftId {
-    function initialize(Freeport _freeport, NFTAttachment _nftAttachment, Marketplace _marketplace, Auction _auction) public initializer {
+    function initialize(Freeport _freeport, Marketplace _marketplace, Auction _auction) public initializer {
         __MetaTxContext_init();
 
         freeport = _freeport;
-        nftAttachment = _nftAttachment;
         marketplace = _marketplace;
         auction = _auction;
     }
 
-    function initialize_update(Freeport _freeport, NFTAttachment _nftAttachment, Marketplace _marketplace, Auction _auction) external onlyRole(DEFAULT_ADMIN_ROLE) {
+    function initialize_update(Freeport _freeport, Marketplace _marketplace, Auction _auction) external onlyRole(DEFAULT_ADMIN_ROLE) {
         freeport = _freeport;
-        nftAttachment = _nftAttachment;
         marketplace = _marketplace;
         auction = _auction;
     }
@@ -31,8 +29,6 @@ contract CollectionFactory is MetaTxContext, HasGlobalNftId {
 
     // The address of Freeport contract.
     Freeport public freeport;
-    // The address of NFTAttachment contract.
-    NFTAttachment public nftAttachment;
 
     // Collection id to address.
     mapping(uint256 => address) private addressProxies;
@@ -76,7 +72,7 @@ contract CollectionFactory is MetaTxContext, HasGlobalNftId {
         require(nameToCollection[name] == address(0), "collection name already exists");
 
         Collection collection = new Collection();
-        collection.initialize(address(this), collectionManager, name, uriTpl, contractURI, freeport, nftAttachment, marketplace, auction);
+        collection.initialize(address(this), collectionManager, name, uriTpl, contractURI, freeport, marketplace, auction);
 
         address collAddr = address(collection);
 
