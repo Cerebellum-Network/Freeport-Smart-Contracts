@@ -19,7 +19,7 @@ contract Collection is OpenSeaCollection, CollectionRoyalties, CollectionIssuanc
 
     using Strings for uint256;
 
-    function initialize(address admin, address manager, string memory _name, string memory _uri, string memory __contractURI, Freeport _freeport, NFTAttachment _nftAttachment, Marketplace _marketplace, Auction _auction, CollectionFactory _collectionFactory) public initializer {
+    function initialize(address admin, address manager, string memory _name, string memory _uri, string memory __contractURI, Freeport _freeport, NFTAttachment _nftAttachment, Marketplace _marketplace, Auction _auction, address txForwarder, CollectionFactory _collectionFactory) public initializer {
         __OpenSeaCollection_init(_name, __contractURI);
         __CollectionRoyalties_init(_freeport);
         __CollectionNFTAttachment_init(_nftAttachment);
@@ -35,6 +35,7 @@ contract Collection is OpenSeaCollection, CollectionRoyalties, CollectionIssuanc
         _setupRole(DEFAULT_ADMIN_ROLE, admin);
         _setupRole(COLLECTION_MANAGER_ROLE, manager);
         _setupRole(COLLECTION_MANAGER_ROLE, admin);
+        _setupRole(META_TX_FORWARDER, txForwarder);
     }
 
     /** Native Collection factory.

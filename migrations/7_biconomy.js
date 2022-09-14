@@ -1,13 +1,13 @@
+const {getBiconomyForwarder} = require("./infrasctucture");
 const Freeport = artifacts.require("Freeport");
 const SimpleAuction = artifacts.require("SimpleAuction");
+const Auction = artifacts.require("Auction");
+const Marketplace = artifacts.require("Marketplace");
 const log = console.log;
 
 module.exports = async function (deployer, network, accounts) {
     // Pick the forwarder contract from https://docs.biconomy.io/misc/contract-addresses
-    let biconomyForwarder;
-    if (network === "polygon_mainnet") biconomyForwarder = "0x86C80a8aa58e0A4fa09A69624c31Ab2a6CAD56b8";
-    if (network === "polygon_testnet") biconomyForwarder = "0x9399BB24DBB5C4b782C70c2969F58716Ebbd6a3b";
-
+    const biconomyForwarder = getBiconomyForwarder(network)
     if (!biconomyForwarder) {
         log("Skipping Biconomy setup on network", network);
         return;
@@ -19,8 +19,12 @@ module.exports = async function (deployer, network, accounts) {
 
     const freeport = await Freeport.deployed();
     log("Operating on Freeport contract", freeport.address);
-    const auction = await SimpleAuction.deployed();
-    log("Operating on SimpleAuction contract", auction.address);
+    const simpleAuction = await SimpleAuction.deployed();
+    log("Operating on SimpleAuction contract", simpleAuction.address);
+    const auction = await Auction.deployed();
+    log("Operating on Auction contract", auction.address);
+    const marketplace = await Marketplace.deployed();
+    log("Operating on Marketplace contract", marketplace.address);
 
     const META_TX_FORWARDER = await freeport.META_TX_FORWARDER.call();
 
@@ -28,7 +32,13 @@ module.exports = async function (deployer, network, accounts) {
     await freeport.grantRole(META_TX_FORWARDER, biconomyForwarder);
 
     log("Give the permission to forward meta-transactions on SimpleAuction to the Biconomy Forwarder");
+    await simpleAuction.grantRole(META_TX_FORWARDER, biconomyForwarder);
+
+    log("Give the permission to forward meta-transactions on Auction to the Biconomy Forwarder");
     await auction.grantRole(META_TX_FORWARDER, biconomyForwarder);
+
+    log("Give the permission to forward meta-transactions on Marketplace to the Biconomy Forwarder");
+    await marketplace.grantRole(META_TX_FORWARDER, biconomyForwarder);
 
     log();
 };
