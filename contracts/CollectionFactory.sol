@@ -10,20 +10,24 @@ import "./Auction.sol";
  *
  */
 contract CollectionFactory is MetaTxContext, HasGlobalNftId {
-    function initialize(Freeport _freeport, NFTAttachment _nftAttachment, Marketplace _marketplace, Auction _auction) public initializer {
+    function initialize(Freeport _freeport, NFTAttachment _nftAttachment, Marketplace _marketplace, Auction _auction, address _txForwarder) public initializer {
         __MetaTxContext_init();
 
         freeport = _freeport;
         nftAttachment = _nftAttachment;
         marketplace = _marketplace;
         auction = _auction;
+
+        txForwarder = _txForwarder;
     }
 
-    function initialize_update(Freeport _freeport, NFTAttachment _nftAttachment, Marketplace _marketplace, Auction _auction) external onlyRole(DEFAULT_ADMIN_ROLE) {
+    function initialize_update(Freeport _freeport, NFTAttachment _nftAttachment, Marketplace _marketplace, Auction _auction, address _txForwarder) external onlyRole(DEFAULT_ADMIN_ROLE) {
         freeport = _freeport;
         nftAttachment = _nftAttachment;
         marketplace = _marketplace;
         auction = _auction;
+
+        txForwarder = _txForwarder;
     }
 
     // Standalone user collections mapped to its names.
@@ -55,6 +59,8 @@ contract CollectionFactory is MetaTxContext, HasGlobalNftId {
     Marketplace public marketplace;
     // The address of Auction contract.
     Auction public auction;
+    // Transaction forwarder
+    address public txForwarder;
 
     /** An event emitted when new collection is created.
      *
@@ -76,7 +82,7 @@ contract CollectionFactory is MetaTxContext, HasGlobalNftId {
         require(nameToCollection[name] == address(0), "collection name already exists");
 
         Collection collection = new Collection();
-        collection.initialize(address(this), collectionManager, name, uriTpl, contractURI, freeport, nftAttachment, marketplace, auction);
+        collection.initialize(address(this), collectionManager, name, uriTpl, contractURI, freeport, nftAttachment, marketplace, auction, txForwarder);
 
         address collAddr = address(collection);
 
