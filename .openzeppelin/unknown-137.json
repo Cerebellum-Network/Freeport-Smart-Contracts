@@ -1301,7 +1301,7 @@
           {
             "contract": "JointAccounts",
             "label": "jointAccounts",
-            "type": "t_mapping(t_address,t_array(t_struct(JointAccountShare)11986_storage)dyn_storage)",
+            "type": "t_mapping(t_address,t_array(t_struct(JointAccountShare)12066_storage)dyn_storage)",
             "src": "../project:/contracts/freeportParts/JointAccounts.sol:33"
           },
           {
@@ -1369,13 +1369,13 @@
           "t_mapping(t_uint256,t_address)": {
             "label": "mapping(uint256 => address)"
           },
-          "t_mapping(t_address,t_array(t_struct(JointAccountShare)11986_storage)dyn_storage)": {
+          "t_mapping(t_address,t_array(t_struct(JointAccountShare)12066_storage)dyn_storage)": {
             "label": "mapping(address => struct JointAccounts.JointAccountShare[])"
           },
-          "t_array(t_struct(JointAccountShare)11986_storage)dyn_storage": {
+          "t_array(t_struct(JointAccountShare)12066_storage)dyn_storage": {
             "label": "struct JointAccounts.JointAccountShare[]"
           },
-          "t_struct(JointAccountShare)11986_storage": {
+          "t_struct(JointAccountShare)12066_storage": {
             "label": "struct JointAccounts.JointAccountShare",
             "members": [
               {
