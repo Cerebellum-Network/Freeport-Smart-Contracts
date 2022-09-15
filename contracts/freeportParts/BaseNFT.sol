@@ -69,5 +69,7 @@ abstract contract BaseNFT is ERC1155Upgradeable, MetaTxContext {
 
         address operator = _msgSender();
         emit TransferSingle(operator, from, to, id, amount);
+
+        _onTransferSingle(operator, from, to, id, amount);
     }
 }

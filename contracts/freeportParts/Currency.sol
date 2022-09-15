@@ -24,5 +24,7 @@ abstract contract Currency is BaseNFT {
 
         address operator = _msgSender();
         emit TransferSingle(operator, from, to, CURRENCY, amount);
+
+        _onTransferSingle(operator, from, to, CURRENCY, amount);
     }
 }

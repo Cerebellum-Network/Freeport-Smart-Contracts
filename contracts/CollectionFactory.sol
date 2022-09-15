@@ -4,6 +4,7 @@ import "./freeportParts/MetaTxContext.sol";
 import "./freeportParts/HasGlobalNftId.sol";
 import "./Collection.sol";
 import "./Marketplace.sol";
+import "./NFTAttachment.sol";
 import "./Auction.sol";
 
 /** This is a contract for creating standalone contracts (collections) for users.
@@ -66,6 +67,17 @@ contract CollectionFactory is MetaTxContext, HasGlobalNftId {
      */
     event MintOnBehalf(address _operator, address _collection, address _holder, uint256 _id, uint64 _amount);
 
+    /**
+     * @dev Emitted when `value` tokens of token type `id` are transferred from `from` to `to` by `operator`.
+     */
+    event TransferSingle(address indexed operator, address indexed from, address indexed to, uint256 id, uint256 value);
+
+    /**
+     * @dev Equivalent to multiple {TransferSingle} events, where `operator`, `from` and `to` are the same for all
+     * transfers.
+     */
+    event TransferBatch(address indexed operator, address indexed from, address indexed to, uint256[] ids, uint256[] values);
+
     /** Deploying a new user collection.
      *
      *  Emits a {CollectionCreated} event.
@@ -76,7 +88,7 @@ contract CollectionFactory is MetaTxContext, HasGlobalNftId {
         require(nameToCollection[name] == address(0), "collection name already exists");
 
         Collection collection = new Collection();
-        collection.initialize(address(this), collectionManager, name, uriTpl, contractURI, freeport, nftAttachment, marketplace, auction);
+        collection.initialize(address(this), collectionManager, name, uriTpl, contractURI, freeport, nftAttachment, marketplace, auction, this);
 
         address collAddr = address(collection);
 
@@ -95,6 +107,30 @@ contract CollectionFactory is MetaTxContext, HasGlobalNftId {
         uint256 nftID = Collection(collection).issueOnBehalfOf(holder, supply, data);
 
         emit MintOnBehalf(operator, collection, holder, nftID, supply);
+    }
+
+    /**
+     * @dev This method merely a hook for {IERC1155-TransferSingle} on Collection.
+     */
+    function transferSingleHook(address operator, address from, address to, uint256 nftId, uint256 amount) external {
+        address sender = _msgSender();
+        (address collection, uint32 innerId, uint64 supply) = _parseNftId(nftId);
+        require(collection == sender, "collection does not have this NFT");
+
+        emit TransferSingle(operator, from, to, nftId, amount);
+    }
+
+    /**
+     * @dev This method merely a hook for {IERC1155-TransferBatch} on Collection.
+     */
+    function transferBatchHook(address operator, address from, address to, uint256[] memory ids, uint256[] memory amounts) external {
+        address sender = _msgSender();
+        for (uint256 i = 0; i < ids.length; ++i) {
+            (address collection, uint32 innerId, uint64 supply) = _parseNftId(ids[i]);
+            require(collection == sender, "collections does not have provided NFT");
+        }
+
+        emit TransferBatch(operator, from, to, ids, amounts);
     }
 
     function parseNftId(uint256 id) pure external

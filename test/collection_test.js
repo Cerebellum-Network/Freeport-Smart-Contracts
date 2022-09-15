@@ -135,12 +135,19 @@ contract("Collection", accounts => {
         assert.equal(takeOfferEv.nftId.toString(), nftId.toString());
         assert.equal(takeOfferEv.price.toNumber(), price);
         assert.equal(takeOfferEv.amount.toNumber(), 2);
-        let transferSingleEv = getEvent(takeOfferTx, "TransferSingle");
+        let transferSingleEv = getEvent(takeOfferTx, "TransferSingle", collection.address);
         assert.equal(transferSingleEv.operator.toString(), marketplace.address);
         assert.equal(transferSingleEv.from.toString(), minter);
         assert.equal(transferSingleEv.to.toString(), buyer);
         assert.equal(transferSingleEv.id.toString(), nftId.toString());
         assert.equal(transferSingleEv.value.toNumber(), 2);
+        let factoryTransferSingleEv = getEvent(takeOfferTx, "TransferSingle", factory.address);
+        assert.equal(factoryTransferSingleEv.operator.toString(), marketplace.address);
+        assert.equal(factoryTransferSingleEv.from.toString(), minter);
+        assert.equal(factoryTransferSingleEv.to.toString(), buyer);
+        assert.equal(factoryTransferSingleEv.id.toString(), nftId.toString());
+        assert.equal(factoryTransferSingleEv.value.toNumber(), 2);
+
 
         // The NFTs were transferred.
         let minterNfts = +(await collection.balanceOf(minter, nftId));
@@ -157,8 +164,14 @@ contract("Collection", accounts => {
 
 });
 
-function getEvent(tx, eventName) {
-    return tx.logs.find((log) =>
-        log.event === eventName
-    ).args;
+function getEvent(tx, eventName, address) {
+    if (address) {
+        return tx.logs.find((log) =>
+            log.event === eventName && log.address === address
+        ).args;
+    } else {
+        return tx.logs.find((log) =>
+            log.event === eventName
+        ).args;
+    }
 }
