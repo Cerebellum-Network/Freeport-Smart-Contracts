@@ -156,6 +156,8 @@ contract ERC1155Upgradeable is Initializable, ContextUpgradeable, ERC165Upgradea
 
         emit TransferSingle(operator, from, to, id, amount);
 
+        _onTransferSingle(operator, from, to, id, amount);
+
         _doSafeTransferAcceptanceCheck(operator, from, to, id, amount, data);
     }
 
@@ -195,6 +197,8 @@ contract ERC1155Upgradeable is Initializable, ContextUpgradeable, ERC165Upgradea
         }
 
         emit TransferBatch(operator, from, to, ids, amounts);
+
+        _onTransferBatch(operator, from, to, ids, amounts);
 
         _doSafeBatchTransferAcceptanceCheck(operator, from, to, ids, amounts, data);
     }
@@ -243,6 +247,8 @@ contract ERC1155Upgradeable is Initializable, ContextUpgradeable, ERC165Upgradea
         _balances[id][account] += amount;
         emit TransferSingle(operator, address(0), account, id, amount);
 
+        _onTransferSingle(operator, address(0), account, id, amount);
+
         _doSafeTransferAcceptanceCheck(operator, address(0), account, id, amount, data);
     }
 
@@ -269,6 +275,8 @@ contract ERC1155Upgradeable is Initializable, ContextUpgradeable, ERC165Upgradea
 
         emit TransferBatch(operator, address(0), to, ids, amounts);
 
+        _onTransferBatch(operator, address(0), to, ids, amounts);
+
         _doSafeBatchTransferAcceptanceCheck(operator, address(0), to, ids, amounts, data);
     }
 
@@ -292,6 +300,8 @@ contract ERC1155Upgradeable is Initializable, ContextUpgradeable, ERC165Upgradea
         _balances[id][account] = accountBalance - amount;
 
         emit TransferSingle(operator, account, address(0), id, amount);
+
+        _onTransferSingle(operator, account, address(0), id, amount);
     }
 
     /**
@@ -319,6 +329,8 @@ contract ERC1155Upgradeable is Initializable, ContextUpgradeable, ERC165Upgradea
         }
 
         emit TransferBatch(operator, account, address(0), ids, amounts);
+
+        _onTransferBatch(operator, account, address(0), ids, amounts);
     }
 
     /**
@@ -398,6 +410,30 @@ contract ERC1155Upgradeable is Initializable, ContextUpgradeable, ERC165Upgradea
             }
         }
     }
+
+    // Hook function that invokes on TransferSingle event.
+    function _onTransferSingle(
+        address operator,
+        address from,
+        address to,
+        uint256 id,
+        uint256 amount
+    )
+    internal
+    virtual
+    { }
+
+    // Hook function that invokes on TransferBatch event.
+    function _onTransferBatch(
+        address operator,
+        address from,
+        address to,
+        uint256[] memory ids,
+        uint256[] memory amounts
+    )
+    internal
+    virtual
+    { }
 
     function _asSingletonArray(uint256 element) private pure returns (uint256[] memory) {
         uint256[] memory array = new uint256[](1);

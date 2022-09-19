@@ -6,7 +6,9 @@ import "./freeportParts/collections/CollectionIssuance.sol";
 import "./freeportParts/collections/CollectionNFTAttachment.sol";
 import "./freeportParts/OpenSeaCollection.sol";
 import "./freeportParts/BaseTransferOperator.sol";
+import "./freeportParts/BaseNFT.sol";
 import "./Marketplace.sol";
+import "./CollectionFactory.sol";
 import "./Auction.sol";
 
 
@@ -17,7 +19,7 @@ contract Collection is OpenSeaCollection, CollectionRoyalties, CollectionIssuanc
 
     using Strings for uint256;
 
-    function initialize(address admin, address manager, string memory _name, string memory _uri, string memory __contractURI, Freeport _freeport, NFTAttachment _nftAttachment, Marketplace _marketplace, Auction _auction) public initializer {
+    function initialize(address admin, address manager, string memory _name, string memory _uri, string memory __contractURI, Freeport _freeport, NFTAttachment _nftAttachment, Marketplace _marketplace, Auction _auction, address txForwarder, CollectionFactory _collectionFactory) public initializer {
         __OpenSeaCollection_init(_name, __contractURI);
         __CollectionRoyalties_init(_freeport);
         __CollectionNFTAttachment_init(_nftAttachment);
@@ -25,6 +27,7 @@ contract Collection is OpenSeaCollection, CollectionRoyalties, CollectionIssuanc
         __BaseTransferOperator_init();
         __BaseNFT_init();
         if (bytes(_uri).length != 0) _setURI(_uri);
+        collectionFactory = _collectionFactory;
 
         _setupRole(TRANSFER_OPERATOR, address(_marketplace));
         _setupRole(TRANSFER_OPERATOR, address(_auction));
@@ -32,7 +35,12 @@ contract Collection is OpenSeaCollection, CollectionRoyalties, CollectionIssuanc
         _setupRole(DEFAULT_ADMIN_ROLE, admin);
         _setupRole(COLLECTION_MANAGER_ROLE, manager);
         _setupRole(COLLECTION_MANAGER_ROLE, admin);
+        _setupRole(META_TX_FORWARDER, txForwarder);
     }
+
+    /** Native Collection factory.
+     */
+    CollectionFactory collectionFactory;
 
     /**
      * @dev See {IERC165-supportsInterface}.
@@ -73,5 +81,27 @@ contract Collection is OpenSeaCollection, CollectionRoyalties, CollectionIssuanc
     /** @dev URI override for OpenSea traits compatibility. */
     function uri(uint256 nftId) override public view returns (string memory) {
         return string(abi.encodePacked(ERC1155Upgradeable.uri(nftId), Strings.toString(nftId)));
+    }
+
+    // Hooks
+
+    function _onTransferSingle(
+        address operator,
+        address from,
+        address to,
+        uint256 id,
+        uint256 amount
+    ) override internal {
+        collectionFactory.transferSingleHook(operator, from, to, id, amount);
+    }
+
+    function _onTransferBatch(
+        address operator,
+        address from,
+        address to,
+        uint256[] memory ids,
+        uint256[] memory amounts
+    ) override internal {
+        collectionFactory.transferBatchHook(operator, from, to, ids, amounts);
     }
 }

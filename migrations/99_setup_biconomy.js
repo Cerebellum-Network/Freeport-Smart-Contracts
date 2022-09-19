@@ -21,6 +21,10 @@ module.exports = async function (deployer, network, accounts) {
     log("Operating on Freeport contract", freeport.address);
     const simpleAuction = await SimpleAuction.deployed();
     log("Operating on SimpleAuction contract", simpleAuction.address);
+    const auction = await Auction.deployed();
+    log("Operating on Auction contract", auction.address);
+    const marketplace = await Marketplace.deployed();
+    log("Operating on Marketplace contract", marketplace.address);
 
     const META_TX_FORWARDER = await freeport.META_TX_FORWARDER.call();
 
@@ -30,6 +34,11 @@ module.exports = async function (deployer, network, accounts) {
     log("Give the permission to forward meta-transactions on SimpleAuction to the Biconomy Forwarder");
     await simpleAuction.grantRole(META_TX_FORWARDER, biconomyForwarder);
 
+    log("Give the permission to forward meta-transactions on Auction to the Biconomy Forwarder");
+    await auction.grantRole(META_TX_FORWARDER, biconomyForwarder);
+
+    log("Give the permission to forward meta-transactions on Marketplace to the Biconomy Forwarder");
+    await marketplace.grantRole(META_TX_FORWARDER, biconomyForwarder);
 
     log();
 };
