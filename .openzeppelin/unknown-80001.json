@@ -5932,13 +5932,13 @@
           {
             "contract": "SimpleAuction",
             "label": "freeport",
-            "type": "t_contract(Freeport)5350",
+            "type": "t_contract(Freeport)5574",
             "src": "../project:/contracts/SimpleAuction.sol:42"
           },
           {
             "contract": "SimpleAuction",
             "label": "sellerNftBids",
-            "type": "t_mapping(t_address,t_mapping(t_uint256,t_struct(Bid)6149_storage))",
+            "type": "t_mapping(t_address,t_mapping(t_uint256,t_struct(Bid)6362_storage))",
             "src": "../project:/contracts/SimpleAuction.sol:82"
           },
           {
@@ -5949,22 +5949,22 @@
           }
         ],
         "types": {
-          "t_contract(Freeport)5350": {
+          "t_contract(Freeport)5574": {
             "label": "contract Freeport"
           },
-          "t_mapping(t_address,t_mapping(t_uint256,t_struct(Bid)6149_storage))": {
+          "t_mapping(t_address,t_mapping(t_uint256,t_struct(Bid)6362_storage))": {
             "label": "mapping(address => mapping(uint256 => struct SimpleAuction.Bid))"
           },
           "t_address": {
             "label": "address"
           },
-          "t_mapping(t_uint256,t_struct(Bid)6149_storage)": {
+          "t_mapping(t_uint256,t_struct(Bid)6362_storage)": {
             "label": "mapping(uint256 => struct SimpleAuction.Bid)"
           },
           "t_uint256": {
             "label": "uint256"
           },
-          "t_struct(Bid)6149_storage": {
+          "t_struct(Bid)6362_storage": {
             "label": "struct SimpleAuction.Bid",
             "members": [
               {
