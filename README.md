@@ -165,3 +165,7 @@ and use `YOUR_CUSTOM_TAG` for running e2e-tests locally.
 ## Where to check the e2e-tests result after merge in dev?
 
 After merge in develop, make sure that tests passed in **@e2e-test-results** channel on Cere Slack.
+
+## Contracts Overview
+
+![image](https://user-images.githubusercontent.com/4569866/183383386-07079de5-a201-4f1f-90d4-583339d8d07a.png)
