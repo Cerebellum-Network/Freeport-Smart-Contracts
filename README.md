@@ -10,6 +10,11 @@ See the [documentation](docs/Freeport.md) (regenerate with `npm run doc`).
 
 ## Deployments
 
+#### v3.1.0 on Polygon (Production)
+
+- Transfer on factory
+- FREEP-693: added forwarder role to Biconomy forwarder
+- fix-configure_deployment: support fresh artifact files
 
 #### v3.0.0 on Polygon (Production)
 

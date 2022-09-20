@@ -469,4 +469,138 @@ Upgraded 0x80F9DdF6De7a7bBfF651580944F4746665335ecd
 Operating on Marketplace contract 0xd24CFfD60380A82A3cd1596642BE4dB5DAe6F2F9
 Upgraded 0xd24CFfD60380A82A3cd1596642BE4dB5DAe6F2F9
 
+8_upgrade_freeport.js
+=====================
+Operating on Freeport contract 0xf9AC6022F786f6f64Fd8abf661190b8517D92396
 
+   Replacing 'Freeport'
+   --------------------
+   > transaction hash:    0xf49cfbebfe58e8487e0699d58ec849b6a8a0bb3cc002e4130d7ab00ccc2b6fd1
+   > Blocks: 0            Seconds: 0
+   > contract address:    0xdd91AdE4e0a9f2B858cD978a7E488781B53f180F
+   > block number:        33338961
+   > block timestamp:     1663667582
+   > account:             0x80259e2b330C6149bc9256161264F8ff2CeFf7dd
+   > balance:             1.693331148354656014
+   > gas used:            3874582 (0x3b1f16)
+   > gas price:           40 gwei
+   > value sent:          0 ETH
+   > total cost:          0.15498328 ETH
+
+   Pausing for 1 confirmations...
+
+   -------------------------------
+   > confirmation number: 15 (block: 33338978)
+Upgraded 0xf9AC6022F786f6f64Fd8abf661190b8517D92396
+
+   > Saving artifacts
+   -------------------------------------
+   > Total cost:          0.15498328 ETH
+
+9_upgrade_simple_auction.js
+===========================
+Operating on SimpleAuction contract 0xf6a530242B233B1b4208c449D6C72FB7c6133cC0
+Operating SimpleAuction with Freeport contract 0xf9AC6022F786f6f64Fd8abf661190b8517D92396
+Upgraded 0xf6a530242B233B1b4208c449D6C72FB7c6133cC0
+Done initialize_v2_0_0
+
+   -------------------------------------
+   > Total cost:                   0 ETH
+
+11_upgrade_fiat_gateway.js
+==========================
+Operating on FiatGateway contract 0x4478e3B0B71531DAc9d0ECe9357eBB0043669804
+Operating on Freeport contract 0xf9AC6022F786f6f64Fd8abf661190b8517D92396
+Operating on Marketplace contract 0xd24CFfD60380A82A3cd1596642BE4dB5DAe6F2F9
+Upgraded 0x4478e3B0B71531DAc9d0ECe9357eBB0043669804
+Done initialize_update
+
+   -------------------------------------
+   > Total cost:                   0 ETH
+
+23_upgrade_auction.js
+=====================
+Operating on Auction contract 0xeD40a2D2785755cEA0DeB36Fb3bB9AA74aD61f34
+Operating Auction with Freeport contract 0xf9AC6022F786f6f64Fd8abf661190b8517D92396
+Upgraded 0xeD40a2D2785755cEA0DeB36Fb3bB9AA74aD61f34
+Done initialize_v2_0_0
+
+   -------------------------------------
+   > Total cost:                   0 ETH
+
+24_upgrade_collection_factory.js
+================================
+Operating on CollectionFactory contract 0x80F9DdF6De7a7bBfF651580944F4746665335ecd
+Operating CollectionFactory with Freeport contract 0xf9AC6022F786f6f64Fd8abf661190b8517D92396
+Operating CollectionFactory with NFTAttachment contract 0x651f2C6942F1c290632Ad5bB61D9ece789f82f35
+Operating CollectionFactory with Marketplace contract 0xd24CFfD60380A82A3cd1596642BE4dB5DAe6F2F9
+Operating CollectionFactory with Auction contract 0xeD40a2D2785755cEA0DeB36Fb3bB9AA74aD61f34
+Operating CollectionFactory with Biconomy Forwarder 0x86C80a8aa58e0A4fa09A69624c31Ab2a6CAD56b8 for network polygon_mainnet
+
+   Replacing 'CollectionFactory'
+   -----------------------------
+   > transaction hash:    0x1972f0cb428fffbc702184211e67bfe34792fc1ac6ff91873c0cf23b4fbfbb63
+   > Blocks: 0            Seconds: 0
+   > contract address:    0x720571edf5b0824B197b211719aE9C9AA2533e36
+   > block number:        33339362
+   > block timestamp:     1663668408
+   > account:             0x80259e2b330C6149bc9256161264F8ff2CeFf7dd
+   > balance:             0.862667388354656014
+   > gas used:            5200973 (0x4f5c4d)
+   > gas price:           40 gwei
+   > value sent:          0 ETH
+   > total cost:          0.20803892 ETH
+
+   Pausing for 1 confirmations...
+
+   -------------------------------
+Tx checked manually
+
+25_upgrade_marketplace.js
+=========================
+Operating on Marketplace contract 0xd24CFfD60380A82A3cd1596642BE4dB5DAe6F2F9
+
+   Replacing 'Marketplace'
+   -----------------------
+   > transaction hash:    0x27d829415b3956e307a51cbe183f2d24f3bc6a2ce1ba9851e43db119e7cc5c85
+   > Blocks: 0            Seconds: 0
+   > contract address:    0x60991c0a218C4319dB67BD2385Ad14837Cf95012
+   > block number:        33339422
+   > block timestamp:     1663668532
+   > account:             0x80259e2b330C6149bc9256161264F8ff2CeFf7dd
+   > balance:             0.811694188354656014
+   > gas used:            1274330 (0x1371da)
+   > gas price:           40 gwei
+   > value sent:          0 ETH
+   > total cost:          0.0509732 ETH
+
+   Pausing for 1 confirmations...
+
+   -------------------------------
+   > confirmation number: 15 (block: 33339442)
+
+Tx checked manually
+
+26_upgrade_nftattachment.js
+===========================
+Operating on NFTAttachment contract 0x651f2C6942F1c290632Ad5bB61D9ece789f82f35
+
+   Replacing 'NFTAttachment'
+   -------------------------
+   > transaction hash:    0x44beb05a17484914c7bb18e98fac746d57baeffff50a992a8850e0c38d432f40
+   > Blocks: 0            Seconds: 0
+   > contract address:    0x333324d27ADA890B60e5FB20C6224172b5c5f637
+   > block number:        33339488
+   > block timestamp:     1663668668
+   > account:             0x80259e2b330C6149bc9256161264F8ff2CeFf7dd
+   > balance:             0.757292228354656014
+   > gas used:            1360049 (0x14c0b1)
+   > gas price:           40 gwei
+   > value sent:          0 ETH
+   > total cost:          0.05440196 ETH
+
+   Pausing for 1 confirmations...
+
+   -------------------------------
+
+Tx checked manually
