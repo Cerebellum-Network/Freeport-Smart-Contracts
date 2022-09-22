@@ -10,6 +10,12 @@ See the [documentation](docs/Freeport.md) (regenerate with `npm run doc`).
 
 ## Deployments
 
+#### v3.1.1 on Polygon (Production)
+
+- Re-run 26_upgrade_nftattachment
+- Re-run 24_upgrade_collection_factory
+- Re-run 25_upgrade_marketplace
+
 #### v3.1.0 on Polygon (Production)
 
 - Transfer on factory

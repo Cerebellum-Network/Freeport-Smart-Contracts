@@ -604,3 +604,67 @@ Operating on NFTAttachment contract 0x651f2C6942F1c290632Ad5bB61D9ece789f82f35
    -------------------------------
 
 Tx checked manually
+
+26_upgrade_nftattachment.js
+===========================
+Operating on NFTAttachment contract 0x651f2C6942F1c290632Ad5bB61D9ece789f82f35
+
+   Replacing 'NFTAttachment'
+   -------------------------
+   > transaction hash:    0xb40c1696ad28b306aca009d42944355e601dcb3c55632b70277773b313efa329
+   > Blocks: 0            Seconds: 0
+   > contract address:    0xe38582B140681B3B13459014C9Ff95920e35b942
+   > block number:        33345734
+   > block timestamp:     1663682204
+   > account:             0x80259e2b330C6149bc9256161264F8ff2CeFf7dd
+   > balance:             0.702890268354656014
+   > gas used:            1360049 (0x14c0b1)
+   > gas price:           40 gwei
+   > value sent:          0 ETH
+   > total cost:          0.05440196 ETH
+
+   Pausing for 1 confirmations...
+
+   -------------------------------
+   > confirmation number: 15 (block: 33345749)
+Upgraded 0x651f2C6942F1c290632Ad5bB61D9ece789f82f35
+
+   > Saving artifacts
+   -------------------------------------
+   > Total cost:          0.05440196 ETH
+
+24_upgrade_collection_factory.js
+================================
+Operating on CollectionFactory contract 0x80F9DdF6De7a7bBfF651580944F4746665335ecd
+Operating CollectionFactory with Freeport contract 0xf9AC6022F786f6f64Fd8abf661190b8517D92396
+Operating CollectionFactory with NFTAttachment contract 0x651f2C6942F1c290632Ad5bB61D9ece789f82f35
+Operating CollectionFactory with Marketplace contract 0xd24CFfD60380A82A3cd1596642BE4dB5DAe6F2F9
+Operating CollectionFactory with Auction contract 0xeD40a2D2785755cEA0DeB36Fb3bB9AA74aD61f34
+Operating CollectionFactory with Biconomy Forwarder 0x86C80a8aa58e0A4fa09A69624c31Ab2a6CAD56b8 for network polygon_mainnet
+
+   Replacing 'CollectionFactory'
+   -----------------------------
+   > transaction hash:    0x7b19d5e70d3ffa76583356ea0c8baaa75dba5771b749bf3cf2c880b0e507fb9e
+   > Blocks: 0            Seconds: 0
+   > contract address:    0x22A3b1054213F33ebA7B507A74167acbc2612e01
+   > block number:        33345944
+   > block timestamp:     1663682636
+   > account:             0x80259e2b330C6149bc9256161264F8ff2CeFf7dd
+   > balance:             0.492773908354656014
+   > gas used:            5200973 (0x4f5c4d)
+   > gas price:           40 gwei
+   > value sent:          0 ETH
+   > total cost:          0.20803892 ETH
+
+   Pausing for 1 confirmations...
+
+   -------------------------------
+   > confirmation number: 15 (block: 33345961)
+
+25_upgrade_marketplace.js
+=========================
+Operating on Marketplace contract 0xd24CFfD60380A82A3cd1596642BE4dB5DAe6F2F9
+Upgraded 0xd24CFfD60380A82A3cd1596642BE4dB5DAe6F2F9
+
+   -------------------------------------
+   > Total cost:                   0 ETH

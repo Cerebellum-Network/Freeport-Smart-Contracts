@@ -22173,7 +22173,7 @@
     }
   },
   "schemaVersion": "3.4.9",
-  "updatedAt": "2022-09-20T10:10:52.216Z",
+  "updatedAt": "2022-09-20T14:07:47.876Z",
   "devdoc": {
     "events": {
       "TransferBatch(address,address,address,uint256[],uint256[])": {
