@@ -231,8 +231,7 @@
         }
       ],
       "stateMutability": "view",
-      "type": "function",
-      "constant": true
+      "type": "function"
     },
     {
       "inputs": [],
@@ -245,8 +244,7 @@
         }
       ],
       "stateMutability": "view",
-      "type": "function",
-      "constant": true
+      "type": "function"
     },
     {
       "inputs": [],
@@ -259,8 +257,7 @@
         }
       ],
       "stateMutability": "view",
-      "type": "function",
-      "constant": true
+      "type": "function"
     },
     {
       "inputs": [
@@ -279,8 +276,7 @@
         }
       ],
       "stateMutability": "view",
-      "type": "function",
-      "constant": true
+      "type": "function"
     },
     {
       "inputs": [
@@ -299,8 +295,7 @@
         }
       ],
       "stateMutability": "view",
-      "type": "function",
-      "constant": true
+      "type": "function"
     },
     {
       "inputs": [
@@ -342,8 +337,7 @@
         }
       ],
       "stateMutability": "view",
-      "type": "function",
-      "constant": true
+      "type": "function"
     },
     {
       "inputs": [
@@ -362,8 +356,7 @@
         }
       ],
       "stateMutability": "view",
-      "type": "function",
-      "constant": true
+      "type": "function"
     },
     {
       "inputs": [
@@ -418,8 +411,7 @@
         }
       ],
       "stateMutability": "view",
-      "type": "function",
-      "constant": true
+      "type": "function"
     },
     {
       "inputs": [
@@ -450,8 +442,7 @@
       "name": "upgradeToAndCall",
       "outputs": [],
       "stateMutability": "payable",
-      "type": "function",
-      "payable": true
+      "type": "function"
     },
     {
       "inputs": [
@@ -506,8 +497,7 @@
         }
       ],
       "stateMutability": "view",
-      "type": "function",
-      "constant": true
+      "type": "function"
     },
     {
       "inputs": [
@@ -11967,7 +11957,7 @@
       "events": {},
       "links": {},
       "transactionHash": "0x0000000000000000000000000000000000000000000000000000000000000000",
-      "address": "0xd24CFfD60380A82A3cd1596642BE4dB5DAe6F2F9"
+      "address": "0x8820492e58Cd0d19cb7482188581d96b1C67D394"
     },
     "80001": {
       "events": {
@@ -12160,8 +12150,7 @@
     }
   },
   "schemaVersion": "3.4.9",
-  "updatedAt": "2022-09-20T14:08:06.895Z",
-  "networkType": "ethereum",
+  "updatedAt": "2022-09-22T15:29:31.680Z",
   "devdoc": {
     "events": {
       "TransferSingle(address,address,address,uint256,uint256)": {

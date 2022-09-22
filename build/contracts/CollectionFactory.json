@@ -21986,7 +21986,7 @@
       "events": {},
       "links": {},
       "transactionHash": "0x0000000000000000000000000000000000000000000000000000000000000000",
-      "address": "0x80F9DdF6De7a7bBfF651580944F4746665335ecd"
+      "address": "0x892E4e4ABCb6e94C43D8Da5e93A3832011f647aD"
     },
     "80001": {
       "events": {
@@ -22173,7 +22173,7 @@
     }
   },
   "schemaVersion": "3.4.9",
-  "updatedAt": "2022-09-20T14:07:47.876Z",
+  "updatedAt": "2022-09-22T15:29:31.655Z",
   "devdoc": {
     "events": {
       "TransferBatch(address,address,address,uint256[],uint256[])": {

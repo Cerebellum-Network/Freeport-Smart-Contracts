@@ -26337,7 +26337,7 @@
       },
       "links": {},
       "transactionHash": "0x0000000000000000000000000000000000000000000000000000000000000000",
-      "address": "0xeD40a2D2785755cEA0DeB36Fb3bB9AA74aD61f34"
+      "address": "0x55feE3c2bc489e335f527C4a8B702571975dA7Da"
     },
     "80001": {
       "events": {
@@ -26573,7 +26573,7 @@
     }
   },
   "schemaVersion": "3.4.9",
-  "updatedAt": "2022-09-20T14:07:47.854Z",
+  "updatedAt": "2022-09-22T15:29:31.632Z",
   "devdoc": {
     "kind": "dev",
     "methods": {

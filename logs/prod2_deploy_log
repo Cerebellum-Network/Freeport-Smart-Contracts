@@ -389,3 +389,71 @@ Upgraded 0x892E4e4ABCb6e94C43D8Da5e93A3832011f647aD
 =========================
 Operating on Marketplace contract 0x8820492e58Cd0d19cb7482188581d96b1C67D394
 Upgraded 0x8820492e58Cd0d19cb7482188581d96b1C67D394
+
+8_upgrade_freeport.js
+=====================
+Operating on Freeport contract 0x302a0D1208e5FFB0371CA15470639A946fc4a17d
+Upgraded 0x302a0D1208e5FFB0371CA15470639A946fc4a17d
+
+   -------------------------------------
+   > Total cost:                   0 ETH
+
+9_upgrade_simple_auction.js
+===========================
+Operating on SimpleAuction contract 0x09CE7099FB6772244073496e6D04ec43DCC83c34
+Operating SimpleAuction with Freeport contract 0x302a0D1208e5FFB0371CA15470639A946fc4a17d
+Upgraded 0x09CE7099FB6772244073496e6D04ec43DCC83c34
+Done initialize_v2_0_0
+
+   -------------------------------------
+   > Total cost:                   0 ETH
+
+11_upgrade_fiat_gateway.js
+==========================
+Operating on FiatGateway contract 0xeC9b0dEEE224c759D99D1ebb90330Ed9A275beBb
+Operating on Freeport contract 0x302a0D1208e5FFB0371CA15470639A946fc4a17d
+Operating on Marketplace contract 0x8820492e58Cd0d19cb7482188581d96b1C67D394
+Upgraded 0xeC9b0dEEE224c759D99D1ebb90330Ed9A275beBb
+Done initialize_update
+
+   -------------------------------------
+   > Total cost:                   0 ETH
+
+23_upgrade_auction.js
+=====================
+Operating on Auction contract 0x55feE3c2bc489e335f527C4a8B702571975dA7Da
+Operating Auction with Freeport contract 0x302a0D1208e5FFB0371CA15470639A946fc4a17d
+Upgraded 0x55feE3c2bc489e335f527C4a8B702571975dA7Da
+Done initialize_v2_0_0
+
+   -------------------------------------
+   > Total cost:                   0 ETH
+
+24_upgrade_collection_factory.js
+================================
+Operating on CollectionFactory contract 0x892E4e4ABCb6e94C43D8Da5e93A3832011f647aD
+Operating CollectionFactory with Freeport contract 0x302a0D1208e5FFB0371CA15470639A946fc4a17d
+Operating CollectionFactory with NFTAttachment contract 0xF493a7E942d709f56bE6CFa0579210a070DF6803
+Operating CollectionFactory with Marketplace contract 0x8820492e58Cd0d19cb7482188581d96b1C67D394
+Operating CollectionFactory with Auction contract 0x55feE3c2bc489e335f527C4a8B702571975dA7Da
+Operating CollectionFactory with Biconomy Forwarder 0x86C80a8aa58e0A4fa09A69624c31Ab2a6CAD56b8 for network polygon_mainnet
+Upgraded 0x892E4e4ABCb6e94C43D8Da5e93A3832011f647aD
+
+   -------------------------------------
+   > Total cost:                   0 ETH
+
+25_upgrade_marketplace.js
+=========================
+Operating on Marketplace contract 0x8820492e58Cd0d19cb7482188581d96b1C67D394
+Upgraded 0x8820492e58Cd0d19cb7482188581d96b1C67D394
+
+   -------------------------------------
+   > Total cost:                   0 ETH
+
+26_upgrade_nftattachment.js
+===========================
+Operating on NFTAttachment contract 0xF493a7E942d709f56bE6CFa0579210a070DF6803
+Upgraded 0xF493a7E942d709f56bE6CFa0579210a070DF6803
+
+   -------------------------------------
+   > Total cost:                   0 ETH
