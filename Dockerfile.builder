@@ -1,4 +1,4 @@
-FROM node:12.18.4-alpine as builder
+FROM node:16.4.2-alpine as builder
 LABEL maintainer="team@cere.network"
 LABEL description="This is the build stage install all dependecies"
 
