@@ -16,6 +16,7 @@ contract("Collection", accounts => {
     const minter = accounts[1];
     const buyer = accounts[2];
     const anon = accounts[9];
+    const nextBuyer = accounts[3];
 
     const CURRENCY = 0;
     const UNIT = 1e6;
@@ -162,6 +163,53 @@ contract("Collection", accounts => {
         assert.equal(buyerMoney1 - buyerMoney0, -price * 2);
     });
 
+    it("should be able to sell secondary listing", async () => {
+        // Deployer creates a collection for the minter.
+        let createTx = await factory.createCollection(minter, "my collection 2", "https://{id}.json", "https://my_contract", {from: deployer});
+
+        let collectionAddr = getEvent(createTx, "CollectionCreated").addr;
+
+        // The minter mints some NFTs.
+        const mintTx = await factory.mintOnBehalf(collectionAddr, minter, 15, "0x", {from: minter});
+
+        let mintEvent = getEvent(mintTx, "MintOnBehalf");
+        let nftId = mintEvent._id;
+
+        let collection = await Collection.at(collectionAddr);
+        let balance = +(await collection.balanceOf(minter, nftId));
+        assert.equal(balance, 15);
+
+        // The minter puts the NFTs for sale.
+        let price = 100;
+        await marketplace.makeOffer(nftId, price, {from: minter});
+
+        await attachment.collectionManagerAttachToNFT(nftId, attachmentData, {from: minter});
+
+        // The buyer gets some money.
+        await mintUSDC(buyer, 1000);
+        // The buyer approves the marketplace.
+        await erc20.approve(marketplace.address, aLot, {from: buyer});
+
+        // The buyer buys one NFT.
+        await marketplace.takeOffer(buyer, minter, nftId, 0, 1, {from: buyer});
+
+        // The NFTs were transferred.
+        let minterNfts = +(await collection.balanceOf(minter, nftId));
+        let buyerNfts = +(await collection.balanceOf(buyer, nftId));
+        assert.equal(minterNfts, 15 - 1);
+        assert.equal(buyerNfts, 1);
+
+        await marketplace.makeOffer(nftId, price, {from: buyer});
+
+        // The buyer gets some money.
+        await mintUSDC(nextBuyer, 1000);
+
+        // The buyer approves the marketplace.
+        await erc20.approve(marketplace.address, aLot, {from: nextBuyer});
+
+        // The buyer buys one NFT.
+        await marketplace.takeOffer(nextBuyer, minter, nftId, 0, 1, {from: nextBuyer});
+    });
 });
 
 function getEvent(tx, eventName, address) {
